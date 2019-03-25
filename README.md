@@ -45,7 +45,7 @@ Note: tests with prefix `nocrash_` are specifically handled by the tester--inste
 
 ## Workflow with PFT
 
-unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, what the expected output was, and what your output was. You can then find the test in unit\_tests.c to see what code was run that produced an error.  
+unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed. 
 
 ```
 vim trick: In the command line, type `/test-name` and hit enter. This takes you to a particular test.
