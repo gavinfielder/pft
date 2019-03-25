@@ -27,7 +27,7 @@ Inside testing/:
 
 There are five options:
  - `./test prefix` runs all the enabled tests whose name starts with 'prefix'
- - `./test search-pattern` runs all the enabled tests whose name matches a wildcard-based ('\*') search
+ - `./test "search-pattern"` runs all the enabled tests whose name matches a wildcard-based ('\*') search
  - `./test 42 84` runs (enabled) test number 42 through test 84
  - `./test 42` runs enabled tests from 42 to the end of all the enabled tests
  - `./test` runs all the enabled tests
@@ -64,23 +64,19 @@ Simple prefix-based search:
  ./disable-test "" && ./enable-test s     # Disables all tests except tests that start with 's'
 
 Wildcard search:
- ./disable-test "*zeropad"                # Disables all the tests that have 'zeropad' anywhere in the name
- ./enable-test "*_null_*_prec_"           # Enables all the tests that have a '_null_' followed by a '_prec_'
- ./enable-test "s_*prec"                  # Enables all tests that start with 's_' and have a 'prec' in the name
+ ./disable-test "*zeropad"        # Disables all the tests that have 'zeropad' anywhere in the name
+ ./enable-test "*_null_*_prec_"   # Enables all the tests that have a '_null_' followed by a '_prec_'
+ ./enable-test "s_*prec"          # Enables all tests that start with 's_' and have a 'prec' in the name
 ```
 
-While you **can** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
+While you ***can*** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
 
 # Troubleshooting
 
 If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.  
 
 # Contributing
-Feel free to fork the repo and make pull requests.
-
-A big thing that needs to be done is simply just changing test names so that they're grouped better for using the prefix search. I wrote these tests as I was developing my printf, and searching by prefix was an afterthought to all of it, so some of them are a little scattered.  
-
-Adding additional tests would be great as well.  
+I encourage everyone to contribute to this, even if it's just adding tests to the library. To do this, fork and make pull requests.   
 
 Before making pull requests, please:
 
