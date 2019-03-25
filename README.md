@@ -52,12 +52,18 @@ You can add your own tests to this unit\_tests.c, following the same format. You
 
 ## Enabling and Disabling tests
 
-I have provided scripts that make it easy to enable and disable tests by prefix. Example:
+I have provided scripts that make it easy to enable and disable tests by a search pattern. Example:
 
 ```bash
-./disable-test s                         # All the tests that start with 's' are disabled
-./enable-test s_null_                    # All the tests that start with 's_null_' are enabled
-./disable-test "" && ./enable-test s     # Disables all tests except tests that start with 's'
+Simple prefix-based search:
+ ./disable-test s                         # All the tests that start with 's' are disabled
+ ./enable-test s_null_                    # All the tests that start with 's_null_' are enabled
+ ./disable-test "" && ./enable-test s     # Disables all tests except tests that start with 's'
+
+Wildcard search:
+ ./disable-test "*zeropad"                # Disables all the tests that have 'zeropad' anywhere in the name
+ ./enable-test "*_null_*_prec_"           # Enables all the tests that have a '_null_' followed by a '_prec_'
+ ./enable-test "s_*prec"                  # Enables all tests that start with 's_' and have a 'prec' in the name
 ```
 
 While you **can** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
@@ -96,8 +102,7 @@ There are some user options in the makefile, you can explore them yourself.
 
 I have a few ideas how to improve this:
 
-- disable-test could be able to disable a numeric range of tests.
-- enable-test could have an option -o to enable only what is specified.
+- disable-test could be able to disable a numeric range of tests, or a specific test by number
 - Could add a more generalized unit test framework alongside the current one that gives you more control in coming up with unit tests
 - Could add tests for the thousands separator optional format flag.
 - Could add tests for the `n` specifier.

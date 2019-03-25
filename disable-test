@@ -13,32 +13,30 @@
 
 if [ $# -ne 1 ]
 then
-	echo "usage: ./disable-test  test-prefix"
+	echo "usage: ./disable-test  search-pattern"
+	echo "       search patterns are a single word, using * for wildcards. (Enclose in double quotes if using *)"
 	exit 1
 fi
 
 FILENAME=unit_tests.c
 
-
-# Treat the argument as test-prefix and perform a name-based search
-PREFIX=$(echo $1 | tr -d " \t\r\n")
-NUM_DISABLED=$(grep -c "^int[	 ]*$PREFIX.*(void)" $FILENAME | tr -d " \t\r\n")
+PATTERN=$(echo $1 | tr -d " \t\r\n")
+TOREGEX=$(echo $PATTERN | sed "s/\*/.\*/g")
+NUM_DISABLED=$(grep -c "^int[	 ]*$TOREGEX.*(void)" $FILENAME | tr -d " \t\r\n")
 
 if [ $NUM_DISABLED -eq 0 ]
 then
-	echo "No enabled tests were found that start with \"$PREFIX\"."
+	echo "No enabled tests were found that match the pattern \"$PATTERN*\"."
 	exit 0
 fi
 
-echo "Disabling tests that start with \"$PREFIX\"..."
-
-sed -i .bak "s/^int[	 ]*$PREFIX.*(void)/ &/g" $FILENAME
-echo "Disabled $NUM_DISABLED tests that start with \"$PREFIX\"."
+sed -i .bak "s/^int[	 ]*$TOREGEX.*(void)/ &/g" $FILENAME
+echo "Disabled $NUM_DISABLED tests matching the pattern \"$PATTERN*\"."
 
 if [ $? -eq 0 ]
 then
 	rm $FILENAME.bak
 	make -C $(dirname $0) fclean
 else
- 	echo "Error occurred while performing prefix-based sed operation. If any changes were made, the unit test file has been backed up to $FILENAME.bak. Please check your input and try again."
+ 	echo "Error occurred while performing sed operation. If any changes were made, the unit test file has been backed up to $FILENAME.bak. Please check your input and try again."
 fi

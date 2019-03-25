@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/24 23:28:17 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:35:42 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
+
 void	unit_testing(int argc, char **argv)
 {
 	int from, to;
 	if (argc > 1)
 	{
-		if ((argv[1][0] >= 'a' && argv[1][0] <= 'z') || (argv[1][0] >= 'A' && argv[1][0] <= 'Z'))
+		if ((argv[1][0] == '*') || (argv[1][0] >= 'a' && argv[1][0] <= 'z') || (argv[1][0] >= 'A' && argv[1][0] <= 'Z'))
 		{
 			run_search_tests(argv[1]);
 		}

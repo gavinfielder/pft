@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/25 13:08:53 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/25 16:38:07 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ short				mx_hi = -3244;
 char				mx_hhi = 'F';
 char			   *mx_s = "Hello, World!";
 int					mx_i = 42;
+
+
 
 /* ----------------------------------------------------------------------------
 ** Calls a unit test function and outputs the result to a file
@@ -178,17 +180,69 @@ static void	print_end_test_message(int num_tests, int num_passed)
 }
 
 /* ----------------------------------------------------------------------------
-** Runs all the tests that start with [str]
+** The ft_match function is used for wildcard-based searches
+** s2 has an indeterminate number of *, s1 is the function name to test.
+** --------------------------------------------------------------------------*/
+static int	ft_match(const char *s1, char *s2);
+static int	ft_match_helper(const char *s1, char *s2)
+{
+	int		i;
+	char	next;
+	int		found;
+
+	i = 0;
+	next = *(s2 + 1);
+	found = 0;
+	if (next == '\0')
+		return (1);
+	if (next == '*')
+		return (ft_match(s1, s2 + 1));
+	while (1)
+	{
+		if (s1[i] == next)
+			found = (ft_match(s1 + i, s2 + 1));
+		if (found)
+			return (found);
+		if (s1[i] == '\0')
+			return (0);
+		i++;
+	}
+	return (-1);
+}
+static int	ft_match(const char *s1, char *s2)
+{
+	if (*s1 == '\0' && *s2 == '\0')
+		return (1);
+	if (*s2 != '*' && (*s1 != *s2))
+		return (0);
+	if (*s2 == '*')
+		return (ft_match_helper(s1, s2));
+	else if (*s1 == *s2)
+		return (ft_match(s1 + 1, s2 + 1));
+	return (-1);
+}
+
+/* ----------------------------------------------------------------------------
+** Runs all the tests that match the search pattern
 ** --------------------------------------------------------------------------*/
 void	run_search_tests(char *str)
 {
 	int fail = 0;
 	int num_fails = 0;
 	int	num_run = 0;
+	
+	//Append a * onto str so we don't have to modify the piscine's ft_match
+	size_t len = strlen(str) + 2;
+	char *pattern = (char *)malloc(len);
+	pattern[len] = '\0';
+	for (size_t i = 0; i < len; i++)
+		pattern[i] = str[i];
+	pattern[len - 1] = '*';
 
+	//Search tests
 	for (int i = 0; g_unit_tests[i] != NULL; i++)
 	{
-		if (strncmp(str, g_unit_test_names[i], strlen(str)) == 0)
+		if (ft_match(g_unit_test_names[i], pattern))
 		{
 			fail = run_test(i);
 			num_fails += fail;
@@ -196,6 +250,7 @@ void	run_search_tests(char *str)
 		}
 	}
 	print_end_test_message(num_run, num_run - num_fails);
+	free(pattern);
 }
 
 /* ----------------------------------------------------------------------------

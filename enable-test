@@ -13,23 +13,25 @@
 
 if [ $# -ne 1 ]
 then
-	echo "usage: ./enable-test  test-prefix"
+	echo "usage: ./enable-test  search-pattern"
+	echo "       search patterns are a single word, using * for wildcards. (Enclose in double quotes if using *)"
 	exit 1
 fi
 
 FILENAME=unit_tests.c
 
-PREFIX=$(echo $1 | tr -d " \t\r\n")
-NUM_ENABLED=$(grep -c "^[	 ]*int[	 ]*$PREFIX.*(void)" $FILENAME | tr -d " \t\r\n")
+PATTERN=$(echo $1 | tr -d " \t\r\n")
+TOREGEX=$(echo $PATTERN | sed "s/\*/.\*/g")
+NUM_ENABLED=$(grep -c "^[	 ]*int[	 ]*$TOREGEX.*(void)" $FILENAME | tr -d " \t\r\n")
 
 if [ $NUM_ENABLED -eq 0 ]
 then
-	echo "No disabled tests were found that start with \"$PREFIX\"."
+	echo "No disabled tests were found matching the pattern \"$PATTERN*\"."
 	exit 0
 fi
 
-sed -i .bak "s/^[	 ]*\(int[	 ]*$PREFIX.*(void)\)/\1/g" $FILENAME
-echo "Enabled $NUM_ENABLED tests that start with \"$PREFIX\"."
+sed -i .bak "s/^[	 ]*\(int[	 ]*$TOREGEX.*(void)\)/\1/g" $FILENAME
+echo "Enabled $NUM_ENABLED tests matching the pattern \"$PATTERN*\"."
 
 if [ $? -eq 0 ]
 then
