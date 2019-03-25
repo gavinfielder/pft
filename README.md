@@ -25,11 +25,14 @@ Inside testing/:
 
 # Usage, the long version
 
-There are four options:
+There are five options:
  - `./test prefix` runs all the enabled tests whose name starts with 'prefix'
+ - `./test search-pattern` runs all the enabled tests whose name matches a wildcard-based ('\*') search
  - `./test 42 84` runs (enabled) test number 42 through test 84
  - `./test 42` runs enabled tests from 42 to the end of all the enabled tests
  - `./test` runs all the enabled tests
+
+Wildcard-based searches have an implict '\*' at the end. For example, `./test "*zeropad"` runs all the tests that have 'zeropad' anywhere in the name.
 
 ### Some good prefixes to try
 s, i, d, u, x, X, o, p, c, f, f\_L, mix, nocrash, moul
