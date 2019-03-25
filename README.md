@@ -91,6 +91,15 @@ run\_test() runs a particular test. The way the test works is that it redirects 
 
 There are some user options in the makefile, you can explore them yourself.
 
+# Possible Future Features
+
+I have a few ideas how to improve this:
+- disable-test could be able to disable a numeric range of tests
+- enable-test could have an option -o to enable only what is specified
+- Add a more generalized unit test framework alongside the current one that gives you more control in coming up with unit tests
+
+Feel free to give me suggestions, or code them yourself and make a pull request.  
+
 # Credits
 
 All code, and all tests (so far) were written by me.
