@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/25 11:43:31 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/25 12:06:22 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -633,9 +633,9 @@ int d_size_l_neg_big(void){return test("%ld", -22337203685477);}
 int d_size_ll_pos_big(void){return test("%lld", 522337203685470);}
 int d_size_ll_neg_big(void){return test("%lld", -522337203685470);}
 int d_llmax(void){return test("%lld", 9223372036854775807);}
-int d_llmin(void){return test("%lld", llmdn);}
+int d_llmin(void){return test("%lld", llmin);}
 int d_lmax(void){return test("%ld", 9223372036854775807);}
-int d_lmin(void){return test("%ld", lmdn);}
+int d_lmin(void){return test("%ld", lmin);}
 int d_hmax(void){return test("%hd", 32767);}
 int d_hmin(void){return test("%hd", -32768);}
 int d_hhmax(void){return test("%hhd", 127);}
@@ -648,26 +648,26 @@ int d_size_ll_pos_big_width(void){return test("%37lld", 522337203685470);}
 int d_size_ll_neg_big_lj(void){return test("%-37lld", -522337203685470);}
 int d_size_l_pos_big_allsign(void){return test("%+ld", 22337203685477);}
 //Multiple signed integers in a row of varying sizes
-int d_size_follows_d_i(void){return test("[%d] [%d]", d_pos_1, d_pos_1);}
-int d_size_follows_d_l(void){return test("[%d] [%ld]", d_pos_1, l_pos_1);}
-int d_size_follows_d_ll(void){return test("[%d] [%lld]", d_pos_1, ll_pos_1);}
-int d_size_follows_d_h(void){return test("[%d] [%hd]", d_pos_1, sh_pos_1);}
-int d_size_follows_d_hh(void){return test("[%d] [%hhd]", d_pos_1, ch_pos_1);}
+int d_size_follows_d_i(void){return test("[%d] [%d]", i_pos_1, i_pos_1);}
+int d_size_follows_d_l(void){return test("[%d] [%ld]", i_pos_1, l_pos_1);}
+int d_size_follows_d_ll(void){return test("[%d] [%lld]", i_pos_1, ll_pos_1);}
+int d_size_follows_d_h(void){return test("[%d] [%hd]", i_pos_1, sh_pos_1);}
+int d_size_follows_d_hh(void){return test("[%d] [%hhd]", i_pos_1, ch_pos_1);}
 int d_size_ll_hh_ll(void){return test("%lld%hhd%lld", ll_pos_1, ch_neg_1, ll_neg_1);}
 int d_size_h_l_hh(void){return test("%hd%ld%hhd", sh_pos_1, l_neg_1, ch_neg_1);}
 int d_size_l_hh_h(void){return test("%ld%hhd%hd", l_neg_1, ch_pos_1, sh_pos_1);}
-int d_size_n_ll_hh(void){return test("%d%lld%hhd", d_pos_1, ll_neg_1, ch_pos_1);}
-int d_size_ll_n_l(void){return test("%lld%d%ld", ll_neg_1, d_pos_1, l_pos_1);}
+int d_size_n_ll_hh(void){return test("%d%lld%hhd", i_pos_1, ll_neg_1, ch_pos_1);}
+int d_size_ll_n_l(void){return test("%lld%d%ld", ll_neg_1, i_pos_1, l_pos_1);}
 //Signed integers (d) - space - no modifers
-int d_basic_ d_pos_sp(void){return test("this % d number", 17);}
-int d_basic_ d_neg_sp(void){return test("this % d number", -267);}
-int d_basic_ d_zero_sp(void){return test("this % d number", 0);}
-int d_basic_ d_onlypos_sp(void){return test("% d", 3);}
-int d_basic_ d_onlyneg_sp(void){return test("% d", -1);}
-int d_basic_ d_onlyzero_sp(void){return test("% d", 0);}
-int d_basic_ d_pos_d_sp(void){return test("this % d number", 17);}
-int d_basic_ d_neg_d_sp(void){return test("this % d number", -267);}
-int d_basic_ d_zero_d_sp(void){return test("this % d number", 0);}
+int d_basic_d_pos_sp(void){return test("this % d number", 17);}
+int d_basic_d_neg_sp(void){return test("this % d number", -267);}
+int d_basic_d_zero_sp(void){return test("this % d number", 0);}
+int d_basic_d_onlypos_sp(void){return test("% d", 3);}
+int d_basic_d_onlyneg_sp(void){return test("% d", -1);}
+int d_basic_d_onlyzero_sp(void){return test("% d", 0);}
+int d_basic_d_pos_d_sp(void){return test("this % d number", 17);}
+int d_basic_d_neg_d_sp(void){return test("this % d number", -267);}
+int d_basic_d_zero_d_sp(void){return test("this % d number", 0);}
 int d_intmax_sp(void){return test("% d", 2147483647);}
 int d_intmin_sp(void){return test("% d", -2147483678);}
 //Signed integers (d) - space with allsign ('+')
@@ -815,9 +815,9 @@ int d_size_l_neg_big_sp(void){return test("% ld", -22337203685477);}
 int d_size_ll_pos_big_sp(void){return test("% lld", 522337203685470);}
 int d_size_ll_neg_big_sp(void){return test("% lld", -522337203685470);}
 int d_llmax_sp(void){return test("% lld", 9223372036854775807);}
-int d_llmin_sp(void){return test("% lld", llmdn);}
+int d_llmin_sp(void){return test("% lld", llmin);}
 int d_lmax_sp(void){return test("% ld", 9223372036854775807);}
-int d_lmin_sp(void){return test("% ld", lmdn);}
+int d_lmin_sp(void){return test("% ld", lmin);}
 int d_hmax_sp(void){return test("% hd", 32767);}
 int d_hmin_sp(void){return test("% hd", -32768);}
 int d_hhmax_sp(void){return test("% hhd", 127);}
