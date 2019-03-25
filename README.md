@@ -113,4 +113,4 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 
 # Credits
 
-All code, and all tests (so far) were written by me.
+All code was written by me. All the tests were written by me, except the ones prefixed moul\_. The moulinette files I got a hold of (which are now outdated since the printf subject change) had 'ly' as the author in the header.
