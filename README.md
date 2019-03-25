@@ -59,20 +59,13 @@ I have provided scripts that make it easy to enable and disable tests by prefix.
 
 While you **can** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
 
-# How it works
-### ...for those who want knowledge and power (or maybe just want to use it to do something specific)
+# Troubleshooting
 
-When you run make, the first thing that happens is the test index is created. Two copies of unit\_tests.c are created. In the copy unit\_tests\_indexed.c, the test() function is replaced with ft\_printf(). In the copy unit\_tests\_benched.c, the test() function is replaced with printf() and '\_bench' is added to all the function names. Next, in both files, an array of function pointers is created at the end of the file pointing to all the enabled unit tests.   An array will also be created holding the names of all the functions as string literals.  
+If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.  
 
-When you call `./test str_`, main.c will see alpha input and call run\_search\_tests, which does strncmp on each position in the array of function names, and when it finds a function name starting with 'str\_', it calls run\_test() on that test.  
 
-run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version, and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. This is very essentially the same way moulinette tests printf. The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
-
-# Troubleshooting, and Contributing
-
-If something goes wrong--slack me @gfielder. I want people to use this, so you telling me about difficulties you have with it can help me make it easier to use. It is part of my education to learn to manage user experience, so please, contribute to my education.  
-
-Same goes with contributing. Feel free to fork the repo and make pull requests. I'm interested in devops, so I'm motivated to get every little experience with managing collaborative repos.   
+# Contributing
+Feel free to fork the repo and make pull requests.
 
 A big thing that needs to be done is simply just changing test names so that they're grouped better for using the prefix search. I wrote these tests as I was developing my printf, and searching by prefix was an afterthought to all of it, so some of them are a little scattered.  
 
@@ -85,7 +78,19 @@ Before making pull requests, please:
 && ./disable-test moul_g && ./disable-test moul_e && ./disable-test moul_wide \
 && ./disable-test moul_F && ./disable-test moul_D && ./disable-test nocrash
 ```
+*and if you add tests that can segfault in any way, modify this block in the readme*
 
-## Credits
+# How it works
+### ...for those who want knowledge and power (or maybe just want to use it to do something specific)
+
+When you run make, the first thing that happens is the test index is created. Two copies of unit\_tests.c are created. In the copy unit\_tests\_indexed.c, the test() function is replaced with ft\_printf(). In the copy unit\_tests\_benched.c, the test() function is replaced with printf() and '\_bench' is added to all the function names. Next, in both files, an array of function pointers is created at the end of the file pointing to all the enabled unit tests.   An array will also be created holding the names of all the functions as string literals.  
+
+When you call `./test str_`, main.c will see alpha input and call run\_search\_tests, which does strncmp on each position in the array of function names, and when it finds a function name starting with 'str\_', it calls run\_test() on that test.  
+
+run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version (through the array of function pointers that was created on `make`), and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. This is very essentially the same way moulinette tests printf. The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
+
+There are some user options in the makefile, you can explore them yourself.
+
+# Credits
 
 All code, and all tests (so far) were written by me.
