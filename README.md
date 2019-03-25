@@ -30,7 +30,7 @@ There are four options:
  - `./test` runs all the enabled tests
 
 ### Some good prefixes to try
-str, sint, uint, hexl, hexu, octl, ptr, char, flt, mix, nocrash, moul
+s, i, d, u, x, X, o, p, c, f, f\_L, mix, nocrash, moul
 
 ```
 If the prefix stuff doesn't make sense, look at unit_tests.c and then run ./test nospec
@@ -52,9 +52,9 @@ You can add your own tests to this unit\_tests.c, following the same format. You
 I have provided scripts that make it easy to enable and disable tests by prefix. Example:
 
 ```bash
-./disable-test str                      # All the tests that start with 'str' are disabled
-./enable-test str_space_                # All the tests that start with 'str_space_' are enabled
-./disable-test "" && ./enable-test str  # Disables all tests except tests that start with 'str'
+./disable-test s                         # All the tests that start with 's' are disabled
+./enable-test s_null_                    # All the tests that start with 's_null_' are enabled
+./disable-test "" && ./enable-test s     # Disables all tests except tests that start with 's'
 ```
 
 While you **can** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
@@ -62,7 +62,6 @@ While you **can** call `./enable-test ""` to enable all tests, I do not recommen
 # Troubleshooting
 
 If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.  
-
 
 # Contributing
 Feel free to fork the repo and make pull requests.
@@ -74,9 +73,7 @@ Adding additional tests would be great as well.
 Before making pull requests, please:
 
 ```bash
-./enable-test "" && ./disable-test argnum && ./disable-test moul_star && ./disable-test moul_a \
-&& ./disable-test moul_g && ./disable-test moul_e && ./disable-test moul_wide \
-&& ./disable-test moul_F && ./disable-test moul_D && ./disable-test nocrash
+./enable-test "" && ./disable-test argnum && ./disable-test moul_notmandatory && ./disable-test nocrash
 ```
 *and if you add tests that can segfault in any way, modify this block in the readme*
 
@@ -85,7 +82,7 @@ Before making pull requests, please:
 
 When you run make, the first thing that happens is the test index is created. Two copies of unit\_tests.c are created. In the copy unit\_tests\_indexed.c, the test() function is replaced with ft\_printf(). In the copy unit\_tests\_benched.c, the test() function is replaced with printf() and '\_bench' is added to all the function names. Next, in both files, an array of function pointers is created at the end of the file pointing to all the enabled unit tests.   An array will also be created holding the names of all the functions as string literals.  
 
-When you call `./test str_`, main.c will see alpha input and call run\_search\_tests, which does strncmp on each position in the array of function names, and when it finds a function name starting with 'str\_', it calls run\_test() on that test.  
+When you call `./test s_`, main.c will see alpha input and call run\_search\_tests, which does strncmp on each position in the array of function names, and when it finds a function name starting with 's\_', it calls run\_test() on that test.  
 
 run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version (through the array of function pointers that was created on `make`), and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. This is very essentially the same way moulinette tests printf. The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
 
