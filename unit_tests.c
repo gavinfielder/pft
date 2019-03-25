@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/23 17:12:15 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/24 18:53:17 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,15 +252,15 @@ int		sint_prec_width_fn_neg_lj_allsign_zpad(void){return test("%0+-3.7i", -2375)
 int		sint_prec_width_nn_pos_lj_allsign_zpad(void){return test("%0+-3.3i", 6983);}
 int		sint_prec_width_nn_neg_lj_allsign_zpad(void){return test("%0+-3.3i", -8462);}
 //Signed integers of varying size modifiers
-char 		ch_pos_1 = 100, ch_neg_1 = -87;
-short		sh_pos_1 = 3047, sh_neg_1 = -8875;
-int			i_pos_1 = 878023, i_neg_1 = -992744;
-long		l_pos_1 = 22337203685477, l_neg_1 = -22337203685477;
-long long	ll_pos_1 = 22337203685477, ll_neg_1 = -22337203685477;
-long		lmax	= 9223372036854775807;
-long		lmin	= -9223372036854775807;
-long long llmax = 9223372036854775807;
-long		llmin = -9223372036854775807;
+static char 		ch_pos_1 = 100, ch_neg_1 = -87;
+static short		sh_pos_1 = 3047, sh_neg_1 = -8875;
+static int			i_pos_1 = 878023;
+static long		l_pos_1 = 22337203685477, l_neg_1 = -22337203685477;
+static long long	ll_pos_1 = 22337203685477, ll_neg_1 = -22337203685477;
+static long		lmax	= 9223372036854775807;
+static long		lmin	= -9223372036854775807;
+static long long llmax = 9223372036854775807;
+static long		llmin = -9223372036854775807;
 int		sint_size_hh_pos_casted(void){return test("%hhi", (char)45);}
 int		sint_size_hh_neg_casted(void){return test("%hhi", (char)-45);}
 int		sint_size_h_pos_casted(void){return test("%hi", (short)385);}
@@ -274,6 +274,8 @@ int		sint_size_hh_neg_ref(void){return test("%hhi", ch_neg_1);}
 int		sint_size_h_pos_ref(void){return test("%hi", sh_pos_1);}
 int		sint_size_h_neg_ref(void){return test("%hi", sh_neg_1);}
 int		sint_size_l_pos_ref(void){return test("%li", l_pos_1);}
+int		sint_size_l_pos_ref_lmax(void){return test("%li", lmax);}
+int		sint_size_ll_pos_ref_llmax(void){return test("%lli", llmax);}
 int		sint_size_l_neg_ref(void){return test("%li", l_neg_1);}
 int		sint_size_ll_pos_ref(void){return test("%lli", ll_pos_1);}
 int		sint_size_ll_neg_ref(void){return test("%lli", ll_neg_1);}
@@ -473,10 +475,11 @@ int		sint_hhmax_sp(void){return test("% hhi", 127);}
 int		sint_hhmin_sp(void){return test("% hhi", -128);}
 
 //Switching between string and signed integers of various sizes
-char	str_1[] = "hello world", str_2[] = "panda", str_3[] = "this is a longer string";
-char	str_empty[] = "";
+static char	str_1[] = "hello world", str_2[] = "panda", str_3[] = "this is a longer string";
+static char	str_empty[] = "";
 int		hhi_str_lli_str(void){return test("%hhi%s%lli%s", ch_pos_1, str_3, ll_neg_1, str_2);}
 int		str_hi_str_li(void){return test("%s%hi%s%li", str_1, sh_neg_1, str_3, l_neg_1);}
+int		str_hi_str_li_emptystr(void){return test("%s%hi%s%li", str_empty, sh_neg_1, str_3, l_neg_1);}
 
 //Unsigned integers - no modifers
 int		uint_basic_uint_pos(void){return test("this %u number", 17);}
@@ -562,13 +565,13 @@ int		uint_prec_width_nf_pos_lj_allsign_zpad(void){return test("%0+-8.3u", 8375);
 int		uint_prec_width_fn_pos_lj_allsign_zpad(void){return test("%0+-3.7u", 3267);}
 int		uint_prec_width_nn_pos_lj_allsign_zpad(void){return test("%0+-3.3u", 6983);}
 //Unsigned integers of varying size modifiers
-unsigned char 		uch_pos_1 = 100;
-unsigned short		ush_pos_1 = 3047;
-unsigned int		ui_pos_1 = 878023;
-unsigned long		ul_pos_1 = 22337203685477;
-unsigned long long	ull_pos_1 = 22337203685477;
-unsigned long long  ullmax = 9223372036854775807;
-unsigned long  		ulmax = 9223372036854775807;
+static unsigned char 		uch_pos_1 = 100;
+static unsigned short		ush_pos_1 = 3047;
+static unsigned int		ui_pos_1 = 878023;
+static unsigned long		ul_pos_1 = 22337203685477;
+static unsigned long long	ull_pos_1 = 22337203685477;
+static unsigned long long  ullmax = 9223372036854775807;
+static unsigned long  		ulmax = 9223372036854775807;
 int		uint_size_hh_pos_casted(void){return test("%hhu", (unsigned char)45);}
 int		uint_size_h_pos_casted(void){return test("%hu", (unsigned short)385);}
 int		uint_size_l_pos_casted(void){return test("%lu", (unsigned long)32);}
@@ -1033,19 +1036,18 @@ int		octl_size_n_ll_hh_af(void){return test("%#u%llu%hho", ui_pos_1, ull_pos_1, 
 int		octl_size_ll_n_l_af(void){return test("%#llu%u%lo", ull_pos_1, ui_pos_1, ul_pos_1);}
 
 //Pointers - Basic
-char	a01;
-unsigned char a02;
-short a03;
-unsigned short a04;
-int a05;
-unsigned int a06;
-long a07;
-unsigned long a08;
-long long a09;
-unsigned long long a10;
-char *a11;
-void *a12;
-t_ftpf_expandler a13;
+ extern  char	a01;
+ extern unsigned char a02;
+ extern short a03;
+ extern unsigned short a04;
+ extern int a05;
+ extern unsigned int a06;
+ extern long a07;
+ extern unsigned long a08;
+ extern long long a09;
+ extern unsigned long long a10;
+ extern char *a11;
+ extern void *a12;
 
 int		ptr_null(void){return test("%p", NULL);}
 
@@ -1097,20 +1099,6 @@ int		ptr_width_8_lj(void){return test("%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p%
 int		ptr_width_32_lj(void){return test("%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
 
 
-int		ptr_width_fit_zpad_lj(void){return test("%-070p%-070p%-070p%-070p%-070p%-070p%-070p%-070p%-070p%-070p%-070p%-070p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
-
-
-int		ptr_width_nofit_zpad_lj(void){return test("%-05p%-05p%-05p%-05p%-05p%-05p%-05p%-05p%-05p%-05p%-05p%-05p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
-
-
-int		ptr_width_16_zpad_lj(void){return test("%-016p%-016p%-016p%-016p%-016p%-016p%-016p%-016p%-016p%-016p%-016p%-016p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
-
-
-int		ptr_width_8_zpad_lj(void){return test("%-08p%-08p%-08p%-08p%-08p%-08p%-08p%-08p%-08p%-08p%-08p%-08p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
-
-
-int		ptr_width_32_zpad_lj(void){return test("%-032p%-032p%-032p%-032p%-032p%-032p%-032p%-032p%-032p%-032p%-032p%-032p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
-
 //Chars - Basic
 int		char_allprintable_combined(void){return test("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",' ','!','"','#','$','%','&','\'','(',')','*','+',',','-','.','/','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?','@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','[','\\',']','^','_','`','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','{','|','}','~','');}
 
@@ -1124,23 +1112,11 @@ int		char_1_31_width(void){return test("%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%
 
 int		char_128_255_width(void){return test("%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c%1c%2c%3c%4c",(char)128,(char)129,(char)130,(char)131,(char)132,(char)133,(char)134,(char)135,(char)136,(char)137,(char)138,(char)139,(char)140,(char)141,(char)142,(char)143,(char)144,(char)145,(char)146,(char)147,(char)148,(char)149,(char)150,(char)151,(char)152,(char)153,(char)154,(char)155,(char)156,(char)157,(char)158,(char)159,(char)160,(char)161,(char)162,(char)163,(char)164,(char)165,(char)166,(char)167,(char)168,(char)169,(char)170,(char)171,(char)172,(char)173,(char)174,(char)175,(char)176,(char)177,(char)178,(char)179,(char)180,(char)181,(char)182,(char)183,(char)184,(char)185,(char)186,(char)187,(char)188,(char)189,(char)190,(char)191,(char)192,(char)193,(char)194,(char)195,(char)196,(char)197,(char)198,(char)199,(char)200,(char)201,(char)202,(char)203,(char)204,(char)205,(char)206,(char)207,(char)208,(char)209,(char)210,(char)211,(char)212,(char)213,(char)214,(char)215,(char)216,(char)217,(char)218,(char)219,(char)220,(char)221,(char)222,(char)223,(char)224,(char)225,(char)226,(char)227,(char)228,(char)229,(char)230,(char)231,(char)232,(char)233,(char)234,(char)235,(char)236,(char)237,(char)238,(char)239,(char)240,(char)241,(char)242,(char)243,(char)244,(char)245,(char)246,(char)247,(char)248,(char)249,(char)250,(char)251,(char)252,(char)253,(char)254,(char)255);}
 
-int		char_allprintable_width_zpad(void){return test("%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c",' ','!','"','#','$','%','&','\'','(',')','*','+',',','-','.','/','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?','@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','[','\\',']','^','_','`','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','{','|','}','~','');}
-
-int		char_1_31_width_zpad(void){return test("%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c",(char)1,(char)2,(char)3,(char)4,(char)5,(char)6,(char)7,(char)8,(char)9,(char)10,(char)11,(char)12,(char)13,(char)14,(char)15,(char)16,(char)17,(char)18,(char)19,(char)20,(char)21,(char)22,(char)23,(char)24,(char)25,(char)26,(char)27,(char)28,(char)29,(char)30,(char)31);}
-
-int		char_128_255_width_zpad(void){return test("%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c%01c%02c%03c%04c",(char)128,(char)129,(char)130,(char)131,(char)132,(char)133,(char)134,(char)135,(char)136,(char)137,(char)138,(char)139,(char)140,(char)141,(char)142,(char)143,(char)144,(char)145,(char)146,(char)147,(char)148,(char)149,(char)150,(char)151,(char)152,(char)153,(char)154,(char)155,(char)156,(char)157,(char)158,(char)159,(char)160,(char)161,(char)162,(char)163,(char)164,(char)165,(char)166,(char)167,(char)168,(char)169,(char)170,(char)171,(char)172,(char)173,(char)174,(char)175,(char)176,(char)177,(char)178,(char)179,(char)180,(char)181,(char)182,(char)183,(char)184,(char)185,(char)186,(char)187,(char)188,(char)189,(char)190,(char)191,(char)192,(char)193,(char)194,(char)195,(char)196,(char)197,(char)198,(char)199,(char)200,(char)201,(char)202,(char)203,(char)204,(char)205,(char)206,(char)207,(char)208,(char)209,(char)210,(char)211,(char)212,(char)213,(char)214,(char)215,(char)216,(char)217,(char)218,(char)219,(char)220,(char)221,(char)222,(char)223,(char)224,(char)225,(char)226,(char)227,(char)228,(char)229,(char)230,(char)231,(char)232,(char)233,(char)234,(char)235,(char)236,(char)237,(char)238,(char)239,(char)240,(char)241,(char)242,(char)243,(char)244,(char)245,(char)246,(char)247,(char)248,(char)249,(char)250,(char)251,(char)252,(char)253,(char)254,(char)255);}
-
 int		char_allprintable_width_lj(void){return test("%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c",' ','!','"','#','$','%','&','\'','(',')','*','+',',','-','.','/','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?','@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','[','\\',']','^','_','`','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','{','|','}','~','');}
 
 int		char_1_31_width_lj(void){return test("%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c",(char)1,(char)2,(char)3,(char)4,(char)5,(char)6,(char)7,(char)8,(char)9,(char)10,(char)11,(char)12,(char)13,(char)14,(char)15,(char)16,(char)17,(char)18,(char)19,(char)20,(char)21,(char)22,(char)23,(char)24,(char)25,(char)26,(char)27,(char)28,(char)29,(char)30,(char)31);}
 
 int		char_128_255_width_lj(void){return test("%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c%-1c%-2c%-3c%-4c",(char)128,(char)129,(char)130,(char)131,(char)132,(char)133,(char)134,(char)135,(char)136,(char)137,(char)138,(char)139,(char)140,(char)141,(char)142,(char)143,(char)144,(char)145,(char)146,(char)147,(char)148,(char)149,(char)150,(char)151,(char)152,(char)153,(char)154,(char)155,(char)156,(char)157,(char)158,(char)159,(char)160,(char)161,(char)162,(char)163,(char)164,(char)165,(char)166,(char)167,(char)168,(char)169,(char)170,(char)171,(char)172,(char)173,(char)174,(char)175,(char)176,(char)177,(char)178,(char)179,(char)180,(char)181,(char)182,(char)183,(char)184,(char)185,(char)186,(char)187,(char)188,(char)189,(char)190,(char)191,(char)192,(char)193,(char)194,(char)195,(char)196,(char)197,(char)198,(char)199,(char)200,(char)201,(char)202,(char)203,(char)204,(char)205,(char)206,(char)207,(char)208,(char)209,(char)210,(char)211,(char)212,(char)213,(char)214,(char)215,(char)216,(char)217,(char)218,(char)219,(char)220,(char)221,(char)222,(char)223,(char)224,(char)225,(char)226,(char)227,(char)228,(char)229,(char)230,(char)231,(char)232,(char)233,(char)234,(char)235,(char)236,(char)237,(char)238,(char)239,(char)240,(char)241,(char)242,(char)243,(char)244,(char)245,(char)246,(char)247,(char)248,(char)249,(char)250,(char)251,(char)252,(char)253,(char)254,(char)255);}
-
-int		char_allprintable_width_zpad_lj(void){return test("%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c",' ','!','"','#','$','%','&','\'','(',')','*','+',',','-','.','/','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?','@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','[','\\',']','^','_','`','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','{','|','}','~','');}
-
-int		char_1_31_width_zpad_lj(void){return test("%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c",(char)1,(char)2,(char)3,(char)4,(char)5,(char)6,(char)7,(char)8,(char)9,(char)10,(char)11,(char)12,(char)13,(char)14,(char)15,(char)16,(char)17,(char)18,(char)19,(char)20,(char)21,(char)22,(char)23,(char)24,(char)25,(char)26,(char)27,(char)28,(char)29,(char)30,(char)31);}
-
-int		char_128_255_width_zpad_lj(void){return test("%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c%-01c%-02c%-03c%-04c",(char)128,(char)129,(char)130,(char)131,(char)132,(char)133,(char)134,(char)135,(char)136,(char)137,(char)138,(char)139,(char)140,(char)141,(char)142,(char)143,(char)144,(char)145,(char)146,(char)147,(char)148,(char)149,(char)150,(char)151,(char)152,(char)153,(char)154,(char)155,(char)156,(char)157,(char)158,(char)159,(char)160,(char)161,(char)162,(char)163,(char)164,(char)165,(char)166,(char)167,(char)168,(char)169,(char)170,(char)171,(char)172,(char)173,(char)174,(char)175,(char)176,(char)177,(char)178,(char)179,(char)180,(char)181,(char)182,(char)183,(char)184,(char)185,(char)186,(char)187,(char)188,(char)189,(char)190,(char)191,(char)192,(char)193,(char)194,(char)195,(char)196,(char)197,(char)198,(char)199,(char)200,(char)201,(char)202,(char)203,(char)204,(char)205,(char)206,(char)207,(char)208,(char)209,(char)210,(char)211,(char)212,(char)213,(char)214,(char)215,(char)216,(char)217,(char)218,(char)219,(char)220,(char)221,(char)222,(char)223,(char)224,(char)225,(char)226,(char)227,(char)228,(char)229,(char)230,(char)231,(char)232,(char)233,(char)234,(char)235,(char)236,(char)237,(char)238,(char)239,(char)240,(char)241,(char)242,(char)243,(char)244,(char)245,(char)246,(char)247,(char)248,(char)249,(char)250,(char)251,(char)252,(char)253,(char)254,(char)255);}
 
 int		char_nullterm_basic(void){return test("%c", '\0');}
 int		char_nullterm_5w(void){return test("%5c", '\0');}
@@ -1918,271 +1894,8 @@ int		fltl_pzero_6wzp(void){long double special; *((unsigned long *)(&special)) =
 	return test("%06Lf", special);}
 int		fltl_nzero_6wzp(void){long double special; *((unsigned long *)(&special)) = 0ull;FTPF_LDBL_BYTE5(special) = 0;
 	return test("%06Lf", special);}
-//Memory Expansion
 
-int		mem_4bytes_basic(void){
-	unsigned int num = 0x12345678;
-	char *str; ft_asprintf(&str, "%m", &num);
-	int ret = assert_str(str, "78563412");
-	free(str); return (ret);}
 
-int		mem_4bytes_prec3_10w(void){
-	unsigned int num = 0x12345678;
-	char *str; ft_asprintf(&str, "%10.3m", &num);
-	int ret = assert_str(str, "    785634");
-	free(str); return (ret);}
-
-int		mem_8bytes_l_sp(void){
-	unsigned long num = 0x123456789abcde67;
-	char *str; ft_asprintf(&str, "% lm", &num);
-	int ret = assert_str(str, "67de bc9a 7856 3412");
-	free(str); return (ret);}
-
-int		mem_str_basic(void){
-	char *s1 = "Hello, World!";
-	char *str; ft_asprintf(&str, "Crazy %.13m Train", s1);
-	int ret = assert_str(str, "Crazy 48656c6c6f2c20576f726c6421 Train");
-	free(str); return (ret);}
-
-int		mem_str_altform_15w_lj(void){
-	char *s1 = "Hello, World!";
-	char *str; ft_asprintf(&str, "%#-15.13mI am groot.", s1);
-	int ret = assert_str(str, "Hello, World!  I am groot.");
-	free(str); return (ret);}
-
-int		mem_str_altform_15w_lj_np(void){
-	char *s1 = "Hello,\nWorld!";
-	char *str; ft_asprintf(&str, "%#-15.13mI am groot.", s1);
-	int ret = assert_str(str, "Hello,.World!  I am groot.");
-	free(str); return (ret);}
-
-//Binary Expansion
-
-int		bin_4bytes_basic(void){
-	unsigned int num = 0x12345678;
-	char *str; ft_asprintf(&str, "%b", &num);
-	int ret = assert_str(str, "00010010001101000101011001111000");
-	free(str); return (ret);}
-
-int		bin_4bytes_prec3_27w(void){
-	unsigned int num = 0x12345678;
-	char *str; ft_asprintf(&str, "%27.3b", &num);
-	int ret = assert_str(str, "   001101000101011001111000");
-	free(str); return (ret);}
-
-int		bin_4bytes_prec3_27w_lj(void){
-	unsigned int num = 0x12345678;
-	char *str; ft_asprintf(&str, "%-27.3b", &num);
-	int ret = assert_str(str, "001101000101011001111000   ");
-	free(str); return (ret);}
-
-int		bin_8bytes_l_af(void){
-	unsigned long num = 0x1234567891234567;
-	char *str; ft_asprintf(&str, "%#lb", &num);
-	int ret = assert_str(str, "0001.0010.0011.0100.0101.0110.0111.1000.1001.0001.0010.0011.0100.0101.0110.0111");
-	free(str); return (ret);}
-
-/*
-//ftbi big integers
-
- int	ftbi_basic_pos(void) {
-	t_ftbi *bi = ftbi_new_str("463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello %Bi world", bi);
-	int ret = assert_str(str, "hello 463748564628465637395847 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_zero_pos(void) {
-	t_ftbi *bi = ftbi_new_llong(0);
-	char *str; ft_asprintf(&str, "hello %Bi world", bi);
-	int ret = assert_str(str, "hello 0 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_basic_neg(void) {
-	t_ftbi *bi = ftbi_new_str("-463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello %Bi world", bi);
-	int ret = assert_str(str, "hello -463748564628465637395847 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_width(void) {
-	t_ftbi *bi = ftbi_new_str("-463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello %30Bi world", bi);
-	int ret = assert_str(str, "hello      -463748564628465637395847 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_width_lj(void) {
-	t_ftbi *bi = ftbi_new_str("-463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello %-30Bi world", bi);
-	int ret = assert_str(str, "hello -463748564628465637395847      world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_width_zpad(void) {
-	t_ftbi *bi = ftbi_new_str("-463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello %30Bi world", bi);
-	int ret = assert_str(str, "hello -00000463748564628465637395847 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_allsign(void) {
-	t_ftbi *bi = ftbi_new_str("463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello %+Bi world", bi);
-	int ret = assert_str(str, "hello +463748564628465637395847 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_space(void) {
-	t_ftbi *bi = ftbi_new_str("463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello % Bi world", bi);
-	int ret = assert_str(str, "hello  463748564628465637395847 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
- int	ftbi_width_prec(void) {
-	t_ftbi *bi = ftbi_new_str("463748564628465637395847");
-	char *str; ft_asprintf(&str, "hello %32.27Bi world", bi);
-	int ret = assert_str(str, "hello      00463748564628465637395847 world");
-	ftbi_del(&bi); free(str); return (ret);}
-
-/ *
-** -----------------------------------------------------------------------------
-**                     ftbf : general construction and tostr
-** -----------------------------------------------------------------------------
-* /
-
- int ftbf_general_simple(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_str("15");
-	f->val->neg = 0;
-	f->special = FTBF_NORMAL;
-	f->exp = -1;
-	char *str; ft_asprintf(&str, "hello [%Bf] world");
-	int ret = assert_str(str, "hello [1.5] world");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_general_negexp(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_str("15");
-	f->val->neg = 0;
-	f->special = FTBF_NORMAL;
-	f->exp = -2;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "0.15");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_general_negexp_negative(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_str("15");
-	f->val->neg = 1;
-	f->special = FTBF_NORMAL;
-	f->exp = -2;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "-0.15");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_general_big(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_str("726387");
-	f->val->neg = 0;
-	f->special = FTBF_NORMAL;
-	f->exp = -3;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "726.387");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_general_small(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_str("72");
-	f->val->neg = 0;
-	f->special = FTBF_NORMAL;
-	f->exp = -5;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "0.00072");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_general_exp_gt_len(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_str("72");
-	f->val->neg = 0;
-	f->special = FTBF_NORMAL;
-	f->exp = 5;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "7200000");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_ultimate_1(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_str("72816506716406411350341341354035174746516506816746516516816841674313503540351651032035403581");
-	f->val->neg = 0;
-	f->special = FTBF_NORMAL;
-	f->exp = -70;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "7281650671640641135034.1341354035174746516506816746516516816841674313503540351651032035403581");
-	ftbf_del(&f); free(str); return (ret);}
-
-/ *
-** -----------------------------------------------------------------------------
-**                        ftbf : special values to string
-** -----------------------------------------------------------------------------
-* /
-
- int ftbf_posinf_tostr(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_llong(0);
-	f->val->neg = 0;
-	f->special = FTBF_POSINF;
-	f->exp = 0;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "inf");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_neginf_tostr(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_llong(0);
-	f->val->neg = 0;
-	f->special = FTBF_NEGINF;
-	f->exp = 0;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "-inf");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_nan_tostr(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_llong(0);
-	f->val->neg = 0;
-	f->special = FTBF_NAN;
-	f->exp = 0;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "nan");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_poszero_tostr(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_llong(0);
-	f->val->neg = 0;
-	f->special = FTBF_POSZERO;
-	f->exp = 0;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "0");
-	ftbf_del(&f); free(str); return (ret);}
-
- int ftbf_negzero_tostr(void)
-{
-	t_ftbf *f = (t_ftbf *)malloc(sizeof(t_ftbf));
-	f->val = ftbi_new_llong(0);
-	f->val->neg = 1;
-	f->special = FTBF_NEGZERO;
-	f->exp = 0;
-	char *str; ft_asprintf(&str, "%Bf", f);
-	int ret = assert_str(str, "-0");
-	ftbf_del(&f); free(str); return (ret);}
-*/
 //Arbitrary argument numbers
 
 int		argnum_simple_swap(void){return test("%2$s, %1$s!", "world", "hello");}
@@ -2198,16 +1911,16 @@ int		argnum_ultimate_3(void){return test("%% %4$.5s %.4i %lli %% %1$Lf %c %7$20.
 			5.75l, 'c', -17, "Atlanta, GA", 54, 9879879879879ll, "baby shark");}
 
 //Mix tests
-unsigned int		mx_u = 235;
-long double			mx_Lf = 0.375l;
-double				mx_f = 0.625;
-long				mx_li =  4223372036854775800;
-long long			mx_lli = 3223372036654775200;
-char				mx_c = 'G';
-short				mx_hi = -3244;
-char				mx_hhi = 'F';
-char			   *mx_s = "Hello, World!";
-int					mx_i = 42;
+ extern unsigned int		mx_u;
+ extern long double			mx_Lf;
+ extern double				mx_f;
+ extern long				mx_li;
+ extern long long			mx_lli;
+ extern char				mx_c;
+ extern short				mx_hi;
+ extern char				mx_hhi;
+ extern char			   *mx_s;
+ extern int					mx_i;
 
 int		mix_test_0(void){return test(
 			"  %hi    %u    %lli    %f    %li    %X  ",
@@ -2856,111 +2569,51 @@ int		mix_test_extra_10(void){return test(
 
 
 //No-crash-no-segfault test
-int		nocrash_noarg_1(void){char *str; ft_asprintf(&str, "%1$"); free(str); return (0);}
-int		nocrash_noarg_2(void){char *str; ft_asprintf(&str, "%0"); free(str); return (0);}
-int		nocrash_noarg_3(void){char *str; ft_asprintf(&str, "% "); free(str); return (0);}
-int		nocrash_noarg_4(void){char *str; ft_asprintf(&str, "%#"); free(str); return (0);}
-int		nocrash_noarg_5(void){char *str; ft_asprintf(&str, "%-"); free(str); return (0);}
-int		nocrash_noarg_6(void){char *str; ft_asprintf(&str, "%+"); free(str); return (0);}
-int		nocrash_noarg_9(void){char *str; ft_asprintf(&str, "%23"); free(str); return (0);}
-int		nocrash_noarg_10(void){char *str; ft_asprintf(&str, "%."); free(str); return (0);}
-int		nocrash_noarg_11(void){char *str; ft_asprintf(&str, "%hh"); free(str); return (0);}
-int		nocrash_noarg_12(void){char *str; ft_asprintf(&str, "%h"); free(str); return (0);}
-int		nocrash_noarg_13(void){char *str; ft_asprintf(&str, "%ll"); free(str); return (0);}
-int		nocrash_noarg_14(void){char *str; ft_asprintf(&str, "%l"); free(str); return (0);}
-int		nocrash_noarg_15(void){char *str; ft_asprintf(&str, "%L"); free(str); return (0);}
-int		nocrash_noarg_16(void){char *str; ft_asprintf(&str, "%p"); free(str); return (0);}
-int		nocrash_noarg_17(void){char *str; ft_asprintf(&str, "%d"); free(str); return (0);}
-int		nocrash_noarg_19(void){char *str; ft_asprintf(&str, "%u"); free(str); return (0);}
-int		nocrash_noarg_20(void){char *str; ft_asprintf(&str, "%x"); free(str); return (0);}
-int		nocrash_noarg_21(void){char *str; ft_asprintf(&str, "%X"); free(str); return (0);}
-int		nocrash_noarg_22(void){char *str; ft_asprintf(&str, "%f"); free(str); return (0);}
-int		nocrash_noarg_24(void){char *str; ft_asprintf(&str, "%c"); free(str); return (0);}
-int		nocrash_noarg_25(void){char *str; ft_asprintf(&str, "%o"); free(str); return (0);}
-int		nocrash_noarg_27(void){char *str; ft_asprintf(&str, "%{}"); free(str); return (0);}
+int		nocrash_noarg_1(void){return test("%1$"); }
+int		nocrash_noarg_2(void){return test("%0"); }
+int		nocrash_noarg_3(void){return test("% "); }
+int		nocrash_noarg_4(void){return test("%#"); }
+int		nocrash_noarg_5(void){return test("%-"); }
+int		nocrash_noarg_6(void){return test("%+"); }
+int		nocrash_noarg_9(void){return test("%23"); }
+int		nocrash_noarg_10(void){return test("%."); }
+int		nocrash_noarg_11(void){return test("%hh"); }
+int		nocrash_noarg_12(void){return test("%h"); }
+int		nocrash_noarg_13(void){return test("%ll"); }
+int		nocrash_noarg_14(void){return test("%l"); }
+int		nocrash_noarg_15(void){return test("%L"); }
+int		nocrash_noarg_16(void){return test("%p"); }
+int		nocrash_noarg_17(void){return test("%d"); }
+int		nocrash_noarg_19(void){return test("%u"); }
+int		nocrash_noarg_20(void){return test("%x"); }
+int		nocrash_noarg_21(void){return test("%X"); }
+int		nocrash_noarg_22(void){return test("%f"); }
+int		nocrash_noarg_24(void){return test("%c"); }
+int		nocrash_noarg_25(void){return test("%o"); }
 
-int		nocrash_nullarg_1(void){char *str; ft_asprintf(&str, "%1$s", NULL); free(str); return (0);}
-int		nocrash_nullarg_2(void){char *str; ft_asprintf(&str, "%0s", NULL); free(str); return (0);}
-int		nocrash_nullarg_3(void){char *str; ft_asprintf(&str, "% s", NULL); free(str); return (0);}
-int		nocrash_nullarg_4(void){char *str; ft_asprintf(&str, "%#s", NULL); free(str); return (0);}
-int		nocrash_nullarg_5(void){char *str; ft_asprintf(&str, "%-s", NULL); free(str); return (0);}
-int		nocrash_nullarg_6(void){char *str; ft_asprintf(&str, "%+s", NULL); free(str); return (0);}
-int		nocrash_nullarg_9(void){char *str; ft_asprintf(&str, "%23s", NULL); free(str); return (0);}
-int		nocrash_nullarg_10(void){char *str; ft_asprintf(&str, "%.s", NULL); free(str); return (0);}
-int		nocrash_nullarg_11(void){char *str; ft_asprintf(&str, "%hhs", NULL); free(str); return (0);}
-int		nocrash_nullarg_12(void){char *str; ft_asprintf(&str, "%hs", NULL); free(str); return (0);}
-int		nocrash_nullarg_13(void){char *str; ft_asprintf(&str, "%lls", NULL); free(str); return (0);}
-int		nocrash_nullarg_14(void){char *str; ft_asprintf(&str, "%ls", NULL); free(str); return (0);}
-int		nocrash_nullarg_15(void){char *str; ft_asprintf(&str, "%Ls", NULL); free(str); return (0);}
-int		nocrash_nullarg_16(void){char *str; ft_asprintf(&str, "%p", NULL); free(str); return (0);}
-int		nocrash_nullarg_17(void){char *str; ft_asprintf(&str, "%d", NULL); free(str); return (0);}
-int		nocrash_nullarg_18(void){char *str; ft_asprintf(&str, "%b", NULL); free(str); return (0);}
-int		nocrash_nullarg_19(void){char *str; ft_asprintf(&str, "%u", NULL); free(str); return (0);}
-int		nocrash_nullarg_20(void){char *str; ft_asprintf(&str, "%x", NULL); free(str); return (0);}
-int		nocrash_nullarg_21(void){char *str; ft_asprintf(&str, "%X", NULL); free(str); return (0);}
-int		nocrash_nullarg_22(void){char *str; ft_asprintf(&str, "%f", NULL); free(str); return (0);}
-int		nocrash_nullarg_23(void){char *str; ft_asprintf(&str, "%s", NULL); free(str); return (0);}
-int		nocrash_nullarg_24(void){char *str; ft_asprintf(&str, "%c", NULL); free(str); return (0);}
-int		nocrash_nullarg_25(void){char *str; ft_asprintf(&str, "%o", NULL); free(str); return (0);}
-int		nocrash_nullarg_26(void){char *str; ft_asprintf(&str, "%m", NULL); free(str); return (0);}
-int		nocrash_nullarg_27(void){char *str; ft_asprintf(&str, "%{}", NULL); free(str); return (0);}
-
-//Alternate API tests
-int		snprintf_buffwrite_simple(void)
-{
-	char	*str = ft_strdup("0123456789");
-	ft_snprintf(str + 2, 4, "abcd");
-	int ret = assert_str(str, "01abcd6789");
-	free(str); return (ret);
-}
-
-int		snprintf_buffwrite_trunc(void)
-{
-	char	*str = ft_strdup("0123456789");
-	ft_snprintf(str + 2, 2, "abcd");
-	int ret = assert_str(str, "01ab456789");
-	free(str); return (ret);
-}
-
-int		snprintf_buffwrite_trunc_expansion_s(void)
-{
-	char	*str = ft_strdup("0123456789");
-	ft_snprintf(str + 2, 2, "%s", "abcd");
-	int ret = assert_str(str, "01ab456789");
-	free(str); return (ret);
-}
-
-int		snprintf_buffwrite_trunc_expansion_f(void)
-{
-	char	*str = ft_strdup("0123456789");
-	ft_snprintf(str + 2, 3, "%f", 5.375);
-	int ret = assert_str(str, "015.356789");
-	free(str); return (ret);
-}
-
-int		sprintf_buffwrite_simple(void)
-{
-	char	*str = ft_strdup("0123456789");
-	ft_sprintf(str + 2, "abcd");
-	int ret = assert_str(str, "01abcd6789");
-	free(str); return (ret);
-}
-
-int		sprintf_buffwrite_expansion_s(void)
-{
-	char	*str = ft_strdup("0123456789");
-	ft_sprintf(str + 2, "%s", "abcd");
-	int ret = assert_str(str, "01abcd6789");
-	free(str); return (ret);
-}
-
-int		sprintf_buffwrite_expansion_f(void)
-{
-	char	*str = ft_strdup("0123456789");
-	ft_sprintf(str + 2, "%f", 5.375);
-	int ret = assert_str(str, "015.375000");
-	free(str); return (ret);
-}
+int		nocrash_nullarg_1(void){return test("%1$s", NULL); }
+int		nocrash_nullarg_2(void){return test("%0s", NULL); }
+int		nocrash_nullarg_3(void){return test("% s", NULL); }
+int		nocrash_nullarg_4(void){return test("%#s", NULL); }
+int		nocrash_nullarg_5(void){return test("%-s", NULL); }
+int		nocrash_nullarg_6(void){return test("%+s", NULL); }
+int		nocrash_nullarg_9(void){return test("%23s", NULL); }
+int		nocrash_nullarg_10(void){return test("%.s", NULL); }
+int		nocrash_nullarg_11(void){return test("%hhs", NULL); }
+int		nocrash_nullarg_12(void){return test("%hs", NULL); }
+int		nocrash_nullarg_13(void){return test("%lls", NULL); }
+int		nocrash_nullarg_14(void){return test("%ls", NULL); }
+int		nocrash_nullarg_15(void){return test("%Ls", NULL); }
+int		nocrash_nullarg_16(void){return test("%p", NULL); }
+int		nocrash_nullarg_17(void){return test("%d", NULL); }
+int		nocrash_nullarg_18(void){return test("%b", NULL); }
+int		nocrash_nullarg_19(void){return test("%u", NULL); }
+int		nocrash_nullarg_20(void){return test("%x", NULL); }
+int		nocrash_nullarg_21(void){return test("%X", NULL); }
+int		nocrash_nullarg_22(void){return test("%f", NULL); }
+int		nocrash_nullarg_23(void){return test("%s", NULL); }
+int		nocrash_nullarg_24(void){return test("%c", NULL); }
+int		nocrash_nullarg_25(void){return test("%o", NULL); }
 
 
 //Moulinette tests
