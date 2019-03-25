@@ -43,78 +43,78 @@ int		nullspec_5wzplj(void){return test("%-05");}
 int		nullspec_5wlj(void){return test("%-5");}
 
 //String specifiers - no modifiers
-int str_basic_string_expansion(void){return test("hello, %s.", "gavin");}
-int str_only_string_expansion(void){return test("%s", "testing testing");}
-int str_two_string_expansions(void){return test("%s%s", "hello", "world");}
-int str_two_string_expansions2(void){return test("..%s stuff %s", "a", "b");}
-int str_empty_string_expansion(void){return test("this %s is empty", "");}
-int str_full_then_empty_string(void){return test("this %s is %s", "hello", "");}
-int str_empty_then_full_string(void){return test("this %s is %s", "", "hello");}
-int str_three_strings(void){return test("%s%s%s", "1", "2", "3's a charm");}
+ int str_basic_string_expansion(void){return test("hello, %s.", "gavin");}
+ int str_only_string_expansion(void){return test("%s", "testing testing");}
+ int str_two_string_expansions(void){return test("%s%s", "hello", "world");}
+ int str_two_string_expansions2(void){return test("..%s stuff %s", "a", "b");}
+ int str_empty_string_expansion(void){return test("this %s is empty", "");}
+ int str_full_then_empty_string(void){return test("this %s is %s", "hello", "");}
+ int str_empty_then_full_string(void){return test("this %s is %s", "", "hello");}
+ int str_three_strings(void){return test("%s%s%s", "1", "2", "3's a charm");}
 //String specifiers with field_width, space- or zero-padded
-int str_space_padded_field_width(void){return test("%32s", "abc");}
-int str_space_padded_field_width2(void){return test("%16s", "nark nark");}
-int str_space_padded_over_field_width(void){return test("%5s", "goes over");}
-int str_zero_padded_field_width(void){return test("%021s", "abc");}
-int str_zero_padded_over_field_width(void){return test("%05s", "goes over");}
+ int str_space_padded_field_width(void){return test("%32s", "abc");}
+ int str_space_padded_field_width2(void){return test("%16s", "nark nark");}
+ int str_space_padded_over_field_width(void){return test("%5s", "goes over");}
+ int str_zero_padded_field_width(void){return test("%021s", "abc");}
+ int str_zero_padded_over_field_width(void){return test("%05s", "goes over");}
 //String specifiers with field_width, space- or zero-padded, left-justified
-int str_space_padded_field_width_lj(void){return test("%-32s", "abc");}
-int str_space_padded_field_width2_lj(void){return test("%-16s", "nark nark");}
-int str_space_padded_over_field_width_lj(void){return test("%-5s", "goes over");}
-int str_zero_padded_field_width_lj(void){return test("%-021s", "abc");}
-int str_zero_padded_over_field_width_lj(void){return test("%-05s", "goes over");}
+ int str_space_padded_field_width_lj(void){return test("%-32s", "abc");}
+ int str_space_padded_field_width2_lj(void){return test("%-16s", "nark nark");}
+ int str_space_padded_over_field_width_lj(void){return test("%-5s", "goes over");}
+ int str_zero_padded_field_width_lj(void){return test("%-021s", "abc");}
+ int str_zero_padded_over_field_width_lj(void){return test("%-05s", "goes over");}
 //String specifiers with precision
-int str_string_prec_notrunc(void){return test("%.7s", "hello");}
-int str_string_prec_trunc(void){return test("%.3s", "hello");}
-int str_string_prec_default(void){return test("%.s", "hello");}
-int str_string_prec_zero(void){return test("%.0s", "hello");}
-int str_two_strings_prec_2trunc(void){return test("%.3s%.2s", "holla", "bitch");}
-int str_two_strings_prec_1trunc_a(void){return test("%.2s%.7s", "hello", "world");}
-int str_two_strings_prec_1trunc_b(void){return test("%.7s%.2s", "hello", "world");}
-int str_two_strings_prec_0trunc(void){return test("%.5s%7s", "yo", "boi");}
+ int str_string_prec_notrunc(void){return test("%.7s", "hello");}
+ int str_string_prec_trunc(void){return test("%.3s", "hello");}
+ int str_string_prec_default(void){return test("%.s", "hello");}
+ int str_string_prec_zero(void){return test("%.0s", "hello");}
+ int str_two_strings_prec_2trunc(void){return test("%.3s%.2s", "holla", "bitch");}
+ int str_two_strings_prec_1trunc_a(void){return test("%.2s%.7s", "hello", "world");}
+ int str_two_strings_prec_1trunc_b(void){return test("%.7s%.2s", "hello", "world");}
+ int str_two_strings_prec_0trunc(void){return test("%.5s%7s", "yo", "boi");}
 //String specifiers with both precision and field width
-int str_string_prec_width_notrunc(void){return test("%7.5s", "yolo");}
-int str_string_prec_width_trunc(void){return test("%7.5s", "bombastic");}
-int str_string_prec_width_notrunc_lj(void){return test("%-7.5s", "yolo");}
-int str_string_prec_width_trunc_lj(void){return test("%-7.5s", "tubular");}
-int str_two_str_prec_width_2fit_0trunc(void){return test("%7.7s%7.7s", "hello", "world");}
-int str_two_str_prec_width_1fit_a_0trunc(void){return test("%3.7s%7.7s", "hello", "world");}
-int str_two_str_prec_width_1fit_b_0trunc(void){return test("%7.7s%3.7s", "hello", "world");}
-int str_two_str_prec_width_0fit_0trunc(void){return test("%3.7s%3.7s", "hello", "world");}
-int str_two_str_prec_width_2fit_1trunc_a(void){return test("%7.3s%7.7s", "hello", "world");}
-int str_two_str_prec_width_1fit_a_1trunc_a(void){return test("%3.3s%7.7s", "hello", "world");}
-int str_two_str_prec_width_1fit_b_1trunc_a(void){return test("%7.3s%3.7s", "hello", "world");}
-int str_two_str_prec_width_0fit_1trunc_a(void){return test("%3.3s%3.7s", "hello", "world");}
-int str_two_str_prec_width_2fit_1trunc_b(void){return test("%7.7s%7.3s", "hello", "world");}
-int str_two_str_prec_width_1fit_a_1trunc_b(void){return test("%3.7s%7.3s", "hello", "world");}
-int str_two_str_prec_width_1fit_b_1trunc_b(void){return test("%7.7s%3.3s", "hello", "world");}
-int str_two_str_prec_width_0fit_1trunc_b(void){return test("%3.7s%3.3s", "hello", "world");}
-int str_two_str_prec_width_2fit_2trunc(void){return test("%7.3s%7.3s", "hello", "world");}
-int str_two_str_prec_width_1fit_a_2trunc(void){return test("%3.3s%7.3s", "hello", "world");}
-int str_two_str_prec_width_1fit_b_2trunc(void){return test("%7.3s%3.3s", "hello", "world");}
-int str_two_str_prec_width_0fit_2trunc(void){return test("%3.3s%3.3s", "hello", "world");}
-int str_two_str_prec_width_2trunc(void){return test("%3s%3s", "hello", "world");}
+ int str_string_prec_width_notrunc(void){return test("%7.5s", "yolo");}
+ int str_string_prec_width_trunc(void){return test("%7.5s", "bombastic");}
+ int str_string_prec_width_notrunc_lj(void){return test("%-7.5s", "yolo");}
+ int str_string_prec_width_trunc_lj(void){return test("%-7.5s", "tubular");}
+ int str_two_str_prec_width_2fit_0trunc(void){return test("%7.7s%7.7s", "hello", "world");}
+ int str_two_str_prec_width_1fit_a_0trunc(void){return test("%3.7s%7.7s", "hello", "world");}
+ int str_two_str_prec_width_1fit_b_0trunc(void){return test("%7.7s%3.7s", "hello", "world");}
+ int str_two_str_prec_width_0fit_0trunc(void){return test("%3.7s%3.7s", "hello", "world");}
+ int str_two_str_prec_width_2fit_1trunc_a(void){return test("%7.3s%7.7s", "hello", "world");}
+ int str_two_str_prec_width_1fit_a_1trunc_a(void){return test("%3.3s%7.7s", "hello", "world");}
+ int str_two_str_prec_width_1fit_b_1trunc_a(void){return test("%7.3s%3.7s", "hello", "world");}
+ int str_two_str_prec_width_0fit_1trunc_a(void){return test("%3.3s%3.7s", "hello", "world");}
+ int str_two_str_prec_width_2fit_1trunc_b(void){return test("%7.7s%7.3s", "hello", "world");}
+ int str_two_str_prec_width_1fit_a_1trunc_b(void){return test("%3.7s%7.3s", "hello", "world");}
+ int str_two_str_prec_width_1fit_b_1trunc_b(void){return test("%7.7s%3.3s", "hello", "world");}
+ int str_two_str_prec_width_0fit_1trunc_b(void){return test("%3.7s%3.3s", "hello", "world");}
+ int str_two_str_prec_width_2fit_2trunc(void){return test("%7.3s%7.3s", "hello", "world");}
+ int str_two_str_prec_width_1fit_a_2trunc(void){return test("%3.3s%7.3s", "hello", "world");}
+ int str_two_str_prec_width_1fit_b_2trunc(void){return test("%7.3s%3.3s", "hello", "world");}
+ int str_two_str_prec_width_0fit_2trunc(void){return test("%3.3s%3.3s", "hello", "world");}
+ int str_two_str_prec_width_2trunc(void){return test("%3s%3s", "hello", "world");}
 //String specifiers, other tests
-int str_two_strings_lj_and_rj(void){return test("%-7s%5s", "hello", "world");}
-int str_two_strings_rj_and_lj(void){return test("%7s%-5s", "hello", "world");}
-int str_two_strings_zrjtrunc_and_ljtrunc(void){return test("%04.3s%-7.4s", "hello", "world");}
+ int str_two_strings_lj_and_rj(void){return test("%-7s%5s", "hello", "world");}
+ int str_two_strings_rj_and_lj(void){return test("%7s%-5s", "hello", "world");}
+ int str_two_strings_zrjtrunc_and_ljtrunc(void){return test("%04.3s%-7.4s", "hello", "world");}
 //String specifiers - NULL strings
-int str_null_basic_string_expansion(void){return test("hello, %s.", NULL);}
-int str_null_only_string_expansion(void){return test("%s", NULL);}
-int str_null_space_padded_field_width(void){return test("%32s", NULL);}
-int str_null_space_padded_over_field_width(void){return test("%2s", NULL);}
-int str_null_zero_padded_field_width(void){return test("%021s", NULL);}
-int str_null_zero_padded_over_field_width(void){return test("%02s", NULL);}
-int str_null_space_padded_field_width_lj(void){return test("%-32s", NULL);}
-int str_null_space_padded_field_width2_lj(void){return test("%-16s", NULL);}
-int str_null_space_padded_over_field_width_lj(void){return test("%-3s", NULL);}
-int str_null_zero_padded_field_width_lj(void){return test("%-021s", NULL);}
-int str_null_zero_padded_over_field_width_lj(void){return test("%-03s", NULL);}
+ int str_null_basic_string_expansion(void){return test("hello, %s.", NULL);}
+ int str_null_only_string_expansion(void){return test("%s", NULL);}
+ int str_null_space_padded_field_width(void){return test("%32s", NULL);}
+ int str_null_space_padded_over_field_width(void){return test("%2s", NULL);}
+ int str_null_zero_padded_field_width(void){return test("%021s", NULL);}
+ int str_null_zero_padded_over_field_width(void){return test("%02s", NULL);}
+ int str_null_space_padded_field_width_lj(void){return test("%-32s", NULL);}
+ int str_null_space_padded_field_width2_lj(void){return test("%-16s", NULL);}
+ int str_null_space_padded_over_field_width_lj(void){return test("%-3s", NULL);}
+ int str_null_zero_padded_field_width_lj(void){return test("%-021s", NULL);}
+ int str_null_zero_padded_over_field_width_lj(void){return test("%-03s", NULL);}
 //String specifiers with precision
-int str_null_string_prec_notrunc(void){return test("%.9s", "NULL");}
-int str_null_string_prec_trunc(void){return test("%.3s", "NULL");}
-int str_null_string_prec_default(void){return test("%.s", "NULL");}
-int str_null_string_prec_zero(void){return test("%.0s", "NULL");}
+ int str_null_string_prec_notrunc(void){return test("%.9s", "NULL");}
+ int str_null_string_prec_trunc(void){return test("%.3s", "NULL");}
+ int str_null_string_prec_default(void){return test("%.s", "NULL");}
+ int str_null_string_prec_zero(void){return test("%.0s", "NULL");}
 
 //Signed integers - no modifers
 int		sint_basic_sint_pos(void){return test("this %i number", 17);}
@@ -478,8 +478,8 @@ int		sint_hhmin_sp(void){return test("% hhi", -128);}
 static char	str_1[] = "hello world", str_2[] = "panda", str_3[] = "this is a longer string";
 static char	str_empty[] = "";
 int		hhi_str_lli_str(void){return test("%hhi%s%lli%s", ch_pos_1, str_3, ll_neg_1, str_2);}
-int		str_hi_str_li(void){return test("%s%hi%s%li", str_1, sh_neg_1, str_3, l_neg_1);}
-int		str_hi_str_li_emptystr(void){return test("%s%hi%s%li", str_empty, sh_neg_1, str_3, l_neg_1);}
+ int		str_hi_str_li(void){return test("%s%hi%s%li", str_1, sh_neg_1, str_3, l_neg_1);}
+ int		str_hi_str_li_emptystr(void){return test("%s%hi%s%li", str_empty, sh_neg_1, str_3, l_neg_1);}
 
 //Unsigned integers - no modifers
 int		uint_basic_uint_pos(void){return test("this %u number", 17);}
