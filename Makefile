@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/03/24 18:50:32 by gfielder         ###   ########.fr        #
+#    Updated: 2019/03/24 22:37:33 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ TEST_ONAME=test
 # Maximum size of output strings to see in the test results file
 TEST_FAIL_LOGGING_MAXBYTES=100
 
-# Specify where your Makefile is, and where libftprintf.a will be
+# Specify the root of your repo, where your Makefile is and where your libftprinf.a will be
 LIBFTPRINTF_DIR=..
 
 # The compile flags the tester is built with
@@ -45,8 +45,6 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D OUT_EXPECTED="\"$(TEST_OUT_EXPECTED)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
 			 -D MAX_FILE_COPY_SIZE=$(TEST_FAIL_LOGGING_MAXBYTES)
-
-all: $(TEST_ONAME)
 
 $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) test_index
 	@rm -f $(TEST_OUT_ACTUAL)
@@ -82,7 +80,7 @@ test_index: $(UNIT_TEST_FILE)
 	@echo "NULL" >> $(INDEXED_BENCH)
 	@echo "};" >> $(INDEXED_BENCH)
 	@echo "" >> $(INDEXED_BENCH)
-	@echo "\x1B[33mTest index and bench tests created. \x1B[1;36m$(shell cat $(UNIT_TEST_FILE) | grep -c "^int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") \x1B[0;33mout of $(shell cat $(UNIT_TEST_FILE) | grep -c "\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") tests are enabled.\x1B[0;0;0m"
+	@echo "\x1B[33mTest index and bench tests created. \x1B[1;36m$(shell cat $(UNIT_TEST_FILE) | grep -c "^int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") \x1B[0;33mout of $(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") tests are enabled.\x1B[0;0;0m"
 	@rm -f *.bak
 
 $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME):
