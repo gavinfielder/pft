@@ -1,7 +1,11 @@
 # PFT
 *aka Printftester2000*
 
-This is a unit test library and tester for ft\_printf. 
+This is a unit test library and tester for ft\_printf.  
+
+By default, it can check if your *completed* printf is pretty good or not pretty good.   
+
+It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name and category, and in general perform quick regression testing, and it's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible, so you can use it how you wish.  
 
 # Installation
 
@@ -28,7 +32,8 @@ There are four options:
 Here are some common prefixes that might be useful to run: str, sint, uint, hexl, hexu, octl, ptr, char, flt, mix, nocrash, moul.
 
 ```
-If the prefix stuff doesn't make sense, look at unit\_tests.c and then `./test nospec`. You should easily pass 3 tests, and have an idea of how to use this program. 
+If the prefix stuff doesn't make sense, look at unit\_tests.c and then `./test nospec`.
+You should easily pass 3 tests, and have an idea of how to use this program. 
 ```
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, what the expected output was, and what your output was. You can then find the test in unit\_tests.c to see what code was run that produced an error.  
@@ -50,10 +55,13 @@ I have provided scripts that make it easy to enable and disable tests by prefix.
 ```
 
 ```
-While you **can** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
+While you **can** call `./enable-test ""` to enable all tests, I do not recommend it.
+Some tests are disabled by default because if you have not implemented certain bonuses,
+your ft\_printf will segfault.   
 ```
 
-# How it works, for those who want knowledge and power (or maybe just want to use it to do something specific)
+# How it works
+### for those who want knowledge and power (or maybe just want to use it to do something specific)
 
 When you run make, the first thing that happens is the test index is created. Two copies of unit\_tests.c are created. In the copy unit\_tests\_indexed.c, the test() function is replaced with ft\_printf(). In the copy unit\_tests\_benched.c, the test() function is replaced with printf() and '\_bench' is added to all the function names. Next, in both files, an array of function pointers is created at the end of the file pointing to all the enabled unit tests.   An array will also be created holding the names of all the functions as string literals.  
 
@@ -63,11 +71,11 @@ run\_test() runs a particular test. The way the test works is that it redirects 
 
 # Troubleshooting, and Contributing
 
-If something goes wrong--slack me. gfielder. I'm serious--I want people to use this, so you telling me about difficulties you have with it can help me make it easier to use.
+If something goes wrong--slack me @gfielder. I want people to use this, so you telling me about difficulties you have with it can help me make it easier to use. It is part of my education to learn to manage user experience, so please, contribute to my education.  
 
-Same goes with contributing. Feel free to fork the repo and make pull requests. I'm interested in devops, so I'm motivated to get every little experience with managing collaborative repos. 
+Same goes with contributing. Feel free to fork the repo and make pull requests. I'm interested in devops, so I'm motivated to get every little experience with managing collaborative repos.   
 
-A big thing that needs to be done is simply just changing test names so that they're grouped better for using the prefix search. I wrote these tests as I was developing my printf and searching by prefix was an afterthought to all of it, so some of them are a little scattered.  
+A big thing that needs to be done is simply just changing test names so that they're grouped better for using the prefix search. I wrote these tests as I was developing my printf, and searching by prefix was an afterthought to all of it, so some of them are a little scattered.  
 
 Adding additional tests would be great as well.  
 
