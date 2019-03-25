@@ -91,21 +91,13 @@ run\_test() runs a particular test. The way the test works is that it redirects 
 
 There are some user options in the makefile, you can explore them yourself.
 
-# Known Issues
-
-Some tests may need to be deleted because they're actually undefined behavior. A good way to see this for yourself is edit the CFLAGS in the makefile and remove the -Wformat=0 option. I bet you'll see plenty of compiler warnings from unit\_tests\_benched.c. What that option does is turn off the 'printf checker' feature of the compiler that gives you warnings if you're not using printf in an expected way.
-
-All of the tests in there CAN actually work and printf does seem to have a defined behavior for them, which I know because they're the tests I used to develop mine. 
-
-But I'll work on this soon. Like, tomorrow, so this issue should be gone soon. 
-
 # Possible Future Features
 
 I have a few ideas how to improve this:
 
 - disable-test could be able to disable a numeric range of tests.
 - enable-test could have an option -o to enable only what is specified.
-- Add a more generalized unit test framework alongside the current one that gives you more control in coming up with unit testsl
+- Could add a more generalized unit test framework alongside the current one that gives you more control in coming up with unit tests
 - Could add tests for the thousands separator optional format flag.
 - Could add tests for the `n` specifier.
 

@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/03/24 22:37:33 by gfielder         ###   ########.fr        #
+#    Updated: 2019/03/25 10:55:40 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D OUT_EXPECTED="\"$(TEST_OUT_EXPECTED)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
 			 -D MAX_FILE_COPY_SIZE=$(TEST_FAIL_LOGGING_MAXBYTES)
+
+all: $(TEST_ONAME)
 
 $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) test_index
 	@rm -f $(TEST_OUT_ACTUAL)
