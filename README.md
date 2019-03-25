@@ -1,5 +1,5 @@
 # PFT
-<img align="right"  src="https://i.imgur.com/yngNuS4.png" width="45%" />
+<img align="right"  src="https://i.imgur.com/yngNuS4.png" width="50%" />
 *aka Printftester2000*
 
 This is a unit test library and tester for ft\_printf.  
