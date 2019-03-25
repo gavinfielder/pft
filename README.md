@@ -36,6 +36,7 @@ s, i, d, u, x, X, o, p, c, f, f\_L, mix, nocrash, moul
 If the prefix stuff doesn't make sense, look at unit_tests.c and then run ./test nospec
 You should easily pass 3 tests, and have an idea of how to use this program. 
 ```
+Note: tests with prefix `nocrash_` are specifically handled by the tester--instead of benching against printf, they just return automatic pass (assuming, of course, ft\_printf doesn't crash). They are disabled by default (see below for how to enable); I also encourage you to write your own nocrash\_ tests.
 
 ## Workflow with PFT
 
