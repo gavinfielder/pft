@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/24 15:45:12 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:05:42 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef int					(*printf_func) (const char *, ...);
 extern const t_unit_test	g_unit_tests[];
 extern const char 			*g_unit_test_names[];
 extern const t_unit_test	g_bench[];
+extern const char			*g_unit_test_first_lines[];
 
 int							ft_printf(const char *, ...);
 

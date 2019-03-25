@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/24 16:23:23 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/25 13:08:53 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,12 @@ void	log_failed_test(int test_number, int expected, int actual)
 	//Write to test results file
 	snprintf(buff, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_test_names[test_number]);
 	write(fout, buff, strlen(buff));
-	snprintf(buff, MAX_FILE_COPY_SIZE, "    Returned expected %i, actual %i\n", expected, actual);
+	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s", g_unit_test_first_lines[test_number]);
 	write(fout, buff, strlen(buff));
+	write(fout, "\n", 1);
+	snprintf(buff, MAX_FILE_COPY_SIZE, "    Returned expected %i, actual %i", expected, actual);
+	write(fout, buff, strlen(buff));
+	write(fout, "\n", 1);
 	snprintf(buff, MAX_FILE_COPY_SIZE, "      expected : \"");
 	write(fout, buff, strlen(buff));
 	int bytes = read(finlibc, buff, MAX_FILE_COPY_SIZE);

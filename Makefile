@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/03/25 10:55:40 by gfielder         ###   ########.fr        #
+#    Updated: 2019/03/25 14:44:55 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@
 TEST_ONAME=test
 
 # Maximum size of output strings to see in the test results file
-TEST_FAIL_LOGGING_MAXBYTES=100
+TEST_FAIL_LOGGING_MAXBYTES=150
 
 # Specify the root of your repo, where your Makefile is and where your libftprinf.a will be
 LIBFTPRINTF_DIR=..
@@ -71,6 +71,10 @@ test_index: $(UNIT_TEST_FILE)
 	@echo "" >> $(INDEXED_TESTS)
 	@echo "const char *g_unit_test_names[] = {" >> $(INDEXED_TESTS)
 	@cat $(UNIT_TEST_FILE) | grep -o "^int\s*[a-zA-Z0-9_]*(void)" | sed "s/^int\s*/\"/g    " | sed "s/(void)/\",/g" | tr -d " \t\v\f" >> $(INDEXED_TESTS)
+	@echo "NULL" >> $(INDEXED_TESTS)
+	@echo "};" >> $(INDEXED_TESTS)
+	@echo "const char *g_unit_test_first_lines[] = {" >> $(INDEXED_TESTS)
+	@cat $(UNIT_TEST_FILE) | grep "^int\s*[a-zA-Z0-9_]*(void)" | sed "s/int\s*.*(void){//g" | sed "s/}//g" | sed "s/\"/\\\\\"/g" | sed "s/\\\\\\\\\"/\\\\\"/g" | sed "s/\(.*\)/\"\1\",/g" >> $(INDEXED_TESTS)
 	@echo "NULL" >> $(INDEXED_TESTS)
 	@echo "};" >> $(INDEXED_TESTS)
 	@echo "\x1B[33mTests indexed. Creating bench tests..."

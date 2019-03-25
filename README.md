@@ -76,7 +76,8 @@ Adding additional tests would be great as well.
 Before making pull requests, please:
 
 ```bash
-./enable-test "" && ./disable-test argnum && ./disable-test moul_notmandatory && ./disable-test nocrash
+./enable-test "" && ./disable-test argnum && ./disable-test moul_notmandatory \
+&& ./disable-test nocrash && ./disable-test moul_D && ./disable-test moul_F
 ```
 *and if you add tests that can segfault in any way, modify this block in the readme*
 
