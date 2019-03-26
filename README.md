@@ -9,6 +9,12 @@ By default, it can check if your *completed* printf is pretty good or not pretty
 
 It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name and category, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible, so you can use it how you wish.  
 
+## Requirements
+
+You have to have a Makefile in your project directory that will compile libftprintf.a as the default make option, and your libftprintf.a has to have ft\_printf inside.
+
+Other than this, it should be completely general to all ft\_printf projects.  
+
 # Installation
 
 In the root of your repo, run this command:
