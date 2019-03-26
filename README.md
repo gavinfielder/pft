@@ -45,10 +45,9 @@ Note: tests with prefix `nocrash_` are specifically handled by the tester--inste
 
 ## Workflow with PFT
 
-- unit\_tests.c shows you all the tests that are available.  
-- Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
-- You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake.   
+unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
 
+You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake.   
 ## Enabling and Disabling tests
 
 I have provided scripts that make it easy to enable and disable tests by a search pattern. Example:
