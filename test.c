@@ -6,11 +6,12 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/25 21:34:24 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/26 00:23:29 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
+
 
 /* ----------------------------------------------------------------------------
 ** Put any variables that are needed as singular references (e.g., for testing
@@ -69,10 +70,12 @@ static int	output_to_file(char *filename, t_unit_test f)
 /* ----------------------------------------------------------------------------
 ** Logs a failed test to the test results file
 ** --------------------------------------------------------------------------*/
-void	log_failed_test(int test_number, int expected, int actual)
+void	log_failed_test(int test_number, int expected, int actual,
+		char *signal_terminated)
 {
 	char	buff[MAX_FILE_COPY_SIZE + 1];
 	buff[MAX_FILE_COPY_SIZE] = '\0';
+	int bytes;
 
 	//Open files
 	int finmine = open(OUT_ACTUAL, O_RDONLY);
@@ -89,23 +92,67 @@ void	log_failed_test(int test_number, int expected, int actual)
 	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s", g_unit_test_first_lines[test_number]);
 	write(fout, buff, strlen(buff));
 	write(fout, "\n", 1);
-	snprintf(buff, MAX_FILE_COPY_SIZE, "    Returned expected %i, actual %i", expected, actual);
-	write(fout, buff, strlen(buff));
-	write(fout, "\n", 1);
-	snprintf(buff, MAX_FILE_COPY_SIZE, "      expected : \"");
-	write(fout, buff, strlen(buff));
-	int bytes = read(finlibc, buff, MAX_FILE_COPY_SIZE);
-	if (bytes > 0) write(fout, buff, bytes);
-	snprintf(buff, MAX_FILE_COPY_SIZE, "\"\n      actual   : \"");
-	write(fout, buff, strlen(buff));
-	bytes = read(finmine, buff, MAX_FILE_COPY_SIZE);
-	if (bytes > 0) write(fout, buff, bytes);
-	write(fout, "\"\n", 2);
-
+	if (!signal_terminated)
+	{
+		snprintf(buff, MAX_FILE_COPY_SIZE, "    Returned expected %i, actual %i", expected, actual);
+		write(fout, buff, strlen(buff));
+		write(fout, "\n", 1);
+		snprintf(buff, MAX_FILE_COPY_SIZE, "      expected : \"");
+		write(fout, buff, strlen(buff));
+		bytes = read(finlibc, buff, MAX_FILE_COPY_SIZE);
+		if (bytes > 0) write(fout, buff, bytes);
+		snprintf(buff, MAX_FILE_COPY_SIZE, "\"\n      actual   : \"");
+		write(fout, buff, strlen(buff));
+		bytes = read(finmine, buff, MAX_FILE_COPY_SIZE);
+		if (bytes > 0) write(fout, buff, bytes);
+		write(fout, "\"\n", 2);
+	}
+	else
+	{
+		write(fout, "    ", 4);
+		write(fout, signal_terminated, strlen(signal_terminated));
+	}
 	//close files)
 	close(finlibc);
 	close(finmine);
 	close(fout);
+}
+
+/* ----------------------------------------------------------------------------
+** Signal Handlers for segfault, bus error, etc.
+** --------------------------------------------------------------------------*/
+static void failsafe_recover(void)
+{
+	//Go to the next test
+	failsafe_args_recover->current++;
+	failsafe_args_recover->num_fails++;
+	failsafe_args_recover->num_run++;
+	//Cleanup stdout
+	fflush(stdout);
+	fflush(stderr);
+	//Recover stdout from the args failsafe
+	dup2(failsafe_args_recover->fd_stdout_dup, fileno(stdout));
+}
+static void	handle_sigsegv(int sigval)
+{
+	(void)sigval;
+	failsafe_recover();
+	printf(FAULT "SEGFAULT" RESET "]\n");
+	failsafe_args_recover->run(failsafe_args_recover);
+}
+static void	handle_sigbus(int sigval)
+{
+	(void)sigval;
+	failsafe_recover();
+	printf(FAULT "BUSERROR" RESET "]\n");
+	failsafe_args_recover->run(failsafe_args_recover);
+}
+static void handle_sigabrt(int sigval)
+{
+	(void)sigval;
+	failsafe_recover();
+	printf(FAULT "SIGABRT" RESET "]\n");
+	failsafe_args_recover->run(failsafe_args_recover);
 }
 
 /* ----------------------------------------------------------------------------
@@ -118,6 +165,10 @@ static int		run_test(int test_number)
 	int				failed = 0;
 	FILE			*fpmine, *fplibc;
 	int				cmine, clibc;
+
+	signal(SIGSEGV, handle_sigsegv);
+	signal(SIGBUS, handle_sigbus);
+	signal(SIGABRT, handle_sigabrt);
 
 	printf("Test %4i:  %-42s [",test_number, g_unit_test_names[test_number]);
 
@@ -156,7 +207,7 @@ static int		run_test(int test_number)
 
 	if (failed)
 	{
-		log_failed_test(test_number, ret_val_libc, ret_val_mine);
+		log_failed_test(test_number, ret_val_libc, ret_val_mine, NULL);
 		printf(RED "FAIL" RESET);
 	}
 	else
@@ -225,57 +276,48 @@ static int	ft_match(const char *s1, char *s2)
 /* ----------------------------------------------------------------------------
 ** Runs all the tests that match the search pattern
 ** --------------------------------------------------------------------------*/
-void	run_search_tests(char *str)
+void	run_search_tests(t_unit_tester_args *args)
 {
 	int fail = 0;
-	int num_fails = 0;
-	int	num_run = 0;
 	
-	//Append a * onto str so we don't have to modify the piscine's ft_match
-	size_t len = strlen(str) + 2;
+	//Append a * onto pattern so we don't have to modify the piscine's ft_match
+	size_t len = strlen(args->pattern) + 2;
 	char *pattern = (char *)malloc(len);
 	pattern[len - 1] = '\0';
 	for (size_t i = 0; i < len - 2; i++)
-		pattern[i] = str[i];
+		pattern[i] = args->pattern[i];
 	pattern[len - 2] = '*';
 
 	//Search tests
-	for (int i = 0; g_unit_tests[i] != NULL; i++)
+	while (g_unit_tests[args->current] != NULL)
 	{
-		if (ft_match(g_unit_test_names[i], pattern))
+		if (ft_match(g_unit_test_names[args->current], pattern))
 		{
-			fail = run_test(i);
-			num_fails += fail;
-			num_run++;
+			fail = run_test(args->current);
+			args->num_fails += fail;
+			args->num_run++;
 		}
+		args->current++;
 	}
-	print_end_test_message(num_run, num_run - num_fails);
+	print_end_test_message(args->num_run, args->num_run - args->num_fails);
 	free(pattern);
+	exit(0); //needed in case a test segfaulted
 }
 
 /* ----------------------------------------------------------------------------
 ** Runs a range of tests
 ** --------------------------------------------------------------------------*/
-void	run_test_range(int from_num, int to_num)
+void	run_test_range(t_unit_tester_args *args)
 {
-	if (to_num < from_num) to_num = 2147483647;
-	int fail = 0;
-	int num_fails = 0;
-	int	num_run = 0;
-	for (int i = from_num; i <= to_num && g_unit_tests[i] != NULL; i++)
+	int	fail = 0;
+
+	while (args->current <= args->to && g_unit_tests[args->current] != NULL)
 	{
-		fail = run_test(i);
-		num_fails += fail;
-		num_run++;
+		fail = run_test(args->current);
+		args->num_fails += fail;
+		args->num_run++;
+		args->current++;
 	}
-	print_end_test_message(num_run, num_run - num_fails);
+	print_end_test_message(args->num_run, args->num_run - args->num_fails);
+	exit(0); //needed in case a test segfaulted
 }
-
-/* ----------------------------------------------------------------------------
-** Runs all the tests
-** --------------------------------------------------------------------------*/
-void	run_all_tests(void)
-{
-	run_test_range(0, -1);
-}
-
