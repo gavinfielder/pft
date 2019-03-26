@@ -115,4 +115,4 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 
 # Credits
 
-All code was written by me. All the tests were written by me, except the ones prefixed moul\_. The moulinette files I got a hold of (which are now outdated since the printf subject change) had 'ly' as the author in the header.
+Some code was adapted from moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, and all other tests (so far) were written by me.
