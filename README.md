@@ -70,7 +70,7 @@ Wildcard search:
  ./enable-test "s_*prec"        # Enables all tests that start with 's_' and have a 'prec' in the name
 ```
 
-While you ***can*** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
+While you ***can*** call `./enable-test ""` to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
 
 # Troubleshooting
 
