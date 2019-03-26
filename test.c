@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/25 16:38:07 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/25 21:34:24 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,10 +234,10 @@ void	run_search_tests(char *str)
 	//Append a * onto str so we don't have to modify the piscine's ft_match
 	size_t len = strlen(str) + 2;
 	char *pattern = (char *)malloc(len);
-	pattern[len] = '\0';
-	for (size_t i = 0; i < len; i++)
+	pattern[len - 1] = '\0';
+	for (size_t i = 0; i < len - 2; i++)
 		pattern[i] = str[i];
-	pattern[len - 1] = '*';
+	pattern[len - 2] = '*';
 
 	//Search tests
 	for (int i = 0; g_unit_tests[i] != NULL; i++)
