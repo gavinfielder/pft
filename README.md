@@ -47,11 +47,7 @@ Note: tests with prefix `nocrash_` are specifically handled by the tester--inste
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed. 
 
-```
-vim trick: In the command line, type `/test-name` and hit enter. This takes you to a particular test.
-```
-
-You can add your own tests to this unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake.   
+You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake.   
 
 ## Enabling and Disabling tests
 
@@ -64,9 +60,9 @@ Simple prefix-based search:
  ./disable-test "" && ./enable-test s     # Disables all tests except tests that start with 's'
 
 Wildcard search:
- ./disable-test "*zeropad"        # Disables all the tests that have 'zeropad' anywhere in the name
- ./enable-test "*_null_*_prec_"   # Enables all the tests that have a '_null_' followed by a '_prec_'
- ./enable-test "s_*prec"          # Enables all tests that start with 's_' and have a 'prec' in the name
+ ./disable-test "*zeropad"      # Disables all the tests that have 'zeropad' anywhere in the name
+ ./enable-test "*null*prec"     # Enables all the tests that have a 'null' followed by a 'prec'
+ ./enable-test "s_*prec"        # Enables all tests that start with 's_' and have a 'prec' in the name
 ```
 
 While you ***can*** call `./enable-test ""` to enable all tests, I do not recommend it. Some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.   
