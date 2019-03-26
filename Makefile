@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/03/26 00:31:15 by gfielder         ###   ########.fr        #
+#    Updated: 2019/03/26 00:33:51 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) test_index
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
 	@$(CC) $(CFLAGS) $(INC) $(LIB) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS) $(INDEXED_BENCH)
-	@echo "\x1B[0;32mSuccessfully made printftester2000. Directions:\x1B[0;0m\n    ./test [from] [[to]]   for a range of tests by number,\n    ./test [string]        to run all tests starting with [string],\n    ./test "[str*ing]"       (you can use * as wildcards if it's in double quotes),\n    ./test                 to run all tests."
+	@echo "\x1B[0;32mSuccessfully made printftester2000. Directions:\x1B[0;0m\n    ./test [from] [[to]]   for a range of tests by number,\n    ./test [string]        to run all tests starting with [string],\n    ./test \"[str*ing]\"     (you can use * as wildcards if it's in double quotes),\n    ./test                 to run all tests."
 
 $(INDEXED_TESTS): test_index
 
