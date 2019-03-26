@@ -85,7 +85,7 @@ Before making pull requests, please:
 ./enable-test "" && ./disable-test argnum && ./disable-test moul_notmandatory \
 && ./disable-test nocrash && ./disable-test moul_D && ./disable-test moul_F
 ```
-*and if you add tests that can segfault in any way, modify this block in the readme*
+*and if you add non-mandatory test cases or tests that can segfault, modify this block in the readme*
 
 # How it works
 ### ...for those who want knowledge and power (or maybe just want to use it to do something specific)
