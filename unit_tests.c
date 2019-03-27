@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/27 13:10:34 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/27 13:56:30 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int s_null_string_prec_notrunc(void){return test("%.9s", "NULL");}
 int s_null_string_prec_trunc(void){return test("%.3s", "NULL");}
 int s_null_string_prec_default(void){return test("%.s", "NULL");}
 int s_null_string_prec_zero(void){return test("%.0s", "NULL");}
+
 
 //Signed integers - no modifers
 int		i_basic_i_pos(void){return test("this %i number", 17);}
