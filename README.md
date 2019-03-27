@@ -115,4 +115,4 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 
 # Credits
 
-Some code was adapted from moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, and all other tests (so far) were written by me.
+Some code was adapted from moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.

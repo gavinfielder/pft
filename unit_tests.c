@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/25 14:39:56 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/03/27 13:10:34 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -479,6 +479,24 @@ int		i_hmax_sp(void){return test("% hi", 32767);}
 int		i_hmin_sp(void){return test("% hi", -32768);}
 int		i_hhmax_sp(void){return test("% hhi", 127);}
 int		i_hhmin_sp(void){return test("% hhi", -128);}
+ //Signed integers - zero precision zero value
+int i_prec0val0_basic(void){return test("%.0i", 0);}
+int i_prec0val0_implicit(void){return test("%.i", 0);}
+int i_prec0val0_w(void){return test("%5.0i", 0);}
+int i_prec0val0_w_impl(void){return test("%5.i", 0);}
+int i_prec0val0_wlj(void){return test("%-5.0i", 0);}
+int i_prec0val0_wlj_impl(void){return test("%-5.i", 0);}
+int i_prec0val0_as(void){return test("%+.0i", 0);}
+int i_prec0val0_as_impl(void){return test("%+.i", 0);}
+int i_prec0val0_was(void){return test("%+5.0i", 0);}
+int i_prec0val0_was_impl(void){return test("%+5.i", 0);}
+int i_prec0val0_waslj(void){return test("%+-5.0i", 0);}
+int i_prec0val0_waslj_impl(void){return test("%+-5.i", 0);}
+//Signed integers - some out of range h, hh tests from filechecker
+int i_ftfc_hhdoutofrange1(void){return test("%hhi", -129);}
+int i_ftfc_hhdoutofrange2(void){return test("%hhi", 128);}
+int i_ftfc_hdoutofrange1(void){return test("%hi", 32768);}
+int i_ftfc_hdoutofrange2(void){return test("%hi", -32769);}
 
 //Signed integers (d)
 int d_basic_d_onlypos(void){return test("%d", 3);}
@@ -640,6 +658,11 @@ int d_hmax(void){return test("%hd", 32767);}
 int d_hmin(void){return test("%hd", -32768);}
 int d_hhmax(void){return test("%hhd", 127);}
 int d_hhmin(void){return test("%hhd", -128);}
+//Signed integers (d) - Some out of range size mod tests from Filechecker
+int d_ftfc_hhdoutofrange1(void){return test("%hhd", -129);}
+int d_ftfc_hhdoutofrange2(void){return test("%hhd", 128);}
+int d_ftfc_hdoutofrange1(void){return test("%hd", 32768);}
+int d_ftfc_hdoutofrange2(void){return test("%hd", -32769);}
 
 //Signed integers (d) of varying size modifiers with some other modifiers
 int d_size_l_pos_big_zpad(void){return test("%037ld", 22337203685477);}
@@ -822,6 +845,20 @@ int d_hmax_sp(void){return test("% hd", 32767);}
 int d_hmin_sp(void){return test("% hd", -32768);}
 int d_hhmax_sp(void){return test("% hhd", 127);}
 int d_hhmin_sp(void){return test("% hhd", -128);}
+ //Signed integers (d) - zero precision zero value
+int d_prec0val0_basic(void){return test("%.0d", 0);}
+int d_prec0val0_implicit(void){return test("%.d", 0);}
+int d_prec0val0_w(void){return test("%5.0d", 0);}
+int d_prec0val0_w_impl(void){return test("%5.d", 0);}
+int d_prec0val0_wlj(void){return test("%-5.0d", 0);}
+int d_prec0val0_wlj_impl(void){return test("%-5.d", 0);}
+int d_prec0val0_as(void){return test("%+.0d", 0);}
+int d_prec0val0_as_impl(void){return test("%+.d", 0);}
+int d_prec0val0_was(void){return test("%+5.0d", 0);}
+int d_prec0val0_was_impl(void){return test("%+5.d", 0);}
+int d_prec0val0_waslj(void){return test("%+-5.0d", 0);}
+int d_prec0val0_waslj_impl(void){return test("%+-5.d", 0);}
+
 
 //Switching between string and signed integers of various sizes
 static char	str_1[] = "hello world", str_2[] = "panda", str_3[] = "this is a longer string";
@@ -908,6 +945,13 @@ int u_size_h_l_hh(void){return test("%hu%lu%hhu", ush_pos_1, ul_pos_1, uch_pos_1
 int u_size_l_hh_h(void){return test("%lu%hhu%hu", ul_pos_1, uch_pos_1, ush_pos_1);}
 int u_size_n_ll_hh(void){return test("%u%llu%hhu", ui_pos_1, ull_pos_1, uch_pos_1);}
 int u_size_ll_n_l(void){return test("%llu%u%lu", ull_pos_1, ui_pos_1, ul_pos_1);}
+//Unsigned integers - zero precision zero value
+int u_prec0val0_basic(void){return test("%.0u", 0);}
+int u_prec0val0_implicit(void){return test("%.u", 0);}
+int u_prec0val0_w(void){return test("%5.0u", 0);}
+int u_prec0val0_w_impl(void){return test("%5.u", 0);}
+int u_prec0val0_wlj(void){return test("%-5.0u", 0);}
+int u_prec0val0_wlj_impl(void){return test("%-5.u", 0);}
 
 //Switching between string and unsigned integers of various sizes
 int		mix_hhu_str_llu_str(void){return test("%hhu%s%llu%s", uch_pos_1, str_3, ull_pos_1, str_2);}
@@ -1060,6 +1104,20 @@ int x_size_h_l_hh_af(void){return test("%hu%#lx%hhx", ush_pos_1, ul_pos_1, uch_p
 int x_size_l_hh_h_af(void){return test("%lu%hhu%#hx", ul_pos_1, uch_pos_1, ush_pos_1);}
 int x_size_n_ll_hh_af(void){return test("%#x%llu%hhx", ui_pos_1, ull_pos_1, uch_pos_1);}
 int x_size_ll_n_l_af(void){return test("%llu%u%#lx", ull_pos_1, ui_pos_1, ul_pos_1);}
+ //Hexadecimal lower - zero precision zero value
+int x_prec0val0_basic(void){return test("%.0x", 0);}
+int x_prec0val0_implicit(void){return test("%.x", 0);}
+int x_prec0val0_w(void){return test("%5.0x", 0);}
+int x_prec0val0_w_impl(void){return test("%5.x", 0);}
+int x_prec0val0_wlj(void){return test("%-5.0x", 0);}
+int x_prec0val0_wlj_impl(void){return test("%-5.x", 0);}
+int x_prec0val0_af(void){return test("%#.0x", 0);}
+int x_prec0val0_af_impl(void){return test("%#.x", 0);}
+int x_prec0val0_waf(void){return test("%#5.0x", 0);}
+int x_prec0val0_waf_impl(void){return test("%#5.x", 0);}
+int x_prec0val0_waflj(void){return test("%#-5.0x", 0);}
+int x_prec0val0_waflj_impl(void){return test("%#-5.x", 0);}
+
 
 //Hexadecimal uppers - no modifers
 int X_basic_hexu_pos(void){return test("this %X number", 17);}
@@ -1203,6 +1261,20 @@ int X_size_h_l_hh_af(void){return test("%#hx%lu%#hhX", ush_pos_1, ul_pos_1, uch_
 int X_size_l_hh_h_af(void){return test("%lu%hhu%#hX", ul_pos_1, uch_pos_1, ush_pos_1);}
 int X_size_n_ll_hh_af(void){return test("%#x%llu%#hhX", ui_pos_1, ull_pos_1, uch_pos_1);}
 int X_size_ll_n_l_af(void){return test("%#llx%u%#lX", ull_pos_1, ui_pos_1, ul_pos_1);}
+//Hexadecimal uppers - zero precision zero value
+int X_prec0val0_basic(void){return test("%.0X", 0);}
+int X_prec0val0_implicit(void){return test("%.X", 0);}
+int X_prec0val0_w(void){return test("%5.0X", 0);}
+int X_prec0val0_w_impl(void){return test("%5.X", 0);}
+int X_prec0val0_wlj(void){return test("%-5.0X", 0);}
+int X_prec0val0_wlj_impl(void){return test("%-5.X", 0);}
+int X_prec0val0_af(void){return test("%#.0X", 0);}
+int X_prec0val0_af_impl(void){return test("%#.X", 0);}
+int X_prec0val0_waf(void){return test("%#5.0X", 0);}
+int X_prec0val0_waf_impl(void){return test("%#5.X", 0);}
+int X_prec0val0_waflj(void){return test("%#-5.0X", 0);}
+int X_prec0val0_waflj_impl(void){return test("%#-5.X", 0);}
+
 
 //Octals - no modifers
 int o_basic_octl_pos(void){return test("this %o number", 17);}
@@ -1346,6 +1418,20 @@ int o_size_h_l_hh_af(void){return test("%hu%lu%#hho", ush_pos_1, ul_pos_1, uch_p
 int o_size_l_hh_h_af(void){return test("%#lo%hhu%#ho", ul_pos_1, uch_pos_1, ush_pos_1);}
 int o_size_n_ll_hh_af(void){return test("%#o%llu%hho", ui_pos_1, ull_pos_1, uch_pos_1);}
 int o_size_ll_n_l_af(void){return test("%#llo%u%#lo", ull_pos_1, ui_pos_1, ul_pos_1);}
+//Octals - zero precision zero value
+int o_prec0val0_basic(void){return test("%.0o", 0);}
+int o_prec0val0_implicit(void){return test("%.o", 0);}
+int o_prec0val0_w(void){return test("%5.0o", 0);}
+int o_prec0val0_w_impl(void){return test("%5.o", 0);}
+int o_prec0val0_wlj(void){return test("%-5.0o", 0);}
+int o_prec0val0_wlj_impl(void){return test("%-5.o", 0);}
+int o_prec0val0_af(void){return test("%#.0o", 0);}
+int o_prec0val0_af_impl(void){return test("%#.o", 0);}
+int o_prec0val0_waf(void){return test("%#5.0o", 0);}
+int o_prec0val0_waf_impl(void){return test("%#5.o", 0);}
+int o_prec0val0_waflj(void){return test("%#-5.0o", 0);}
+int o_prec0val0_waflj_impl(void){return test("%#-5.o", 0);}
+
 
 //Pointers - Basic
  extern  char	a01;
