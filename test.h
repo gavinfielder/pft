@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/26 00:22:01 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:56:14 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 #define FAULT "\x1B[0;31;43m"
+
+#define DEBUG 0
 
 #define DBL_INF    0x7FF0000000000000
 #define DBL_NINF   0xFFF0000000000000

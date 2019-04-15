@@ -53,6 +53,10 @@ You should easily pass 3 tests, and have an idea of how to use this program.
 ```
 Note: tests with prefix `nocrash_` are specifically handled by the tester--instead of benching against printf, they just return automatic pass (assuming, of course, ft\_printf doesn't crash). They are disabled by default (see below for how to enable); I also encourage you to write your own nocrash\_ tests.
 
+### A Note on Wildcard Searching
+
+The \* needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell \*. You can either escape it manually (\\\*), or, to make this feature compatible with all terminals, **any character not valid for a C function name (alphanumeric + underscore) will be considered a wildcard**. This means instead of \*, you can also use @, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
+
 ## Workflow with PFT
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
@@ -66,7 +70,7 @@ I have provided scripts that make it easy to enable and disable tests by a searc
 Simple prefix-based search:
  ./disable-test s                         # All the tests that start with 's' are disabled
  ./enable-test s_null_                    # All the tests that start with 's_null_' are enabled
- ./disable-test "" && ./enable-test s     # Disables all tests except tests that start with 's'
+ ./disable-test && ./enable-test s        # Disables all tests except tests that start with 's'
 
 Wildcard search:
  ./disable-test "*zeropad"      # Disables all the tests that have 'zeropad' anywhere in the name
@@ -74,7 +78,7 @@ Wildcard search:
  ./enable-test "s_*prec"        # Enables all tests that start with 's_' and have a 'prec' in the name
 ```
 
-You **can** call `./enable-test ""` to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
+You **can** call `./enable-test` to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
 
 # Troubleshooting
 
@@ -86,7 +90,7 @@ I encourage everyone to contribute to this, even if it's just adding tests to th
 Before making pull requests, please:
 
 ```bash
-./enable-test "" && ./disable-test argnum && ./disable-test moul_notmandatory \
+./enable-test && ./disable-test argnum && ./disable-test moul_notmandatory \
 && ./disable-test nocrash && ./disable-test moul_D && ./disable-test moul_F
 ```
 *and if you add non-mandatory test cases or tests that can segfault, modify this block in the readme*
@@ -96,9 +100,9 @@ Before making pull requests, please:
 
 When you run make, the first thing that happens is the test index is created. Two copies of unit\_tests.c are created. In the copy unit\_tests\_indexed.c, the test() function is replaced with ft\_printf(). In the copy unit\_tests\_benched.c, the test() function is replaced with printf() and '\_bench' is added to all the function names. Next, in both files, an array of function pointers is created at the end of the file pointing to all the enabled unit tests.   An array will also be created holding the names of all the functions as string literals.  
 
-When you call `./test s_`, main.c will see alpha input and call run\_search\_tests, which does strncmp on each position in the array of function names, and when it finds a function name starting with 's\_', it calls run\_test() on that test.  
+When you call `./test s_`, main.c will see alpha input and call run\_search\_tests, which does a match comparison on each position in the array of function names, and when it finds a function name starting with 's\_', it calls run\_test() on that test.  
 
-run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version (through the array of function pointers that was created on `make`), and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. This is very essentially the same way moulinette tests printf. The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
+run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version (through the array of function pointers that was created on `make`), and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. This is very essentially the same way moulinette tests printf (though I suspect moulinette doesn't check return value). The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
 
 There are some user options in the makefile, you can explore them yourself.
 
@@ -116,3 +120,5 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 # Credits
 
 Some code was adapted from moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
+
+Thanks to rwright for giving valuable feedback on improving the features.

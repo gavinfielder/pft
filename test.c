@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/26 00:23:29 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:29:41 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,21 @@ static int	ft_match(const char *s1, char *s2)
 }
 
 /* ----------------------------------------------------------------------------
+** Converts all invalid characters for function names into wildcards
+** --------------------------------------------------------------------------*/
+static void convert_nonalphanum_to_wildcard(char *str)
+{
+	while (*str)
+	{
+		if (!((*str >= 'a' && *str <= 'z')
+				|| (*str >= 'A' && *str <= 'Z')
+				|| (*str >= '0' && *str <= '9')
+				|| *str == '_'))
+			*str = '*';
+		str++;
+	}
+}
+/* ----------------------------------------------------------------------------
 ** Runs all the tests that match the search pattern
 ** --------------------------------------------------------------------------*/
 void	run_search_tests(t_unit_tester_args *args)
@@ -287,6 +302,9 @@ void	run_search_tests(t_unit_tester_args *args)
 	for (size_t i = 0; i < len - 2; i++)
 		pattern[i] = args->pattern[i];
 	pattern[len - 2] = '*';
+
+	//Convert all invalid characters for function names into wildcards
+	convert_nonalphanum_to_wildcard(pattern);
 
 	//Search tests
 	while (g_unit_tests[args->current] != NULL)

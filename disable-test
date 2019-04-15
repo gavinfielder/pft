@@ -11,17 +11,21 @@
 #                                                                              #
 # **************************************************************************** #
 
-if [ $# -ne 1 ]
-then
-	echo "usage: ./disable-test  search-pattern"
-	echo "       search patterns are a single word, using * for wildcards. (Enclose in double quotes if using *)"
-	exit 1
-fi
-
 FILENAME=unit_tests.c
 
-PATTERN=$(echo $1 | tr -d " \t\r\n")
-TOREGEX=$(echo $PATTERN | sed "s/\*/.\*/g")
+if [ $# -eq 0 ]
+then
+	PATTERN=""
+elif [ $# -ne 1 ]
+then
+	echo "usage: ./disable-test  search-pattern"
+	echo "       search patterns are a single word, using * for wildcards. (Enclose in double quotes if using *, or escape the * eg \\*)"
+	exit 1
+else
+	PATTERN=$(echo $1 | tr -d " \t\r\n")
+fi
+
+TOREGEX=$(echo $PATTERN | sed "s/[^a-zA-Z0-9_]/.\*/g")
 NUM_DISABLED=$(grep -c "^int[	 ]*$TOREGEX.*(void)" $FILENAME | tr -d " \t\r\n")
 
 if [ $NUM_DISABLED -eq 0 ]

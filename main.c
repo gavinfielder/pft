@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/26 00:07:45 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:51:28 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ static void		unit_testing(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		if ((argv[1][0] == '*') || (argv[1][0] >= 'a' && argv[1][0] <= 'z')
-				|| (argv[1][0] >= 'A' && argv[1][0] <= 'Z'))
+		if (DEBUG) printf("argv[1] = \"%s\"\n", argv[1]);
+		if (!(argv[1][0] >= '0' && argv[1][0] <= '9'))
 		{
 			//Search pattern
+			if (DEBUG) printf("Searching tests with pattern: \"%s\"\n", argv[1]);
 			init_args(&args, argv[1], 0, 2147483647, run_search_tests);
 			run_search_tests(&args);
 		}
@@ -54,6 +55,7 @@ static void		unit_testing(int argc, char **argv)
 				to = atoi(argv[2]);
 			else
 				to = 2147483647;
+			if (DEBUG) printf("Running tests on range [%i, %i]\n", from, to);
 			init_args(&args, NULL, from, to, run_test_range);
 			run_test_range(&args);
 		}
@@ -61,6 +63,7 @@ static void		unit_testing(int argc, char **argv)
 	else
 	{
 		//No arguments. Run all tests
+		if (DEBUG) printf("Running All Tests...\n");
 		from = 0;
 		to = 2147483647;
 		init_args(&args, NULL, from, to, run_test_range);
