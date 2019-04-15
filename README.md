@@ -55,7 +55,7 @@ Note: tests with prefix `nocrash_` are specifically handled by the tester--inste
 
 ### A Note on Wildcard Searching
 
-The \* needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell \*. You can either escape it manually (\\\*), or, to make this feature compatible with all terminals, **any character not valid for a C function name (alphanumeric + underscore) will be considered a wildcard**. This means instead of \*, you can also use @, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
+For almost all terminals, the \* needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell \* even then. You can either escape it manually '\\\*', or, to make this feature compatible with all terminals, I've made **any character not valid for a C function name (alphanumeric + underscore) is now considered a wildcard**. This means instead of \*, you can also use @, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
 
 ## Workflow with PFT
 
