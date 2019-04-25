@@ -35,7 +35,7 @@ If you include all required .o files (including your libft) in libftprintf.a, th
 
 The executable accepts the following as queries:
  - `./test moul` runs all the enabled tests whose name starts with a string, in this case 'moul'
- - `./test "*prec"` is a wildcard search; this one runs all the enabled tests that have 'prec' in the name.
+ - `./test "d_*prec"` is a wildcard search; this one runs all the enabled tests that have start with 'd\_' and have 'prec' in the name.
  - `./test 42 84` runs (enabled) test number 42 through test 84
  - `./test 42` runs enabled test 42 and onward
  - `./test` runs all the enabled tests
@@ -61,18 +61,14 @@ These are the naming conventions currently used in the included unit\_tests.c.
  - Tests adapated from 42FileChecker have '`ftfc`' in the name
 These naming conventions are ***usually*** followed. There's a lot of tests, so making it more consistent is a huge task for another day. The first rule plus the `moul_` block are the two that most users care about, and they're both consistent.  
 
-## Help! Wildcard search isn't working!
-
-For almost all shell terminals, the `*` needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell `*` even then. You can either escape it manually '`\*`', or, to make this feature compatible with all shells, I've made **any character not valid for a C function name (alphanumeric + underscore) is now considered a wildcard**. This means instead of `\*`, you can also use `@`, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
-
 ## Workflow with PFT
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
 
 ### Adding Tests
 
-You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake. The new tests will be included in the test index and can be queried the same way.    
-
+You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and re-make. The new tests will be included in the test index and can be queried the same way.    
+-
 ## Enabling and Disabling tests
 
 I have provided scripts that make it easy to enable and disable tests by a search pattern. Example:
@@ -97,6 +93,12 @@ The PFT Makefile includes an option to ignore return value checking. I included 
 
 # Troubleshooting
 
+## Help! Wildcard search isn't working!
+
+For almost all shell terminals, the `*` needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell `*` even then. You can either escape it manually '`\*`', or, to make this feature compatible with all shells, I've made **any character not valid for a C function name (alphanumeric + underscore) is now considered a wildcard**. This means instead of `\*`, you can also use `@`, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
+
+## Other Issues
+
 If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.  
 
 # Contributing
@@ -118,16 +120,14 @@ When you run make, the first thing that happens is the test index is created. Tw
 
 When you call `./test s_`, main.c will see alpha input and call run\_search\_tests, which does a match comparison on each position in the array of function names, and when it finds a function name starting with 's\_', it calls run\_test() on that test.  
 
-run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version (through the array of function pointers that was created on `make`), and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. This is very essentially the same way moulinette tests printf (though I suspect moulinette doesn't check return value). The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
-
-There are some user options in the makefile, you can explore them yourself.
+run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version (through the array of function pointers that was created on `make`), and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. (as of the time of writing this, moulinette checks output the same way, though it does not check return value.) The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
 
 # Possible Future Features
 
 I have a few ideas how to improve this:
 
-- disable-test could be able to disable a numeric range of tests, or a specific test by number
-- Could add a more generalized unit test framework alongside the current one that gives you more control in coming up with unit tests
+- The unit test library could stand to be a little more consistent and concise with naming conventions. 
+- There are very few tests for the `*` bonus.  
 - Could add tests for the thousands separator optional format flag.
 - Could add tests for the `n` specifier.
 
@@ -135,6 +135,6 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 
 # Credits
 
-Some code was adapted from moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
+Some code was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
 
 Thanks to rwright for giving valuable feedback on improving the features.
