@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/25 01:57:13 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/25 16:49:21 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ TEST_FAIL_LOGGING_MAXBYTES=150
 LIBFTPRINTF_DIR=..
 
 # The compile flags the tester is built with
-CFLAGS=-Wall -Wextra -g -Wformat=0
+CFLAGS=-Wall -Wextra -g
 
 # ------------------------------------------------------------------------------
 #      End User Options

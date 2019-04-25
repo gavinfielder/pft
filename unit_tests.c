@@ -6,9 +6,12 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/03/27 13:56:30 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:49:49 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winteger-overflow"
+#pragma clang diagnostic ignored "-Wformat"
 
 #include "test.h"
 
@@ -3344,3 +3347,9 @@ int moul_spacepad_3(void){return test("%% 4i 42 == |% 4i|\n", 42);}
  int moul_notmandatory_widechar_basic2(void){return test("%C\n", L'ø');}
  int moul_notmandatory_widestr_basic2(void){wchar_t wz[3] = L"@@"; return test("%ls", wz);}
 
+
+
+
+
+
+#pragma clang diagnostic pop
