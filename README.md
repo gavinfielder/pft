@@ -35,9 +35,9 @@ If you include all required .o files (including your libft) in libftprintf.a, th
 
 The executable accepts the following as queries:
  - `./test moul` runs all the enabled tests whose name starts with a string, in this case 'moul'
- - `./test "*prec"` runs all the enabled tests that have 'prec' in the name.
+ - `./test "*prec"` is a wildcard search; this one runs all the enabled tests that have 'prec' in the name.
  - `./test 42 84` runs (enabled) test number 42 through test 84
- - `./test 42` runs enabled tests 42 onward
+ - `./test 42` runs enabled test 42 and onward
  - `./test` runs all the enabled tests
 
 Wildcard-based searches have an implict '\*' at the end. For example, `./test "*zeropad"` runs all the tests that have 'zeropad' anywhere in the name.
@@ -61,7 +61,7 @@ These are the naming conventions currently used in the included unit\_tests.c.
  - Tests adapated from 42FileChecker have '`ftfc`' in the name
 These naming conventions are ***usually*** followed. There's a lot of tests, so making it more consistent is a huge task for another day. The first rule plus the `moul_` block are the two that most users care about, and they're both consistent.  
 
-## A Note on Wildcard Searching
+## Help! Wildcard search isn't working!
 
 For almost all shell terminals, the `*` needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell `*` even then. You can either escape it manually '`\*`', or, to make this feature compatible with all shells, I've made **any character not valid for a C function name (alphanumeric + underscore) is now considered a wildcard**. This means instead of `\*`, you can also use `@`, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
 
@@ -69,7 +69,9 @@ For almost all shell terminals, the `*` needs to be escaped--usually, putting a 
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
 
-You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake. The new tests will be included in the test index and can be queried the same way.  
+### Adding Tests
+
+You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake. The new tests will be included in the test index and can be queried the same way.    
 
 ## Enabling and Disabling tests
 
