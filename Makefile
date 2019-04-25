@@ -6,13 +6,22 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/15 15:59:27 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/24 23:07:59 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# #######################
+
+# ------------------------------------------------------------------------------
 #      User Options
-# #######################
+# ------------------------------------------------------------------------------
+
+# Set to 1 if you do not include your libft .o's in your libftprintf
+USE_SEPARATE_LIBFT=0
+LIBFT_DIR_PATH=../libft
+LIBFT_NAME=libft.a
+
+# Set to 1 to ignore return value
+IGNORE_RETURN_VALUE=0
 
 # Name of the test executable
 TEST_ONAME=test
@@ -26,13 +35,12 @@ LIBFTPRINTF_DIR=..
 # The compile flags the tester is built with
 CFLAGS=-Wall -Wextra -g -Wformat=0
 
-# #######################
-#    End User Options
-# #######################
+# ------------------------------------------------------------------------------
+#      End User Options
+# ------------------------------------------------------------------------------
 
 LIBFTPRINTF_NAME=libftprintf.a
 CC=clang
-LIB=
 INC=-I.
 TEST_RESULTS=test_results.txt
 TEST_OUT_ACTUAL=test.mine
@@ -44,15 +52,21 @@ INDEXED_BENCH=unit_tests_benched.c
 TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D OUT_EXPECTED="\"$(TEST_OUT_EXPECTED)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
-			 -D MAX_FILE_COPY_SIZE=$(TEST_FAIL_LOGGING_MAXBYTES)
+			 -D MAX_FILE_COPY_SIZE=$(TEST_FAIL_LOGGING_MAXBYTES) \
+			 -D IGNORE_RETURN_VALUE=$(IGNORE_RETURN_VALUE)
+ifeq ($(USE_SEPARATE_LIBFT),1)
+LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
+else
+LIB=
+endif
 
 all: $(TEST_ONAME)
 
-$(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) test_index
+$(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_index
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
-	@$(CC) $(CFLAGS) $(INC) $(LIB) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS) $(INDEXED_BENCH)
+	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS) $(INDEXED_BENCH)
 	@echo "\x1B[0;32mSuccessfully made printftester2000. Directions:\x1B[0;0m\n    ./test [from] [[to]]   for a range of tests by number,\n    ./test [string]        to run all tests starting with [string],\n    ./test \"[str*ing]\"     (you can use * as wildcards if it's in double quotes or escaped)\n                               any non-(alphanumeric/underscore) will be a wildcard as well\n    ./test                 to run all tests."
 
 $(INDEXED_TESTS): test_index
@@ -91,6 +105,9 @@ test_index: $(UNIT_TEST_FILE)
 
 $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME):
 	@make -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1
+
+$(LIBFT_DIR_PATH)/$(LIBFT_NAME):
+	@make -C $(LIBFT_DIR_PATH) > /dev/null 2>&1
 
 clean:
 	@rm -f $(INDEXED_TESTS)

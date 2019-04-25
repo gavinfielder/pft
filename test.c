@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/15 15:29:41 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/24 22:45:56 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,13 @@ static void handle_sigabrt(int sigval)
 	printf(FAULT "SIGABRT" RESET "]\n");
 	failsafe_args_recover->run(failsafe_args_recover);
 }
+static void handle_sigill(int sigval)
+{
+	(void)sigval;
+	failsafe_recover();
+	printf(FAULT "SIGILL" RESET "]\n");
+	failsafe_args_recover->run(failsafe_args_recover);
+}
 
 /* ----------------------------------------------------------------------------
 ** Runs a specific test
@@ -169,6 +176,7 @@ static int		run_test(int test_number)
 	signal(SIGSEGV, handle_sigsegv);
 	signal(SIGBUS, handle_sigbus);
 	signal(SIGABRT, handle_sigabrt);
+	signal(SIGILL, handle_sigill);
 
 	printf("Test %4i:  %-42s [",test_number, g_unit_test_names[test_number]);
 
@@ -182,7 +190,7 @@ static int		run_test(int test_number)
 		ret_val_libc = output_to_file(OUT_EXPECTED, g_bench[test_number]);
 
 		//Evaluate test results
-		if (ret_val_mine != ret_val_libc)
+		if (ret_val_mine != ret_val_libc || IGNORE_RETURN_VALUE)
 			failed = 1;
 		else
 		{
