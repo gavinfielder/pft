@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/15 15:56:14 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/24 23:49:59 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 #define MAG   "\x1B[35m"
 #define CYN   "\x1B[36m"
 #define WHT   "\x1B[37m"
+#define DIM   "\x1B[2m"
 #define RESET "\x1B[0m"
 #define FAULT "\x1B[0;31;43m"
 

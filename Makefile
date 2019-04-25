@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/24 23:17:17 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/25 01:57:13 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@
 # ------------------------------------------------------------------------------
 
 # Set to 1 if you do not include your libft .o's in your libftprintf
-USE_SEPARATE_LIBFT=1
+USE_SEPARATE_LIBFT=0
 LIBFT_DIR_PATH=../libft
 LIBFT_NAME=libft.a
 
 # Set to 1 to ignore return value
-IGNORE_RETURN_VALUE=1
+IGNORE_RETURN_VALUE=0
 
 # Name of the test executable
 TEST_ONAME=test
@@ -67,7 +67,15 @@ $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_in
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
 	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS) $(INDEXED_BENCH)
-	@echo "\x1B[0;32mSuccessfully made printftester2000. Directions:\x1B[0;0m\n    ./test [from] [[to]]   for a range of tests by number,\n    ./test [string]        to run all tests starting with [string],\n    ./test \"[str*ing]\"     (you can use * as wildcards if it's in double quotes or escaped)\n    ./test                 to run all tests."
+	@echo "\x1B[32m=============================================================\x1B[0m"
+	@echo "\x1B[32m  printftester2000 (aka PFT)\x1B[0m - \x1B[2mmade by gfielder@42.us.org\x1B[0m"
+	@echo "\x1B[32m=============================================================\x1B[0m"
+	@echo "  \x1B[1;36m$(shell cat $(UNIT_TEST_FILE) | grep -c "^int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") \x1B[0mout of \x1B[1;33m$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")\x1B[0m tests are enabled.\x1B[0;0;0m"
+	@echo "  \x1B[4mDirections\x1B[0m:"
+	@echo "    \x1B[36m./test [query]\x1B[0m          to run tests"
+	@echo "    \x1B[36m./test help\x1B[0m             to see examples"
+	@echo "    \x1B[36m./test help all\x1B[0m         to see extended help information"
+
 
 $(INDEXED_TESTS): test_index
 
@@ -75,7 +83,6 @@ $(INDEXED_BENCH): test_index
 
 .INTERMEDIATE: test_index
 test_index: $(UNIT_TEST_FILE)
-	@echo "\x1B[33mIndexing tests..."
 	@cp $(UNIT_TEST_FILE) $(INDEXED_TESTS)
 	@sed -i .bak "s/return test(/return ft_printf(/g" $(INDEXED_TESTS)
 	@echo "const t_unit_test g_unit_tests[] = {" >> $(INDEXED_TESTS)
@@ -91,7 +98,6 @@ test_index: $(UNIT_TEST_FILE)
 	@cat $(UNIT_TEST_FILE) | grep "^int\s*[a-zA-Z0-9_]*(void)" | sed "s/int\s*.*(void){//g" | sed "s/}//g" | sed "s/\"/\\\\\"/g" | sed "s/\\\\\\\\\"/\\\\\"/g" | sed "s/\(.*\)/\"\1\",/g" >> $(INDEXED_TESTS)
 	@echo "NULL" >> $(INDEXED_TESTS)
 	@echo "};" >> $(INDEXED_TESTS)
-	@echo "\x1B[33mTests indexed. Creating bench tests..."
 	@cp $(UNIT_TEST_FILE) $(INDEXED_BENCH)
 	@sed -i .bak "s/return test(/return printf(/g" $(INDEXED_BENCH)
 	@sed -i .bak "s/(void)/_bench(void)/g" $(INDEXED_BENCH)
@@ -100,7 +106,6 @@ test_index: $(UNIT_TEST_FILE)
 	@echo "NULL" >> $(INDEXED_BENCH)
 	@echo "};" >> $(INDEXED_BENCH)
 	@echo "" >> $(INDEXED_BENCH)
-	@echo "\x1B[33mTest index and bench tests created. \x1B[1;36m$(shell cat $(UNIT_TEST_FILE) | grep -c "^int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") \x1B[0;33mout of $(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") tests are enabled.\x1B[0;0;0m"
 	@rm -f *.bak
 
 $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME):
