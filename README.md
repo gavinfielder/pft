@@ -26,9 +26,8 @@ In the root of your repo, run this command:
 git clone https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
 ```
 
-***If your libft.a is separate from libftprintf.a***
-
-If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. Otherwise, you must set `USE_SEPARATE_LIBFT=1` in PFT's Makefile.   
+***If your libft.a is separate from libftprintf.a:***
+If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in PFT's Makefile.   
 
 # Usage
  - `./test help` shows some help text and usage examples  
@@ -45,13 +44,13 @@ Wildcard-based searches have an implict '\*' at the end. For example, `./test "*
 
 ## Test Naming Conventions
  - d, i, o, u, x, X, c, s, p, f tests start with `d_`, `i_`, `o_`, etc.
- - %% tests start with `pct_`
+ - `%%` tests start with `pct_`
  - hh, h, l, ll tests usually have '`size`' in the name
  - L (long double) tests start with `f_L_`
- - # tests usually have '`af`' in the name (or '`altform`')
+ - `#` tests usually have '`af`' in the name (or '`altform`')
  - 0 (zero padding) tests usually have '`zp`' in the name
- - - (left justify) tests usually have '`lj`' in the name
- - + tests usually have '`as`' or '`allsign`' in the name
+ - `-` (left justify) tests usually have '`lj`' in the name
+ - `+` tests usually have '`as`' or '`allsign`' in the name
  - ' ' (space padding) tests usually have '`sp`' in the name
  - Precision tests usually have '`prec`' in the name
  - Field width tests usually have '`width`' or just '`w`' in the name
@@ -90,7 +89,7 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 ## Disabling Return Value Check
 
-The Makefile includes an option to ignore return value checking. I included this because at the time of writing this, moulinette does not check return value, and from what I've seen, the return value is the #1 reason people fail a lot of PFT tests. I don't encourage ignoring the return value, but it is an option if you would like to.  
+The PFT Makefile includes an option to ignore return value checking. I included this because at the time of writing this, moulinette does not check return value, and from what I've seen, the return value is the #1 reason people fail a lot of PFT tests. I don't encourage ignoring the return value, but it is an option if you would like to.  
 
 # Troubleshooting
 
