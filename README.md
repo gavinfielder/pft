@@ -10,7 +10,7 @@ By default, it can check if your *completed* printf is pretty good or not pretty
 It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name and category, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible, so you can use it how you wish.  
 
 <p align="center">
-  <img src="https://i.imgur.com/W7bXUMV.jpg?1" width="70%" />
+  <img src="https://i.imgur.com/Iwsvc2Y.png" width="60%" />
 </p>
 
 ## Requirements
@@ -27,22 +27,24 @@ In the root of your repo, run this command:
 git clone https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
 ```
 
-# Usage, the short version
+## If Your libft.a is separate from libftprintf.a
 
-Inside testing/:  
-`make`  
-`./test`  
+If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. Otherwise, you must set `USE_SEPARATE_LIBFT=1` in PFT's Makefile.   
 
-# Usage, the long version
+# Usage
+ - `./test help` shows some help text and usage examples  
+ - `./test help all` shows more help text  
 
-There are five options:
- - `./test prefix` runs all the enabled tests whose name starts with 'prefix'
- - `./test "search-pattern"` runs all the enabled tests whose name matches a wildcard-based ('\*') search
+The executable accepts the following as queries:
+ - `./test moul` runs all the enabled tests whose name starts with a string, in this case 'moul'
+ - `./test "*prec"` runs all the enabled tests that have 'prec' in the name.
  - `./test 42 84` runs (enabled) test number 42 through test 84
- - `./test 42` runs enabled tests from 42 to the end of all the enabled tests
+ - `./test 42` runs enabled tests 42 onward
  - `./test` runs all the enabled tests
 
 Wildcard-based searches have an implict '\*' at the end. For example, `./test "*zeropad"` runs all the tests that have 'zeropad' anywhere in the name.
+
+# Test Naming Conventions
 
 ### Some good prefixes to try
 s, i, d, u, x, X, o, p, c, f, f\_L, mix, nocrash, moul
@@ -61,7 +63,8 @@ For almost all shell terminals, the `*` needs to be escaped--usually, putting a 
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
 
-You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake.   
+You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and remake. The new tests will be included in the test index and can be queried the same way.  
+
 ## Enabling and Disabling tests
 
 I have provided scripts that make it easy to enable and disable tests by a search pattern. Example:
