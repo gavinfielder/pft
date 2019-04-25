@@ -94,15 +94,15 @@ The PFT Makefile includes an option to ignore return value checking. I included 
 
 # Troubleshooting
 
-## I tried making and got a bunch of "undefined symbol" errors
+### I tried making and got a bunch of "undefined symbol" errors
 
 Are these your libft functions? If so, you probably need to follow the installation directions under 'Installation' in order to include your libft.a.  
 
-## Help! Wildcard search isn't working!
+### Help! Wildcard search isn't working!
 
 For almost all shell terminals, the `*` needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell `*` even then. You can either escape it manually '`\*`', or, to make this feature compatible with all shells, I've made **any character not valid for a C function name (alphanumeric + underscore) is now considered a wildcard**. This means instead of `\*`, you can also use `@`, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
 
-## Other Issues
+### Other Issues
 
 If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.  
 
