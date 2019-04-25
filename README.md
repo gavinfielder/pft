@@ -1,7 +1,6 @@
 <img align="right"  src="https://i.imgur.com/tpVSrBr.png" width="45%" />  
 
 # PFT
-*aka Printftester2000*
 
 This is a unit test library and tester for ft\_printf.  
 
@@ -10,7 +9,7 @@ By default, it can check if your *completed* printf is pretty good or not pretty
 It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name and category, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible, so you can use it how you wish.  
 
 <p align="center">
-  <img src="https://i.imgur.com/Iwsvc2Y.png" width="60%" />
+  <img src="https://i.imgur.com/Iwsvc2Y.png" width="50%" />
 </p>
 
 ## Requirements
@@ -27,7 +26,7 @@ In the root of your repo, run this command:
 git clone https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
 ```
 
-## If Your libft.a is separate from libftprintf.a
+***If your libft.a is separate from libftprintf.a***
 
 If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. Otherwise, you must set `USE_SEPARATE_LIBFT=1` in PFT's Makefile.   
 
@@ -44,18 +43,24 @@ The executable accepts the following as queries:
 
 Wildcard-based searches have an implict '\*' at the end. For example, `./test "*zeropad"` runs all the tests that have 'zeropad' anywhere in the name.
 
-# Test Naming Conventions
+## Test Naming Conventions
+ - d, i, o, u, x, X, c, s, p, f tests start with `d_`, `i_`, `o_`, etc.
+ - %% tests start with `pct_`
+ - hh, h, l, ll tests usually have '`size`' in the name
+ - L (long double) tests start with `f_L_`
+ - # tests usually have '`af`' in the name (or '`altform`')
+ - 0 (zero padding) tests usually have '`zp`' in the name
+ - - (left justify) tests usually have '`lj`' in the name
+ - + tests usually have '`as`' or '`allsign`' in the name
+ - ' ' (space padding) tests usually have '`sp`' in the name
+ - Precision tests usually have '`prec`' in the name
+ - Field width tests usually have '`width`' or just '`w`' in the name
+ - Simple tests usually have '`basic`' in the name
+ - Tests taken from moulinette files start with `moul_`
+ - The `moul_` block has subgroups `moul_d_`, `moul_i_`, `moul_o_`, etc.
+ - Tests adapated from 42FileChecker have '`ftfc`' in the name
 
-### Some good prefixes to try
-s, i, d, u, x, X, o, p, c, f, f\_L, mix, nocrash, moul
-
-```
-If the prefix stuff doesn't make sense, look at unit_tests.c and then run ./test nospec
-You should easily pass 3 tests, and have an idea of how to use this program. 
-```
-Note: tests with prefix `nocrash_` are specifically handled by the tester--instead of benching against printf, they just return automatic pass (assuming, of course, ft\_printf doesn't crash). They are disabled by default (see below for how to enable); I also encourage you to write your own nocrash\_ tests.
-
-### A Note on Wildcard Searching
+## A Note on Wildcard Searching
 
 For almost all shell terminals, the `*` needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell `*` even then. You can either escape it manually '`\*`', or, to make this feature compatible with all shells, I've made **any character not valid for a C function name (alphanumeric + underscore) is now considered a wildcard**. This means instead of `\*`, you can also use `@`, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.
 
@@ -81,7 +86,11 @@ Wildcard search:
  ./enable-test "s_*prec"        # Enables all tests that start with 's_' and have a 'prec' in the name
 ```
 
-You **can** call `./enable-test` to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
+You **can** call `./enable-test` (with no arguments) to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
+
+## Disabling Return Value Check
+
+The Makefile includes an option to ignore return value checking. I included this because at the time of writing this, moulinette does not check return value, and from what I've seen, the return value is the #1 reason people fail a lot of PFT tests. I don't encourage ignoring the return value, but it is an option if you would like to.  
 
 # Troubleshooting
 
@@ -94,7 +103,8 @@ Before making pull requests, please:
 
 ```bash
 ./enable-test && ./disable-test argnum && ./disable-test moul_notmandatory \
-&& ./disable-test nocrash && ./disable-test moul_D && ./disable-test moul_F
+&& ./disable-test nocrash && ./disable-test moul_D && ./disable-test moul_F \
+&& ./disable-test f_l_reserved_value && ./disable-test f_L_reserved_value
 ```
 *and if you add non-mandatory test cases or tests that can segfault, modify this block in the readme*
 
