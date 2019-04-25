@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/24 23:14:19 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/24 23:17:17 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@
 # ------------------------------------------------------------------------------
 
 # Set to 1 if you do not include your libft .o's in your libftprintf
-USE_SEPARATE_LIBFT=0
+USE_SEPARATE_LIBFT=1
 LIBFT_DIR_PATH=../libft
 LIBFT_NAME=libft.a
 
 # Set to 1 to ignore return value
-IGNORE_RETURN_VALUE=0
+IGNORE_RETURN_VALUE=1
 
 # Name of the test executable
 TEST_ONAME=test
@@ -67,7 +67,7 @@ $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_in
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
 	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS) $(INDEXED_BENCH)
-	@echo "\x1B[0;32mSuccessfully made printftester2000. Directions:\x1B[0;0m\n    ./test [from] [[to]]   for a range of tests by number,\n    ./test [string]        to run all tests starting with [string],\n    ./test \"[str*ing]\"     (you can use * as wildcards if it's in double quotes or escaped)\n                               any non-(alphanumeric/underscore) will be a wildcard as well\n    ./test                 to run all tests."
+	@echo "\x1B[0;32mSuccessfully made printftester2000. Directions:\x1B[0;0m\n    ./test [from] [[to]]   for a range of tests by number,\n    ./test [string]        to run all tests starting with [string],\n    ./test \"[str*ing]\"     (you can use * as wildcards if it's in double quotes or escaped)\n    ./test                 to run all tests."
 
 $(INDEXED_TESTS): test_index
 
