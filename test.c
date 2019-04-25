@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/24 22:45:56 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/24 23:13:51 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ static int		run_test(int test_number)
 		ret_val_libc = output_to_file(OUT_EXPECTED, g_bench[test_number]);
 
 		//Evaluate test results
-		if (ret_val_mine != ret_val_libc || IGNORE_RETURN_VALUE)
+		if (ret_val_mine != ret_val_libc && !(IGNORE_RETURN_VALUE))
 			failed = 1;
 		else
 		{

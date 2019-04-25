@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/24 23:07:59 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/24 23:14:19 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,5 +123,6 @@ fclean:
 	@rm -rf $(TEST_ONAME)
 
 re:
+	@make -C $(LIBFTPRINTF_DIR) fclean > /dev/null 2>&1
 	@make fclean
 	@make all
