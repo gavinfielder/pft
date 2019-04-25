@@ -58,17 +58,18 @@ These are the naming conventions currently used in the included unit\_tests.c.
  - Simple tests usually have '`basic`' in the name
  - Tests taken from moulinette files start with `moul_`
  - The `moul_` block has subgroups `moul_d_`, `moul_i_`, `moul_o_`, etc.
- - Tests adapated from 42FileChecker have '`ftfc`' in the name
+ - Tests adapated from 42FileChecker have '`ftfc`' in the name   
+
 These naming conventions are ***usually*** followed. There's a lot of tests, so making it more consistent is a huge task for another day. The first rule plus the `moul_` block are the two that most users care about, and they're both consistent.  
 
 ## Workflow with PFT
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
 
-### Adding Tests
+### Adding Tests   
 
 You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and re-make. The new tests will be included in the test index and can be queried the same way.    
--
+
 ## Enabling and Disabling tests
 
 I have provided scripts that make it easy to enable and disable tests by a search pattern. Example:
@@ -109,7 +110,7 @@ Before making pull requests, please:
 ```bash
 ./enable-test && ./disable-test argnum && ./disable-test moul_notmandatory \
 && ./disable-test nocrash && ./disable-test moul_D && ./disable-test moul_F \
-&& ./disable-test f_l_reserved_value && ./disable-test f_L_reserved_value
+&& ./disable-test f_reserved_values_ && ./disable-test f_L_reserved_values_
 ```
 *and if you add non-mandatory test cases or tests that can segfault, modify this block in the readme*
 
