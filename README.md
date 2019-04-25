@@ -26,8 +26,8 @@ In the root of your repo, run this command:
 git clone https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
 ```
 
-***If your libft.a is separate from libftprintf.a:***
-If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in PFT's Makefile.   
+***If your libft.a is separate from libftprintf.a:***   
+If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in PFT's Makefile. See the PFT Makefile, and it should be self-explanatory.  
 
 # Usage
  - `./test help` shows some help text and usage examples  
@@ -43,6 +43,7 @@ The executable accepts the following as queries:
 Wildcard-based searches have an implict '\*' at the end. For example, `./test "*zeropad"` runs all the tests that have 'zeropad' anywhere in the name.
 
 ## Test Naming Conventions
+These are the naming conventions currently used in the included unit\_tests.c.   
  - d, i, o, u, x, X, c, s, p, f tests start with `d_`, `i_`, `o_`, etc.
  - `%%` tests start with `pct_`
  - hh, h, l, ll tests usually have '`size`' in the name
@@ -58,6 +59,7 @@ Wildcard-based searches have an implict '\*' at the end. For example, `./test "*
  - Tests taken from moulinette files start with `moul_`
  - The `moul_` block has subgroups `moul_d_`, `moul_i_`, `moul_o_`, etc.
  - Tests adapated from 42FileChecker have '`ftfc`' in the name
+These naming conventions are ***usually*** followed. There's a lot of tests, so making it more consistent is a huge task for another day. The first rule plus the `moul_` block are the two that most users care about, and they're both consistent.  
 
 ## A Note on Wildcard Searching
 
