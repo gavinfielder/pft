@@ -6,7 +6,7 @@ This is a unit test library and tester for ft\_printf.
 
 By default, it can check if your *completed* printf is pretty good or not pretty good.   
 
-It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name and category, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible, so you can use it how you wish.  
+It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name and category, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible, so you can use it how you wish.   
 
 <p align="center">
   <img src="https://i.imgur.com/Iwsvc2Y.png" width="50%" />
