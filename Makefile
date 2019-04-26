@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/25 16:49:21 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/26 16:39:17 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ INC=-I.
 TEST_RESULTS=test_results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
-SRC_TEST=main.c test.c
+SRC_TEST=main.c test.c test_print_and_utils.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=unit_tests_indexed.c
 INDEXED_BENCH=unit_tests_benched.c

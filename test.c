@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/24 23:13:51 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/26 16:44:56 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ short				mx_hi = -3244;
 char				mx_hhi = 'F';
 char			   *mx_s = "Hello, World!";
 int					mx_i = 42;
-
 
 
 /* ----------------------------------------------------------------------------
@@ -163,41 +162,48 @@ static void handle_sigill(int sigval)
 }
 
 /* ----------------------------------------------------------------------------
-** Runs a specific test
+** Runs the pair of a test function and its bench and outputs to file
 ** --------------------------------------------------------------------------*/
-static int		run_test(int test_number)
+static t_retvals	output_test(int test_number)
 {
-	int				ret_val_mine;
-	int				ret_val_libc;
-	int				failed = 0;
-	FILE			*fpmine, *fplibc;
-	int				cmine, clibc;
-
-	signal(SIGSEGV, handle_sigsegv);
-	signal(SIGBUS, handle_sigbus);
-	signal(SIGABRT, handle_sigabrt);
-	signal(SIGILL, handle_sigill);
-
-	printf("Test %4i:  %-42s [",test_number, g_unit_test_names[test_number]);
+	t_retvals		retvals;
 
 	//Run test
-	ret_val_mine = output_to_file(OUT_ACTUAL, g_unit_tests[test_number]);
+	retvals.ret_val_mine = output_to_file(OUT_ACTUAL, g_unit_tests[test_number]);
 
 	//If the test was not a nocrash_ test
 	if (strncmp(g_unit_test_names[test_number], "nocrash_", 8) != 0)
 	{
 		//Run bench
-		ret_val_libc = output_to_file(OUT_EXPECTED, g_bench[test_number]);
+		retvals.ret_val_libc = output_to_file(OUT_EXPECTED, g_bench[test_number]);
+	}
+	else
+		retvals.ret_val_libc = -2;
 
+	return (retvals);
+}
+
+/* ----------------------------------------------------------------------------
+** Evaluates results from the recently run test
+** --------------------------------------------------------------------------*/
+static int	evaluate_test_results(t_retvals retvals, int test_number)
+{
+	int				failed = 0;
+	FILE			*fpmine, *fplibc;
+	int				cmine, clibc;
+
+	//If the test was not a nocrash_ test
+	if (strncmp(g_unit_test_names[test_number], "nocrash_", 8) != 0)
+	{
 		//Evaluate test results
-		if (ret_val_mine != ret_val_libc && !(IGNORE_RETURN_VALUE))
+		if (retvals.ret_val_mine != retvals.ret_val_libc && !(IGNORE_RETURN_VALUE))
 			failed = 1;
 		else
 		{
 			fpmine = fopen(OUT_ACTUAL, "r+");
 			fplibc = fopen(OUT_EXPECTED, "r+");
 			if (!fpmine || !fplibc) {
-				perror("error: ");
+				perror("Error opening test output files--contact gfielder about this error");
 				return 0;
 			}
 			cmine = getc(fpmine);
@@ -214,88 +220,32 @@ static int		run_test(int test_number)
 	}
 
 	if (failed)
-	{
-		log_failed_test(test_number, ret_val_libc, ret_val_mine, NULL);
-		printf(RED "FAIL" RESET);
-	}
-	else
-	{
-		printf(GRN "PASS" RESET);
-	}
-	printf("]\n");
+		log_failed_test(test_number, retvals.ret_val_libc, retvals.ret_val_mine, NULL);
 
 	return failed;
 }
 
 /* ----------------------------------------------------------------------------
-** Prints a message at the end of all the tests
+** Runs a specific test
 ** --------------------------------------------------------------------------*/
-static void	print_end_test_message(int num_tests, int num_passed)
+static int		run_test(int test_number)
 {
-	printf("Tests completed. %i/%i tests passed.\n",
-			num_passed, num_tests);
-	if (num_passed != num_tests)
-		printf("See %s for details.\n", TEST_OUTPUT_FILENAME);
+	t_retvals		retvals;
+	int				failed = 0;
+
+	signal(SIGSEGV, handle_sigsegv);
+	signal(SIGBUS, handle_sigbus);
+	signal(SIGABRT, handle_sigabrt);
+	signal(SIGILL, handle_sigill);
+
+	print_test_start(test_number);
+	retvals = output_test(test_number);
+	failed = evaluate_test_results(retvals, test_number);
+	print_test_end(failed);
+
+	return failed;
 }
 
-/* ----------------------------------------------------------------------------
-** The ft_match function is used for wildcard-based searches
-** s2 has an indeterminate number of *, s1 is the function name to test.
-** --------------------------------------------------------------------------*/
-static int	ft_match(const char *s1, char *s2);
-static int	ft_match_helper(const char *s1, char *s2)
-{
-	int		i;
-	char	next;
-	int		found;
-
-	i = 0;
-	next = *(s2 + 1);
-	found = 0;
-	if (next == '\0')
-		return (1);
-	if (next == '*')
-		return (ft_match(s1, s2 + 1));
-	while (1)
-	{
-		if (s1[i] == next)
-			found = (ft_match(s1 + i, s2 + 1));
-		if (found)
-			return (found);
-		if (s1[i] == '\0')
-			return (0);
-		i++;
-	}
-	return (-1);
-}
-static int	ft_match(const char *s1, char *s2)
-{
-	if (*s1 == '\0' && *s2 == '\0')
-		return (1);
-	if (*s2 != '*' && (*s1 != *s2))
-		return (0);
-	if (*s2 == '*')
-		return (ft_match_helper(s1, s2));
-	else if (*s1 == *s2)
-		return (ft_match(s1 + 1, s2 + 1));
-	return (-1);
-}
-
-/* ----------------------------------------------------------------------------
-** Converts all invalid characters for function names into wildcards
-** --------------------------------------------------------------------------*/
-static void convert_nonalphanum_to_wildcard(char *str)
-{
-	while (*str)
-	{
-		if (!((*str >= 'a' && *str <= 'z')
-				|| (*str >= 'A' && *str <= 'Z')
-				|| (*str >= '0' && *str <= '9')
-				|| *str == '_'))
-			*str = '*';
-		str++;
-	}
-}
 /* ----------------------------------------------------------------------------
 ** Runs all the tests that match the search pattern
 ** --------------------------------------------------------------------------*/

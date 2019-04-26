@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/24 23:49:59 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/26 16:44:03 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@
 # define FTPF_LDBL_BYTE5(x) ((short *)(&x))[4]
 # define FTPF_LDBL_MANTS(x) *((unsigned long *)(&x))
 
+
+/* ----------------------------------------------------------------------------
+** Definitions
+** --------------------------------------------------------------------------*/
+
 typedef struct s_unit_tester_args t_unit_tester_args;
 
 typedef void (*t_unit_tester_func) (t_unit_tester_args *);
@@ -99,21 +104,49 @@ struct s_unit_tester_args
 	int		fd_stdout_dup;
 };
 
-extern t_unit_tester_args  *failsafe_args_recover;
+typedef struct s_retvals
+{
+	int		ret_val_libc;
+	int		ret_val_mine;
+} t_retvals;
+
 
 typedef	int					(* t_unit_test) (void);
 typedef int					(*printf_func) (const char *, ...);
+
+/* ----------------------------------------------------------------------------
+** Globals
+** --------------------------------------------------------------------------*/
+
+extern t_unit_tester_args  *failsafe_args_recover;
 
 extern const t_unit_test	g_unit_tests[];
 extern const char 			*g_unit_test_names[];
 extern const t_unit_test	g_bench[];
 extern const char			*g_unit_test_first_lines[];
 
+/* ----------------------------------------------------------------------------
+** The Victim
+** --------------------------------------------------------------------------*/
+
 int							ft_printf(const char *, ...);
+
+/* ----------------------------------------------------------------------------
+** Interface Functions
+** --------------------------------------------------------------------------*/
 
 void						run_test_range(t_unit_tester_args *args);
 void						run_search_tests(t_unit_tester_args *args);
 
+/* ----------------------------------------------------------------------------
+** Helper Functions
+** --------------------------------------------------------------------------*/
 
+void		print_test_start(int test_number);
+void		print_test_end(int failed);
+void		print_end_test_message(int num_tests, int num_passed);
+int			ft_match_helper(const char *s1, char *s2);
+int			ft_match(const char *s1, char *s2);
+void 		convert_nonalphanum_to_wildcard(char *str);
 
 #endif
