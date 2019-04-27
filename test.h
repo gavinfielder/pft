@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/26 16:44:03 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/27 03:22:03 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <pthread.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <strings.h>
@@ -26,6 +27,10 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <signal.h>
+#include <sys/wait.h>
+#include <time.h>
+
+#define LOG_FILE "log.txt"
 
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
@@ -108,11 +113,26 @@ typedef struct s_retvals
 {
 	int		ret_val_libc;
 	int		ret_val_mine;
+	int		stat_loc;
 } t_retvals;
 
+typedef struct s_timeout_args
+{
+	pid_t		pid;
+	int			signal;
+	pthread_t	mainthread;
+} t_timeout_args;
+
+typedef struct s_retval_pipe_args
+{
+	int			fd;
+	t_retvals	retvals;
+} t_retval_pipe_args;
 
 typedef	int					(* t_unit_test) (void);
 typedef int					(*printf_func) (const char *, ...);
+
+typedef int					(*t_run_test_func) (int);
 
 /* ----------------------------------------------------------------------------
 ** Globals
@@ -124,6 +144,8 @@ extern const t_unit_test	g_unit_tests[];
 extern const char 			*g_unit_test_names[];
 extern const t_unit_test	g_bench[];
 extern const char			*g_unit_test_first_lines[];
+
+extern const char			*g_signal_strings[];
 
 /* ----------------------------------------------------------------------------
 ** The Victim
@@ -138,15 +160,22 @@ int							ft_printf(const char *, ...);
 void						run_test_range(t_unit_tester_args *args);
 void						run_search_tests(t_unit_tester_args *args);
 
+void						set_option_fork(void);
+void						set_option_nofork(void);
+void						set_option_usetimeout(void);
+void						set_option_notimeout(void);
+
 /* ----------------------------------------------------------------------------
 ** Helper Functions
 ** --------------------------------------------------------------------------*/
 
+void		log_msg(const char *msg);
 void		print_test_start(int test_number);
-void		print_test_end(int failed);
+void		print_test_end(int failed, int stat_loc, int timed_out);
 void		print_end_test_message(int num_tests, int num_passed);
 int			ft_match_helper(const char *s1, char *s2);
 int			ft_match(const char *s1, char *s2);
 void 		convert_nonalphanum_to_wildcard(char *str);
+void		ft_putnbr_fd(int nb, int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 01:32:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/25 01:54:25 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/26 21:52:08 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,10 @@ static void		unit_testing(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
+	if (TEST_ON_FORK_BY_DEFAULT)
+		set_option_fork();
+	else
+		set_option_nofork();
 	if (argc > 1 && strcmp(argv[1], "help") == 0)
 	{
 		if (argc == 3 && strcmp(argv[2], "all") == 0)

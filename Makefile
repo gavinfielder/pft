@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/26 16:39:17 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/27 04:41:05 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,13 @@ LIBFT_NAME=libft.a
 
 # Set to 1 to ignore return value
 IGNORE_RETURN_VALUE=0
+
+# Set to 1 to run tests on child processes by default
+# This option can make PFT more stable, but it breaks lldb debugging
+TEST_ON_FORK_BY_DEFAULT=1
+
+# Set the number of seconds to timeout on each test
+TIMEOUT_SECONDS=0.75
 
 # Name of the test executable
 TEST_ONAME=test
@@ -53,7 +60,9 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D OUT_EXPECTED="\"$(TEST_OUT_EXPECTED)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
 			 -D MAX_FILE_COPY_SIZE=$(TEST_FAIL_LOGGING_MAXBYTES) \
-			 -D IGNORE_RETURN_VALUE=$(IGNORE_RETURN_VALUE)
+			 -D IGNORE_RETURN_VALUE=$(IGNORE_RETURN_VALUE) \
+			 -D TEST_ON_FORK_BY_DEFAULT=$(TEST_ON_FORK_BY_DEFAULT) \
+			 -D TIMEOUT_SECONDS=$(TIMEOUT_SECONDS)
 ifeq ($(USE_SEPARATE_LIBFT),1)
 LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else
