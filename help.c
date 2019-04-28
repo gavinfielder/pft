@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:57:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 20:41:28 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/27 20:45:24 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		print_help(int extended)
 	printf("\n");
 	printf(    "  \x1B[1;33mRunning PFT with LLDB or other debuggers\n" RESET);
 	printf(    "    PFT must run in debugger compatibility mode to work with debuggers.\n");
+	printf(    "    You must also include the -g flag in your own Makefile.\n");
 	printf(    "    The following works with your current configuration:\n");
 	printf("\n");
 	if (SINGLE_NUMBER_SINGLE_TEST && SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE)
