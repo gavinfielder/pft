@@ -43,11 +43,6 @@ The executable accepts the following as queries:
 
 Wildcard-based searches have an implict '\*' at the end. For example, `./test "*zeropad"` runs all the tests that have 'zeropad' anywhere in the name.
 
-## Using PFT with LLDB or other debuggers
-PFT compiles with debugging symbols by default, and also by default, running a single test e.g. `./test 42` turns on debugger compatibility mode. You can force all tests to run in debugger compatibility mode by using the `-d` command line option e.g. `./test -d nospec`. You can read more about command line options and debugger compatibility mode under [Advanced Options](#advanced-options). 
-tl;dr: To use PFT with lldb, use it like this: `lldb ./test 42`.  
-Of course, in order for lldb to read your own libftprintf.a, you must also use the `-g` flag in your own Makefile.
-
 ## Test Naming Conventions
 These are the naming conventions currently used in the included unit\_tests.c.   
  - d, i, o, u, x, X, c, s, p, f tests start with `d_`, `i_`, `o_`, etc.
@@ -79,6 +74,13 @@ unit\_tests.c shows you all the tests that are available. Failing a test means t
 ### Adding Tests   
 
 You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and re-make. The new tests will be included in the test index and can be queried the same way.    
+
+### Using PFT with LLDB or other debuggers
+PFT compiles with debugging symbols by default, and also by default, running a single test e.g. `./test 42` turns on debugger compatibility mode. You can force all tests to run in debugger compatibility mode by using the `-d` command line option e.g. `./test -d nospec`. You can read more about command line options and debugger compatibility mode under [Advanced Options](#advanced-options).   
+
+tl;dr: To use PFT with lldb, use it like this: `lldb ./test 42`.  
+
+Of course, in order for lldb to read your own libftprintf.a, you must also use the `-g` flag in your own Makefile...
 
 ## Enabling and Disabling tests
 
