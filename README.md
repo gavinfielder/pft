@@ -36,11 +36,17 @@ If you include all required .o files (including your libft) in libftprintf.a, th
 The executable accepts the following as queries:
  - `./test moul` runs all the enabled tests whose name starts with a string, in this case 'moul'
  - `./test "d_*prec"` is a wildcard search; this one runs all the enabled tests that have start with 'd\_' and have 'prec' in the name.
- - `./test 42 84` runs (enabled) test number 42 through test 84
- - `./test 42` runs enabled test 42 and onward
+ - `./test 42 84` runs (enabled) test #42 through test #84
+ - `./test 42` runs test #42 (also turns on debugger compatibility mode.)
  - `./test` runs all the enabled tests
+ - `./test -d [any of the above queries]` runs the selected test(s) in debugger compatibility mode.
 
 Wildcard-based searches have an implict '\*' at the end. For example, `./test "*zeropad"` runs all the tests that have 'zeropad' anywhere in the name.
+
+## Using PFT with LLDB or other debuggers
+PFT compiles with debugging symbols by default, and also by default, running a single test e.g. `./test 42` turns on debugger compatibility mode. You can force all tests to run in debugger compatibility mode by using the `-d` command line option e.g. `./test -d nospec`. You can read more about command line options and debugger compatibility mode under [Advanced Options](#advanced-options). 
+tl;dr: To use PFT with lldb, use it like this: `lldb ./test 42`.  
+Of course, in order for lldb to read your own libftprintf.a, you must also use the `-g` flag in your own Makefile.
 
 ## Test Naming Conventions
 These are the naming conventions currently used in the included unit\_tests.c.   
@@ -92,6 +98,36 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 The PFT Makefile includes an option to ignore return value checking. I included this because at the time of writing this, moulinette does not check return value, and from what I've seen, the return value is the #1 reason people fail a lot of PFT tests. I don't encourage ignoring the return value, but it is an option if you would like to.  
 
+# How it works, in Brief
+
+The Makefile creates two copies of unit\_tests.c, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
+
+# Advanced Options
+
+PFT has a couple of different modes. By default it tests ft\_printf on forked child processes, which makes it more stable, and uses parallel threads to implement timeout. You can use the below options to control this behavior.  
+
+Debuggers tend to only work well on single-threaded single processes, so "debugger compatibility mode" currently means "disable forking and multithreading".  
+
+## Command Line Options
+Command line options come before test run queries, e.g. `./test -d nospec`
+ - `-d` Turns on debugger compatibility mode (currently identical to `-FT`)
+ - `-f` Turn on fork mode (default)
+ - `-F` Turn off fork mode (also disables timeout). Incompatible with `-t`
+ - `-t` Turn on timeout (default)
+ - `-T` Turn off timeout
+
+## Options in Makefile
+ - `TIMEOUT_SECONDS=(float)` (default 0.75) sets the number of seconds before any particular test times out.
+ - `RUN_TESTS_AS_FORK=1` (default) Makes the `-f` option (fork) the run default.
+ - `RUN_TESTS_AS_FORK=0` Makes the `-F` option (no fork) the run default. Also disables timeout.
+ - `USE_TIMEOUT=1` (default) Makes the `-t` (use timeout) option the run default
+ - `USE_TIMEOUT=0` Makes the `-T` option (no timeout) the run default
+ - `IGNORE_RETURN_VALUE=0` (default) Tests fail if ft\_printf and printf do not have the same return value.
+ - `IGNORE_RETURN_VALUE=1` Ignores differences in the return value between ft\_printf and printf.
+ - `SINGLE_NUMBER_SINGLE_TEST=0` (legacy option) Makes it such that `./test 42` runs test #42 to the end of all enabled tests. This could still be useful if you are using only your own tests and are writing them as you develop.  
+ - `SINGLE_NUMBER_SINGLE_TEST=1` (default) Single numeric arguments given will run only the specified test number.
+ - `SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1` (default) When `SINGLE_NUMBER_SINGLE_TEST` is 1, single tests also turn on debugger compatibility mode unless overridden at the command line.
+
 # Troubleshooting
 
 **I tried making and got a bunch of "undefined symbol" errors**  
@@ -102,9 +138,10 @@ For almost all shell terminals, the `*` needs to be escaped--usually, putting a 
 
 ### Other Issues
 
-If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.  
+If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.    
 
 # Contributing
+
 I encourage everyone to contribute to this, even if it's just adding tests to the library. To do this, fork and make pull requests.   
 
 Before making pull requests, please:
@@ -115,15 +152,6 @@ Before making pull requests, please:
 && ./disable-test f_reserved_values_ && ./disable-test f_L_reserved_values_
 ```
 *and if you add non-mandatory test cases or tests that can segfault, modify this block in the readme*
-
-# How it works
-### ...for those who want knowledge and power (or maybe just want to use it to do something specific)
-
-When you run make, the first thing that happens is the test index is created. Two copies of unit\_tests.c are created. In the copy unit\_tests\_indexed.c, the test() function is replaced with ft\_printf(). In the copy unit\_tests\_benched.c, the test() function is replaced with printf() and '\_bench' is added to all the function names. Next, in both files, an array of function pointers is created at the end of the file pointing to all the enabled unit tests.   An array will also be created holding the names of all the functions as string literals.  
-
-When you call `./test s_`, main.c will see alpha input and call run\_search\_tests, which does a match comparison on each position in the array of function names, and when it finds a function name starting with 's\_', it calls run\_test() on that test.  
-
-run\_test() runs a particular test. The way the test works is that it redirects stdout to a file, calls the ft\_printf version (through the array of function pointers that was created on `make`), and does the same with the printf version. It compares the return value and the content of the files, and if either is different, the test is failed. (as of the time of writing this, moulinette checks output the same way, though it does not check return value.) The diff is logged to file and a red FAIL is printed instead of a pretty green PASS.  
 
 # Possible Future Features
 
@@ -138,6 +166,9 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 
 # Credits
 
-Some code was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
+The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
 
-Thanks to rwright for giving valuable feedback on improving the features.
+Also thanks to:
+ - rwright for valuable usage feedback
+ - phtroung for finding 'edge case' printf projects that exposed deficiencies.  
+
