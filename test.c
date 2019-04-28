@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 18:10:14 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:23:05 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,9 @@ void	log_failed_test(int test_number, int expected, int actual,
 	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s", g_unit_test_first_lines[test_number]);
 	write(fout, buff, strlen(buff));
 	write(fout, "\n", 1);
-	if (!signal_terminated)
+	if (timed_out)
+		write(fout, "    Timed out\n", 14);
+	else if (!signal_terminated)
 	{
 		snprintf(buff, MAX_FILE_COPY_SIZE, "    Returned expected %i, actual %i", expected, actual);
 		write(fout, buff, strlen(buff));
@@ -174,10 +176,7 @@ void	log_failed_test(int test_number, int expected, int actual,
 	else
 	{
 		write(fout, "    ", 4);
-		if (timed_out)
-			write(fout, "Timed out", 9);
-		else
-			write(fout, signal_terminated, strlen(signal_terminated));
+		write(fout, signal_terminated, strlen(signal_terminated));
 		write(fout, "\n", 1);
 	}
 	//close files)
