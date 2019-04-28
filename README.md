@@ -68,6 +68,10 @@ These are the naming conventions currently used in the included unit\_tests.c.
 
 These naming conventions are ***usually*** followed. There's a lot of tests, so making it more consistent is a huge task for another day. The first rule plus the `moul_` block are the two that most users care about, and they're both consistent.  
 
+## Disclaimer about the `moul_` tests
+
+They are outdated. At the very least, they were taken from before the subject recently changed. ***IN ADDITION*** more tests were added to moulinette to more sections than just `%f`. Do not think that by simply passing the `moul_` block, you will pass moulinette. Multiple people have already tried this and failed.  
+
 ## Workflow with PFT
 
 unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
