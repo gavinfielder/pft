@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 04:37:28 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:10:14 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,15 @@ const char *g_signal_strings[] =
 };
 
 /* ----------------------------------------------------------------------------
-** The test runner (set by options in Makefile/command line options)
+** Options that are set by Makefile and/or command line arguments
 ** --------------------------------------------------------------------------*/
 
 t_run_test_func		run_test = NULL;
+static int			use_timeout = 1;
 
 /* ----------------------------------------------------------------------------
 ** Global flags for timeout function
 ** --------------------------------------------------------------------------*/
-
-static int			use_timeout = 1;
 
 static int			timeout = 0;
 static int			ready = 0;
@@ -549,7 +548,7 @@ static int	run_test_fork(int test_number)
 	int			failed = 0;
 	int			stat_loc;
 	int			pipe_fd[2];
-
+	
 	remove(OUT_ACTUAL);
 	remove(OUT_EXPECTED);
 	print_test_start(test_number);
@@ -573,7 +572,8 @@ static int	run_test_fork(int test_number)
 	}
 	else
 	{
-		start_timeout(pid, 0, &timeout_thread, this_thread);
+		if (use_timeout)
+			start_timeout(pid, 0, &timeout_thread, this_thread);
 		//Waiting for child process to complete
 		waitpid(pid, &stat_loc, WUNTRACED);
 		if (WIFEXITED(stat_loc) && WEXITSTATUS(stat_loc) == 0 && pipe_fd[0] > 0)
@@ -586,7 +586,8 @@ static int	run_test_fork(int test_number)
 			{
 				//finished reading
 				retvals = args.retvals;
-				pthread_kill(timeout_thread, SIGUSR1);
+				if (use_timeout)
+					pthread_kill(timeout_thread, SIGUSR1);
 			}
 			else
 			{
@@ -599,7 +600,7 @@ static int	run_test_fork(int test_number)
 		}
 		else
 		{
-			if (!timeout)
+			if (use_timeout && !timeout)
 				pthread_kill(timeout_thread, SIGUSR1);
 			retvals.ret_val_mine = -4;
 			retvals.ret_val_libc = -4;

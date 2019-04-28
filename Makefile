@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/27 04:41:05 by gfielder         ###   ########.fr        #
+#    Updated: 2019/04/27 18:09:29 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,13 @@ LIBFT_NAME=libft.a
 # Set to 1 to ignore return value
 IGNORE_RETURN_VALUE=0
 
-# Set to 1 to run tests on child processes by default
-# This option can make PFT more stable, but it breaks lldb debugging
-TEST_ON_FORK_BY_DEFAULT=1
-
-# Set the number of seconds to timeout on each test
+# Set the number of seconds to timeout on each test, when timeout is used
 TIMEOUT_SECONDS=0.75
+
+# Sets default program behavior; can be overridden with command line arguments
+USE_TIMEOUT=1
+RUN_TESTS_AS_FORK=1
+# Note the timeout feature is currently only available when using fork
 
 # Name of the test executable
 TEST_ONAME=test
@@ -36,23 +37,33 @@ TEST_ONAME=test
 # Maximum size of output strings to see in the test results file
 TEST_FAIL_LOGGING_MAXBYTES=150
 
+# The compile flags the tester is built with
+CFLAGS=-Wall -Wextra -g
+
 # Specify the root of your repo, where your Makefile is and where your libftprinf.a will be
 LIBFTPRINTF_DIR=..
 
-# The compile flags the tester is built with
-CFLAGS=-Wall -Wextra -g
+# This is the name required by the subject, so I doubt you'd want to change it
+LIBFTPRINTF_NAME=libftprintf.a
+
+# When 1, ./test 824 runs test 824 only. When 0, ./test 824 runs 824-[end]
+SINGLE_NUMBER_SINGLE_TEST=1
+
+#     Note setting the option above to 0 disables the next option:
+
+# When 1, ./test 824 runs the test in LLDB compatibility mode by default
+SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1
 
 # ------------------------------------------------------------------------------
 #      End User Options
 # ------------------------------------------------------------------------------
 
-LIBFTPRINTF_NAME=libftprintf.a
 CC=clang
 INC=-I.
 TEST_RESULTS=test_results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
-SRC_TEST=main.c test.c test_print_and_utils.c
+SRC_TEST=main.c test.c test_print_and_utils.c ft_options.c help.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=unit_tests_indexed.c
 INDEXED_BENCH=unit_tests_benched.c
@@ -61,8 +72,11 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
 			 -D MAX_FILE_COPY_SIZE=$(TEST_FAIL_LOGGING_MAXBYTES) \
 			 -D IGNORE_RETURN_VALUE=$(IGNORE_RETURN_VALUE) \
-			 -D TEST_ON_FORK_BY_DEFAULT=$(TEST_ON_FORK_BY_DEFAULT) \
-			 -D TIMEOUT_SECONDS=$(TIMEOUT_SECONDS)
+			 -D USE_TIMEOUT=$(USE_TIMEOUT) \
+			 -D RUN_TESTS_AS_FORK=$(RUN_TESTS_AS_FORK) \
+			 -D TIMEOUT_SECONDS=$(TIMEOUT_SECONDS) \
+			 -D SINGLE_NUMBER_SINGLE_TEST=$(SINGLE_NUMBER_SINGLE_TEST) \
+			 -D SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=$(SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE)
 ifeq ($(USE_SEPARATE_LIBFT),1)
 LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else

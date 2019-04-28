@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 03:22:03 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/27 16:59:01 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ int							ft_printf(const char *, ...);
 void						run_test_range(t_unit_tester_args *args);
 void						run_search_tests(t_unit_tester_args *args);
 
+void						print_help(int extended);
+
 void						set_option_fork(void);
 void						set_option_nofork(void);
 void						set_option_usetimeout(void);
@@ -177,5 +179,32 @@ int			ft_match_helper(const char *s1, char *s2);
 int			ft_match(const char *s1, char *s2);
 void 		convert_nonalphanum_to_wildcard(char *str);
 void		ft_putnbr_fd(int nb, int fd);
+
+
+/* ----------------------------------------------------------------------------
+** Args Array from Libft
+** --------------------------------------------------------------------------*/
+typedef struct			s_argsarr
+{
+	char				**argv;
+	int					argc;
+}						t_argsarr;
+
+/* ----------------------------------------------------------------------------
+** Command Line Options from Libft
+** --------------------------------------------------------------------------*/
+
+# define FTOPT_MAX_OPTIONS 63
+
+typedef struct			s_clopt
+{
+	char				selected[FTOPT_MAX_OPTIONS + 1];
+	int					num_sel;
+	char				*program_name;
+	t_argsarr			args;
+}						t_clopt;
+
+t_clopt					ft_optget(int argc, char **argv);
+int						ft_issel(t_clopt *opt, char c);
 
 #endif
