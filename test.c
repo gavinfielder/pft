@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 18:23:05 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:28:33 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	log_failed_test(int test_number, int expected, int actual,
 		write(fout, signal_terminated, strlen(signal_terminated));
 		write(fout, "\n", 1);
 	}
+	write(fout, "\n", 1);
 	//close files)
 	close(finlibc);
 	close(finmine);
