@@ -175,6 +175,6 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
 
 Also thanks to:
- - rwright for valuable usage feedback
- - phtroung for finding 'edge case' printf projects that exposed deficiencies.  
+ - [rwright](https://github.com/wright08) for valuable usage feedback
+ - phtruong for finding 'edge case' printf projects that exposed deficiencies.  
 
