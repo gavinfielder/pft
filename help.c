@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:57:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 18:11:32 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/04/27 20:41:28 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,24 @@ void		print_help(int extended)
 	printf(    "  Run ft_printf unit tests by name or number\n");
 	printf("\n");
 	printf(    "  \x1B[1;33mBasic Examples:\n" RESET);
-	printf(    "    \x1B[0;36m./test moul       \x1B[0m (recommended usage)\n");
-	printf(    "      \x1B[0m\x1B[2mRun all tests that start with a string, in this case \"moul\"\n" RESET);
+	printf(    "    \x1B[0;36m./test mix       \x1B[0m (recommended usage)\n");
+	printf(    "      \x1B[0m\x1B[2mRun all tests that start with a string, in this case \"mix\"\n" RESET);
 	printf(    "    \x1B[0;36m./test 42 84\n" RESET);
 	printf(    "      \x1B[0m\x1B[2mRun the 42nd through 84th tests (of those enabled)\n" RESET);
 	printf(    "    \x1B[0;36m./test 42\n" RESET);
-	printf(    "      \x1B[0m\x1B[2mRun all the enabled tests starting at the 42nd\n" RESET);
+	if (SINGLE_NUMBER_SINGLE_TEST)
+	{
+		printf(    "      \x1B[0m\x1B[2mRun test 42%s\n" RESET,
+			((SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE) ? " (Also turns on debug compatibility mode)" : ""));
+	}
+	else
+	{
+		printf(    "      \x1B[0m\x1B[2mRun all the enabled tests starting at the 42nd\n" RESET);
+	}
 	printf(    "    \x1B[0;36m./test\n" RESET);
 	printf(    "      \x1B[0m\x1B[2mRun all the enabled tests\n" RESET);
+	printf(    "    \x1B[0;36m./test -d \x1B[2;32m[any of the above queries]\n" RESET);
+	printf(    "      \x1B[0m\x1B[2mRun the selected tests in debug compatibility mode\n" RESET);
 	printf("\n");
 	printf(    "  \x1B[1;33mWildcard Search:\n" RESET);
 	printf(    "    All alphabetic queries have an implicit wildcard at the end\n");
@@ -65,10 +75,23 @@ void		print_help(int extended)
 	printf(    "    - The \x1B[33mmoul_\x1B[0m block has subgroups \x1B[33mmoul_d_\x1B[0m, \x1B[33mmoul_i_\x1B[0m, \x1B[33mmoul_o_\x1B[0m, etc.\n");
 	printf(    "    - Tests adapated from 42FileChecker have '\x1B[33mftfc\x1B[0m' in the name\n");
 	printf("\n");
+	printf(    "  \x1B[1;33mRunning PFT with LLDB or other debuggers\n" RESET);
+	printf(    "    PFT must run in debugger compatibility mode to work with debuggers.\n");
+	printf(    "    The following works with your current configuration:\n");
+	printf("\n");
+	if (SINGLE_NUMBER_SINGLE_TEST && SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE)
+	{
+		printf(    "    \x1B[0;36mlldb ./test 42\n" RESET);
+		printf(    "      \x1B[0m\x1B[2mDebug test 42\n" RESET);
+	}
+	printf(    "    \x1B[0;36mlldb ./test -d \x1B[2;32m[query]\n" RESET);
+	printf(    "      \x1B[0m\x1B[2mDebugs the selected tests.\n" RESET);
+	printf("\n");
 	if (!extended) {
 		printf("  Run \x1B[0;36m./test help all\x1B[0m  to see more.\n");
 		return ;
 	}
+
 	printf(    "  \x1B[1;33mOther Specific Test Blocks\n" RESET);
 	printf(    "    - \x1B[33mmix_\x1B[0m are tests that combine multiple specifiers at random\n");
 	printf(    "    - \x1B[33mf_stress_\x1B[0m and \x1B[33mf_L_stress_\x1B[0m are float stress tests. Don't worry\n");
@@ -103,6 +126,37 @@ void		print_help(int extended)
 	printf(    "      \x1B[0m\x1B[2mEnables all the tests that start with 'nocrash'\n" RESET);
 	printf(    "    \x1B[0;36m./disable-test \"f_L*prec\"\n" RESET);
 	printf(    "      \x1B[0m\x1B[2mDisables tests that start with 'f_L' and includes 'prec'\n" RESET);
+	printf("\n");
+	printf(    "  \x1B[1;33mAdvanced Options\n" RESET);
+	printf(    "    See Readme for descriptions of these options and more.\n");
+	printf(    "    The current configuration can be changed in the PFT Makefile.\n\n");
+	if (USE_TIMEOUT)
+	{
+		printf(    "    current configuration: timeouts enabled\n");
+		printf(    "    command line option:  \x1B[33m-T\x1B[0m turns off timeouts.\n");
+	}
+	else if (RUN_TESTS_AS_FORK)
+	{
+		printf(    "    current configuration: timeouts disabled but available\n");
+		printf(    "    command line option:  \x1B[33m-t\x1B[0m turns on timeouts.\n");
+	}
+	else
+	{
+		printf(    "    current configuration: fork mode and timeouts are disabled\n");
+		printf(    "    command line options: \x1B[33m-ft\x1B[0m turns on fork mode with timeouts.\n");
+	}
+	if (RUN_TESTS_AS_FORK)
+	{
+		printf(    "    current configuration: fork mode is enabled.\n");
+		printf(    "    command line option:  \x1B[33m-F\x1B[0m turns off fork mode (also disables timeout).\n");
+	}
+	else
+	{
+		printf(    "    current configuration: fork mode is disabled.\n");
+		printf(    "    command line option:  \x1B[33m-f\x1B[0m turns on fork mode.\n");
+	}
+	printf(    "    command line options: \x1B[33m-f\x1B[0m / \x1B[33m-t\x1B[0m force fork mode / timeout\n");
+	printf(    "    and will override debug compatibility mode.\n");
 	printf("\n");
 	printf(    "  \x1B[1;33mThe Return Value (aka Why are all my tests failing?)\n" RESET);
 	printf(    "    By default, this tester first checks your ft_printf return value.\n");
