@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/04/27 18:09:29 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/01 03:42:13 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,14 +59,14 @@ SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1
 # ------------------------------------------------------------------------------
 
 CC=clang
-INC=-I.
+INC=-I src
 TEST_RESULTS=test_results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
-SRC_TEST=main.c test.c test_print_and_utils.c ft_options.c help.c
+SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/ft_options.c src/help.c
 UNIT_TEST_FILE=unit_tests.c
-INDEXED_TESTS=unit_tests_indexed.c
-INDEXED_BENCH=unit_tests_benched.c
+INDEXED_TESTS=src/unit_tests_indexed.c
+INDEXED_BENCH=src/unit_tests_benched.c
 TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D OUT_EXPECTED="\"$(TEST_OUT_EXPECTED)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
