@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/01 03:42:13 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/01 06:37:05 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,6 @@ TEST_OUT_EXPECTED=test.libc
 SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/ft_options.c src/help.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=src/unit_tests_indexed.c
-INDEXED_BENCH=src/unit_tests_benched.c
 TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D OUT_EXPECTED="\"$(TEST_OUT_EXPECTED)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
@@ -89,7 +88,7 @@ $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_in
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
-	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS) $(INDEXED_BENCH)
+	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS)
 	@echo "\x1B[32m=============================================================\x1B[0m"
 	@echo "\x1B[32m  printftester2000 (aka PFT)\x1B[0m - \x1B[2mmade by gfielder@42.us.org\x1B[0m"
 	@echo "\x1B[32m=============================================================\x1B[0m"
@@ -102,34 +101,9 @@ $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_in
 
 $(INDEXED_TESTS): test_index
 
-$(INDEXED_BENCH): test_index
-
 .INTERMEDIATE: test_index
 test_index: $(UNIT_TEST_FILE)
-	@cp $(UNIT_TEST_FILE) $(INDEXED_TESTS)
-	@sed -i .bak "s/return test(/return ft_printf(/g" $(INDEXED_TESTS)
-	@echo "const t_unit_test g_unit_tests[] = {" >> $(INDEXED_TESTS)
-	@cat $(UNIT_TEST_FILE) | grep -o "^int\s*[a-zA-Z0-9_]*(void)" | sed "s/^int\s*//g" | sed "s/(void)/,/g" | tr -d " \t\v\f" >> $(INDEXED_TESTS)
-	@echo "NULL" >> $(INDEXED_TESTS)
-	@echo "};" >> $(INDEXED_TESTS)
-	@echo "" >> $(INDEXED_TESTS)
-	@echo "const char *g_unit_test_names[] = {" >> $(INDEXED_TESTS)
-	@cat $(UNIT_TEST_FILE) | grep -o "^int\s*[a-zA-Z0-9_]*(void)" | sed "s/^int\s*/\"/g    " | sed "s/(void)/\",/g" | tr -d " \t\v\f" >> $(INDEXED_TESTS)
-	@echo "NULL" >> $(INDEXED_TESTS)
-	@echo "};" >> $(INDEXED_TESTS)
-	@echo "const char *g_unit_test_first_lines[] = {" >> $(INDEXED_TESTS)
-	@cat $(UNIT_TEST_FILE) | grep "^int\s*[a-zA-Z0-9_]*(void)" | sed "s/int\s*.*(void){//g" | sed "s/}//g" | sed "s/\"/\\\\\"/g" | sed "s/\\\\\\\\\"/\\\\\"/g" | sed "s/\(.*\)/\"\1\",/g" >> $(INDEXED_TESTS)
-	@echo "NULL" >> $(INDEXED_TESTS)
-	@echo "};" >> $(INDEXED_TESTS)
-	@cp $(UNIT_TEST_FILE) $(INDEXED_BENCH)
-	@sed -i .bak "s/return test(/return printf(/g" $(INDEXED_BENCH)
-	@sed -i .bak "s/(void)/_bench(void)/g" $(INDEXED_BENCH)
-	@echo "const t_unit_test g_bench[] = {" >> $(INDEXED_BENCH)
-	@cat $(INDEXED_BENCH) | grep -o "^int\s*[a-zA-Z0-9_]*(void)" | sed "s/^int\s*//g" | sed "s/(void)/,/g" | tr -d " \t\v\f" >> $(INDEXED_BENCH)
-	@echo "NULL" >> $(INDEXED_BENCH)
-	@echo "};" >> $(INDEXED_BENCH)
-	@echo "" >> $(INDEXED_BENCH)
-	@rm -f *.bak
+	@php src/create_index.php $(UNIT_TEST_FILE) $(INDEXED_TESTS)
 
 $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME):
 	@make -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1
@@ -139,7 +113,6 @@ $(LIBFT_DIR_PATH)/$(LIBFT_NAME):
 
 clean:
 	@rm -f $(INDEXED_TESTS)
-	@rm -f $(INDEXED_BENCH)
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)

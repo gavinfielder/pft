@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 16:59:01 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/01 05:37:43 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,16 +134,23 @@ typedef int					(*printf_func) (const char *, ...);
 
 typedef int					(*t_run_test_func) (int);
 
+typedef struct	s_test_entry
+{
+	int			enabled;
+	int			number;
+	const char	*name;
+	t_unit_test	test;
+	t_unit_test	bench;
+	const char	*first_line;
+}				t_test_entry;
+
 /* ----------------------------------------------------------------------------
 ** Globals
 ** --------------------------------------------------------------------------*/
 
 extern t_unit_tester_args  *failsafe_args_recover;
 
-extern const t_unit_test	g_unit_tests[];
-extern const char 			*g_unit_test_names[];
-extern const t_unit_test	g_bench[];
-extern const char			*g_unit_test_first_lines[];
+extern const t_test_entry	g_unit_tests[];
 
 extern const char			*g_signal_strings[];
 

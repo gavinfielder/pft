@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 18:28:33 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/01 06:34:17 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ const char *g_signal_strings[] =
 
 t_run_test_func		run_test = NULL;
 static int			use_timeout = 1;
+static int			run_disabled = 0;
 
 /* ----------------------------------------------------------------------------
 ** Global flags for timeout function
@@ -141,9 +142,9 @@ void	log_failed_test(int test_number, int expected, int actual,
 	}
 
 	//Write to test results file
-	snprintf(buff, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_test_names[test_number]);
+	snprintf(buff, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_tests[test_number].name);
 	write(fout, buff, strlen(buff));
-	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s", g_unit_test_first_lines[test_number]);
+	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s", g_unit_tests[test_number].first_line);
 	write(fout, buff, strlen(buff));
 	write(fout, "\n", 1);
 	if (timed_out)
@@ -258,10 +259,10 @@ static t_retvals	output_test(int test_number)
 	int				nocrash = 0;
 
 	bzero(&retvals, sizeof(t_retvals));
-	nocrash = (strncmp(g_unit_test_names[test_number], "nocrash_", 8) == 0);
-	retvals.ret_val_mine = output_to_file(OUT_ACTUAL, g_unit_tests[test_number]);
+	nocrash = (strncmp(g_unit_tests[test_number].name, "nocrash_", 8) == 0);
+	retvals.ret_val_mine = output_to_file(OUT_ACTUAL, g_unit_tests[test_number].test);
 	if (!nocrash)
-		retvals.ret_val_libc = output_to_file(OUT_EXPECTED, g_bench[test_number]);
+		retvals.ret_val_libc = output_to_file(OUT_EXPECTED, g_unit_tests[test_number].bench);
 	else
 		retvals.ret_val_libc = -2;
 	return (retvals);
@@ -335,7 +336,7 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 	int				nocrash;
 	int				run_comparison = 1;
 
-	nocrash = (strncmp(g_unit_test_names[test_number], "nocrash_", 8) == 0);
+	nocrash = (strncmp(g_unit_tests[test_number].name, "nocrash_", 8) == 0);
 	if (nocrash)
 	{
 		if (retvals.stat_loc == 0)
@@ -655,9 +656,10 @@ void	run_search_tests(t_unit_tester_args *args)
 	convert_nonalphanum_to_wildcard(pattern);
 
 	//Search tests
-	while (g_unit_tests[args->current] != NULL)
+	while (g_unit_tests[args->current].test != NULL)
 	{
-		if (ft_match(g_unit_test_names[args->current], pattern))
+		if (ft_match(g_unit_tests[args->current].name, pattern)
+				&& (g_unit_tests[args->current].enabled || run_disabled))
 		{
 			fail = run_test(args->current);
 			args->num_fails += fail;
@@ -667,7 +669,7 @@ void	run_search_tests(t_unit_tester_args *args)
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
 	free(pattern);
-	exit(0); //needed in case a test segfaulted
+	exit(0); //needed in non-fork mode in case a test segfaulted
 }
 
 /* ----------------------------------------------------------------------------
@@ -677,13 +679,16 @@ void	run_test_range(t_unit_tester_args *args)
 {
 	int	fail = 0;
 
-	while (args->current <= args->to && g_unit_tests[args->current] != NULL)
+	while (args->current <= args->to && g_unit_tests[args->current].test != NULL)
 	{
-		fail = run_test(args->current);
-		args->num_fails += fail;
-		args->num_run++;
+		if (g_unit_tests[args->current].enabled || run_disabled)
+		{
+			fail = run_test(args->current);
+			args->num_fails += fail;
+			args->num_run++;
+		}
 		args->current++;
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
-	exit(0); //needed in case a test segfaulted
+	exit(0); //needed in non-fork mode in case a test segfaulted
 }

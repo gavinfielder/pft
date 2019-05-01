@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 02:52:51 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/01 05:49:21 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** --------------------------------------------------------------------------*/
 void		print_test_start(int test_number)
 {
-	printf("Test %4i:  %-42s [",test_number, g_unit_test_names[test_number]);
+	printf("Test %4i:  %-42s [",test_number, g_unit_tests[test_number].name);
 }
 
 /* ----------------------------------------------------------------------------
