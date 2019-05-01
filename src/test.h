@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/01 05:37:43 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/01 08:08:27 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,35 +99,35 @@ typedef void (*t_unit_tester_func) (t_unit_tester_args *);
 
 struct s_unit_tester_args
 {
-	char	*pattern;
-	int		from;
-	int		to;
-	int		current;
-	int		num_fails;
-	int		num_run;
-	t_unit_tester_func	run;
-	int		fd_stdout_dup;
+	char					*pattern;
+	int						from;
+	int						to;
+	int						current;
+	int						num_fails;
+	int						num_run;
+	t_unit_tester_func		run;
+	int						fd_stdout_dup;
 };
 
-typedef struct s_retvals
+typedef struct 				s_retvals
 {
-	int		ret_val_libc;
-	int		ret_val_mine;
-	int		stat_loc;
-} t_retvals;
+	int						ret_val_libc;
+	int						ret_val_mine;
+	int						stat_loc;
+} 							t_retvals;
 
 typedef struct s_timeout_args
 {
-	pid_t		pid;
-	int			signal;
-	pthread_t	mainthread;
-} t_timeout_args;
+	pid_t					pid;
+	int						signal;
+	pthread_t				mainthread;
+}							t_timeout_args;
 
 typedef struct s_retval_pipe_args
 {
-	int			fd;
-	t_retvals	retvals;
-} t_retval_pipe_args;
+	int						fd;
+	t_retvals				retvals;
+} 							t_retval_pipe_args;
 
 typedef	int					(* t_unit_test) (void);
 typedef int					(*printf_func) (const char *, ...);
@@ -136,13 +136,21 @@ typedef int					(*t_run_test_func) (int);
 
 typedef struct	s_test_entry
 {
-	int			enabled;
-	int			number;
-	const char	*name;
-	t_unit_test	test;
-	t_unit_test	bench;
-	const char	*first_line;
-}				t_test_entry;
+	int						enabled;
+	int						number;
+	const char				*name;
+	t_unit_test				test;
+	t_unit_test				bench;
+	const char				*first_line;
+}							t_test_entry;
+
+typedef struct				s_test_log_entry
+{
+	const t_test_entry		*test;
+	time_t					timestamp_pass;
+	time_t					timestamp_fail;
+	struct s_test_log_entry *next;
+}							t_test_log_entry;
 
 /* ----------------------------------------------------------------------------
 ** Globals
@@ -158,39 +166,47 @@ extern const char			*g_signal_strings[];
 ** The Victim
 ** --------------------------------------------------------------------------*/
 
-int							ft_printf(const char *, ...);
+int						ft_printf(const char *, ...);
 
 /* ----------------------------------------------------------------------------
 ** Interface Functions
 ** --------------------------------------------------------------------------*/
 
-void						run_test_range(t_unit_tester_args *args);
-void						run_search_tests(t_unit_tester_args *args);
+void					run_test_range(t_unit_tester_args *args);
+void					run_search_tests(t_unit_tester_args *args);
 
-void						print_help(int extended);
+void					print_help(int extended);
 
-void						set_option_fork(void);
-void						set_option_nofork(void);
-void						set_option_usetimeout(void);
-void						set_option_notimeout(void);
+void					set_option_fork(void);
+void					set_option_nofork(void);
+void					set_option_usetimeout(void);
+void					set_option_notimeout(void);
 
 /* ----------------------------------------------------------------------------
 ** Helper Functions
 ** --------------------------------------------------------------------------*/
 
-void		log_msg(const char *msg);
-void		print_test_start(int test_number);
-void		print_test_end(int failed, int stat_loc, int timed_out);
-void		print_end_test_message(int num_tests, int num_passed);
-int			ft_match_helper(const char *s1, char *s2);
-int			ft_match(const char *s1, char *s2);
-void 		convert_nonalphanum_to_wildcard(char *str);
-void		ft_putnbr_fd(int nb, int fd);
+void					log_msg(const char *msg);
+void					print_test_start(int test_number);
+void					print_test_end(int failed, int stat_loc, int timed_out);
+void					print_end_test_message(int num_tests, int num_passed);
+int						ft_match_helper(const char *s1, char *s2);
+int						ft_match(const char *s1, char *s2);
+void 					convert_nonalphanum_to_wildcard(char *str);
+void					ft_putnbr_fd(int nb, int fd);
 
+/* ----------------------------------------------------------------------------
+** Test History Logging
+** --------------------------------------------------------------------------*/
+
+void					add_log_entry(const t_test_entry *test, int failed);
+void					new_log(void);
+void					write_log(void);
 
 /* ----------------------------------------------------------------------------
 ** Args Array from Libft
 ** --------------------------------------------------------------------------*/
+
 typedef struct			s_argsarr
 {
 	char				**argv;
@@ -213,5 +229,12 @@ typedef struct			s_clopt
 
 t_clopt					ft_optget(int argc, char **argv);
 int						ft_issel(t_clopt *opt, char c);
+
+/* ----------------------------------------------------------------------------
+** strsplit from libft
+** --------------------------------------------------------------------------*/
+
+char					**my_strsplit(char const *s, char c);
+void					ft_destroy_nullterm_ptrarray(void ***arr);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/01 06:37:05 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/01 07:57:19 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,10 +60,13 @@ SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1
 
 CC=clang
 INC=-I src
+TEST_LOG=test_history.txt
 TEST_RESULTS=test_results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
-SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/ft_options.c src/help.c
+SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/ft_options.c \
+		 src/help.c src/ft_destroy_nullterm_ptrarray.c src/ft_strsplit.c \
+		 src/history.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=src/unit_tests_indexed.c
 TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
@@ -75,7 +78,8 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D RUN_TESTS_AS_FORK=$(RUN_TESTS_AS_FORK) \
 			 -D TIMEOUT_SECONDS=$(TIMEOUT_SECONDS) \
 			 -D SINGLE_NUMBER_SINGLE_TEST=$(SINGLE_NUMBER_SINGLE_TEST) \
-			 -D SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=$(SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE)
+			 -D SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=$(SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE) \
+			 -D TEST_LOG="\"$(TEST_LOG)\""
 ifeq ($(USE_SEPARATE_LIBFT),1)
 LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else

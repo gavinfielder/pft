@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/01 06:34:17 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/01 07:53:34 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,7 +369,10 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 	if (run_comparison)
 	{
 		if (get_and_validate_test_fp(&fpmine, &fplibc) < 0)
+		{
+			//TODO: some indication of error to the user would be nice here
 			return (1);
+		}
 		//Evaluate test results
 		if (retvals.ret_val_mine != retvals.ret_val_libc && !(IGNORE_RETURN_VALUE))
 			failed = 1;
@@ -397,6 +400,8 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 				g_signal_strings[WTERMSIG(retvals.stat_loc)] : NULL),
 				timeout);
 	}
+
+	add_log_entry(&(g_unit_tests[test_number]), failed);
 
 	return failed;
 }
@@ -669,6 +674,7 @@ void	run_search_tests(t_unit_tester_args *args)
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
 	free(pattern);
+	write_log();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }
 
@@ -690,5 +696,6 @@ void	run_test_range(t_unit_tester_args *args)
 		args->current++;
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
+	write_log();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }
