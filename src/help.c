@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:57:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 20:45:24 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/01 20:38:11 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ void		print_help(int extended)
 	printf(    "      \x1B[0m\x1B[2mDisables tests that start with 'f_L' and includes 'prec'\n" RESET);
 	printf("\n");
 	printf(    "  \x1B[1;33mAdvanced Options\n" RESET);
+	printf(    "    This section of help is under construction. Please refer to README.md\n");
+	/*
 	printf(    "    See Readme for descriptions of these options and more.\n");
 	printf(    "    The current configuration can be changed in the PFT Makefile.\n\n");
 	if (USE_TIMEOUT)
@@ -158,6 +160,7 @@ void		print_help(int extended)
 	}
 	printf(    "    command line options: \x1B[33m-f\x1B[0m / \x1B[33m-t\x1B[0m force fork mode / timeout\n");
 	printf(    "    and will override debug compatibility mode.\n");
+	*/
 	printf("\n");
 	printf(    "  \x1B[1;33mThe Return Value (aka Why are all my tests failing?)\n" RESET);
 	printf(    "    By default, this tester first checks your ft_printf return value.\n");

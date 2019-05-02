@@ -1,3 +1,4 @@
+
 <img align="right"  src="https://i.imgur.com/tpVSrBr.png" width="45%" />  
 
 # PFT
@@ -109,30 +110,43 @@ The PFT Makefile includes an option to ignore return value checking. I included 
 The Makefile creates two copies of unit\_tests.c, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
 
 # Advanced Options
+These options are selected either in the PFT Makefile (to set the default run options) and/or as command line options. See below for a description of each optional feature.
+| Option                       |  On  |  Off  | Note            |
+|------------------------------|------|-------|-----------------|
+| Debugger compatibility Mode  | `-d` |       | default on for single tests, off otherwise
+| Timeout                      | `-t` | `-T`  | default on
+| Test history logging         | `-l` | `-L`  | default on
+| Do not write new test history|      | `-W`  | 
+| Test recently failed tests   | `-f` | `-F`  | default on
+| Test recently passed tests   | `-p` | `-P`  | default on
+| Test outdated tests          | `-o` | `-O`  | default on
+| Test disabled tests          | `-a` | `-A`  | default off
+| Fork mode                    | `-x` | `-X`  | default on
+| Handle Signals               | `-s` | `-S`  | default on (non-fork mode only)
+### Debugger Compatibility Mode
+Debuggers tend to only work well on single-threaded single processes, so "debugger compatibility mode" means "disable forking and multithreading". It also disables signal handling. `-d` is identical to `-XTS`. By default, debugger compatibility mode is turned on when running a single test e.g. `./test 42`.
+### Timeout
+Fails tests after a specified time interval. The timeout duration can be set in the PFT Makefile. Only available in fork mode.
+### Test History Logging
+test\_history.csv is a CSV file of records composed of test number, test name, timestamp of last pass, timestamp of lass fail. Turning this option on means that the test history will be read on start, will be written on completion (unless `-W` is specified), and that the options `-p`, `-f`, `-o`, and their negatives can filter which tests are run. The Makefile option `TEST_OUTDATED_TIME` determines how much time passes before tests become 'outdated'.  
 
-PFT has a couple of different modes. By default it tests ft\_printf on forked child processes, which makes it more stable, and uses parallel threads to implement timeout. You can use the below options to control this behavior.  
+UPCOMING FEATURES:
+~~The PFT Makefile removes test\_history.csv whenever unit\_tests.c is strictly newer, as this feature only remains coherent when the test numbers do not change. By default the enable-test and disable-test scripts, as they modify unit\_tests.c, will trigger such removal of test\_history.csv.
 
-Debuggers tend to only work well on single-threaded single processes, so "debugger compatibility mode" currently means "disable forking and multithreading".  
+There is an option in the makefile to disable the history removal behavior, as well as an option in each of these scripts to touch test\_history.csv to prevent the removal trigger. ~~
 
-## Command Line Options
-Command line options come before test run queries, e.g. `./test -d nospec`
- - `-d` Turns on debugger compatibility mode (currently identical to `-FT`)
- - `-f` Turn on fork mode (default)
- - `-F` Turn off fork mode (also disables timeout). Incompatible with `-t`
- - `-t` Turn on timeout (default)
- - `-T` Turn off timeout
+### Fork Mode
+By default, PFT calls ft\_printf only on forked child processes to improve stability. Turning this option off means that tests will run in a single process and a single thread. Timeout is not available when fork mode is off.
+### Handle Signals
+(only applies to non-fork mode) When this option is off, signals will not be caught by PFT and PFT will stop immediately when a test aborts abnormally. When this option is on, abnormal terminations by certain signals will be caught by PFT and tests will continue running.    
 
 ## Options in Makefile
  - `TIMEOUT_SECONDS=(float)` (default 0.75) sets the number of seconds before any particular test times out.
- - `RUN_TESTS_AS_FORK=1` (default) Makes the `-f` option (fork) the run default.
- - `RUN_TESTS_AS_FORK=0` Makes the `-F` option (no fork) the run default. Also disables timeout.
- - `USE_TIMEOUT=1` (default) Makes the `-t` (use timeout) option the run default
- - `USE_TIMEOUT=0` Makes the `-T` option (no timeout) the run default
- - `IGNORE_RETURN_VALUE=0` (default) Tests fail if ft\_printf and printf do not have the same return value.
- - `IGNORE_RETURN_VALUE=1` Ignores differences in the return value between ft\_printf and printf.
- - `SINGLE_NUMBER_SINGLE_TEST=0` (legacy option) Makes it such that `./test 42` runs test #42 to the end of all enabled tests. This could still be useful if you are using only your own tests and are writing them as you develop.  
- - `SINGLE_NUMBER_SINGLE_TEST=1` (default) Single numeric arguments given will run only the specified test number.
- - `SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1` (default) When `SINGLE_NUMBER_SINGLE_TEST` is 1, single tests also turn on debugger compatibility mode unless overridden at the command line.
+- `DEFAULT_RUN_OPTIONS` (default `AfKlopstx`) specifies the command-line options that are selected by default. These are overridden by any command line options given at execution time.
+ - `IGNORE_RETURN_VALUE` (default 0) If this option is `0`, Tests fail if ft\_printf and printf do not have the same return value. If this option is `1`, the return value is ignored.
+ - `REMOVE_HISTORY_WHEN_TESTS_NEW` (default 1) If this option is 1, the makefile will remove test\_history.csv whenever unit\_tests.c is strictly newer.
+ - `SINGLE_NUMBER_SINGLE_TEST` (default 1) When this option is 1, single numeric arguments given will run only the specified test number. When this option is 0 it makes it such that `./test 42` runs test #42 to the end of all enabled tests. This is a legacy feature, but could still be useful if you are using only your own tests and are writing them as you develop.  
+ - `SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE` (default 1) When this option is 1, (and `SINGLE_NUMBER_SINGLE_TEST`) is also 1, single tests also turn on debugger compatibility mode unless overridden at the command line.
 
 # Troubleshooting
 
@@ -175,7 +189,10 @@ Feel free to give me suggestions, or code them yourself and make a pull request.
 The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
 
 Also thanks to:
- - [rwright](https://github.com/wright08) for valuable usage feedback
- - phtruong for finding 'edge case' printf projects that exposed deficiencies.  
- - [osfally](https://github.com/shaparder) for motivation on a particular feature
+- [rwright](https://github.com/wright08)
+- phtruong
+- [osfally](https://github.com/shaparder)
+- [dfonarev](https://github.com/ruv1nce)  
+for various suggestions and feature motivations.
+
 

@@ -6,16 +6,59 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 06:47:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/01 08:08:56 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:32:10 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <time.h>
+#include <string.h>
 #include "test.h"
 #include <stdio.h>
 
 static t_test_log_entry		*head = NULL;
 static t_test_log_entry		*tail = NULL;
+
+static int					log_write_enabled = 1;
+void		set_option_nowritelog(void) { log_write_enabled = 0; }
+
+void		load_history(void)
+{
+	FILE	*fp_in = NULL;
+	size_t	size = 0;
+	char	*line = NULL;
+	int		test_number;
+	char	**split;
+	time_t	test_last_passed;
+	time_t	test_last_failed;
+	time_t	now = time(NULL);
+
+	memset(test_history, NO_HISTORY, NUMBER_OF_TESTS + 10);
+
+	fp_in = fopen(TEST_LOG, "r");
+	if (!fp_in)
+		return ;
+	while (getline(&line, &size, fp_in) > 0)
+	{
+		split = my_strsplit(line, ',');
+		test_number = atoi(split[0]);
+		test_last_passed = (time_t)atol(split[2]);
+		test_last_failed = (time_t)atol(split[3]);
+		if (now < test_last_failed + TEST_OUTDATED_TIME && test_last_failed > test_last_passed)
+			test_history[test_number] = RECENTLY_FAILED;
+		else if (now < test_last_passed + TEST_OUTDATED_TIME && test_last_passed > test_last_failed)
+			test_history[test_number] = RECENTLY_PASSED;
+		else
+			test_history[test_number] = OUTDATED;
+		ft_destroy_nullterm_ptrarray((void ***)(&split));
+	}
+	if (line)
+		free(line);
+	fclose(fp_in);
+
+	//debug
+	if (DEBUG)
+		printf("Test history:\n\"%s\"\n\n", test_history);
+}
 
 void		add_log_entry(const t_test_entry *test, int failed)
 {
@@ -60,6 +103,21 @@ void		write_head_to_log(FILE *fp_out, int test_last_passed,
 	t_test_log_entry *tmp = head->next;
 	free(head);
 	head = tmp;
+	if (!head)
+		tail = NULL;
+}
+
+void		flush_all_log_entries(void)
+{
+	t_test_log_entry *tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		free(head);
+		head = tmp;
+	}
+	tail = NULL;
 }
 
 void		new_log(void)
@@ -87,6 +145,11 @@ void		write_log(void)
 
 	if (!head)
 		return ;
+	if (log_write_enabled == 0)
+	{
+		flush_all_log_entries();
+		return ;
+	}
 	fp_in = fopen(TEST_LOG, "r");
 	if (!fp_in)
 	{
@@ -113,6 +176,8 @@ void		write_log(void)
 		write_head_to_log(fp_out, 0, 0);
 	fclose(fp_in);
 	fclose(fp_out);
+	if (line)
+		free(line);
 	char *cmd = NULL; asprintf(&cmd, "mv log_new.temp %s", TEST_LOG);
 	system(cmd);
 	free(cmd);

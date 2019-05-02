@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/01 08:08:27 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:53:03 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #include <sys/wait.h>
 #include <time.h>
 
-#define LOG_FILE "log.txt"
+#define LOG_FILE "error.log"
 
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
@@ -88,6 +88,10 @@
 # define FTPF_LDBL_BYTE5(x) ((short *)(&x))[4]
 # define FTPF_LDBL_MANTS(x) *((unsigned long *)(&x))
 
+# define NO_HISTORY 'n'
+# define OUTDATED 'o'
+# define RECENTLY_PASSED 'p'
+# define RECENTLY_FAILED 'f'
 
 /* ----------------------------------------------------------------------------
 ** Definitions
@@ -157,10 +161,9 @@ typedef struct				s_test_log_entry
 ** --------------------------------------------------------------------------*/
 
 extern t_unit_tester_args  *failsafe_args_recover;
-
 extern const t_test_entry	g_unit_tests[];
-
 extern const char			*g_signal_strings[];
+extern char					test_history[NUMBER_OF_TESTS + 10];
 
 /* ----------------------------------------------------------------------------
 ** The Victim
@@ -172,6 +175,8 @@ int						ft_printf(const char *, ...);
 ** Interface Functions
 ** --------------------------------------------------------------------------*/
 
+void					run_init(void);
+
 void					run_test_range(t_unit_tester_args *args);
 void					run_search_tests(t_unit_tester_args *args);
 
@@ -181,19 +186,41 @@ void					set_option_fork(void);
 void					set_option_nofork(void);
 void					set_option_usetimeout(void);
 void					set_option_notimeout(void);
+void					set_option_loghistory(void);
+void					set_option_nologhistory(void);
+void					set_option_filter_failingoff(void);
+void					set_option_filter_failingon(void);
+void					set_option_filter_passingoff(void);
+void					set_option_filter_passingon(void);
+void					set_option_filter_outdatedon(void);
+void					set_option_filter_outdatedoff(void);
+void					set_option_rundisabled(void);
+void					set_option_norundisabled(void);
+void					set_option_handlesignals(void);
+void					set_option_nohandlesignals(void);
+void					set_option_nowritelog(void);
+
+int						get_option_loghistory(void);
 
 /* ----------------------------------------------------------------------------
 ** Helper Functions
 ** --------------------------------------------------------------------------*/
-
+void					load_history(void);
+void					options_check(void);
 void					log_msg(const char *msg);
 void					print_test_start(int test_number);
-void					print_test_end(int failed, int stat_loc, int timed_out);
+void					print_test_end(int test_number, int failed,
+							int stat_loc, int timed_out);
 void					print_end_test_message(int num_tests, int num_passed);
 int						ft_match_helper(const char *s1, char *s2);
 int						ft_match(const char *s1, char *s2);
 void 					convert_nonalphanum_to_wildcard(char *str);
 void					ft_putnbr_fd(int nb, int fd);
+void					init_printing(void);
+
+//options for run_test
+int						run_test_fork(int test_number);
+int						run_test_nofork(int test_number);
 
 /* ----------------------------------------------------------------------------
 ** Test History Logging

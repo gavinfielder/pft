@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/01 07:57:19 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/02 01:51:14 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,10 @@ IGNORE_RETURN_VALUE=0
 TIMEOUT_SECONDS=0.75
 
 # Sets default program behavior; can be overridden with command line arguments
-USE_TIMEOUT=1
-RUN_TESTS_AS_FORK=1
-# Note the timeout feature is currently only available when using fork
+DEFAULT_RUN_OPTIONS=Aflopstx
+
+# Sets the number of seconds for a test history to be considered 'outdated'
+TEST_OUTDATED_TIME=900
 
 # Name of the test executable
 TEST_ONAME=test
@@ -60,7 +61,7 @@ SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1
 
 CC=clang
 INC=-I src
-TEST_LOG=test_history.txt
+TEST_LOG=test_history.csv
 TEST_RESULTS=test_results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
@@ -69,17 +70,19 @@ SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/ft_options.c \
 		 src/history.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=src/unit_tests_indexed.c
+NUMBER_OF_TESTS=$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")
 TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D OUT_EXPECTED="\"$(TEST_OUT_EXPECTED)\"" \
 			 -D TEST_OUTPUT_FILENAME="\"$(TEST_RESULTS)\"" \
 			 -D MAX_FILE_COPY_SIZE=$(TEST_FAIL_LOGGING_MAXBYTES) \
 			 -D IGNORE_RETURN_VALUE=$(IGNORE_RETURN_VALUE) \
-			 -D USE_TIMEOUT=$(USE_TIMEOUT) \
-			 -D RUN_TESTS_AS_FORK=$(RUN_TESTS_AS_FORK) \
+			 -D DEFAULT_RUN_OPTIONS="\"$(DEFAULT_RUN_OPTIONS)\"" \
 			 -D TIMEOUT_SECONDS=$(TIMEOUT_SECONDS) \
 			 -D SINGLE_NUMBER_SINGLE_TEST=$(SINGLE_NUMBER_SINGLE_TEST) \
 			 -D SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=$(SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE) \
-			 -D TEST_LOG="\"$(TEST_LOG)\""
+			 -D TEST_LOG="\"$(TEST_LOG)\"" \
+			 -D NUMBER_OF_TESTS=$(NUMBER_OF_TESTS) \
+			 -D TEST_OUTDATED_TIME=$(TEST_OUTDATED_TIME)
 ifeq ($(USE_SEPARATE_LIBFT),1)
 LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else

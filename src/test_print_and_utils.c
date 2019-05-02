@@ -6,24 +6,62 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/01 05:49:21 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/01 22:36:23 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdint.h>
+#include <sys/ioctl.h>
 #include "test.h"
+
+/* ----------------------------------------------------------------------------
+** For responsive window size
+** --------------------------------------------------------------------------*/
+
+static uint16_t	window_width = 0;
+static const char *test_start_fmt_str = "Test %4i:  %-42s [";
+static const char *test_history_fmt_str = "   \x1B[2mPrev: %s\x1B[0m";
+
+uint16_t		tty_get_window_width(void)
+{
+	struct ttysize	ws;
+
+	ioctl(0, TIOCGWINSZ, &ws);
+	return (ws.ts_cols);
+}
+
+void			init_printing(void)
+{
+	window_width = tty_get_window_width();
+	if (DEBUG)
+		printf("window width: %hu\n", window_width);
+	if (window_width < 74)
+	{
+		test_start_fmt_str = "%4i: %-42s [";
+		if (window_width < 68)
+		{
+			test_history_fmt_str = "\n    \x1B[2m Previous result: %s\x1B[0m";
+			if (window_width < 55)
+			{
+				test_start_fmt_str = "%4i: %30.30s... [";
+			}
+		}
+	}
+}
 
 /* ----------------------------------------------------------------------------
 ** Begins a test run line by printing the test number and name
 ** --------------------------------------------------------------------------*/
 void		print_test_start(int test_number)
 {
-	printf("Test %4i:  %-42s [",test_number, g_unit_tests[test_number].name);
+	printf(test_start_fmt_str, test_number, g_unit_tests[test_number].name);
 }
 
 /* ----------------------------------------------------------------------------
 ** Ends a test run line by printing pass or fail
 ** --------------------------------------------------------------------------*/
-void		print_test_end(int failed, int stat_loc, int timed_out)
+void		print_test_end(int test_number, int failed,
+				int stat_loc, int timed_out)
 {
 	if (timed_out)
 		printf(FAULT "TIMEOUT" RESET);
@@ -33,7 +71,19 @@ void		print_test_end(int failed, int stat_loc, int timed_out)
 		printf(RED "FAIL" RESET);
 	else
 		printf(GRN "PASS" RESET);
-	printf("]\n");
+	printf("]");
+	if (get_option_loghistory()
+			&& test_history[test_number] != NO_HISTORY
+			/*&& test_history[test_number] != OUTDATED*/)
+	{
+		if (test_history[test_number] == RECENTLY_PASSED)
+			printf(test_history_fmt_str, "pass");
+		else if (test_history[test_number] == RECENTLY_FAILED)
+			printf(test_history_fmt_str, "fail");
+		else if (test_history[test_number] == OUTDATED && window_width > 60)
+			printf(DIM "   was outdated" RESET);
+	}
+	printf("\n");
 }
 
 /* ----------------------------------------------------------------------------

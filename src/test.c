@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/01 07:53:34 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:52:30 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,29 @@ const char *g_signal_strings[] =
 ** Options that are set by Makefile and/or command line arguments
 ** --------------------------------------------------------------------------*/
 
-t_run_test_func		run_test = NULL;
+//Either run_test_fork or run_test_nofork; set by -x, -X, and -d
+t_run_test_func		run_test = run_test_fork;
+
+//set by -t, -T, and -d
 static int			use_timeout = 1;
-static int			run_disabled = 0;
+
+//set by -a and -A
+static int			filter_run_disabled = 0;
+
+//set by -l and -L
+static int			log_history = 1;
+
+//set by -f and -F
+static int			filter_run_failing = 1;
+
+//set by -p and -P
+static int			filter_run_passing = 1;
+
+//set by -o and -O
+static int			filter_run_outdated = 1;
+
+//set by -s, -S and -d
+static int			handle_signals = 1;
 
 /* ----------------------------------------------------------------------------
 ** Global flags for timeout function
@@ -93,6 +113,18 @@ static int			run_disabled = 0;
 
 static int			timeout = 0;
 static int			ready = 0;
+
+/* ----------------------------------------------------------------------------
+** Set to true if in non-forking mode and a test signaled out
+** --------------------------------------------------------------------------*/
+
+static int			signaled = 0;
+
+/* ----------------------------------------------------------------------------
+** Populated parallel array with test history from the log
+** --------------------------------------------------------------------------*/
+
+char				test_history[NUMBER_OF_TESTS + 10];
 
 /* ----------------------------------------------------------------------------
 ** Calls a unit test function and outputs the result to a file
@@ -205,6 +237,7 @@ static void failsafe_recover(void)
 static void	handle_sigsegv(int sigval)
 {
 	(void)sigval;
+	signaled = 1;
 	failsafe_recover();
 	log_failed_test(failsafe_args_recover->current - 1, -6, -6,
 			"Segmentation Fault", 0);
@@ -214,6 +247,7 @@ static void	handle_sigsegv(int sigval)
 static void	handle_sigbus(int sigval)
 {
 	(void)sigval;
+	signaled = 1;
 	failsafe_recover();
 	log_failed_test(failsafe_args_recover->current - 1, -6, -6,
 			"Bus Error", 0);
@@ -223,6 +257,7 @@ static void	handle_sigbus(int sigval)
 static void handle_sigabrt(int sigval)
 {
 	(void)sigval;
+	signaled = 1;
 	failsafe_recover();
 	log_failed_test(failsafe_args_recover->current - 1, -6, -6,
 			"Abort Signal (SIGABRT)", 0);
@@ -232,6 +267,7 @@ static void handle_sigabrt(int sigval)
 static void handle_sigill(int sigval)
 {
 	(void)sigval;
+	signaled = 1;
 	failsafe_recover();
 	log_failed_test(failsafe_args_recover->current - 1, -6, -6,
 			"Illegal Instruction (SIGILL)", 0);
@@ -242,6 +278,7 @@ static void handle_sigill(int sigval)
 static void	handle_timeout_signal(int sigval)
 {
 	(void)sigval;
+	signaled = 1;
 	failsafe_recover();
 	log_failed_test(failsafe_args_recover->current - 1, -7, -7,
 			"Test timed out", 1);
@@ -370,7 +407,7 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 	{
 		if (get_and_validate_test_fp(&fpmine, &fplibc) < 0)
 		{
-			//TODO: some indication of error to the user would be nice here
+			log_msg("error: test results could not be evaluated: failed to open file(s)");
 			return (1);
 		}
 		//Evaluate test results
@@ -401,7 +438,8 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 				timeout);
 	}
 
-	add_log_entry(&(g_unit_tests[test_number]), failed);
+	if (log_history)
+		add_log_entry(&(g_unit_tests[test_number]), failed);
 
 	return failed;
 }
@@ -443,22 +481,17 @@ static void		start_timeout(pid_t pid, int signal, pthread_t *thread, pthread_t m
 /* ----------------------------------------------------------------------------
 ** Runs a specific test
 ** --------------------------------------------------------------------------*/
-static int		run_test_nofork(int test_number)
+int				run_test_nofork(int test_number)
 {
 	t_retvals		retvals;
 	int				failed = 0;
-
-	signal(SIGSEGV, handle_sigsegv);
-	signal(SIGBUS, handle_sigbus);
-	signal(SIGABRT, handle_sigabrt);
-	signal(SIGILL, handle_sigill);
 
 	remove(OUT_ACTUAL);
 	remove(OUT_EXPECTED);
 	print_test_start(test_number);
 	retvals = output_test(test_number);
 	failed = evaluate_test_results(retvals, test_number);
-	print_test_end(failed, 0, 0);
+	print_test_end(test_number, failed, 0, 0);
 
 	return failed;
 }
@@ -543,7 +576,7 @@ static pthread_t	read_retvals_pipe_async(t_retval_pipe_args *args)
 /* ----------------------------------------------------------------------------
 ** Run a test using fork
 ** --------------------------------------------------------------------------*/
-static int	run_test_fork(int test_number)
+int			run_test_fork(int test_number)
 {
 	pthread_t	timeout_thread;
 	pthread_t	read_thread;
@@ -618,28 +651,104 @@ static int	run_test_fork(int test_number)
 	if (pipe_fd[1] > 0)
 		close(pipe_fd[1]);
 	failed = evaluate_test_results(retvals, test_number);
-	print_test_end(failed, retvals.stat_loc, timeout);
+	print_test_end(test_number, failed, retvals.stat_loc, timeout);
 	return (failed);
 }
 
 /* ----------------------------------------------------------------------------
 ** Sets options
 ** --------------------------------------------------------------------------*/
-void	set_option_fork(void)
+void	set_option_fork(void) { run_test = run_test_fork; }
+void	set_option_nofork(void) { run_test = run_test_nofork; }
+void	set_option_notimeout(void) { use_timeout = 0; }
+void	set_option_usetimeout(void) { use_timeout = 1; }
+void	set_option_loghistory(void) { log_history = 1; }
+void	set_option_nologhistory(void) { log_history = 0; }
+void	set_option_filter_failingoff(void) { filter_run_failing = 0; }
+void	set_option_filter_failingon(void) { filter_run_failing = 1; }
+void	set_option_filter_passingoff(void) { filter_run_passing = 0; }
+void	set_option_filter_passingon(void) { filter_run_passing = 1; }
+void	set_option_filter_outdatedoff(void) { filter_run_outdated = 0; }
+void	set_option_filter_outdatedon(void) { filter_run_outdated = 1; }
+void	set_option_rundisabled(void) { filter_run_disabled = 1; }
+void	set_option_norundisabled(void) { filter_run_disabled = 0; }
+void	set_option_handlesignals(void) { handle_signals = 1; }
+void	set_option_nohandlesignals(void) { handle_signals = 0; }
+
+//Accessors
+int		get_option_loghistory(void) { return log_history; }
+
+void	options_check(void)
 {
-	run_test = run_test_fork;
+	if (use_timeout && run_test == run_test_nofork)
+	{
+		dprintf(2, "Notice: timeout (-t) is only available in forking mode (-x).\n");
+		fflush(stdout);
+	}
+
+	if (DEBUG)
+	{
+		printf("Options selected:\n");
+		if (run_test == run_test_nofork)
+			printf("   run_test = run_test_nofork\n");
+		else if (run_test == run_test_fork)
+			printf("   run_test = run_test_fork\n");
+		else
+			printf("   run_test = %p\n", run_test);
+		printf("   use_timeout = %i\n", use_timeout);
+		printf("   log_history = %i\n", log_history);
+		printf("   filter_run_failing = %i\n", filter_run_failing);
+		printf("   filter_run_passing = %i\n", filter_run_passing);
+		printf("   filter_run_outdated = %i\n", filter_run_outdated);
+		printf("   filter_run_disabled = %i\n", filter_run_disabled);
+		printf("\n");
+		fflush(stdout);
+	}
 }
-void	set_option_nofork(void)
+
+/* ----------------------------------------------------------------------------
+** Returns 1 if options allow test to run, 0 if it is filtered out
+** --------------------------------------------------------------------------*/
+int		filter(int test_number)
 {
-	run_test = run_test_nofork;
+	int		ret = 1;
+
+	if (g_unit_tests[test_number].enabled == 0 && filter_run_disabled == 0)
+		return (0);
+	if (log_history)
+	{
+		switch (test_history[test_number])
+		{
+			case OUTDATED:
+				ret &= filter_run_outdated;
+				break;
+			case RECENTLY_PASSED:
+				ret &= filter_run_passing;
+				break;
+			case RECENTLY_FAILED:
+				ret &= filter_run_failing;
+				break;
+		}
+	}
+	return (ret);
 }
-void	set_option_notimeout(void)
+
+
+/* ----------------------------------------------------------------------------
+** Runs before either test runner function runs
+** --------------------------------------------------------------------------*/
+void	run_init(void)
 {
-	use_timeout = 0;
-}
-void	set_option_usetimeout(void)
-{
-	use_timeout = 1;
+	if (log_history)
+		load_history();
+	init_printing();
+	if (run_test == run_test_nofork && handle_signals)
+	{
+		signal(SIGSEGV, handle_sigsegv);
+		signal(SIGBUS, handle_sigbus);
+		signal(SIGABRT, handle_sigabrt);
+		signal(SIGILL, handle_sigill);
+	}
 }
 
 /* ----------------------------------------------------------------------------
@@ -664,7 +773,7 @@ void	run_search_tests(t_unit_tester_args *args)
 	while (g_unit_tests[args->current].test != NULL)
 	{
 		if (ft_match(g_unit_tests[args->current].name, pattern)
-				&& (g_unit_tests[args->current].enabled || run_disabled))
+				&& (filter(args->current)))
 		{
 			fail = run_test(args->current);
 			args->num_fails += fail;
@@ -674,7 +783,8 @@ void	run_search_tests(t_unit_tester_args *args)
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
 	free(pattern);
-	write_log();
+	if (log_history)
+		write_log();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }
 
@@ -687,7 +797,7 @@ void	run_test_range(t_unit_tester_args *args)
 
 	while (args->current <= args->to && g_unit_tests[args->current].test != NULL)
 	{
-		if (g_unit_tests[args->current].enabled || run_disabled)
+		if (filter(args->current))
 		{
 			fail = run_test(args->current);
 			args->num_fails += fail;
@@ -696,6 +806,7 @@ void	run_test_range(t_unit_tester_args *args)
 		args->current++;
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
-	write_log();
+	if (log_history)
+		write_log();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }

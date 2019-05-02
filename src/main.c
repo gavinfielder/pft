@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/27 18:10:21 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:51:27 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void		unit_testing(t_clopt clargs)
 	failsafe_args_recover = &args;
 	int from, to;
 
+	run_init();
 	if (clargs.args.argc > 0)
 	{
 		if (!(clargs.args.argv[0][0] >= '0' && clargs.args.argv[0][0] <= '9'))
@@ -83,41 +84,79 @@ static void		unit_testing(t_clopt clargs)
 	}
 }
 
+void	parse_option(char c)
+{
+	switch (c)
+	{
+		case 'd':
+			set_option_notimeout();
+			set_option_nofork();
+			break ;
+		case 't':
+			set_option_usetimeout();
+			break ;
+		case 'T':
+			set_option_notimeout();
+			break ;
+		case 'x':
+			set_option_fork();
+			break ;
+		case 'X':
+			set_option_nofork();
+			break ;
+		case 'l':
+			set_option_loghistory();
+			break;
+		case 'L':
+			set_option_nologhistory();
+			break;
+		case 'F':
+			set_option_filter_failingoff();
+			break;
+		case 'f':
+			set_option_filter_failingon();
+			break;
+		case 'p':
+			set_option_filter_passingon();
+			break;
+		case 'P':
+			set_option_filter_passingoff();
+			break;
+		case 'o':
+			set_option_filter_outdatedon();
+			break;
+		case 'O':
+			set_option_filter_outdatedoff();
+			break;
+		case 'a':
+			set_option_rundisabled();
+			break;
+		case 'A':
+			set_option_norundisabled();
+			break;
+		case 's':
+			set_option_handlesignals();
+			break;
+		case 'S':
+			set_option_nohandlesignals();
+			break;
+		case 'W':
+			set_option_nowritelog();
+			break;
+	}
+}
+
 void	handle_args(t_clopt *opt, int argc, char **argv)
 {
 	//First, set default behavior with Makefile defines
-	if (USE_TIMEOUT)
-		set_option_usetimeout();
-	else
-		set_option_notimeout();
-	if (RUN_TESTS_AS_FORK)
-		set_option_fork();
-	else
-		set_option_nofork();
+	for (int i = 0; DEFAULT_RUN_OPTIONS[i]; i++)
+		parse_option(DEFAULT_RUN_OPTIONS[i]);
 	//Next, get command line options
 	*opt = ft_optget(argc, argv);
 	for (int i = 0; i < opt->num_sel; i++)
-	{
-		switch (opt->selected[i])
-		{
-			case 'd':
-				set_option_notimeout();
-				set_option_nofork();
-				break ;
-			case 't':
-				set_option_usetimeout();
-				break ;
-			case 'T':
-				set_option_notimeout();
-				break ;
-			case 'f':
-				set_option_fork();
-				break ;
-			case 'F':
-				set_option_nofork();
-				break ;
-		}
-	}
+		parse_option(opt->selected[i]);
+	//Check the options to make sure they're coherent
+	options_check();
 }
 
 int main(int argc, char **argv)

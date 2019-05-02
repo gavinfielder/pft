@@ -11,6 +11,12 @@
 #                                                                              #
 # **************************************************************************** #
 
+# Below is an option to touch the test history when this script is complete
+# Read the below before turning on
+
+# Test history logging is only coherent when the test numbers do not change. For this reason, test_history.csv is removed by the makefile whenever unit_tests.c is strictly newer (there is an option to disable this, however). The enable-test and disable-test scripts modify unit_tests.c, so by default calling either of these scripts will trigger a removal. There is an option in each of these scripts to touch test_history.csv so that enabling and disabling tests do not trigger a history removal, but when using this option, the system can break if you add tests and then immediately call enable-test or disable-test. So if you do this, you must remove test_history.csv manually. This does not apply if you only add tests to the end of unit_tests.c, as this does not change any test numbers.
+TOUCH_TEST_HISTORY=0
+
 FILENAME=unit_tests.c
 
 if [ $# -eq 0 ]
