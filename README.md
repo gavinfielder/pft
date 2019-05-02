@@ -141,6 +141,8 @@ The PFT Makefile removes test\_history.csv whenever unit\_tests.c is strictly ne
 
 ### Leaks Test (BETA)
 When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).
+
+This feature is still being tested. Do not rely on it completely.
 ### Fork Mode
 By default, PFT calls ft\_printf only on forked child processes to improve stability. Turning this option off means that tests will run in a single process and a single thread. Timeout is not available when fork mode is off.
 ### Handle Signals
