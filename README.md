@@ -137,7 +137,7 @@ Debuggers tend to only work well on single-threaded single processes, so "debugg
 ### Timeout
 Fails tests after a specified time interval. The timeout duration can be set in the PFT Makefile. Only available in fork mode.
 ### Test History Logging
-test\_history.csv is a CSV file of records composed of test number, test name, timestamp of last pass, timestamp of lass fail. Turning this option on means that the test history will be read on start, will be written on completion (unless `-W` is specified), and that the options `-p`, `-f`, `-o`, and their negatives can filter which tests are run. The Makefile option `TEST_OUTDATED_TIME` determines how much time passes before tests become 'outdated'.  
+test\_history.csv is a CSV file of records composed of test number, test name, timestamp of last pass, timestamp of lass fail. Turning this option on means that the test history will be read on start, will be written on completion (unless `-W` is specified), and that the options `-p`, `-f`, `-o`, `-n`, `-r`, and `-u`, and their negatives can filter which tests are run. The Makefile option `TEST_OUTDATED_TIME` determines how much time passes before tests become 'outdated'.  
 
 The PFT Makefile removes test\_history.csv whenever unit\_tests.c is strictly newer, as this feature only remains coherent when the test numbers do not change. By default the enable-test and disable-test scripts, as they modify unit\_tests.c, will trigger such removal of test\_history.csv. There is an option in the makefile to disable the history removal behavior, as well as an option in each of these scripts to touch test\_history.csv to prevent the removal trigger. 
 
