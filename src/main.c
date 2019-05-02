@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 03:20:43 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 03:34:37 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,13 @@ static void		unit_testing(t_clopt clargs)
 					{
 						set_option_notimeout();
 						set_option_nofork();
+						set_option_nohandlesignals();
 						if (ft_issel(&clargs, 'f'))
 							set_option_fork();
 						if (ft_issel(&clargs, 't'))
 							set_option_usetimeout();
+						if (ft_issel(&clargs, 's'))
+							set_option_handlesignals();
 					}
 					to = from;
 				}
@@ -167,7 +170,6 @@ void	parse_option(char c)
 			set_option_filter_outdatedon();
 			set_option_filter_failingoff();
 			break;
-
 	}
 }
 
