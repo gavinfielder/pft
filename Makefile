@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/02 01:51:14 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/02 03:27:32 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,16 @@ IGNORE_RETURN_VALUE=0
 TIMEOUT_SECONDS=0.75
 
 # Sets default program behavior; can be overridden with command line arguments
-DEFAULT_RUN_OPTIONS=Aflopstx
+DEFAULT_RUN_OPTIONS=AfKlnopstx
 
 # Sets the number of seconds for a test history to be considered 'outdated'
 TEST_OUTDATED_TIME=900
+
+# Sets the command that's run when leaks test option is selected
+LEAKS_TEST_CMD=system(\"leaks $(TEST_ONAME)\");
+
+# When 1, removes test_history.csv whenever unit_tests.c is strictly newer
+REMOVE_HISTORY_WHEN_TESTS_NEW=1
 
 # Name of the test executable
 TEST_ONAME=test
@@ -82,16 +88,23 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=$(SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE) \
 			 -D TEST_LOG="\"$(TEST_LOG)\"" \
 			 -D NUMBER_OF_TESTS=$(NUMBER_OF_TESTS) \
-			 -D TEST_OUTDATED_TIME=$(TEST_OUTDATED_TIME)
+			 -D TEST_OUTDATED_TIME=$(TEST_OUTDATED_TIME) \
+			 -D LEAKS_TEST_CMD="$(LEAKS_TEST_CMD)"
 ifeq ($(USE_SEPARATE_LIBFT),1)
 LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else
 LIB=
 endif
 
+TEST_HISTORY_MOD_TIME:=$(shell stat -r $(TEST_LOG) 2> /dev/null | awk '{ print $$9 }' 2> /dev/null)
+UNIT_TESTS_MOD_TIME:=$(shell stat -r $(UNIT_TEST_FILE) 2> /dev/null | awk '{ print $$9 }' 2> /dev/null)
+ifndef TEST_HISTORY_MOD_TIME
+TEST_HISTORY_MOD_TIME:=0
+endif
+
 all: $(TEST_ONAME)
 
-$(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_index
+$(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_index check_history_remove
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
@@ -111,6 +124,14 @@ $(INDEXED_TESTS): test_index
 .INTERMEDIATE: test_index
 test_index: $(UNIT_TEST_FILE)
 	@php src/create_index.php $(UNIT_TEST_FILE) $(INDEXED_TESTS)
+
+.INTERMEDIATE: check_history_remove
+check_history_remove:
+	@if [ $(REMOVE_HISTORY_WHEN_TESTS_NEW) -eq 1 ] ; then \
+		if [ $(UNIT_TESTS_MOD_TIME) -gt $(TEST_HISTORY_MOD_TIME) ] ; then \
+			rm -rf $(TEST_LOG) ; \
+		fi \
+	fi
 
 $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME):
 	@make -C $(LIBFTPRINTF_DIR) > /dev/null 2>&1

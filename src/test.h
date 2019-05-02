@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 01:53:03 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 03:25:00 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,8 +194,12 @@ void					set_option_filter_passingoff(void);
 void					set_option_filter_passingon(void);
 void					set_option_filter_outdatedon(void);
 void					set_option_filter_outdatedoff(void);
+void					set_option_filter_nohistoryon(void);
+void					set_option_filter_nohistoryoff(void);
 void					set_option_rundisabled(void);
 void					set_option_norundisabled(void);
+void					set_option_leakstest(void);
+void					set_option_noleakstest(void);
 void					set_option_handlesignals(void);
 void					set_option_nohandlesignals(void);
 void					set_option_nowritelog(void);

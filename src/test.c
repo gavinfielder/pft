@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 01:52:30 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 03:24:22 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,20 @@ static int			filter_run_disabled = 0;
 //set by -l and -L
 static int			log_history = 1;
 
-//set by -f and -F
+//set by -f and -F and -r and -u
 static int			filter_run_failing = 1;
 
-//set by -p and -P
+//set by -p and -P and -r and -u
 static int			filter_run_passing = 1;
 
-//set by -o and -O
+//set by -o and -O and -r and -u
 static int			filter_run_outdated = 1;
+
+//set by -n and -N and -r and -u
+static int			filter_run_nohistory = 1;
+
+//set by -k and -K
+static int			run_leaks_test = 0;
 
 //set by -s, -S and -d
 static int			handle_signals = 1;
@@ -670,8 +676,13 @@ void	set_option_filter_passingoff(void) { filter_run_passing = 0; }
 void	set_option_filter_passingon(void) { filter_run_passing = 1; }
 void	set_option_filter_outdatedoff(void) { filter_run_outdated = 0; }
 void	set_option_filter_outdatedon(void) { filter_run_outdated = 1; }
+void	set_option_filter_nohistoryon(void) { filter_run_nohistory = 1; }
+void	set_option_filter_nohistoryoff(void) { filter_run_nohistory = 0; }
 void	set_option_rundisabled(void) { filter_run_disabled = 1; }
 void	set_option_norundisabled(void) { filter_run_disabled = 0; }
+void	set_option_leakstest(void)
+{ run_leaks_test = 1; run_test = run_test_nofork; use_timeout = 0; }
+void	set_option_noleakstest(void) { run_leaks_test = 0; }
 void	set_option_handlesignals(void) { handle_signals = 1; }
 void	set_option_nohandlesignals(void) { handle_signals = 0; }
 
@@ -680,6 +691,11 @@ int		get_option_loghistory(void) { return log_history; }
 
 void	options_check(void)
 {
+	if (run_leaks_test && run_test == run_test_fork)
+	{
+		dprintf(2, "leaks test (-k) must be run in non-forking mode (-X). Run with -kX.\n");
+		exit(-1);
+	}
 	if (use_timeout && run_test == run_test_nofork)
 	{
 		dprintf(2, "Notice: timeout (-t) is only available in forking mode (-x).\n");
@@ -701,6 +717,7 @@ void	options_check(void)
 		printf("   filter_run_passing = %i\n", filter_run_passing);
 		printf("   filter_run_outdated = %i\n", filter_run_outdated);
 		printf("   filter_run_disabled = %i\n", filter_run_disabled);
+		printf("   run_leaks_test = %i\n", run_leaks_test);
 		printf("\n");
 		fflush(stdout);
 	}
@@ -727,6 +744,9 @@ int		filter(int test_number)
 				break;
 			case RECENTLY_FAILED:
 				ret &= filter_run_failing;
+				break;
+			case NO_HISTORY:
+				ret &= filter_run_nohistory;
 				break;
 		}
 	}
@@ -785,6 +805,16 @@ void	run_search_tests(t_unit_tester_args *args)
 	free(pattern);
 	if (log_history)
 		write_log();
+	if (run_leaks_test)
+	{
+		if (signaled)
+			printf("One or more tests terminated abnormally. Skipping leaks test.\n");
+		else
+		{
+			fflush(stdout);
+			LEAKS_TEST_CMD;
+		}
+	}
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }
 
@@ -808,5 +838,15 @@ void	run_test_range(t_unit_tester_args *args)
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
 	if (log_history)
 		write_log();
+	if (run_leaks_test)
+	{
+		if (signaled)
+			printf("One or more tests terminated abnormally. Skipping leaks test.\n");
+		else
+		{
+			fflush(stdout);
+			LEAKS_TEST_CMD;
+		}
+	}
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }

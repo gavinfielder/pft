@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 01:51:27 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 03:20:43 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,23 @@ void	parse_option(char c)
 		case 'O':
 			set_option_filter_outdatedoff();
 			break;
+		case 'n':
+			set_option_filter_nohistoryon();
+			break;
+		case 'N':
+			set_option_filter_nohistoryoff();
+			break;
 		case 'a':
 			set_option_rundisabled();
 			break;
 		case 'A':
 			set_option_norundisabled();
+			break;
+		case 'k':
+			set_option_leakstest();
+			break;
+		case 'K':
+			set_option_noleakstest();
 			break;
 		case 's':
 			set_option_handlesignals();
@@ -143,6 +155,19 @@ void	parse_option(char c)
 		case 'W':
 			set_option_nowritelog();
 			break;
+		case 'r':
+			set_option_filter_nohistoryoff();
+			set_option_filter_passingoff();
+			set_option_filter_outdatedoff();
+			set_option_filter_failingon();
+			break;
+		case 'u':
+			set_option_filter_nohistoryoff();
+			set_option_filter_passingoff();
+			set_option_filter_outdatedon();
+			set_option_filter_failingoff();
+			break;
+
 	}
 }
 

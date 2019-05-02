@@ -25,7 +25,7 @@
 # or disable-test. So if you do this, you must remove test_history.csv manually.
 # This does not apply if you only add tests to the end of unit_tests.c, as this
 # does not change any test numbers.
-TOUCH_TEST_HISTORY=0
+TOUCH_TEST_HISTORY=1
 
 FILENAME=unit_tests.c
 TEST_HISTORY_FILENAME=test_history.csv
@@ -60,4 +60,9 @@ then
 	make -C $(dirname $0) fclean
 else
  	echo "Error occurred while performing prefix-based sed operation. If any changes were made, the unit test file has been backed up to $FILENAME.bak. Please check your input and try again."
+fi
+
+if [[ $TOUCH_TEST_HISTORY -eq 1 ]] && [[ -f "$TEST_HISTORY_FILENAME" ]]
+then
+	touch $TEST_HISTORY_FILENAME
 fi
