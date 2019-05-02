@@ -113,6 +113,8 @@ The Makefile creates two copies of unit\_tests.c, one that uses ft\_printf, and 
 
 These options are selected either in the PFT Makefile (to set the default run options) and/or as command line options. See below for a description of each optional feature.
 
+Command line options are processed left to right, and can override previous selections.  
+
 | Option                          |  On  |  Off  | Note                                       |
 |---------------------------------|------|-------|--------------------------------------------|
 | Debugger compatibility Mode     | `-d` |       | default on for single tests, off otherwise |
@@ -120,10 +122,10 @@ These options are selected either in the PFT Makefile (to set the default run op
 | Test history logging            | `-l` | `-L`  | default on                                 |
 | Do not write new test history   |      | `-W`  |                                            |
 | Include recently failed tests   | `-f` | `-F`  | default on                                 |
-| Test ONLY recently failed       | `-r` |       | default off                                |
+| Test ONLY recently failed       | `-r` |       | default off; identical to `-PONf`          |
 | Include recently passed tests   | `-p` | `-P`  | default on                                 |
 | Include outdated tests          | `-o` | `-O`  | default on                                 |
-| Test ONLY outdated tests        | `-u` |       | default off                                |
+| Test ONLY outdated tests        | `-u` |       | default off; identical to `-PoNF`          |
 | Include tests with no history   | `-n` | `-N`  | default on                                 |
 | Test disabled tests             | `-a` | `-A`  | default off                                |
 | Leaks test (BETA)               | `-k` | `-K`  | default off; turns off fork mode           |
