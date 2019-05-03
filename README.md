@@ -156,7 +156,7 @@ In both cases, options are processed left to right, and can override previous se
 
 ### Additional options when test history logging is enabled
 
-|                                     |     | |  Historical category               |
+|                                     |     | |  Historical category       |       |
 |-------------------------------------|-----|-|----------------------------|-------|
 | Select only the following           | `=` | |  Recently failed tests     |  `f`  |
 | Include the following               | `+` | |  Recently passed tests     |  `p`  |
