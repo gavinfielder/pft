@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 23:17:19 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:09:17 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ typedef struct			s_pft_options
 	char				run_leaks_test : 1;
 	char				handle_signals : 1;
 	char				log_write_enabled : 1;
+	char				print_info: 1;
 }						t_pft_options;
 
 /* ----------------------------------------------------------------------------
@@ -234,17 +235,23 @@ void					set_option_noleakstest(void);
 void					set_option_handlesignals(void);
 void					set_option_nohandlesignals(void);
 void					set_option_nowritelog(void);
+void					set_option_printinfo(void);
+void					set_option_noprintinfo(void);
 int						get_option_loghistory(void);
 int						get_option_writelog(void);
+int						get_option_printinfo(void);
+t_pft_options			get_options(void);
 /* ----------------------------------------------------------------------------
 ** Helper Functions
 ** --------------------------------------------------------------------------*/
 void					load_history(void);
 void					options_check(void);
 void					log_msg(const char *msg);
+void					print_configuration_info(const t_pft_options options,
+							const t_unit_tester_args args);
 void					print_test_start(int test_number);
 void					print_test_end(int test_number, int failed,
-							int stat_loc, int timed_out);
+							int stat_loc, int timed_out, int leak_found);
 void					print_end_test_message(int num_tests, int num_passed);
 int						ft_match_helper(const char *s1, char *s2);
 int						ft_match(const char *s1, char *s2);
@@ -252,13 +259,11 @@ void 					convert_nonalphanum_to_wildcard(char *str);
 void					ft_putnbr_fd(int nb, int fd);
 void					init_printing(void);
 int						parse_option(char *str);
-
 t_clopt					parse_and_strip_options(int argc, char **argv);
 int						ft_issel(t_clopt *opt, char c);
 
 int						run_test_fork(int test_number);
 int						run_test_nofork(int test_number);
-
 /* ----------------------------------------------------------------------------
 ** Test History Logging
 ** --------------------------------------------------------------------------*/

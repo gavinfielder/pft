@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:16:25 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 22:01:17 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 00:31:37 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,12 @@ int		parse_option(char *str)
 			return (1);
 		case 'X':
 			set_option_nofork();
+			return (1);
+		case 'i':
+			set_option_printinfo();
+			return (1);
+		case 'I':
+			set_option_noprintinfo();
 			return (1);
 		case 'l':
 			set_option_loghistory();

@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 21:47:20 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 00:31:51 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void		unit_testing(t_clopt clargs)
 		{
 			//Search pattern
 			init_args(&args, clargs.args.argv[0], 0, 2147483647, run_search_tests);
+			print_configuration_info(get_options(), args);
 			run_search_tests(&args);
 		}
 		else
@@ -74,6 +75,7 @@ static void		unit_testing(t_clopt clargs)
 					to = 2147483647;
 			}
 			init_args(&args, NULL, from, to, run_test_range);
+			print_configuration_info(get_options(), args);
 			run_test_range(&args);
 		}
 	}
@@ -83,6 +85,7 @@ static void		unit_testing(t_clopt clargs)
 		from = 0;
 		to = 2147483647;
 		init_args(&args, NULL, from, to, run_test_range);
+		print_configuration_info(get_options(), args);
 		run_test_range(&args);
 	}
 }

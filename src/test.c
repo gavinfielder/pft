@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 23:18:13 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:09:53 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,10 @@ const char *g_signal_strings[] =
 
 static t_pft_options	options = {
 	run_test_fork,
-	1, 0, 1, 1, 1, 1, 1, 0, 1, 1
+	1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1
 };
+
+t_pft_options	get_options(void) { return options; }
 
 /* ----------------------------------------------------------------------------
 ** Global flags for timeout function
@@ -194,7 +196,7 @@ void	log_failed_test(int test_number, int expected, int actual,
 		write(fout, "\n", 1);
 	}
 	write(fout, "\n", 1);
-	//close files)
+	//close files
 	close(finlibc);
 	close(finmine);
 	close(fout);
@@ -472,7 +474,7 @@ int				run_test_nofork(int test_number)
 	print_test_start(test_number);
 	retvals = output_test(test_number);
 	failed = evaluate_test_results(retvals, test_number);
-	print_test_end(test_number, failed, 0, 0);
+	print_test_end(test_number, failed, 0, 0, 0);
 
 	return failed;
 }
@@ -632,7 +634,7 @@ int			run_test_fork(int test_number)
 	if (pipe_fd[1] > 0)
 		close(pipe_fd[1]);
 	failed = evaluate_test_results(retvals, test_number);
-	print_test_end(test_number, failed, retvals.stat_loc, timeout);
+	print_test_end(test_number, failed, retvals.stat_loc, timeout, 0);
 	return (failed);
 }
 
@@ -661,10 +663,13 @@ void	set_option_noleakstest(void) { options.run_leaks_test = 0; }
 void	set_option_handlesignals(void) { options.handle_signals = 1; }
 void	set_option_nohandlesignals(void) { options.handle_signals = 0; }
 void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
+void	set_option_noprintinfo(void) { options.print_info = 0; }
+void	set_option_printinfo(void) { options.print_info = 1; }
 
 //Accessors
 int		get_option_loghistory(void) { return options.log_history; }
 int		get_option_writelog(void) { return options.log_write_enabled; }
+int		get_option_printinfo(void) { return options.print_info; }
 
 void	options_check(void)
 {

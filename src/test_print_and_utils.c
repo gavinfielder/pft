@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/01 22:36:23 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:12:10 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,94 @@ void			init_printing(void)
 }
 
 /* ----------------------------------------------------------------------------
+** Prints information about the current test run
+** --------------------------------------------------------------------------*/
+
+void		print_configuration_info(const t_pft_options options,
+				const t_unit_tester_args args)
+{
+	int num;
+
+	if (!get_option_printinfo())
+		return ;
+	int max_eq = (((int)(window_width)) - 20) / 2;
+	printf("%.*s Configuration Info %.*s\n",
+		max_eq, "=====================",
+		max_eq + (window_width % 2), "=====================");
+	//Line 1: First print the query
+	printf("  ");
+	if (args.run == run_test_range && args.from == args.to)
+		printf("Running test %i", args.from);
+	else if (args.run == run_test_range && args.to == 2147483647)
+		printf("Running test %i to end", args.from);
+	else if (args.run == run_test_range)
+		printf("Running test %i to %i", args.from, args.to);
+	else if (args.run == run_search_tests)
+		printf("Running \"%s...\" tests", args.pattern);
+	else
+		printf("Unknown query type. Contact gfielder about this error.");
+	//Next print the filters
+	if (options.log_history)
+	{
+		num = 0;
+		printf(" with history:");
+		if (options.filter_run_passing)
+		{
+			printf("pass");
+			num++;
+		}
+		if (options.filter_run_failing)
+			printf("%sfail", ((num++) ? "," : ""));
+		if (options.filter_run_outdated)
+			printf("%soutdated", ((num++) ? "," : ""));
+		if (options.filter_run_nohistory)
+			printf("%snone", ((num++) ? "," : ""));
+		printf("");
+	}
+	if (options.filter_run_disabled)
+		printf(" include disabled");
+	printf("\n");
+	//Line 2: print the execution mode
+	printf("  ");
+	if (options.run_test == run_test_fork)
+	{
+		printf("Running in fork mode");
+		if (options.use_timeout)
+			printf(" with timeout enabled");
+		else
+			printf(" with timeout disabled");
+		printf("\n");
+	}
+	else if (options.run_test == run_test_nofork)
+	{
+		printf("Running in non-fork mode");
+		if (options.handle_signals)
+			printf(" with signal handling");
+		printf("\n");
+	}
+	else
+		printf("Unknown execution mode. Contact gfielder about this error.\n");
+	//Line 3: Print test history logging configuration
+	printf("  ");
+	if (options.log_history)
+	{
+		printf("Test history log open for reading");
+		if (options.log_write_enabled)
+			printf(" and writing");
+		printf("\n");
+	}
+	else
+		printf("Test history unused\n");
+	//Line 4: optional leaks test
+	if (options.run_leaks_test)
+		printf("  Leaks test enabled\n");
+
+	max_eq = ((int)(window_width));
+	printf("%.*s\n", max_eq,
+		"==============================================================");
+}
+
+/* ----------------------------------------------------------------------------
 ** Begins a test run line by printing the test number and name
 ** --------------------------------------------------------------------------*/
 void		print_test_start(int test_number)
@@ -61,10 +149,12 @@ void		print_test_start(int test_number)
 ** Ends a test run line by printing pass or fail
 ** --------------------------------------------------------------------------*/
 void		print_test_end(int test_number, int failed,
-				int stat_loc, int timed_out)
+				int stat_loc, int timed_out, int leak_found)
 {
 	if (timed_out)
 		printf(FAULT "TIMEOUT" RESET);
+	else if (leak_found)
+		printf(FAULT "LEAK" RESET);
 	else if (WIFSIGNALED(stat_loc))
 		printf(FAULT "%s" RESET, g_signal_strings[WTERMSIG(stat_loc)]);
 	else if (failed)
@@ -96,7 +186,6 @@ void		print_end_test_message(int num_tests, int num_passed)
 	if (num_passed != num_tests)
 		printf("See %s for details.\n", TEST_OUTPUT_FILENAME);
 }
-
 
 /* ----------------------------------------------------------------------------
 ** Appends a string to the log

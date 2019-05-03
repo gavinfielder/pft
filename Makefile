@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/02 22:12:05 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/03 00:37:06 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ IGNORE_RETURN_VALUE=0
 TIMEOUT_SECONDS=0.75
 
 # Sets default program behavior; can be overridden with command line arguments
-DEFAULT_RUN_OPTIONS=AKlstx =nopf
+DEFAULT_RUN_OPTIONS=AiKlstx =nopf
 
 # Sets the number of seconds for a test history to be considered 'outdated'
 TEST_OUTDATED_TIME=10
