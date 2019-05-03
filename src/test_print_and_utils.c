@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:47:20 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:38:49 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@
 #include "test.h"
 
 /* ----------------------------------------------------------------------------
+** Time of test run
+** --------------------------------------------------------------------------*/
+
+static time_t	now = 0;
+
+/* ----------------------------------------------------------------------------
 ** For responsive window size
 ** --------------------------------------------------------------------------*/
 
 static uint16_t	window_width = 0;
+static  char *test_history_fmt_str = "   \x1B[2mLast %s %s\x1B[0m";
 static const char *test_start_fmt_str = "Test %4i:  %-42s [";
-static const char *test_history_fmt_str = "   \x1B[2mPrev: %s\x1B[0m";
 
 uint16_t		tty_get_window_width(void)
 {
@@ -34,14 +40,16 @@ uint16_t		tty_get_window_width(void)
 void			init_printing(void)
 {
 	window_width = tty_get_window_width();
+	now = time(NULL);
 	if (DEBUG)
 		printf("window width: %hu\n", window_width);
-	if (window_width < 74)
+	if (window_width < 87)
 	{
-		test_start_fmt_str = "%4i: %-42s [";
-		if (window_width < 68)
+		test_history_fmt_str = "  \x1B[2m%s %s\x1B[0m";
+		if (window_width < 79)
 		{
-			test_history_fmt_str = "\n    \x1B[2m Previous result: %s\x1B[0m";
+			test_start_fmt_str = "%4i: %-42s [";
+			test_history_fmt_str = "\n        \x1B[2mLast %s %s\x1B[0m";
 			if (window_width < 55)
 			{
 				test_start_fmt_str = "%4i: %30.30s... [";
@@ -58,13 +66,11 @@ void		print_configuration_info(const t_pft_options options,
 				const t_unit_tester_args args)
 {
 	int		num;
-	time_t	now;
 	char	date_and_time[27];
 
 	if (!get_option_printinfo())
 		return ;
 	bzero(date_and_time, 27);
-	now = time(NULL);
 	ctime_r(&now, date_and_time);
 	int max_eq = (((int)(window_width)) - 30) / 2;
 	printf("%.*s PFT Run: %19.19s %.*s\n",
@@ -155,6 +161,8 @@ void		print_test_start(int test_number)
 void		print_test_end(int test_number, int failed,
 				int stat_loc, int timed_out, int leak_found)
 {
+	char    ago_str[50];
+
 	if (timed_out)
 		printf(FAULT "TIMEOUT" RESET);
 	else if (leak_found)
@@ -168,14 +176,15 @@ void		print_test_end(int test_number, int failed,
 	printf("]");
 	if (get_option_loghistory()
 			&& test_history[test_number].type != NO_HISTORY
-			/*&& test_history[test_number] != OUTDATED*/)
+			&& test_history[test_number].timestamp != 0)
 	{
+		write_ago(test_history[test_number].timestamp, now, ago_str);
 		if (test_history[test_number].type == RECENTLY_PASSED)
-			printf(test_history_fmt_str, "pass");
+			printf(test_history_fmt_str, "passed", ago_str);
 		else if (test_history[test_number].type == RECENTLY_FAILED)
-			printf(test_history_fmt_str, "fail");
-		else if (test_history[test_number].type == OUTDATED && window_width > 60)
-			printf(DIM "   was outdated" RESET);
+			printf(test_history_fmt_str, "failed", ago_str);
+		else if (test_history[test_number].type == OUTDATED && window_width >= 79)
+			printf(test_history_fmt_str, "run", ago_str);
 	}
 	printf("\n");
 }
@@ -257,6 +266,31 @@ int			ft_match(const char *s1, char *s2)
 	return (-1);
 }
 
+/* ----------------------------------------------------------------------------
+** Writes to a buffer with a [time duration] ago statement
+** --------------------------------------------------------------------------*/
+void		write_ago(time_t prev_time, time_t now, char *buff)
+{
+	time_t	diff = now - prev_time;
+	char *unit = "sec";
+
+	if (diff > 86400)
+	{
+		diff /= 86400;
+		unit = (diff > 1 ? "days" : "day");
+	}
+	else if (diff > 3600)
+	{
+		diff /= 3600;
+		unit = "hr";
+	}
+	else if (diff > 60)
+	{
+		diff /= 60;
+		unit = "min";
+	}
+	sprintf(buff, "%li %s ago", diff, unit);
+}
 
 /* ----------------------------------------------------------------------------
 ** Converts all invalid characters for function names into wildcards

@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 06:47:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:45:31 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:41:30 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 static t_test_log_entry		*head = NULL;
 static t_test_log_entry		*tail = NULL;
 
+time_t		now = 0;
+
 void		load_history(void)
 {
 	FILE	*fp_in = NULL;
@@ -27,9 +29,9 @@ void		load_history(void)
 	char	**split;
 	time_t	test_last_passed;
 	time_t	test_last_failed;
-	time_t	now = time(NULL);
 
 	bzero(test_history, sizeof(t_test_history) * (NUMBER_OF_TESTS + 4));
+	now = time(NULL);
 
 	fp_in = fopen(TEST_LOG, "r");
 	if (!fp_in)
@@ -65,13 +67,13 @@ void		add_log_entry(const t_test_entry *test, int failed)
 	ent->test = test;
 	if (failed)
 	{
-		ent->timestamp_fail = time(NULL);
+		ent->timestamp_fail = now;
 		ent->timestamp_pass = 0;
 	}
 	else
 	{
 		ent->timestamp_fail = 0;
-		ent->timestamp_pass = time(NULL);
+		ent->timestamp_pass = now;
 	}
 	ent->next = NULL;
 

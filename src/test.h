@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:41:08 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:14:33 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ void					print_test_start(int test_number);
 void					print_test_end(int test_number, int failed,
 							int stat_loc, int timed_out, int leak_found);
 void					print_end_test_message(int num_tests, int num_passed);
+void					write_ago(time_t prev_time, time_t now, char *buff);
 int						ft_match_helper(const char *s1, char *s2);
 int						ft_match(const char *s1, char *s2);
 void 					convert_nonalphanum_to_wildcard(char *str);
