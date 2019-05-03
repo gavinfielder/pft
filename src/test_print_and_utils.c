@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:31:38 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:47:20 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,14 +167,14 @@ void		print_test_end(int test_number, int failed,
 		printf(GRN "PASS" RESET);
 	printf("]");
 	if (get_option_loghistory()
-			&& test_history[test_number] != NO_HISTORY
+			&& test_history[test_number].type != NO_HISTORY
 			/*&& test_history[test_number] != OUTDATED*/)
 	{
-		if (test_history[test_number] == RECENTLY_PASSED)
+		if (test_history[test_number].type == RECENTLY_PASSED)
 			printf(test_history_fmt_str, "pass");
-		else if (test_history[test_number] == RECENTLY_FAILED)
+		else if (test_history[test_number].type == RECENTLY_FAILED)
 			printf(test_history_fmt_str, "fail");
-		else if (test_history[test_number] == OUTDATED && window_width > 60)
+		else if (test_history[test_number].type == OUTDATED && window_width > 60)
 			printf(DIM "   was outdated" RESET);
 	}
 	printf("\n");

@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:09:53 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:46:27 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static int			signaled = 0;
 ** Populated parallel array with test history from the log
 ** --------------------------------------------------------------------------*/
 
-char				test_history[NUMBER_OF_TESTS + 10];
+t_test_history			test_history[NUMBER_OF_TESTS + 4];
 
 /* ----------------------------------------------------------------------------
 ** Calls a unit test function and outputs the result to a file
@@ -718,7 +718,7 @@ int		filter(int test_number)
 		return (0);
 	if (options.log_history)
 	{
-		switch (test_history[test_number])
+		switch (test_history[test_number].type)
 		{
 			case OUTDATED:
 				ret &= options.filter_run_outdated;

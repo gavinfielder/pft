@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 06:47:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 23:03:45 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:45:31 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 static t_test_log_entry		*head = NULL;
 static t_test_log_entry		*tail = NULL;
+
 void		load_history(void)
 {
 	FILE	*fp_in = NULL;
@@ -28,7 +29,7 @@ void		load_history(void)
 	time_t	test_last_failed;
 	time_t	now = time(NULL);
 
-	memset(test_history, NO_HISTORY, NUMBER_OF_TESTS + 10);
+	bzero(test_history, sizeof(t_test_history) * (NUMBER_OF_TESTS + 4));
 
 	fp_in = fopen(TEST_LOG, "r");
 	if (!fp_in)
@@ -40,20 +41,19 @@ void		load_history(void)
 		test_last_passed = (time_t)atol(split[2]);
 		test_last_failed = (time_t)atol(split[3]);
 		if (now < test_last_failed + TEST_OUTDATED_TIME && test_last_failed > test_last_passed)
-			test_history[test_number] = RECENTLY_FAILED;
+			test_history[test_number].type = RECENTLY_FAILED;
 		else if (now < test_last_passed + TEST_OUTDATED_TIME && test_last_passed > test_last_failed)
-			test_history[test_number] = RECENTLY_PASSED;
+			test_history[test_number].type = RECENTLY_PASSED;
 		else
-			test_history[test_number] = OUTDATED;
+			test_history[test_number].type = OUTDATED;
+		test_history[test_number].timestamp = 
+			(test_last_passed >= test_last_failed ?
+				test_last_passed : test_last_failed);
 		ft_destroy_nullterm_ptrarray((void ***)(&split));
 	}
 	if (line)
 		free(line);
 	fclose(fp_in);
-
-	//debug
-	//if (DEBUG)
-		//printf("Test history:\n\"%s\"\n\n", test_history);
 }
 
 void		add_log_entry(const t_test_entry *test, int failed)

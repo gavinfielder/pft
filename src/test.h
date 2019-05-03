@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:09:17 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:41:08 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@
 # define FTPF_LDBL_BYTE5(x) ((short *)(&x))[4]
 # define FTPF_LDBL_MANTS(x) *((unsigned long *)(&x))
 
-# define NO_HISTORY 'n'
+# define NO_HISTORY 0
 # define OUTDATED 'o'
 # define RECENTLY_PASSED 'p'
 # define RECENTLY_FAILED 'f'
@@ -188,6 +188,12 @@ typedef struct			s_pft_options
 	char				print_info: 1;
 }						t_pft_options;
 
+typedef struct			s_test_history
+{
+	char				type;
+	time_t				timestamp;
+}						t_test_history;
+
 /* ----------------------------------------------------------------------------
 ** Globals
 ** --------------------------------------------------------------------------*/
@@ -195,7 +201,7 @@ typedef struct			s_pft_options
 extern t_unit_tester_args  *failsafe_args_recover;
 extern const t_test_entry	g_unit_tests[];
 extern const char			*g_signal_strings[];
-extern char					test_history[NUMBER_OF_TESTS + 10];
+extern t_test_history		test_history[NUMBER_OF_TESTS + 4];
 
 /* ----------------------------------------------------------------------------
 ** The Victim
