@@ -6,13 +6,13 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/03 00:37:06 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/03 03:03:30 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # ------------------------------------------------------------------------------
-#      User Options
+#      Common User Options
 # ------------------------------------------------------------------------------
 
 # Set to 1 if you do not include your libft .o's in your libftprintf
@@ -30,7 +30,14 @@ TIMEOUT_SECONDS=0.75
 DEFAULT_RUN_OPTIONS=AiKlstx =nopf
 
 # Sets the number of seconds for a test history to be considered 'outdated'
-TEST_OUTDATED_TIME=10
+TEST_OUTDATED_TIME=900
+
+# When 1, `make re` for this makefile also rebuilds libftprintf.a
+MAKE_RE_ALSO_REBUILDS_LIBFTPRINTF=1
+
+# ------------------------------------------------------------------------------
+#      Advanced User Options
+# ------------------------------------------------------------------------------
 
 # Sets the command that's run when leaks test option is selected
 LEAKS_TEST_CMD=system(\"leaks $(TEST_ONAME)\");
@@ -67,8 +74,8 @@ SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1
 
 CC=clang
 INC=-I src
-TEST_LOG=test_history.csv
-TEST_RESULTS=test_results.txt
+TEST_LOG=history.csv
+TEST_RESULTS=results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
 SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/options.c \
@@ -152,6 +159,8 @@ fclean:
 	@rm -rf $(TEST_ONAME)
 
 re:
-	@make -C $(LIBFTPRINTF_DIR) fclean > /dev/null 2>&1
+	@if [ $(MAKE_RE_ALSO_REBUILDS_LIBFTPRINTF) -eq 1 ] ; then \
+		make -C $(LIBFTPRINTF_DIR) fclean > /dev/null 2>&1 ; \
+	fi
 	@make fclean
 	@make all

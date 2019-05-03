@@ -1,5 +1,3 @@
-
-
 <img align="right"  src="https://i.imgur.com/tpVSrBr.png" width="45%" />  
 
 # PFT
@@ -13,6 +11,17 @@ It's **more** useful as a production tool while you're developing ft\_prinf, bec
 <p align="center">
   <img src="https://i.imgur.com/Iwsvc2Y.png" width="50%" />
 </p>
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Test Naming Conventions (for looking up tests)](#test-naming-conventions)
+  - [Adding Tests](#adding-tests)
+  - [Using PFT with LLDB or other debuggers](#using-pft-with-lldb-or-other-debuggers) 
+  - [Enabling and Disabling Tests](#enabling-and-disabling-tests)
+- [How It Works](#how-it-works-in-brief)
+- [Advanced Options](#advanced-options)
+- [Troubleshooting](#troubleshooting)
 
 ## Requirements
 
@@ -71,14 +80,19 @@ They are outdated. At the very least, they were taken from before the subject re
 
 ## Workflow with PFT
 
-unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'test\_results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
+unit\_tests.c shows you all the tests that are available. Failing a test means that your output and/or return value was not the same as the libc printf. When this happens, there will be a new file, 'results.txt', that holds information about the failed test, the first line of code for the test (most of them are one line anyway), what printf printed, and what ft\_printf printed.  
 
 ### Adding Tests   
+<p align="center">
+  <img src="https://i.imgur.com/CGBRUTf.png" width="70%" />
+</p>
 
-You can add your own tests to unit\_tests.c, following the same format. You do not need to do anything except write the function in this file and re-make. The new tests will be included in the test index and can be queried the same way.    
+You can add your own tests to unit\_tests.c, following the same format as the existing tests. You do not need to do anything except write the function in this file and re-make. The new tests will be included in the test index and can be queried the same way.    
+
+Valid unit tests have the prototype `int  foo(void)` and return the value returned by a call to the `test` function, which has the same prototype as printf.
 
 ### Using PFT with LLDB or other debuggers
-PFT compiles with debugging symbols by default, and also by default, running a single test e.g. `./test 42` turns on debugger compatibility mode. You can force all tests to run in debugger compatibility mode by using the `-d` command line option e.g. `./test -d nospec`. You can read more about command line options and debugger compatibility mode under [Advanced Options](#advanced-options).   
+PFT compiles with debugging symbols by default, and also by default, running a single test e.g. `./test 42` turns on [debugger compatibility mode](#debugger-compatibility-mode). You can force all tests to run in debugger compatibility mode by using the `-d` command line option e.g. `./test -d nospec`. You can read more about command line options and debugger compatibility mode under [Advanced Options](#advanced-options).   
 
 tl;dr: To use PFT with lldb, use it like this: `lldb ./test 42`.  
 
@@ -108,33 +122,47 @@ The PFT Makefile includes an option to ignore return value checking. I included 
 
 # How it works, in Brief
 
-The Makefile creates two copies of unit\_tests.c, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
+The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
 
 # Advanced Options
+- [Run Options (also command line options)](#run-options)
+  - [Test History Logging](#test-history-logging)
+  - [Debugger Compatibility Mode](#debugger-compatibility-mode)
+  - [Timeout](#timeout)
+  - [Leaks Test (BETA)](#leaks-test-beta)
+  - [Fork Mode](#fork-mode)
+  - [Signal Handling](#handle-signals)
+- [Options in the PFT Makefile](#options-in-the-pft-makefile)
+  - [Default run options](#options-in-the-pft-makefile)
+  - [Test outdated time](#options-in-the-pft-makefile)
+- [Other Options](#other-options)
 
+## Run Options
 These options are selected either in the PFT Makefile (to set the default run options) and/or as command line options. 
 
-Command line options are processed left to right, and can override previous selections.  
+In both cases, options are processed left to right, and can override previous selections.  
 
-See below for a description of each optional feature.
-
-| Option                          |  On  |  Off  | Note                                       |
-|---------------------------------|------|-------|--------------------------------------------|
-| Debugger compatibility Mode     | `-d` |       | default on for single tests, off otherwise |
-| Timeout                         | `-t` | `-T`  | default on                                 |
-| Test history logging            | `-l` | `-L`  | default on; enables extra options          |                
-| Test disabled tests             | `-a` | `-A`  | default off                                |
-| Leaks test (BETA)               | `-k` | `-K`  | default off; turns off fork mode           |
-| Fork mode                       | `-x` | `-X`  | default on                                 |
-| Handle Signals                  | `-s` | `-S`  | default on (non-fork mode only)            |
+| Option                                                       |  On  |  Off  | Note                                                                                          |
+|--------------------------------------------------------------|------|-------|-----------------------------------------------------------------------------------------------|
+| [Debugger compatibility Mode](#debugger-compatibility-mode)  | `-d` |       | default on for single tests, off otherwise                                                    |
+| [Timeout](#timeout)                                          | `-t` | `-T`  | default on                                                                                    |
+| [Test history logging](#test-history-logging)                | `-l` | `-L`  | default on; enables [extra options](#additional-options-when-test-history-logging-is-enabled) |
+| Include disabled tests                                       | `-a` | `-A`  | default off                                                                                   |
+| [Leaks test (BETA)](#leaks-test-beta)                        | `-k` | `-K`  | default off; turns off fork mode                                                              |
+| [Fork mode](#fork-mode)                                      | `-x` | `-X`  | default on                                                                                    |
+| [Handle Signals](#handle-signals)                            | `-s` | `-S`  | default on (non-fork mode only)                                                               |
+| Print run info before tests                                  | `-i` | `-I`  | default on                                                                                    |
 
 ### Additional options when test history logging is enabled
-| Additional Options                  | |     |   Specifiers               |       |
-|-------------------------------------|-|-----|----------------------------|-------|
-| Select only the following           | | `=` |  Recently failed tests     |  `f`  |
-| Include the following               | | `+` |  Recently passed tests     |  `p`  |
-| Exclude the following               | | `-` |  Outdated tests            |  `o`  |
-|                                     | |     |  Tests with no history     |  `n`  |
+
+|                                     |     | |  Historical category               |
+|-------------------------------------|-----|-|----------------------------|-------|
+| Select only the following           | `=` | |  Recently failed tests     |  `f`  |
+| Include the following               | `+` | |  Recently passed tests     |  `p`  |
+| Exclude the following               | `-` | |  Outdated tests            |  `o`  |
+|                                     |     | |  Tests with no history     |  `n`  |
+
+-  `-W` : do not write new test history.
 
 **examples**
  - `./test --p x` runs tests that start with 'x', but excludes tests that recently passed.
@@ -142,9 +170,9 @@ See below for a description of each optional feature.
  - `./test -=f s` runs only recently failed tests that start with 's'.
 
 ### Test History Logging
-test\_history.csv is a CSV file of records composed of test number, test name, timestamp of last pass, timestamp of lass fail. Turning this option on means that the test history will be read on start, will be written on completion (unless `-W` is specified), and the additional options above are made available. The Makefile option `TEST_OUTDATED_TIME` determines how much time passes before tests become 'outdated'.  
+By default, PFT will track the last time each test passes and fails, and print information about the most recent run of each test. Tests' history will also become 'outdated' if their age exceeds the value set in the PFT Makefile. This feature also allows selecting tests to run by whether they have recently passed or failed. See [Additional options when test history logging is enabled](#additional-options-when-test-history-logging-is-enabled).
 
-The PFT Makefile removes test\_history.csv whenever unit\_tests.c is strictly newer, as this feature only remains coherent when the test numbers do not change. By default the enable-test and disable-test scripts, as they modify unit\_tests.c, will trigger such removal of test\_history.csv. There is an option in the makefile to disable the history removal behavior, as well as an option in each of these scripts to touch test\_history.csv to prevent the removal trigger. 
+By default, the PFT Makefile removes the test history whenever unit\_tests.c is strictly newer. This prevents the test history from becoming corrupted when you add your own tests (potentially changing the test numbers). By default the enable-test and disable-test scripts, as they modify unit\_tests.c, will trigger such removal of history.csv. There is an option in the makefile to disable the history removal behavior, as well as an option in each of these scripts to touch history.csv to prevent the removal trigger. Use these options at your own discretion.  
 
 ### Debugger Compatibility Mode
 Debuggers tend to only work well on single-threaded single processes, so "debugger compatibility mode" means "disable forking and multithreading". It also disables signal handling. `-d` is identical to `-XTS`. By default, debugger compatibility mode is turned on when running a single test e.g. `./test 42`.
@@ -160,14 +188,23 @@ By default, PFT calls ft\_printf only on forked child processes to improve stabi
 ### Handle Signals
 (only applies to non-fork mode) When this option is off, signals will not be caught by PFT and PFT will stop immediately when a test aborts abnormally. When this option is on, abnormal terminations by certain signals will be caught by PFT and tests will continue running.    
 
-## Options in Makefile
- - `TIMEOUT_SECONDS=(float)` (default 0.75) sets the number of seconds before any particular test times out.
-- `DEFAULT_RUN_OPTIONS` (default `AfKloptx`) specifies the command-line options that are selected by default. These are overridden by any command line options given at execution time.
- - `IGNORE_RETURN_VALUE` (default 0) If this option is `0`, Tests fail if ft\_printf and printf do not have the same return value. If this option is `1`, the return value is ignored.
- - `REMOVE_HISTORY_WHEN_TESTS_NEW` (default 1) If this option is 1, the makefile will remove test\_history.csv whenever unit\_tests.c is strictly newer.
- - `LEAKS_TEST_CMD` The command to run when the leaks test (`-k`) is selected. The default value is  `system(\"leaks $(TEST_ONAME)\");`. 
- - `SINGLE_NUMBER_SINGLE_TEST` (default 1) When this option is 1, single numeric arguments given will run only the specified test number. When this option is 0 it makes it such that `./test 42` runs test #42 to the end of all enabled tests. This is a legacy feature, but could still be useful if you are using only your own tests and are writing them as you develop.  
- - `SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE` (default 1) When this option is 1, (and `SINGLE_NUMBER_SINGLE_TEST`) is also 1, single tests also turn on debugger compatibility mode unless overridden at the command line.
+## Options in the PFT Makefile
+| Option                                  | Description                                                                                                                                                                                                                                                                                |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `DEFAULT_RUN_OPTIONS`                   | (string) Determines default program behavior. These are the options that are selected by default at the start of the program; they are overridden by any command line options given at execution time.                                                                                     |
+| `TIMEOUT_SECONDS`                       | (float) time in seconds for a test to time out, when timeouts are enabled                                                                                                                                                                                                                  |
+| `TEST_OUTDATED_TIME`                    | (long) time in seconds for a test result history to become outdated. The default is 900 (15 minutes). You can set this value to 0 to always consider tests outdated, or to 9999999 to never consider test results outdated, or anything in between.                                        |
+| `MAKE_RE_ALSO_REBUILDS_LIBFTPRINTF`     | (1 or 0) if 1, `make re` will also recompile your project                                                                                                                                                                                                                                  |
+| `IGNORE_RETURN_VALUE`                   | (1 or 0) When this option is 0, tests fail if ft\_printf and printf have different return values. If 1, the return value is ignored.                                                                                                                                                       | 
+| `REMOVE_HISTORY_WHEN_TESTS_NEW`         | (1 or 0) If this option is 1, the makefile will remove history.csv whenever unit\_tests.c is strictly newer.                                                                                                                                                                               |
+| `LEAKS_TEST_CMD`                        | (C macro) The command to run at the end of the test run when the leaks test (`-k`) is selected. The default is to invoke `leaks(1)` with `system(3)`.                                                                                                                                      |
+| `TEST_FAIL_LOGGING_MAXBYTES`                        | (int) The maximum size of output strings to show in results.txt                                                                                                                                                                                                                |
+| `SINGLE_NUMBER_SINGLE_TEST`             | (1 or 0) When this option is 1, single numeric arguments run a single test. If 0, single numeric arguments runs all tests starting at the given number. The latter is a legacy feature, but could still be useful if you are using only your own tests and are writing them as you develop |
+| `SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE` | (1 or 0) When this option is 1 (and `SINGLE_NUMBER_SINGLE_TEST` is also 1), single numeric arguments run the requested test in [debugger compatibility mode](#debugger-compatibility-mode) unless explicitly overridden with command line options.                                         |
+| `LIBFTPRINTF_DIR` | (path)  If you do not wish to have PFT inside your local repo, you can specify a different path for your project.                                                                                                                                                                                                |
+
+## Other Options
+The enable-test and disable-test scripts both have the option `TOUCH_TEST_HISTORY`. When this option is 1, running the script will also touch history.csv, which prevents a makefile removal of the test history when these scripts are used.
 
 # Troubleshooting
 
@@ -215,6 +252,5 @@ Also thanks to:
 - [osfally](https://github.com/shaparder)
 - [dfonarev](https://github.com/ruv1nce)  
 for various suggestions and feature motivations.
-
 
 

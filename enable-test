@@ -25,10 +25,10 @@
 # or disable-test. So if you do this, you must remove test_history.csv manually.
 # This does not apply if you only add tests to the end of unit_tests.c, as this
 # does not change any test numbers.
-TOUCH_TEST_HISTORY=1
+TOUCH_TEST_HISTORY=0
 
 FILENAME=unit_tests.c
-TEST_HISTORY_FILENAME=test_history.csv
+TEST_HISTORY_FILENAME=history.csv
 
 if [ $# -eq 0 ]
 then
