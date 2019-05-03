@@ -21,6 +21,7 @@ It's **more** useful as a production tool while you're developing ft\_prinf, bec
   - [Enabling and Disabling Tests](#enabling-and-disabling-tests)
 - [How It Works](#how-it-works-in-brief)
 - [Advanced Options](#advanced-options)
+  - [Leaks Test (BETA)](#leaks-test-beta)
   - [Filtering by recent test history](#additional-options-when-test-history-logging-is-enabled)
 - [Troubleshooting](#troubleshooting)
 
@@ -35,6 +36,7 @@ Other than this, it should be completely general to all ft\_printf projects.
 In the root of your repo, run this command:
 
 ***DEV BRANCH INSTALLATION***
+
 ```
 git clone --branch dev https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
 ```
@@ -182,7 +184,7 @@ Debuggers tend to only work well on single-threaded single processes, so "debugg
 Fails tests after a specified time interval. The timeout duration can be set in the PFT Makefile. Only available in fork mode.
 
 ### Leaks Test (BETA)
-When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).
+Specify leaks test with `-k`. When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).
 
 This feature is still being tested. Do not rely on it completely.
 ### Fork Mode
