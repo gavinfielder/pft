@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:16:25 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 00:31:37 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:34:15 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		parse_option(char *str)
 		case 'd':
 			set_option_notimeout();
 			set_option_nofork();
+			set_option_nohandlesignals();
 			return (1);
 		case 'k':
 			set_option_leakstest();

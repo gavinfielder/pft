@@ -6,10 +6,11 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:12:10 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:31:38 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <time.h>
 #include <stdint.h>
 #include <sys/ioctl.h>
 #include "test.h"
@@ -56,14 +57,20 @@ void			init_printing(void)
 void		print_configuration_info(const t_pft_options options,
 				const t_unit_tester_args args)
 {
-	int num;
+	int		num;
+	time_t	now;
+	char	date_and_time[27];
 
 	if (!get_option_printinfo())
 		return ;
-	int max_eq = (((int)(window_width)) - 20) / 2;
-	printf("%.*s Configuration Info %.*s\n",
-		max_eq, "=====================",
-		max_eq + (window_width % 2), "=====================");
+	bzero(date_and_time, 27);
+	now = time(NULL);
+	ctime_r(&now, date_and_time);
+	int max_eq = (((int)(window_width)) - 30) / 2;
+	printf("%.*s PFT Run: %19.19s %.*s\n",
+		max_eq,                      "================",
+		date_and_time,
+		max_eq + (window_width % 2), "================");
 	//Line 1: First print the query
 	printf("  ");
 	if (args.run == run_test_range && args.from == args.to)
@@ -73,7 +80,7 @@ void		print_configuration_info(const t_pft_options options,
 	else if (args.run == run_test_range)
 		printf("Running test %i to %i", args.from, args.to);
 	else if (args.run == run_search_tests)
-		printf("Running \"%s...\" tests", args.pattern);
+		printf("Running \"%s*\" tests", args.pattern);
 	else
 		printf("Unknown query type. Contact gfielder about this error.");
 	//Next print the filters
@@ -117,17 +124,14 @@ void		print_configuration_info(const t_pft_options options,
 	}
 	else
 		printf("Unknown execution mode. Contact gfielder about this error.\n");
-	//Line 3: Print test history logging configuration
-	printf("  ");
+	//Line 3: optional print test history logging configuration
 	if (options.log_history)
 	{
-		printf("Test history log open for reading");
+		printf("  Test history log open for reading");
 		if (options.log_write_enabled)
 			printf(" and writing");
 		printf("\n");
 	}
-	else
-		printf("Test history unused\n");
 	//Line 4: optional leaks test
 	if (options.run_leaks_test)
 		printf("  Leaks test enabled\n");
