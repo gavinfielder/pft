@@ -174,22 +174,37 @@ In both cases, options are processed left to right, and can override previous se
  - `./test -=f s` runs only recently failed tests that start with 's'.
 
 ### Test History Logging
+On: `-l` ; Off: `-L`  Default on.  
+
 By default, PFT will track the last time each test passes and fails, and print information about the most recent run of each test. Tests' history will also become 'outdated' if their age exceeds the value set in the PFT Makefile. This feature also allows selecting tests to run by whether they have recently passed or failed. See [Additional options when test history logging is enabled](#additional-options-when-test-history-logging-is-enabled).
 
 By default, the PFT Makefile removes the test history whenever unit\_tests.c is strictly newer. This prevents the test history from becoming corrupted when you add your own tests (potentially changing the test numbers). By default the enable-test and disable-test scripts, as they modify unit\_tests.c, will trigger such removal of history.csv. There is an option in the makefile to disable the history removal behavior, as well as an option in each of these scripts to touch history.csv to prevent the removal trigger. Use these options at your own discretion.  
 
 ### Debugger Compatibility Mode
+On: `-d`  Default off.  
+
 Debuggers tend to only work well on single-threaded single processes, so "debugger compatibility mode" means "disable forking and multithreading". It also disables signal handling. `-d` is identical to `-XTS`. By default, debugger compatibility mode is turned on when running a single test e.g. `./test 42`.
+
 ### Timeout
+On: `-t` ; Off: `-T`  Default on.  
+
 Fails tests after a specified time interval. The timeout duration can be set in the PFT Makefile. Only available in fork mode.
 
 ### Leaks Test (BETA)
-Specify leaks test with `-k`. When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).
+On: `-k` ;  Off: `-K`  Default off.  
+
+When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).
 
 This feature is still being tested. Do not rely on it completely.
+
 ### Fork Mode
+On: `-x` ; Off: `-X`  Default on.  
+
 By default, PFT calls ft\_printf only on forked child processes to improve stability. Turning this option off means that tests will run in a single process and a single thread. Timeout is not available when fork mode is off.
+
 ### Handle Signals
+On: `-s` ; Off: `-S`  Default on.  
+
 (only applies to non-fork mode) When this option is off, signals will not be caught by PFT and PFT will stop immediately when a test aborts abnormally. When this option is on, abnormal terminations by certain signals will be caught by PFT and tests will continue running.    
 
 ## Options in the PFT Makefile
