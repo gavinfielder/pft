@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 02:14:33 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 06:08:58 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ typedef struct			s_pft_options
 	char				handle_signals : 1;
 	char				log_write_enabled : 1;
 	char				print_info: 1;
+	char				refresh_results: 1;
 }						t_pft_options;
 
 typedef struct			s_test_history
@@ -243,6 +244,8 @@ void					set_option_nohandlesignals(void);
 void					set_option_nowritelog(void);
 void					set_option_printinfo(void);
 void					set_option_noprintinfo(void);
+void					set_option_refreshresults(void);
+void					set_option_norefreshresults(void);
 int						get_option_loghistory(void);
 int						get_option_writelog(void);
 int						get_option_printinfo(void);

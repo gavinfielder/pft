@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:46:27 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 06:09:47 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ const char *g_signal_strings[] =
 
 static t_pft_options	options = {
 	run_test_fork,
-	1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1
+	1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1
 };
 
 t_pft_options	get_options(void) { return options; }
@@ -665,6 +665,8 @@ void	set_option_nohandlesignals(void) { options.handle_signals = 0; }
 void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
 void	set_option_noprintinfo(void) { options.print_info = 0; }
 void	set_option_printinfo(void) { options.print_info = 1; }
+void	set_option_refreshresults(void) { options.refresh_results = 1; }
+void	set_option_norefreshresults(void) { options.refresh_results = 0; }
 
 //Accessors
 int		get_option_loghistory(void) { return options.log_history; }
@@ -752,6 +754,10 @@ void	run_init(void)
 		signal(SIGBUS, handle_sigbus);
 		signal(SIGABRT, handle_sigabrt);
 		signal(SIGILL, handle_sigill);
+	}
+	if (options.refresh_results)
+	{
+		remove(TEST_OUTPUT_FILENAME);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:16:25 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 01:34:15 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/03 06:07:16 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,12 @@ int		parse_option(char *str)
 			return (1);
 		case 'W':
 			set_option_nowritelog();
+			return (1);
+		case 'r':
+			set_option_refreshresults();
+			return (1);
+		case 'R':
+			set_option_norefreshresults();
 			return (1);
 		case ' ':
 		case '\t':

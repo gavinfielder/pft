@@ -2,11 +2,11 @@
 
 # PFT
 
-This is a unit test library and tester for ft\_printf.  
+This is a unit test library and configurable tester for ft\_printf.  
 
 By default, it can check if your *completed* printf is pretty good or not pretty good.   
 
-It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name and category, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible, so you can use it how you wish.   
+It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name, category, and previous run history, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible and highly configurable, so you can use it how you wish.   
 
 <p align="center">
   <img src="https://i.imgur.com/Iwsvc2Y.png" width="50%" />
@@ -76,7 +76,7 @@ These are the naming conventions currently used in the included unit\_tests.c.
  - The `moul_` block has subgroups `moul_d_`, `moul_i_`, `moul_o_`, etc.
  - Tests adapated from 42FileChecker have '`ftfc`' in the name   
 
-These naming conventions are ***usually*** followed. There's a lot of tests, so making it more consistent is a huge task for another day. The first rule plus the `moul_` block are the two that most users care about, and they're both consistent.  
+These naming conventions are ***usually*** followed. There's a lot of tests, so making it more consistent is a huge task for another day. The first rule is the one most users will care about most, and it is consistent.  
 
 ## Disclaimer about the `moul_` tests
 
@@ -156,6 +156,7 @@ In both cases, options are processed left to right, and can override previous se
 | [Fork mode](#fork-mode)                                      | `-x` | `-X`  | default on                                                                                    |
 | [Handle Signals](#handle-signals)                            | `-s` | `-S`  | default on (non-fork mode only)                                                               |
 | Print run info before tests                                  | `-i` | `-I`  | default on                                                                                    |
+| Refresh test results before each run                         | `-r` | `-R`  | default on; off mean new test results are appended                                            |
 
 ### Additional options when test history logging is enabled
 
