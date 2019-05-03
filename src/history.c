@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 06:47:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 21:54:07 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 23:03:45 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@
 
 static t_test_log_entry		*head = NULL;
 static t_test_log_entry		*tail = NULL;
-
-static int					log_write_enabled = 1;
-void		set_option_nowritelog(void) { log_write_enabled = 0; }
-
 void		load_history(void)
 {
 	FILE	*fp_in = NULL;
@@ -145,7 +141,7 @@ void		write_log(void)
 
 	if (!head)
 		return ;
-	if (log_write_enabled == 0)
+	if (get_option_writelog() == 0)
 	{
 		flush_all_log_entries();
 		return ;

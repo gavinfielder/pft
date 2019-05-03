@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 22:07:20 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 23:18:13 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,35 +83,10 @@ const char *g_signal_strings[] =
 ** Options that are set by Makefile and/or command line arguments
 ** --------------------------------------------------------------------------*/
 
-//Either run_test_fork or run_test_nofork; set by -x, -X, and -d
-t_run_test_func		run_test = run_test_fork;
-
-//set by -t, -T, and -d
-static int			use_timeout = 1;
-
-//set by -a and -A
-static int			filter_run_disabled = 0;
-
-//set by -l and -L
-static int			log_history = 1;
-
-//set by -f and -F and -r and -u
-static int			filter_run_failing = 1;
-
-//set by -p and -P and -r and -u
-static int			filter_run_passing = 1;
-
-//set by -o and -O and -r and -u
-static int			filter_run_outdated = 1;
-
-//set by -n and -N and -r and -u
-static int			filter_run_nohistory = 1;
-
-//set by -k and -K
-static int			run_leaks_test = 0;
-
-//set by -s, -S and -d
-static int			handle_signals = 1;
+static t_pft_options	options = {
+	run_test_fork,
+	1, 0, 1, 1, 1, 1, 1, 0, 1, 1
+};
 
 /* ----------------------------------------------------------------------------
 ** Global flags for timeout function
@@ -444,7 +419,7 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 				timeout);
 	}
 
-	if (log_history)
+	if (options.log_history)
 		add_log_entry(&(g_unit_tests[test_number]), failed);
 
 	return failed;
@@ -617,7 +592,7 @@ int			run_test_fork(int test_number)
 	}
 	else
 	{
-		if (use_timeout)
+		if (options.use_timeout)
 			start_timeout(pid, 0, &timeout_thread, this_thread);
 		//Waiting for child process to complete
 		waitpid(pid, &stat_loc, WUNTRACED);
@@ -631,7 +606,7 @@ int			run_test_fork(int test_number)
 			{
 				//finished reading
 				retvals = args.retvals;
-				if (use_timeout)
+				if (options.use_timeout)
 					pthread_kill(timeout_thread, SIGUSR1);
 			}
 			else
@@ -645,7 +620,7 @@ int			run_test_fork(int test_number)
 		}
 		else
 		{
-			if (use_timeout && !timeout)
+			if (options.use_timeout && !timeout)
 				pthread_kill(timeout_thread, SIGUSR1);
 			retvals.ret_val_mine = -4;
 			retvals.ret_val_libc = -4;
@@ -664,39 +639,41 @@ int			run_test_fork(int test_number)
 /* ----------------------------------------------------------------------------
 ** Sets options
 ** --------------------------------------------------------------------------*/
-void	set_option_fork(void) { run_test = run_test_fork; }
-void	set_option_nofork(void) { run_test = run_test_nofork; }
-void	set_option_notimeout(void) { use_timeout = 0; }
-void	set_option_usetimeout(void) { use_timeout = 1; }
-void	set_option_loghistory(void) { log_history = 1; }
-void	set_option_nologhistory(void) { log_history = 0; }
-void	set_option_filter_failingoff(void) { filter_run_failing = 0; }
-void	set_option_filter_failingon(void) { filter_run_failing = 1; }
-void	set_option_filter_passingoff(void) { filter_run_passing = 0; }
-void	set_option_filter_passingon(void) { filter_run_passing = 1; }
-void	set_option_filter_outdatedoff(void) { filter_run_outdated = 0; }
-void	set_option_filter_outdatedon(void) { filter_run_outdated = 1; }
-void	set_option_filter_nohistoryon(void) { filter_run_nohistory = 1; }
-void	set_option_filter_nohistoryoff(void) { filter_run_nohistory = 0; }
-void	set_option_rundisabled(void) { filter_run_disabled = 1; }
-void	set_option_norundisabled(void) { filter_run_disabled = 0; }
+void	set_option_fork(void) { options.run_test = run_test_fork; }
+void	set_option_nofork(void) { options.run_test = run_test_nofork; }
+void	set_option_notimeout(void) { options.use_timeout = 0; }
+void	set_option_usetimeout(void) { options.use_timeout = 1; }
+void	set_option_loghistory(void) { options.log_history = 1; }
+void	set_option_nologhistory(void) { options.log_history = 0; }
+void	set_option_filter_failingoff(void) { options.filter_run_failing = 0; }
+void	set_option_filter_failingon(void) { options.filter_run_failing = 1; }
+void	set_option_filter_passingoff(void) { options.filter_run_passing = 0; }
+void	set_option_filter_passingon(void) { options.filter_run_passing = 1; }
+void	set_option_filter_outdatedoff(void) { options.filter_run_outdated = 0; }
+void	set_option_filter_outdatedon(void) { options.filter_run_outdated = 1; }
+void	set_option_filter_nohistoryon(void) { options.filter_run_nohistory = 1; }
+void	set_option_filter_nohistoryoff(void) { options.filter_run_nohistory = 0; }
+void	set_option_rundisabled(void) { options.filter_run_disabled = 1; }
+void	set_option_norundisabled(void) { options.filter_run_disabled = 0; }
 void	set_option_leakstest(void)
-{ run_leaks_test = 1; run_test = run_test_nofork; use_timeout = 0; }
-void	set_option_noleakstest(void) { run_leaks_test = 0; }
-void	set_option_handlesignals(void) { handle_signals = 1; }
-void	set_option_nohandlesignals(void) { handle_signals = 0; }
+{ options.run_leaks_test = 1; options.run_test = run_test_nofork; options.use_timeout = 0; }
+void	set_option_noleakstest(void) { options.run_leaks_test = 0; }
+void	set_option_handlesignals(void) { options.handle_signals = 1; }
+void	set_option_nohandlesignals(void) { options.handle_signals = 0; }
+void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
 
 //Accessors
-int		get_option_loghistory(void) { return log_history; }
+int		get_option_loghistory(void) { return options.log_history; }
+int		get_option_writelog(void) { return options.log_write_enabled; }
 
 void	options_check(void)
 {
-	if (run_leaks_test && run_test == run_test_fork)
+	if (options.run_leaks_test && options.run_test == run_test_fork)
 	{
 		dprintf(2, "leaks test (-k) must be run in non-forking mode (-X). Run with -kX.\n");
 		exit(-1);
 	}
-	if (use_timeout && run_test == run_test_nofork)
+	if (options.use_timeout && options.run_test == run_test_nofork)
 	{
 		dprintf(2, "Notice: timeout (-t) is only available in forking mode (-x).\n");
 		fflush(stdout);
@@ -705,21 +682,21 @@ void	options_check(void)
 	if (DEBUG)
 	{
 		printf("Options selected:\n");
-		if (run_test == run_test_nofork)
-			printf("   run_test = run_test_nofork\n");
-		else if (run_test == run_test_fork)
-			printf("   run_test = run_test_fork\n");
+		if (options.run_test == run_test_nofork)
+			printf("   options.run_test = run_test_nofork\n");
+		else if (options.run_test == run_test_fork)
+			printf("   options.run_test = run_test_fork\n");
 		else
-			printf("   run_test = %p\n", run_test);
-		printf("   use_timeout = %i\n", use_timeout);
-		printf("   log_history = %i\n", log_history);
-		printf("   filter_run_failing = %i\n", filter_run_failing);
-		printf("   filter_run_passing = %i\n", filter_run_passing);
-		printf("   filter_run_outdated = %i\n", filter_run_outdated);
-		printf("   filter_run_nohistory = %i\n", filter_run_nohistory);
-		printf("   filter_run_disabled = %i\n", filter_run_disabled);
-		printf("   run_leaks_test = %i\n", run_leaks_test);
-		printf("   handle_signals = %i\n", handle_signals);
+			printf("   options.run_test = %p\n", options.run_test);
+		printf("   options.use_timeout = %i\n", options.use_timeout);
+		printf("   options.log_history = %i\n", options.log_history);
+		printf("   options.filter_run_failing = %i\n", options.filter_run_failing);
+		printf("   options.filter_run_passing = %i\n", options.filter_run_passing);
+		printf("   options.filter_run_outdated = %i\n", options.filter_run_outdated);
+		printf("   options.filter_run_nohistory = %i\n", options.filter_run_nohistory);
+		printf("   options.filter_run_disabled = %i\n", options.filter_run_disabled);
+		printf("   options.run_leaks_test = %i\n", options.run_leaks_test);
+		printf("   options.handle_signals = %i\n", options.handle_signals);
 		printf("\n");
 		fflush(stdout);
 	}
@@ -732,23 +709,23 @@ int		filter(int test_number)
 {
 	int		ret = 1;
 
-	if (g_unit_tests[test_number].enabled == 0 && filter_run_disabled == 0)
+	if (g_unit_tests[test_number].enabled == 0 && options.filter_run_disabled == 0)
 		return (0);
-	if (log_history)
+	if (options.log_history)
 	{
 		switch (test_history[test_number])
 		{
 			case OUTDATED:
-				ret &= filter_run_outdated;
+				ret &= options.filter_run_outdated;
 				break;
 			case RECENTLY_PASSED:
-				ret &= filter_run_passing;
+				ret &= options.filter_run_passing;
 				break;
 			case RECENTLY_FAILED:
-				ret &= filter_run_failing;
+				ret &= options.filter_run_failing;
 				break;
 			case NO_HISTORY:
-				ret &= filter_run_nohistory;
+				ret &= options.filter_run_nohistory;
 				break;
 		}
 	}
@@ -761,10 +738,10 @@ int		filter(int test_number)
 ** --------------------------------------------------------------------------*/
 void	run_init(void)
 {
-	if (log_history)
+	if (options.log_history)
 		load_history();
 	init_printing();
-	if (run_test == run_test_nofork && handle_signals)
+	if (options.run_test == run_test_nofork && options.handle_signals)
 	{
 		signal(SIGSEGV, handle_sigsegv);
 		signal(SIGBUS, handle_sigbus);
@@ -797,7 +774,7 @@ void	run_search_tests(t_unit_tester_args *args)
 		if (ft_match(g_unit_tests[args->current].name, pattern)
 				&& (filter(args->current)))
 		{
-			fail = run_test(args->current);
+			fail = options.run_test(args->current);
 			args->num_fails += fail;
 			args->num_run++;
 		}
@@ -805,9 +782,9 @@ void	run_search_tests(t_unit_tester_args *args)
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
 	free(pattern);
-	if (log_history)
+	if (options.log_history)
 		write_log();
-	if (run_leaks_test)
+	if (options.run_leaks_test)
 	{
 		if (signaled)
 			printf("One or more tests terminated abnormally. Skipping leaks test.\n");
@@ -831,16 +808,16 @@ void	run_test_range(t_unit_tester_args *args)
 	{
 		if (filter(args->current))
 		{
-			fail = run_test(args->current);
+			fail = options.run_test(args->current);
 			args->num_fails += fail;
 			args->num_run++;
 		}
 		args->current++;
 	}
 	print_end_test_message(args->num_run, args->num_run - args->num_fails);
-	if (log_history)
+	if (options.log_history)
 		write_log();
-	if (run_leaks_test)
+	if (options.run_leaks_test)
 	{
 		if (signaled)
 			printf("One or more tests terminated abnormally. Skipping leaks test.\n");

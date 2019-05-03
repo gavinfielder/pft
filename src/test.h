@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 22:11:26 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 23:17:19 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,21 @@ typedef struct			s_clopt
 	t_argsarr			args;
 }						t_clopt;
 
+typedef struct			s_pft_options
+{
+	t_run_test_func		run_test;
+	char				use_timeout : 1;
+	char				filter_run_disabled : 1;
+	char				log_history : 1;
+	char				filter_run_failing : 1;
+	char				filter_run_passing : 1;
+	char				filter_run_outdated : 1;
+	char				filter_run_nohistory : 1;
+	char				run_leaks_test : 1;
+	char				handle_signals : 1;
+	char				log_write_enabled : 1;
+}						t_pft_options;
+
 /* ----------------------------------------------------------------------------
 ** Globals
 ** --------------------------------------------------------------------------*/
@@ -220,6 +235,7 @@ void					set_option_handlesignals(void);
 void					set_option_nohandlesignals(void);
 void					set_option_nowritelog(void);
 int						get_option_loghistory(void);
+int						get_option_writelog(void);
 /* ----------------------------------------------------------------------------
 ** Helper Functions
 ** --------------------------------------------------------------------------*/
