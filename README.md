@@ -33,8 +33,9 @@ Other than this, it should be completely general to all ft\_printf projects.
 
 In the root of your repo, run this command:
 
+***DEV BRANCH INSTALLATION***
 ```
-git clone https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
+git clone --branch dev https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
 ```
 
 ***If your libft.a is separate from libftprintf.a:***   
