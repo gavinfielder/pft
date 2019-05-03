@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 03:34:37 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:47:20 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,101 +87,14 @@ static void		unit_testing(t_clopt clargs)
 	}
 }
 
-void	parse_option(char c)
-{
-	switch (c)
-	{
-		case 'd':
-			set_option_notimeout();
-			set_option_nofork();
-			break ;
-		case 't':
-			set_option_usetimeout();
-			break ;
-		case 'T':
-			set_option_notimeout();
-			break ;
-		case 'x':
-			set_option_fork();
-			break ;
-		case 'X':
-			set_option_nofork();
-			break ;
-		case 'l':
-			set_option_loghistory();
-			break;
-		case 'L':
-			set_option_nologhistory();
-			break;
-		case 'F':
-			set_option_filter_failingoff();
-			break;
-		case 'f':
-			set_option_filter_failingon();
-			break;
-		case 'p':
-			set_option_filter_passingon();
-			break;
-		case 'P':
-			set_option_filter_passingoff();
-			break;
-		case 'o':
-			set_option_filter_outdatedon();
-			break;
-		case 'O':
-			set_option_filter_outdatedoff();
-			break;
-		case 'n':
-			set_option_filter_nohistoryon();
-			break;
-		case 'N':
-			set_option_filter_nohistoryoff();
-			break;
-		case 'a':
-			set_option_rundisabled();
-			break;
-		case 'A':
-			set_option_norundisabled();
-			break;
-		case 'k':
-			set_option_leakstest();
-			break;
-		case 'K':
-			set_option_noleakstest();
-			break;
-		case 's':
-			set_option_handlesignals();
-			break;
-		case 'S':
-			set_option_nohandlesignals();
-			break;
-		case 'W':
-			set_option_nowritelog();
-			break;
-		case 'r':
-			set_option_filter_nohistoryoff();
-			set_option_filter_passingoff();
-			set_option_filter_outdatedoff();
-			set_option_filter_failingon();
-			break;
-		case 'u':
-			set_option_filter_nohistoryoff();
-			set_option_filter_passingoff();
-			set_option_filter_outdatedon();
-			set_option_filter_failingoff();
-			break;
-	}
-}
-
 void	handle_args(t_clopt *opt, int argc, char **argv)
 {
+	int i = 0;
 	//First, set default behavior with Makefile defines
-	for (int i = 0; DEFAULT_RUN_OPTIONS[i]; i++)
-		parse_option(DEFAULT_RUN_OPTIONS[i]);
-	//Next, get command line options
-	*opt = ft_optget(argc, argv);
-	for (int i = 0; i < opt->num_sel; i++)
-		parse_option(opt->selected[i]);
+	while (DEFAULT_RUN_OPTIONS[i])
+		i += parse_option(((char *)DEFAULT_RUN_OPTIONS) + i);
+	//Next, get command line options and set the strip down to the query
+	*opt = parse_and_strip_options(argc, argv);
 	//Check the options to make sure they're coherent
 	options_check();
 }

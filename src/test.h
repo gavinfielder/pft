@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 03:25:00 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 22:11:26 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@
 # define RECENTLY_PASSED 'p'
 # define RECENTLY_FAILED 'f'
 
+# define FTOPT_MAX_OPTIONS 63
+
 /* ----------------------------------------------------------------------------
 ** Definitions
 ** --------------------------------------------------------------------------*/
@@ -156,6 +158,20 @@ typedef struct				s_test_log_entry
 	struct s_test_log_entry *next;
 }							t_test_log_entry;
 
+typedef struct			s_argsarr
+{
+	char				**argv;
+	int					argc;
+}						t_argsarr;
+
+typedef struct			s_clopt
+{
+	char				selected[FTOPT_MAX_OPTIONS + 1];
+	int					num_sel;
+	char				*program_name;
+	t_argsarr			args;
+}						t_clopt;
+
 /* ----------------------------------------------------------------------------
 ** Globals
 ** --------------------------------------------------------------------------*/
@@ -203,9 +219,7 @@ void					set_option_noleakstest(void);
 void					set_option_handlesignals(void);
 void					set_option_nohandlesignals(void);
 void					set_option_nowritelog(void);
-
 int						get_option_loghistory(void);
-
 /* ----------------------------------------------------------------------------
 ** Helper Functions
 ** --------------------------------------------------------------------------*/
@@ -221,8 +235,11 @@ int						ft_match(const char *s1, char *s2);
 void 					convert_nonalphanum_to_wildcard(char *str);
 void					ft_putnbr_fd(int nb, int fd);
 void					init_printing(void);
+int						parse_option(char *str);
 
-//options for run_test
+t_clopt					parse_and_strip_options(int argc, char **argv);
+int						ft_issel(t_clopt *opt, char c);
+
 int						run_test_fork(int test_number);
 int						run_test_nofork(int test_number);
 
@@ -235,34 +252,7 @@ void					new_log(void);
 void					write_log(void);
 
 /* ----------------------------------------------------------------------------
-** Args Array from Libft
-** --------------------------------------------------------------------------*/
-
-typedef struct			s_argsarr
-{
-	char				**argv;
-	int					argc;
-}						t_argsarr;
-
-/* ----------------------------------------------------------------------------
-** Command Line Options from Libft
-** --------------------------------------------------------------------------*/
-
-# define FTOPT_MAX_OPTIONS 63
-
-typedef struct			s_clopt
-{
-	char				selected[FTOPT_MAX_OPTIONS + 1];
-	int					num_sel;
-	char				*program_name;
-	t_argsarr			args;
-}						t_clopt;
-
-t_clopt					ft_optget(int argc, char **argv);
-int						ft_issel(t_clopt *opt, char c);
-
-/* ----------------------------------------------------------------------------
-** strsplit from libft
+** Miscellaneous
 ** --------------------------------------------------------------------------*/
 
 char					**my_strsplit(char const *s, char c);

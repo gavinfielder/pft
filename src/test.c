@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 03:24:22 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 22:07:20 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -716,8 +716,10 @@ void	options_check(void)
 		printf("   filter_run_failing = %i\n", filter_run_failing);
 		printf("   filter_run_passing = %i\n", filter_run_passing);
 		printf("   filter_run_outdated = %i\n", filter_run_outdated);
+		printf("   filter_run_nohistory = %i\n", filter_run_nohistory);
 		printf("   filter_run_disabled = %i\n", filter_run_disabled);
 		printf("   run_leaks_test = %i\n", run_leaks_test);
+		printf("   handle_signals = %i\n", handle_signals);
 		printf("\n");
 		fflush(stdout);
 	}

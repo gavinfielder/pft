@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/02 03:27:32 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/02 22:12:05 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,10 @@ IGNORE_RETURN_VALUE=0
 TIMEOUT_SECONDS=0.75
 
 # Sets default program behavior; can be overridden with command line arguments
-DEFAULT_RUN_OPTIONS=AfKlnopstx
+DEFAULT_RUN_OPTIONS=AKlstx =nopf
 
 # Sets the number of seconds for a test history to be considered 'outdated'
-TEST_OUTDATED_TIME=900
+TEST_OUTDATED_TIME=10
 
 # Sets the command that's run when leaks test option is selected
 LEAKS_TEST_CMD=system(\"leaks $(TEST_ONAME)\");
@@ -71,7 +71,7 @@ TEST_LOG=test_history.csv
 TEST_RESULTS=test_results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
-SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/ft_options.c \
+SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/options.c \
 		 src/help.c src/ft_destroy_nullterm_ptrarray.c src/ft_strsplit.c \
 		 src/history.c
 UNIT_TEST_FILE=unit_tests.c

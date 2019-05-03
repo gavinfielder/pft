@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 06:47:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/02 01:32:10 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/02 21:54:07 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void		load_history(void)
 	fclose(fp_in);
 
 	//debug
-	if (DEBUG)
-		printf("Test history:\n\"%s\"\n\n", test_history);
+	//if (DEBUG)
+		//printf("Test history:\n\"%s\"\n\n", test_history);
 }
 
 void		add_log_entry(const t_test_entry *test, int failed)
