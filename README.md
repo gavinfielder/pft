@@ -21,6 +21,7 @@ It's **more** useful as a production tool while you're developing ft\_prinf, bec
   - [Enabling and Disabling Tests](#enabling-and-disabling-tests)
 - [How It Works](#how-it-works-in-brief)
 - [Advanced Options](#advanced-options)
+  - [Filtering by recent test history](#additional-options-when-test-history-logging-is-enabled)
 - [Troubleshooting](#troubleshooting)
 
 ## Requirements
