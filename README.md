@@ -196,6 +196,8 @@ On: `-k` ;  Off: `-K`  Default off.
 
 When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).
 
+The default leaks testing method is to call `leaks(1)` via `system(3)`. You can specify a different method with the `LEAKS_TEST_CMD` option in the PFT makefile.  
+
 This feature is still being tested. Do not rely on it completely.
 
 ### Fork Mode
