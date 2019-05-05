@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/03 06:10:07 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/04 16:21:52 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -151,7 +151,7 @@ clean:
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
-	@rm -f *.bak
+	@rm -f src/*.bak
 
 fclean:
 	@make clean
