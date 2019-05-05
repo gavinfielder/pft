@@ -6,39 +6,11 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 06:09:47 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/04 20:38:57 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
-
-/* ----------------------------------------------------------------------------
-** Put any variables that are needed as singular references (e.g., for testing
-** pointers, and declare them as extern in unit_tests.c
-** --------------------------------------------------------------------------*/
-
-char	a01;
-unsigned char a02;
-short a03;
-unsigned short a04;
-int a05;
-unsigned int a06;
-long a07;
-unsigned long a08;
-long long a09;
-unsigned long long a10;
-char *a11;
-void *a12;
-unsigned int		mx_u = 235;
-long double			mx_Lf = 0.375l;
-double				mx_f = 0.625;
-long				mx_li =  4223372036854775800;
-long long			mx_lli = 3223372036654775200;
-char				mx_c = 'G';
-short				mx_hi = -3244;
-char				mx_hhi = 'F';
-char			   *mx_s = "Hello, World!";
-int					mx_i = 42;
 
 /* ----------------------------------------------------------------------------
 ** Signal names, as strings
@@ -80,17 +52,6 @@ const char *g_signal_strings[] =
 };
 
 /* ----------------------------------------------------------------------------
-** Options that are set by Makefile and/or command line arguments
-** --------------------------------------------------------------------------*/
-
-static t_pft_options	options = {
-	run_test_fork,
-	1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1
-};
-
-t_pft_options	get_options(void) { return options; }
-
-/* ----------------------------------------------------------------------------
 ** Global flags for timeout function
 ** --------------------------------------------------------------------------*/
 
@@ -102,12 +63,6 @@ static int			ready = 0;
 ** --------------------------------------------------------------------------*/
 
 static int			signaled = 0;
-
-/* ----------------------------------------------------------------------------
-** Populated parallel array with test history from the log
-** --------------------------------------------------------------------------*/
-
-t_test_history			test_history[NUMBER_OF_TESTS + 4];
 
 /* ----------------------------------------------------------------------------
 ** Calls a unit test function and outputs the result to a file
@@ -638,9 +593,7 @@ int			run_test_fork(int test_number)
 	return (failed);
 }
 
-/* ----------------------------------------------------------------------------
-** Sets options
-** --------------------------------------------------------------------------*/
+/*
 void	set_option_fork(void) { options.run_test = run_test_fork; }
 void	set_option_nofork(void) { options.run_test = run_test_nofork; }
 void	set_option_notimeout(void) { options.use_timeout = 0; }
@@ -707,7 +660,7 @@ void	options_check(void)
 		printf("\n");
 		fflush(stdout);
 	}
-}
+}*/
 
 /* ----------------------------------------------------------------------------
 ** Returns 1 if options allow test to run, 0 if it is filtered out

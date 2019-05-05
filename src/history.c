@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 06:47:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 02:41:30 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/04 20:25:18 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,28 @@
 #include "test.h"
 #include <stdio.h>
 
+/* ----------------------------------------------------------------------------
+** Global variable that holds the test history from the log
+** --------------------------------------------------------------------------*/
+
+t_test_history			test_history[NUMBER_OF_TESTS + 4];
+
+/* ----------------------------------------------------------------------------
+** Linked list for all the tests that ran and need writing to the log
+** --------------------------------------------------------------------------*/
+
 static t_test_log_entry		*head = NULL;
 static t_test_log_entry		*tail = NULL;
 
+/* ----------------------------------------------------------------------------
+** Time of run
+** --------------------------------------------------------------------------*/
+
 time_t		now = 0;
 
+/* ----------------------------------------------------------------------------
+** Populate the test_history array
+** --------------------------------------------------------------------------*/
 void		load_history(void)
 {
 	FILE	*fp_in = NULL;
@@ -58,6 +75,9 @@ void		load_history(void)
 	fclose(fp_in);
 }
 
+/* ----------------------------------------------------------------------------
+** Adds an entry to the linked list for later write to the log
+** --------------------------------------------------------------------------*/
 void		add_log_entry(const t_test_entry *test, int failed)
 {
 	t_test_log_entry	*ent = malloc(sizeof(t_test_log_entry));
@@ -89,6 +109,9 @@ void		add_log_entry(const t_test_entry *test, int failed)
 	}
 }
 
+/* ----------------------------------------------------------------------------
+** Writes the current head to the log
+** --------------------------------------------------------------------------*/
 void		write_head_to_log(FILE *fp_out, int test_last_passed,
 				int test_last_failed)
 {
@@ -105,6 +128,9 @@ void		write_head_to_log(FILE *fp_out, int test_last_passed,
 		tail = NULL;
 }
 
+/* ----------------------------------------------------------------------------
+** Deletes all the log entries waiting to be written
+** --------------------------------------------------------------------------*/
 void		flush_all_log_entries(void)
 {
 	t_test_log_entry *tmp;
@@ -118,6 +144,9 @@ void		flush_all_log_entries(void)
 	tail = NULL;
 }
 
+/* ----------------------------------------------------------------------------
+** Writes a fresh log with all the log entries waiting to be written
+** --------------------------------------------------------------------------*/
 void		new_log(void)
 {
 	FILE* fp = fopen(TEST_LOG, "w");
@@ -129,6 +158,9 @@ void		new_log(void)
 	fclose(fp);
 }
 
+/* ----------------------------------------------------------------------------
+** Re-writes the log, merging existing data and new data
+** --------------------------------------------------------------------------*/
 void		write_log(void)
 {
 	FILE	*fp_in = NULL;
@@ -180,34 +212,4 @@ void		write_log(void)
 	system(cmd);
 	free(cmd);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

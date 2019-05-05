@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/04 16:21:52 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/04 20:35:14 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,9 +78,8 @@ TEST_LOG=history.csv
 TEST_RESULTS=results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
-SRC_TEST=src/main.c src/test.c src/test_print_and_utils.c src/options.c \
-		 src/help.c src/ft_destroy_nullterm_ptrarray.c src/ft_strsplit.c \
-		 src/history.c
+SRC_TEST=src/main.c src/test.c src/options.c src/utils.c \
+		 src/help.c src/history.c src/vars.c src/print.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=src/unit_tests_indexed.c
 NUMBER_OF_TESTS=$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")

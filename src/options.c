@@ -6,12 +6,102 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:16:25 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 06:07:16 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/04 20:33:20 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
+/* ----------------------------------------------------------------------------
+** Options that are set by Makefile and/or command line arguments
+** --------------------------------------------------------------------------*/
+
+t_pft_options	options = {
+	run_test_fork,
+	1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1
+};
+
+t_pft_options	get_options(void) { return options; }
+
+/* ----------------------------------------------------------------------------
+** Sets options
+** --------------------------------------------------------------------------*/
+void	set_option_fork(void) { options.run_test = run_test_fork; }
+void	set_option_nofork(void) { options.run_test = run_test_nofork; }
+void	set_option_notimeout(void) { options.use_timeout = 0; }
+void	set_option_usetimeout(void) { options.use_timeout = 1; }
+void	set_option_loghistory(void) { options.log_history = 1; }
+void	set_option_nologhistory(void) { options.log_history = 0; }
+void	set_option_filter_failingoff(void) { options.filter_run_failing = 0; }
+void	set_option_filter_failingon(void) { options.filter_run_failing = 1; }
+void	set_option_filter_passingoff(void) { options.filter_run_passing = 0; }
+void	set_option_filter_passingon(void) { options.filter_run_passing = 1; }
+void	set_option_filter_outdatedoff(void) { options.filter_run_outdated = 0; }
+void	set_option_filter_outdatedon(void) { options.filter_run_outdated = 1; }
+void	set_option_filter_nohistoryon(void) { options.filter_run_nohistory = 1; }
+void	set_option_filter_nohistoryoff(void) { options.filter_run_nohistory = 0; }
+void	set_option_rundisabled(void) { options.filter_run_disabled = 1; }
+void	set_option_norundisabled(void) { options.filter_run_disabled = 0; }
+void	set_option_leakstest(void)
+{ options.run_leaks_test = 1; options.run_test = run_test_nofork; options.use_timeout = 0; }
+void	set_option_noleakstest(void) { options.run_leaks_test = 0; }
+void	set_option_handlesignals(void) { options.handle_signals = 1; }
+void	set_option_nohandlesignals(void) { options.handle_signals = 0; }
+void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
+void	set_option_noprintinfo(void) { options.print_info = 0; }
+void	set_option_printinfo(void) { options.print_info = 1; }
+void	set_option_refreshresults(void) { options.refresh_results = 1; }
+void	set_option_norefreshresults(void) { options.refresh_results = 0; }
+
+/* ----------------------------------------------------------------------------
+** Option accessors
+** --------------------------------------------------------------------------*/
+int		get_option_loghistory(void) { return options.log_history; }
+int		get_option_writelog(void) { return options.log_write_enabled; }
+int		get_option_printinfo(void) { return options.print_info; }
+
+/* ----------------------------------------------------------------------------
+** Checks options to make sure they're coherent
+** --------------------------------------------------------------------------*/
+void	options_check(void)
+{
+	if (options.run_leaks_test && options.run_test == run_test_fork)
+	{
+		dprintf(2, "leaks test (-k) must be run in non-forking mode (-X). Run with -kX.\n");
+		exit(-1);
+	}
+	if (options.use_timeout && options.run_test == run_test_nofork)
+	{
+		dprintf(2, "Notice: timeout (-t) is only available in forking mode (-x).\n");
+		fflush(stdout);
+	}
+
+	if (DEBUG)
+	{
+		printf("Options selected:\n");
+		if (options.run_test == run_test_nofork)
+			printf("   options.run_test = run_test_nofork\n");
+		else if (options.run_test == run_test_fork)
+			printf("   options.run_test = run_test_fork\n");
+		else
+			printf("   options.run_test = %p\n", options.run_test);
+		printf("   options.use_timeout = %i\n", options.use_timeout);
+		printf("   options.log_history = %i\n", options.log_history);
+		printf("   options.filter_run_failing = %i\n", options.filter_run_failing);
+		printf("   options.filter_run_passing = %i\n", options.filter_run_passing);
+		printf("   options.filter_run_outdated = %i\n", options.filter_run_outdated);
+		printf("   options.filter_run_nohistory = %i\n", options.filter_run_nohistory);
+		printf("   options.filter_run_disabled = %i\n", options.filter_run_disabled);
+		printf("   options.run_leaks_test = %i\n", options.run_leaks_test);
+		printf("   options.handle_signals = %i\n", options.handle_signals);
+		printf("\n");
+		fflush(stdout);
+	}
+}
+
+/* ----------------------------------------------------------------------------
+** Parses a filter option (an option starting with =, +, -)
+** --------------------------------------------------------------------------*/
 int		parse_filter_option(char *str)
 {
 	int i;
@@ -96,6 +186,9 @@ int		parse_filter_option(char *str)
 	return (1);
 }
 
+/* ----------------------------------------------------------------------------
+** Parses a single option
+** --------------------------------------------------------------------------*/
 int		parse_option(char *str)
 {
 	if (DEBUG) printf("parsing option: %c\n", *str);
@@ -170,6 +263,9 @@ int		parse_option(char *str)
 	return (1);
 }
 
+/* ----------------------------------------------------------------------------
+** Reads the argc,argv into a t_clopt and parses all options
+** --------------------------------------------------------------------------*/
 t_clopt		parse_and_strip_options(int argc, char **argv)
 {
 	t_clopt		opt;
@@ -207,6 +303,9 @@ t_clopt		parse_and_strip_options(int argc, char **argv)
 	return (opt);
 }
 
+/* ----------------------------------------------------------------------------
+** Returns whether an option is selected
+** --------------------------------------------------------------------------*/
 int			ft_issel(t_clopt *opt, char c)
 {
 	int		i;
