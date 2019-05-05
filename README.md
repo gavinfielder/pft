@@ -31,14 +31,15 @@ You have to have a Makefile in your project directory that will compile libftpri
 
 Other than this, it should be completely general to all ft\_printf projects.  
 
+### System Requirements
+Requires PHP. All 42 lab computers should have PHP installed.
+
 # Installation
 
 In the root of your repo, run this command:
 
-***DEV BRANCH INSTALLATION***
-
 ```
-git clone --branch dev https://github.com/gavinfielder/pft.git testing && echo "testing/" >> .gitignore
+git clone https://github.com/gavinfielder/pft.git pft && echo "pft/" >> .gitignore
 ```
 
 ***If your libft.a is separate from libftprintf.a:***   
@@ -46,7 +47,6 @@ If you include all required .o files (including your libft) in libftprintf.a, th
 
 # Usage
  - `./test help` shows some help text and usage examples  
- - `./test help all` shows more help text  
 
 The executable accepts the following as queries:
  - `./test moul` runs all the enabled tests whose name starts with a string, in this case 'moul'
