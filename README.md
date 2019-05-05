@@ -104,12 +104,12 @@ Of course, in order for lldb to read your own libftprintf.a, you must also use t
 
 ## Enabling and Disabling tests
 
-I have provided scripts that make it easy to enable and disable tests by a search pattern. Example:
+I have provided scripts that make it easy to enable and disable tests. The scripts accept the same basic queries as the `./test` executable.  
 
 ```bash
-Simple prefix-based search:
  ./disable-test s                         # All the tests that start with 's' are disabled
  ./enable-test s_null_                    # All the tests that start with 's_null_' are enabled
+ ./disable-test 42 84                     # Tests 42 to 84 are disabled
  ./disable-test && ./enable-test s        # Disables all tests except tests that start with 's'
 
 Wildcard search:
