@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 22:34:50 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/03 00:31:51 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/05 10:05:11 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,13 @@ int main(int argc, char **argv)
 	t_clopt	clargs;
 	handle_args(&clargs, argc, argv);
 
+	init_printing();
 	if (clargs.args.argc > 0 && strcmp(clargs.args.argv[0], "help") == 0)
 	{
-		if (clargs.args.argc == 2 && strcmp(clargs.args.argv[1], "all") == 0)
-			print_help(1);
+		if (clargs.args.argc > 1)
+			help_index_search(argv[2]);
 		else
-			print_help(0);
+			help_basic();
 	}
 	else
 		unit_testing(clargs);

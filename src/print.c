@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 20:17:02 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/04 22:27:51 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static time_t	now = 0;
 ** For responsive window size
 ** --------------------------------------------------------------------------*/
 
-static uint16_t	window_width = 0;
+uint16_t		window_width = 0;
 static  char *test_history_fmt_str = "   \x1B[2mLast %s %s\x1B[0m";
 static const char *test_start_fmt_str = "Test %4i:  %-42s [";
 

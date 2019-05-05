@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/04 20:35:14 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/05 12:40:12 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ TEST_RESULTS=results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
 SRC_TEST=src/main.c src/test.c src/options.c src/utils.c \
-		 src/help.c src/history.c src/vars.c src/print.c
+		 src/help.c src/history.c src/vars.c src/print.c src/help_conf.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=src/unit_tests_indexed.c
 NUMBER_OF_TESTS=$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")
@@ -121,8 +121,7 @@ $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_in
 	@echo "  \x1B[1;36m$(shell cat $(UNIT_TEST_FILE) | grep -c "^int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") \x1B[0mout of \x1B[1;33m$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")\x1B[0m tests are enabled.\x1B[0;0;0m"
 	@echo "  \x1B[4mDirections\x1B[0m:"
 	@echo "    \x1B[36m./test [query]\x1B[0m          to run tests"
-	@echo "    \x1B[36m./test help\x1B[0m             to see examples"
-	@echo "    \x1B[36m./test help all\x1B[0m         to see extended help information"
+	@echo "    \x1B[36m./test help\x1B[0m             to see examples and other help"
 
 
 $(INDEXED_TESTS): test_index

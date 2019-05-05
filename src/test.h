@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 20:50:41 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/04 22:52:18 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <time.h>
+
+#include "help.h"
 
 /* ----------------------------------------------------------------------------
 ** Errors go here
@@ -237,6 +239,7 @@ extern const t_test_entry	g_unit_tests[];
 extern const char			*g_signal_strings[];
 extern t_test_history		test_history[NUMBER_OF_TESTS + 4];
 extern t_pft_options		options;
+extern uint16_t				window_width;
 
 /* ----------------------------------------------------------------------------
 ** The Victim
@@ -299,6 +302,7 @@ void					print_test_start(int test_number);
 void					print_test_end(int test_number, int failed,
 							int stat_loc, int timed_out, int leak_found);
 void					print_end_test_message(int num_tests, int num_passed);
+uint16_t				tty_get_window_width(void);
 
 /* ----------------------------------------------------------------------------
 ** Options Management

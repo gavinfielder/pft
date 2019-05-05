@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 20:38:57 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/04 22:26:17 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -700,7 +700,6 @@ void	run_init(void)
 {
 	if (options.log_history)
 		load_history();
-	init_printing();
 	if (options.run_test == run_test_nofork && options.handle_signals)
 	{
 		signal(SIGSEGV, handle_sigsegv);
