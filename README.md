@@ -31,10 +31,10 @@ git clone https://github.com/gavinfielder/pft.git pft && echo "pft/" >> .gitigno
 ```
 For most users, that is all that is required.  
 
-***If your libft.a is separate from libftprintf.a:***   
-If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in the [Configuration Options](https://github.com/gavinfielder/pft/wiki/Configuration-Options). 
+### If your libft.a is separate from libftprintf.a   
+If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in options-config.ini, and make sure the path is correct. See options-config.ini, and it should be self-explanatory.  
 
-For other installation options, see [Installation](https://github.com/gavinfielder/pft/wiki/Installation).
+For non-standard installation options, see [Installation](https://github.com/gavinfielder/pft/wiki/Installation).
 
 # Usage
  - `./test s` runs all the tests that start with a string, in this case 's'. As you might guess, the `%s` tests start with 's'. Tests for the other specifiers (`%d`, `%f`, etc.) can be selected the same way.
@@ -57,7 +57,7 @@ When you fail a test, the file `results.txt` will show the results of the test i
 </p>
 
 
-### Enabling and Disabling tests
+## Enabling and Disabling tests
 
 I have provided scripts that make it easy to enable and disable tests. These scripts accept the same queries as the `./test` executable.  
 
@@ -68,7 +68,7 @@ I have provided scripts that make it easy to enable and disable tests. These scr
 
 You **can** call `./enable-test` (with no arguments) to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
 
-### Using PFT with LLDB or other debuggers
+## Using PFT with LLDB or other debuggers
 
 [Debugger compatibility mode](https://github.com/gavinfielder/pft/wiki/Debugger-Compatibility-Mode) ( `-d` ) is automatically turned on for single tests:   
 
