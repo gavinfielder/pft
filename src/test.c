@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 22:26:17 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/06 19:40:57 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -439,9 +439,9 @@ int				run_test_nofork(int test_number)
 ** --------------------------------------------------------------------------*/
 static void		write_retvals_pipe(int fd, t_retvals retvals)
 {
-	ft_putnbr_fd(retvals.ret_val_mine, fd);
+	my_putnbr_fd(retvals.ret_val_mine, fd);
 	write(fd, ";", 1);
-	ft_putnbr_fd(retvals.ret_val_libc, fd);
+	my_putnbr_fd(retvals.ret_val_libc, fd);
 	write(fd, ";", 1);
 }
 
