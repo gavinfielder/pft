@@ -99,6 +99,10 @@ The full documentation is available in the [Wiki](https://github.com/gavinfielde
    - [Leaks Test (BETA)](https://github.com/gavinfielder/pft/wiki/Leaks-Test-(BETA))
  - [Troubleshooting](https://github.com/gavinfielder/pft/wiki/Troubleshooting)
  - [Contributing to this repo (and possible future features)](https://github.com/gavinfielder/pft/wiki/Contributing-(and-possible-future-features))
+ 
+## Todo List for the Unit Test Library
+I occasionally get suggestions for the unit test library. I keep this list to keep track of what I want to do the next time I modify unit\_tests.c  
+[Todo List for the Unit Test Library](https://github.com/gavinfielder/pft/issues/2)
 
 # Credits
 
