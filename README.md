@@ -77,18 +77,24 @@ The Makefile creates two versions of each unit test function, one that uses ft\_
 
 # Other Documentation
 
-The full documentation is available in the [Wiki](). Here are some quick links:
+The full documentation is available in the [Wiki](https://github.com/gavinfielder/pft/wiki). Here are some quick links:
 
- - [Adding Tests]()
- - [Using PFT with LLDB or other Debuggers]()
- - [Test Naming Conventions (for looking up tests)]()
- - [Wildcard Search]()
- - [Disabling Return Value Check]()
- - [Command Line (Run) Options]()
- - [Configuring and Customizing PFT]()
- - [Troubleshooting]()
- - [Contributing to this repo]()
- - [Possible Future Features]()
+ - [Installation](https://github.com/gavinfielder/pft/wiki/Installation)
+ - [Usage](https://github.com/gavinfielder/pft/wiki/Usage)
+   - [Wildcard Search](https://github.com/gavinfielder/pft/wiki/Wildcard-Search)
+   - [Test Naming Conventions](https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions)
+ - Workflow with PFT
+   - [Enabling and Disabling Tests](https://github.com/gavinfielder/pft/wiki/Enabling-and-Disabling-Tests)
+   - [Adding Tests](https://github.com/gavinfielder/pft/wiki/Adding-Tests)
+ - Options and Configuration
+   - [Run Options](https://github.com/gavinfielder/pft/wiki/Run-Options)
+   - [Configuration Options](https://github.com/gavinfielder/pft/wiki/Configuration-Options)
+ - Additional Features
+   - [Debugger Compatibility Mode](https://github.com/gavinfielder/pft/wiki/Debugger-Compatibility-Mode)
+   - [Test History Logging](https://github.com/gavinfielder/pft/wiki/Test-History-Logging)
+   - [Leaks Test (BETA)](https://github.com/gavinfielder/pft/wiki/Leaks-Test-(BETA))
+ - [Troubleshooting](https://github.com/gavinfielder/pft/wiki/Troubleshooting)
+ - [Contributing to this repo (and possible future features)](https://github.com/gavinfielder/pft/wiki/Contributing-(and-possible-future-features))
 
 # Credits
 
