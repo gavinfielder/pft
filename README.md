@@ -29,9 +29,12 @@ In the root of your repo, run this command:
 ```
 git clone https://github.com/gavinfielder/pft.git pft && echo "pft/" >> .gitignore
 ```
+For most users, that is all that is required.  
 
 ***If your libft.a is separate from libftprintf.a:***   
-If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in options-config.ini. See options-config.ini, and it should be self-explanatory.  
+If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in the [Configuration Options](https://github.com/gavinfielder/pft/wiki/Configuration-Options). 
+
+For other installation options, see [Installation](https://github.com/gavinfielder/pft/wiki/Installation).
 
 # Usage
  - `./test s` runs all the tests that start with a string, in this case 's'. As you might guess, the `%s` tests start with 's'. Tests for the other specifiers (`%d`, `%f`, etc.) can be selected the same way.
@@ -40,7 +43,7 @@ If you include all required .o files (including your libft) in libftprintf.a, th
  - `./test` runs all the enabled tests
  - `./test help` shows examples and other help information.
 
-You can also run specific types of tests by using [Wildcard Search](). See also [Test Naming Conventions]().
+You can also run specific types of tests by using [Wildcard Search](https://github.com/gavinfielder/pft/wiki/Wildcard-Search). See also [Test Naming Conventions](https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions).
 
 
 <p align="center">
@@ -67,7 +70,7 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 ### Using PFT with LLDB or other debuggers
 
-[Debugger compatibility mode]() ( `-d` ) is automatically turned on for single tests:   
+[Debugger compatibility mode](https://github.com/gavinfielder/pft/wiki/Debugger-Compatibility-Mode) ( `-d` ) is automatically turned on for single tests:   
 
 `lldb ./test 42`   
 
