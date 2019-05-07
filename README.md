@@ -122,6 +122,8 @@ Wildcard search:
 
 You **can** call `./enable-test` (with no arguments) to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
 
+enable-test and disable-test also support the `-[-|=|+][fnop]` command line options to filter by test history. See [Advanced Options](#advanced-options) for more on this.
+
 ## Disabling Return Value Check
 
 options-config.ini includes an option to ignore return value checking. I included this because at the time of writing this, moulinette does not check return value, and from what I've seen, the return value is the #1 reason people fail a lot of PFT tests. I don't encourage ignoring the return value, but it is an option if you would like to.  
