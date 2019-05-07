@@ -92,6 +92,7 @@ The full documentation is available in the [Wiki](https://github.com/gavinfielde
  - Options and Configuration
    - [Run Options](https://github.com/gavinfielder/pft/wiki/Run-Options)
    - [Configuration Options](https://github.com/gavinfielder/pft/wiki/Configuration-Options)
+   - [Configuration Guide](https://github.com/gavinfielder/pft/wiki/Configuration-Guide)
  - Additional Features
    - [Debugger Compatibility Mode](https://github.com/gavinfielder/pft/wiki/Debugger-Compatibility-Mode)
    - [Test History Logging](https://github.com/gavinfielder/pft/wiki/Test-History-Logging)
