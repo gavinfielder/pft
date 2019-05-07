@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:02:15 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/05 12:45:44 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:54:35 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,9 @@ int		help_conf_parse_option(char *str)
 		case 'W':
 			help_list_item("W", "new test history will not be written");
 			return (1);
+		case 'w':
+			help_list_item("w", "new test history will be written");
+			return (1);
 		case 'a':
 			help_list_item("a", "run disabled tests");
 			return (1);
@@ -166,7 +169,7 @@ int		help_conf_parse_option(char *str)
 void		help_conf(void)
 {
 	help_header("Current Configuration");
-	help_paragraph("This is the contents of the DEFAULT_RUN_OPTIONS variable in the PFT Makefile. They will be overridden by any command line options given at execution time:");
+	help_paragraph("This is the contents of the DEFAULT_RUN_OPTIONS variable in `options-config.ini`. They will be overridden by any command line options given at execution time:");
 	printf("\n");
 	help_example(DEFAULT_RUN_OPTIONS, 0);
 	printf("\n");

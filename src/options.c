@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:16:25 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 20:33:20 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:58:45 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	set_option_noleakstest(void) { options.run_leaks_test = 0; }
 void	set_option_handlesignals(void) { options.handle_signals = 1; }
 void	set_option_nohandlesignals(void) { options.handle_signals = 0; }
 void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
+void	set_option_writelog(void) { options.log_write_enabled = 1; }
 void	set_option_noprintinfo(void) { options.print_info = 0; }
 void	set_option_printinfo(void) { options.print_info = 1; }
 void	set_option_refreshresults(void) { options.refresh_results = 1; }
@@ -247,6 +248,9 @@ int		parse_option(char *str)
 			return (1);
 		case 'W':
 			set_option_nowritelog();
+			return (1);
+		case 'w':
+			set_option_writelog();
 			return (1);
 		case 'r':
 			set_option_refreshresults();

@@ -7,33 +7,33 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/24 16:59:12 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/04 16:59:12 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/06 16:59:12 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Below is an option to touch the test history when this script is complete
-# Read the below before turning on
+PFT_ROOT=$(dirname $0)
+MAKEFILE=$PFT_ROOT"/Makefile"
+CONFIG_FILE=$PFT_ROOT"/options-config.ini"
 
-# Test history logging is only coherent when the test numbers do not change.
-# For this reason, test_history.csv is removed by the makefile whenever
-# unit_tests.c is strictly newer (there is an option to disable this, however).
-# The enable-test and disable-test scripts modify unit_tests.c, so by default
-# calling either of these scripts will trigger a removal. There is an option
-# in each of these scripts to touch test_history.csv so that enabling and
-# disabling tests do not trigger a history removal, but when using this option,
-# the system can break if you add tests and then immediately call enable-test
-# or disable-test. So if you do this, you must remove test_history.csv manually.
-# This does not apply if you only add tests to the end of unit_tests.c, as this
-# does not change any test numbers.
-TOUCH_TEST_HISTORY=0
+FILENAME=$PFT_ROOT"/"$(grep -e "^UNIT_TEST_FILE" $MAKEFILE | cut -d '=' -f 2 | tr -d " \t")
+TEST_HISTORY_FILENAME=$PFT_ROOT"/"$(grep -e "^TEST_LOG" $MAKEFILE | cut -d '=' -f 2 | tr -d " \t")
+TOUCH_TEST_HISTORY=$(grep -e "^ENABLE_DISABLE_TOUCHES_TEST_HISTORY" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
+REMAKE=$(grep -e "^ENABLE_DISABLE_REMAKES_PFT" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 
-FILENAME=unit_tests.c
-TEST_HISTORY_FILENAME=history.csv
+echo "Enabling tests..."
 
-php src/select_router.php enable $FILENAME $1 $2
-make fclean
+php $PFT_ROOT"/src/select_router.php" enable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $1 $2 $3 $4 $5
+make -C $PFT_ROOT fclean
+
+echo "Done."
 
 if [[ $TOUCH_TEST_HISTORY -eq 1 ]] && [[ -f "$TEST_HISTORY_FILENAME" ]]
 then
 	touch $TEST_HISTORY_FILENAME
+fi
+
+if [[ $REMAKE -eq 1 ]]
+then
+	echo "Remaking PFT..."
+	make -C $PFT_ROOT
 fi

@@ -6,70 +6,18 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/05 12:40:12 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/06 17:04:33 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 # ------------------------------------------------------------------------------
-#      Common User Options
-# ------------------------------------------------------------------------------
-
-# Set to 1 if you do not include your libft .o's in your libftprintf
-USE_SEPARATE_LIBFT=0
-LIBFT_DIR_PATH=../libft
-LIBFT_NAME=libft.a
-
-# Set to 1 to ignore return value
-IGNORE_RETURN_VALUE=0
-
-# Set the number of seconds to timeout on each test, when timeout is used
-TIMEOUT_SECONDS=0.75
-
-# Sets default program behavior; can be overridden with command line arguments
-DEFAULT_RUN_OPTIONS=AiKlrstx =nopf
-
-# Sets the number of seconds for a test history to be considered 'outdated'
-TEST_OUTDATED_TIME=900
-
-# When 1, `make re` for this makefile also rebuilds libftprintf.a
-MAKE_RE_ALSO_REBUILDS_LIBFTPRINTF=1
-
-# ------------------------------------------------------------------------------
-#      Advanced User Options
+#      User options are now in the file below!
 # ------------------------------------------------------------------------------
 
-# Sets the command that's run when leaks test option is selected
-LEAKS_TEST_CMD=system(\"leaks $(TEST_ONAME)\");
-
-# When 1, removes test_history.csv whenever unit_tests.c is strictly newer
-REMOVE_HISTORY_WHEN_TESTS_NEW=1
-
-# Name of the test executable
-TEST_ONAME=test
-
-# Maximum size of output strings to see in the test results file
-TEST_FAIL_LOGGING_MAXBYTES=150
-
-# The compile flags the tester is built with
-CFLAGS=-Wall -Wextra -g
-
-# Specify the root of your repo, where your Makefile is and where your libftprinf.a will be
-LIBFTPRINTF_DIR=..
-
-# This is the name required by the subject, so I doubt you'd want to change it
-LIBFTPRINTF_NAME=libftprintf.a
-
-# When 1, ./test 824 runs test 824 only. When 0, ./test 824 runs 824-[end]
-SINGLE_NUMBER_SINGLE_TEST=1
-
-#     Note setting the option above to 0 disables the next option:
-
-# When 1, ./test 824 runs the test in LLDB compatibility mode by default
-SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE=1
+include options-config.ini
 
 # ------------------------------------------------------------------------------
-#      End User Options
+#      User options are now in the file above!
 # ------------------------------------------------------------------------------
 
 CC=clang

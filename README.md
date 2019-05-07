@@ -9,8 +9,10 @@ By default, it can check if your *completed* printf is pretty good or not pretty
 It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name, category, and previous run history, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible and highly configurable, so you can use it how you wish.   
 
 <p align="center">
-  <img src="https://i.imgur.com/Iwsvc2Y.png" width="50%" />
+  <img src="ttps://i.imgur.com/Iwsvc2Y.png" width="60%" />
 </p>
+
+<i>I've added a lot of features recently, so if you notice any bugs let me know on slack --- @gfielder.</i>
 
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -43,7 +45,7 @@ git clone https://github.com/gavinfielder/pft.git pft && echo "pft/" >> .gitigno
 ```
 
 ***If your libft.a is separate from libftprintf.a:***   
-If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in PFT's Makefile. See the PFT Makefile, and it should be self-explanatory.  
+If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in options-config.ini. See options-config.ini, and it should be self-explanatory.  
 
 # Usage
  - `./test help` shows some help text and usage examples  
@@ -122,7 +124,7 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 ## Disabling Return Value Check
 
-The PFT Makefile includes an option to ignore return value checking. I included this because at the time of writing this, moulinette does not check return value, and from what I've seen, the return value is the #1 reason people fail a lot of PFT tests. I don't encourage ignoring the return value, but it is an option if you would like to.  
+options-config.ini includes an option to ignore return value checking. I included this because at the time of writing this, moulinette does not check return value, and from what I've seen, the return value is the #1 reason people fail a lot of PFT tests. I don't encourage ignoring the return value, but it is an option if you would like to.  
 
 # How it works, in Brief
 
@@ -136,13 +138,12 @@ The Makefile creates two versions of each unit test function, one that uses ft\_
   - [Leaks Test (BETA)](#leaks-test-beta)
   - [Fork Mode](#fork-mode)
   - [Signal Handling](#handle-signals)
-- [Options in the PFT Makefile](#options-in-the-pft-makefile)
-  - [Default run options](#options-in-the-pft-makefile)
-  - [Test outdated time](#options-in-the-pft-makefile)
-- [Other Options](#other-options)
+- [Options in the PFT Config File](#options-in-the-pft-config-file)
+  - [Default run options](#options-in-the-pft-config-file)
+  - [Test outdated time](#options-in-the-pft-config-file)
 
 ## Run Options
-These options are selected either in the PFT Makefile (to set the default run options) and/or as command line options. 
+These options are selected either in options-config.ini (to set the default run options) and/or as command line options. 
 
 In both cases, options are processed left to right, and can override previous selections.  
 
@@ -167,7 +168,9 @@ In both cases, options are processed left to right, and can override previous se
 | Exclude the following               | `-` | |  Outdated tests            |  `o`  |
 |                                     |     | |  Tests with no history     |  `n`  |
 
--  `-W` : do not write new test history.
+| Option                                |  On  |  Off  | Note             |
+|---------------------------------------|------|-------|------------------|
+| Update test history log when complete | `-w` | `-W`  | default on       |
 
 **examples**
  - `./test --p x` runs tests that start with 'x', but excludes tests that recently passed.
@@ -177,9 +180,9 @@ In both cases, options are processed left to right, and can override previous se
 ### Test History Logging
 On: `-l` ; Off: `-L`  Default on.  
 
-By default, PFT will track the last time each test passes and fails, and print information about the most recent run of each test. Tests' history will also become 'outdated' if their age exceeds the value set in the PFT Makefile. This feature also allows selecting tests to run by whether they have recently passed or failed. See [Additional options when test history logging is enabled](#additional-options-when-test-history-logging-is-enabled).
+By default, PFT will track the last time each test passes and fails, and print information about the most recent run of each test. Tests' history will also become 'outdated' if their age exceeds the value set in options-config.ini. This feature also allows selecting tests to run by whether they have recently passed or failed. See [Additional options when test history logging is enabled](#additional-options-when-test-history-logging-is-enabled).
 
-By default, the PFT Makefile removes the test history whenever unit\_tests.c is strictly newer. This prevents the test history from becoming corrupted when you add your own tests (potentially changing the test numbers). By default the enable-test and disable-test scripts, as they modify unit\_tests.c, will trigger such removal of history.csv. There is an option in the makefile to disable the history removal behavior, as well as an option in each of these scripts to touch history.csv to prevent the removal trigger. Use these options at your own discretion.  
+By default, the PFT Makefile removes the test history whenever unit\_tests.c is strictly newer. This prevents the test history from becoming corrupted when you add your own tests (potentially changing the test numbers). By default the enable-test and disable-test scripts, as they modify unit\_tests.c, will trigger such removal of history.csv. There is an option in options-config.ini to disable the history removal behavior, as well as an option in each of these scripts to touch history.csv to prevent the removal trigger. Use these options at your own discretion.  
 
 ### Debugger Compatibility Mode
 On: `-d`  Default off.  
@@ -189,14 +192,14 @@ Debuggers tend to only work well on single-threaded single processes, so "debugg
 ### Timeout
 On: `-t` ; Off: `-T`  Default on.  
 
-Fails tests after a specified time interval. The timeout duration can be set in the PFT Makefile. Only available in fork mode.
+Fails tests after a specified time interval. The timeout duration can be set in options-config.ini. Only available in fork mode.
 
 ### Leaks Test (BETA)
 On: `-k` ;  Off: `-K`  Default off.  
 
 When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).
 
-The default leaks testing method is to call `leaks(1)` via `system(3)`. You can specify a different method with the `LEAKS_TEST_CMD` option in the PFT makefile.  
+The default leaks testing method is to call `leaks(1)` via `system(3)`. You can specify a different method with the `LEAKS_TEST_CMD` option in options-config.ini.  
 
 This feature is still being tested. Do not rely on it completely.
 
@@ -210,7 +213,10 @@ On: `-s` ; Off: `-S`  Default on.
 
 (only applies to non-fork mode) When this option is off, signals will not be caught by PFT and PFT will stop immediately when a test aborts abnormally. When this option is on, abnormal terminations by certain signals will be caught by PFT and tests will continue running.    
 
-## Options in the PFT Makefile
+## Options in the PFT Config File
+
+These options are defined in options-config.ini:  
+
 | Option                                  | Description                                                                                                                                                                                                                                                                                |
 |-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `DEFAULT_RUN_OPTIONS`                   | (string) Determines default program behavior. These are the options that are selected by default at the start of the program; they are overridden by any command line options given at execution time.                                                                                     |
@@ -218,15 +224,14 @@ On: `-s` ; Off: `-S`  Default on.
 | `TEST_OUTDATED_TIME`                    | (long) time in seconds for a test result history to become outdated. The default is 900 (15 minutes). You can set this value to 0 to always consider tests outdated, or to 9999999 to never consider test results outdated, or anything in between.                                        |
 | `MAKE_RE_ALSO_REBUILDS_LIBFTPRINTF`     | (1 or 0) if 1, `make re` will also recompile your project                                                                                                                                                                                                                                  |
 | `IGNORE_RETURN_VALUE`                   | (1 or 0) When this option is 0, tests fail if ft\_printf and printf have different return values. If 1, the return value is ignored.                                                                                                                                                       | 
+| `ENABLE_DISABLE_REMAKES_PFT`            | (1 or 0) When this option is 1, the enable-test and disable-test scripts also re-make PFT when finished.                                                                                                                                                                                   |
+| `ENABLE_DISABLE_TOUCHES_TEST_HISTORY`   | (1 or 0) When this option is 1, the enable=test and disable-test scripts touch history.csv when finished so as to prevent a Makefile removal of the test history.                                                                                                                          |
 | `REMOVE_HISTORY_WHEN_TESTS_NEW`         | (1 or 0) If this option is 1, the makefile will remove history.csv whenever unit\_tests.c is strictly newer.                                                                                                                                                                               |
 | `LEAKS_TEST_CMD`                        | (C macro) The command to run at the end of the test run when the leaks test (`-k`) is selected. The default is to invoke `leaks(1)` with `system(3)`.                                                                                                                                      |
-| `TEST_FAIL_LOGGING_MAXBYTES`                        | (int) The maximum size of output strings to show in results.txt                                                                                                                                                                                                                |
+| `TEST_FAIL_LOGGING_MAXBYTES`            | (int) The maximum size of output strings to show in results.txt                                                                                                                                                                                                                            |
 | `SINGLE_NUMBER_SINGLE_TEST`             | (1 or 0) When this option is 1, single numeric arguments run a single test. If 0, single numeric arguments runs all tests starting at the given number. The latter is a legacy feature, but could still be useful if you are using only your own tests and are writing them as you develop |
 | `SINGLE_TEST_TURNS_ON_LLDB_COMPAT_MODE` | (1 or 0) When this option is 1 (and `SINGLE_NUMBER_SINGLE_TEST` is also 1), single numeric arguments run the requested test in [debugger compatibility mode](#debugger-compatibility-mode) unless explicitly overridden with command line options.                                         |
-| `LIBFTPRINTF_DIR` | (path)  If you do not wish to have PFT inside your local repo, you can specify a different path for your project.                                                                                                                                                                                                |
-
-## Other Options
-The enable-test and disable-test scripts both have the option `TOUCH_TEST_HISTORY`. When this option is 1, running the script will also touch history.csv, which prevents a makefile removal of the test history when these scripts are used.
+| `LIBFTPRINTF_DIR`                       | (path)  If you do not wish to have PFT inside your local repo, you can specify a different path for your project.                                                                                                                                                                          |
 
 # Troubleshooting
 
@@ -238,8 +243,8 @@ For almost all shell terminals, the `*` needs to be escaped--usually, putting a 
 
 ### Other Issues
 
-If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me.    
-
+If something goes wrong--slack me @gfielder. I like testing, like people using good testing, and want to make this easier to use, so don't hesitate to contact me. And if you think it's a bug, let me know so I can fix it.  
+ 
 # Contributing
 
 I encourage everyone to contribute to this, even if it's just adding tests to the library. To do this, fork and make pull requests.   

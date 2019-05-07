@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:57:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/05 13:01:50 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:53:44 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -500,7 +500,7 @@ void		help_enabling_and_disabling(void)
 void		help_return_value(void)
 {
 	help_header("The Return Value (aka Why are all my tests failing?)");
-	help_paragraph("By default, this tester first checks your ft_printf return value. As of the time of writing this, moulinette does not check the ft_printf return value. The PFT Makefile has an option for disabling this behavior and only checking output, if you want to ignore the return value. I do not endorse it, but it's an option.");
+	help_paragraph("By default, this tester first checks your ft_printf return value. As of the time of writing this, moulinette does not check the ft_printf return value. `options-config.ini` has an option for disabling this behavior and only checking output, if you want to ignore the return value. I do not endorse it, but it's an option.");
 }
 
 void		help_how_it_works(void)
@@ -541,13 +541,14 @@ void		help_options(void)
 	help_header("Additional options when test history logging is enabled");
 	help_aux_filter_options();
 	printf("\n");
-	help_header("Options in the PFT Makefile");
+	help_header("Options in the PFT Config File");
+	help_paragraph("These options are available in `options-config.ini`:");
 	help_list_item("IGNORE_RETURN_VALUE", "  whether to ignore the ft_printf return value in testing.");
 	help_list_item("TIMEOUT_SECONDS", "  the timeout duration in seconds.");
 	help_list_item("DEFAULT_RUN_OPTIONS", "  the options selected as the default program behavior");
 	help_list_item("TEST_OUTDATED_TIME", "  the number of seconds for a test history to become outdated");
 	printf("\n");
-	help_paragraph("See Makefile and/or readme for more advanced options.");
+	help_paragraph("See `options-config.ini` and/or readme for more advanced options.");
 	printf("\n");
 	help_header("See Also");
 	help_example("./test help conf", 0);
@@ -569,16 +570,16 @@ void		help_timeout(void)
 {
 	help_header("Timeout");
 	help_paragraph("  on: `-t`   off: `-T`");
-	help_paragraph("This optional feature fails tests after a specified interval of time. The timeout period can be specified in the PFT Makefile. Only available in fork mode.");
+	help_paragraph("This optional feature fails tests after a specified interval of time. The timeout period can be specified in `options-config.ini`. Only available in fork mode.");
 }
 
 void		help_test_history_logging(void)
 {
 	help_header("Test History Logging");
 	help_paragraph("  on: `-l`   off: `-L`");
-	help_paragraph("By default, PFT will track the last time each test passes and fails, and print information about the most recent run of each test. Tests' history will also become 'outdated' if their age exceeds the value set in the PFT Makefile. This feature also allows selecting tests to run by whether they have recently passed or failed.");
+	help_paragraph("By default, PFT will track the last time each test passes and fails, and print information about the most recent run of each test. Tests' history will also become 'outdated' if their age exceeds the value set in `options-config.ini`. This feature also allows selecting tests to run by whether they have recently passed or failed.");
 	printf("\n");
-	help_paragraph("By default, the PFT Makefile removes the test history whenever unit_tests.c is strictly newer. This prevents the test history from becoming corrupted when you add your own tests (potentially changing the test numbers). By default the enable-test and disable-test scripts, as they modify unit_tests.c, will trigger such removal of history.csv. There is an option in the makefile to disable the history removal behavior, as well as an option in each of these scripts to touch history.csv to prevent the removal trigger. Use these options at your own discretion.");
+	help_paragraph("By default, the PFT Makefile removes the test history whenever unit_tests.c is strictly newer. This prevents the test history from becoming corrupted when you add your own tests (potentially changing the test numbers). By default the enable-test and disable-test scripts, as they modify unit_tests.c, will trigger such removal of history.csv. There is an option in `options-config.ini` to disable the history removal behavior, as well as an option in each of these scripts to touch history.csv to prevent the removal trigger. Use these options at your own discretion.");
 	printf("\n");
 	help_header("Filtering Tests by History");
 	help_aux_filter_options();
@@ -606,7 +607,7 @@ void		help_leaks_test(void)
 	help_paragraph("  on: `-k`   off: `-K`");
 	help_paragraph("When this option is on, a leaks test command will run after all tests are completed. This disables fork mode. Leaks test will not run when any test segfaulted or otherwise terminated abnormally (as in this case leaks can come from PFT).");
 	printf("\n");
-	help_paragraph("The default leaks testing method is to call `leaks(1)` via `system(3)`. You can specify a different method with the `LEAKS_TEST_CMD` option in the PFT makefile.");
+	help_paragraph("The default leaks testing method is to call `leaks(1)` via `system(3)`. You can specify a different method with the `LEAKS_TEST_CMD` option in `options-config.ini`.");
 	printf("\n");
 	help_paragraph("This feature is still being tested. Do not rely on it completely.");
 }
@@ -642,7 +643,7 @@ void		help_refresh_results(void)
 void		help_default_run_options(void)
 {
 	help_header("DEFAULT_RUN_OPTIONS");
-	help_paragraph("This option in the PFT Makefile determines the default program behavior. Running `./test [query]` with no command line options will run with the default run options selected using this variable. Any options given as command line options at program execution will override the relevant options set as the default. Options are processed from left to right.");
+	help_paragraph("This option in `options-config.ini` determines the default program behavior. Running `./test [query]` with no command line options will run with the default run options selected using this variable. Any options given as command line options at program execution will override the relevant options set as the default. Options are processed from left to right.");
 	printf("\n");
 	help_header("See Also");
 	help_example("./test help options", 0);
@@ -651,7 +652,7 @@ void		help_default_run_options(void)
 void		help_test_outdated_time(void)
 {
 	help_header("TEST_OUTDATED_TIME");
-	help_paragraph("This option in the PFT Makefile determines the number of seconds before a test result timestamp in the history log becomes 'outdated' instead of recently passed or recently failed. The default is 900 (15 minutes). You can set this value to 0 to always consider tests results outdated, or to 9999999 to never consider test results outdated, or anything in between.");
+	help_paragraph("This option in `options-config.ini` determines the number of seconds before a test result timestamp in the history log becomes 'outdated' instead of recently passed or recently failed. The default is 900 (15 minutes). You can set this value to 0 to always consider tests results outdated, or to 9999999 to never consider test results outdated, or anything in between.");
 	printf("\n");
 	help_header("See Also");
 	help_example("./test help history", 0);
@@ -660,7 +661,7 @@ void		help_test_outdated_time(void)
 void		help_remove_history_when_tests_new(void)
 {
 	help_header("REMOVE_HISTORY_WHEN_TESTS_NEW");
-	help_paragraph("This option in the PFT Makefile determines whether the Makefile will remove the history log whenever unit_tests.c is strictly newer. There are also options in the enable-test and disable-test scripts that can prevent the removal trigger when these scripts are used.");
+	help_paragraph("This option in `options-config.ini` determines whether the Makefile will remove the history log whenever unit_tests.c is strictly newer. There are also options in the enable-test and disable-test scripts that can prevent the removal trigger when these scripts are used.");
 	printf("\n");
 	help_header("See Also");
 	help_example("./test help history", 0);
@@ -669,7 +670,7 @@ void		help_remove_history_when_tests_new(void)
 void		help_leaks_test_cmd(void)
 {
 	help_header("LEAKS_TEST_CMD");
-	help_paragraph("This option in the PFT Makefile is the C macro that will run whenever the leaks test (`-k`) is slected. You may modify this command to use a different leaks testing method.");
+	help_paragraph("This option in `options-config.ini` is the C macro that will run whenever the leaks test (`-k`) is slected. You may modify this command to use a different leaks testing method.");
 	printf("\n");
 	help_header("See Also");
 	help_example("./test help leaks", 0);
@@ -693,7 +694,7 @@ void		help_single_test_turns_on_lldb_compat_mode(void)
 void		help_libftprintf_dir(void)
 {
 	help_header("LIBFTPRINTF_DIR");
-	help_paragraph("This option in the PFT Makefile allows for nonstandard installations. You can specify the path in which your ft_printf project can be found.");
+	help_paragraph("This option in `options-config.ini` allows for nonstandard installations. You can specify the path in which your ft_printf project can be found.");
 }
 
 void		help_troubleshooting(void)
