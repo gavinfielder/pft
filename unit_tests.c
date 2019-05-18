@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 16:43:02 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/18 16:54:22 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -1443,20 +1443,26 @@ int o_prec0val0_waflj_impl(void){return test("%#-5.o", 0);}
 
 
 //Pointers - Basic
- extern  char	a01;
- extern unsigned char a02;
- extern short a03;
- extern unsigned short a04;
- extern int a05;
- extern unsigned int a06;
- extern long a07;
- extern unsigned long a08;
- extern long long a09;
- extern unsigned long long a10;
- extern char *a11;
- extern void *a12;
+static char	a01;
+static unsigned char a02;
+static short a03;
+static unsigned short a04;
+static int a05;
+static unsigned int a06;
+static long a07;
+static unsigned long a08;
+static long long a09;
+static unsigned long long a10;
+static char *a11;
+static void *a12;
 
 int p_null(void){return test("%p", NULL);}
+
+ int	p_ftfc_literal_9w_prec2(void){return test("%9.2p\n", 1234);}
+ int	p_ftfc_literal_2w_prec9(void){return test("%2.9p\n", 1234);}
+ int	p_ftfc_zero_prec5(void){return test("%.5p", 0);}
+ int	p_ftfc_zero_prec0(void){return test("%.0p", 0);}
+int p_ftfc_5w(void){return test("%5p", 0);}
 
 int p_basic(void){return test("%p%p%p%p%p%p%p%p%p%p%p%p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
 
@@ -2299,16 +2305,16 @@ int f_L_stress_prec20_limits_big(void){return test("%.20f",  0.99999999999999999
 			5.75l, 'c', -17, "Atlanta, GA", 54, 9879879879879ll, "baby shark");}
 
 //Mix tests
- extern unsigned int		mx_u;
- extern long double			mx_Lf;
- extern double				mx_f;
- extern long				mx_li;
- extern long long			mx_lli;
- extern char				mx_c;
- extern short				mx_hi;
- extern char				mx_hhi;
- extern char			   *mx_s;
- extern int					mx_i;
+static unsigned int		mx_u = 235;
+static long double			mx_Lf = 0.375l;
+static double				mx_f = 0.625;
+static long				mx_li =  4223372036854775800;
+static long long			mx_lli = 3223372036654775200;
+static char				mx_c = 'G';
+static short				mx_hi = -3244;
+static char				mx_hhi = 'F';
+static char			   *mx_s = "Hello, World!";
+static int					mx_i = 42;
 
 int		mix_test_0(void){return test(
 			"  %o    %u    %li    %s    %X    %lli  ",
