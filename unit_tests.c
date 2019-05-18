@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 16:21:24 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/18 16:43:02 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -45,6 +45,11 @@
 int		nospec_no_specifier_test(void){return test("hello, world!");}
 int		nospec_empty_string(void){return test("");}
 int		nospec_some_escaped_chars(void){return test("\t\n\r\v\f\n");}
+
+//Nospec tests with successive calls
+int		nospec_successive_5_5(void){return ( test("hello") + test("world"));}
+int		nospec_successive_2_9(void){return ( test("he") ^ test(" is alive"));}
+int		nospec_successive_8_3(void){return ( test("is alive") - test(" he"));}
 
 //%% Tests
 int		pct_basic(void){return test("%%");}
@@ -2938,16 +2943,77 @@ int		mix_test_extra_10(void){return test(
 			"  %c    %%    %hhi    %p    %hi    %x  ",
 			mx_c, mx_hhi, &mx_c, mx_hi, mx_u);}
 
-
-
-
-
-
-
-
-
-
-
+int		mix_successive_0(void){return ( test("%c", mx_c) + test("%u", mx_u));}
+int		mix_successive_1(void){return ( test("%o", mx_u) + test("%%"));}
+int		mix_successive_2(void){return ( test("%s", mx_s) + test("%Lf", mx_Lf));}
+int		mix_successive_3(void){return ( test("%Lf", mx_Lf) + test("%hhi", mx_c));}
+int		mix_successive_4(void){return ( test("%x", mx_u) + test("%i", mx_i));}
+int		mix_successive_5(void){return ( test("%x", mx_u) + test("%o", mx_u));}
+int		mix_successive_6(void){return ( test("%s", mx_s) + test("%c", mx_c));}
+int		mix_successive_7(void){return ( test("%p", &mx_i) + test("%hi", mx_hi));}
+int		mix_successive_8(void){return ( test("%f", mx_f) + test("%p", &mx_i));}
+int		mix_successive_9(void){return ( test("%hi", mx_hi) + test("%u", mx_u));}
+int		mix_successive_10(void){return ( test("%u", mx_u) + test("%s", mx_s));}
+int		mix_successive_11(void){return ( test("%Lf", mx_Lf) + test("%p", &mx_i));}
+int		mix_successive_12(void){return ( test("%f", mx_f) + test("%hhi", mx_c));}
+int		mix_successive_13(void){return ( test("%X", mx_u) + test("%hhi", mx_c));}
+int		mix_successive_14(void){return ( test("%X", mx_u) + test("%f", mx_f));}
+int		mix_successive_15(void){return ( test("%hhi", mx_c) + test("%X", mx_u));}
+int		mix_successive_16(void){return ( test("%s", mx_s) + test("%x", mx_u));}
+int		mix_successive_17(void){return ( test("%lli", mx_lli) + test("%i", mx_i));}
+int		mix_successive_18(void){return ( test("%s", mx_s) + test("%o", mx_u));}
+int		mix_successive_19(void){return ( test("%hhi", mx_c) + test("%X", mx_u));}
+int		mix_successive_20(void){return ( test("%p", &mx_i) + test("%s", mx_s));}
+int		mix_successive_21(void){return ( test("%X", mx_u) + test("%x", mx_u));}
+int		mix_successive_22(void){return ( test("%p", &mx_i) + test("%lli", mx_lli));}
+int		mix_successive_23(void){return ( test("%s", mx_s) + test("%f", mx_f));}
+int		mix_successive_24(void){return ( test("%c", mx_c) + test("%hhi", mx_c));}
+int		mix_successive_25(void){return ( test("%x", mx_u) + test("%f", mx_f));}
+int		mix_successive_26(void){return ( test("%s", mx_s) + test("%li", mx_li));}
+int		mix_successive_27(void){return ( test("%f", mx_f) + test("%Lf", mx_Lf));}
+int		mix_successive_28(void){return ( test("%i", mx_i) + test("%u", mx_u));}
+int		mix_successive_29(void){return ( test("%o", mx_u) + test("%li", mx_li));}
+int		mix_successive_30(void){return ( test("%s", mx_s) + test("%u", mx_u));}
+int		mix_successive_31(void){return ( test("%X", mx_u) + test("%c", mx_c));}
+int		mix_successive_32(void){return ( test("%x", mx_u) + test("%u", mx_u));}
+int		mix_successive_33(void){return ( test("%Lf", mx_Lf) + test("%s", mx_s));}
+int		mix_successive_34(void){return ( test("%hhi", mx_c) + test("%u", mx_u));}
+int		mix_successive_35(void){return ( test("%p", &mx_i) + test("%f", mx_f));}
+int		mix_successive_36(void){return ( test("%li", mx_li) + test("%o", mx_u));}
+int		mix_successive_37(void){return ( test("%s", mx_s) + test("%li", mx_li));}
+int		mix_successive_38(void){return ( test("%o", mx_u) + test("%lli", mx_lli));}
+int		mix_successive_39(void){return ( test("%i", mx_i) + test("%c", mx_c));}
+int		mix_successive_40(void){return ( test("%c", mx_c) + test("%x", mx_u));}
+int		mix_successive_41(void){return ( test("%hhi", mx_c) + test("%x", mx_u));}
+int		mix_successive_42(void){return ( test("%x", mx_u) + test("%s", mx_s));}
+int		mix_successive_43(void){return ( test("%u", mx_u) + test("%x", mx_u));}
+int		mix_successive_44(void){return ( test("%i", mx_i) + test("%f", mx_f));}
+int		mix_successive_45(void){return ( test("%s", mx_s) + test("%c", mx_c));}
+int		mix_successive_46(void){return ( test("%i", mx_i) + test("%s", mx_s));}
+int		mix_successive_47(void){return ( test("%u", mx_u) + test("%hhi", mx_c));}
+int		mix_successive_48(void){return ( test("%hi", mx_hi) + test("%o", mx_u));}
+int		mix_successive_49(void){return ( test("%i", mx_i) + test("%hi", mx_hi));}
+int		mix_successive_50(void){return ( test("%o", mx_u) + test("%Lf", mx_Lf));}
+int		mix_successive_51(void){return ( test("%li", mx_li) + test("%hhi", mx_c));}
+int		mix_successive_52(void){return ( test("%hi", mx_hi) + test("%hhi", mx_c));}
+int		mix_successive_53(void){return ( test("%Lf", mx_Lf) + test("%x", mx_u));}
+int		mix_successive_54(void){return ( test("%c", mx_c) + test("%hi", mx_hi));}
+int		mix_successive_55(void){return ( test("%hi", mx_hi) + test("%s", mx_s));}
+int		mix_successive_56(void){return ( test("%i", mx_i) + test("%lli", mx_lli));}
+int		mix_successive_57(void){return ( test("%c", mx_c) + test("%Lf", mx_Lf));}
+int		mix_successive_58(void){return ( test("%f", mx_f) + test("%x", mx_u));}
+int		mix_successive_59(void){return ( test("%s", mx_s) + test("%li", mx_li));}
+int		mix_successive_60(void){return ( test("%hhi", mx_c) + test("%s", mx_s));}
+int		mix_successive_61(void){return ( test("%p", &mx_i) + test("%c", mx_c));}
+int		mix_successive_62(void){return ( test("%lli", mx_lli) + test("%u", mx_u));}
+int		mix_successive_63(void){return ( test("%x", mx_u) + test("%o", mx_u));}
+int		mix_successive_64(void){return ( test("%s", mx_s) + test("%c", mx_c));}
+int		mix_successive_65(void){return ( test("%i", mx_i) + test("%lli", mx_lli));}
+int		mix_successive_66(void){return ( test("%li", mx_li) + test("%Lf", mx_Lf));}
+int		mix_successive_67(void){return ( test("%hi", mx_hi) + test("%x", mx_u));}
+int		mix_successive_68(void){return ( test("%i", mx_i) + test("%hi", mx_hi));}
+int		mix_successive_69(void){return ( test("%Lf", mx_Lf) + test("%li", mx_li));}
+int		mix_successive_70(void){return ( test("%o", mx_u) + test("%li", mx_li));}
 
 
 
