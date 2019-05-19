@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/18 16:55:55 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/18 18:53:44 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,12 +97,14 @@ clean:
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
+	@rm -rf src/show_disabled_postprocess
 	@rm -f src/*.bak
 
 fclean:
 	@make clean
 	@rm -rf $(TEST_ONAME).dSYM
 	@rm -rf $(TEST_ONAME)
+	@rm -rf src/show_disabled_postprocess
 
 re:
 	@if [ $(MAKE_RE_ALSO_REBUILDS_LIBFTPRINTF) -eq 1 ] ; then \

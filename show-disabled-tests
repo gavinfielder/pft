@@ -1,0 +1,20 @@
+#!/bin/sh
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    show-disabled-tests                                :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/05/18 18:10:34 by gfielder          #+#    #+#              #
+#    Updated: 2019/05/18 18:10:34 by gfielder         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+FILENAME=unit_tests.c
+
+if ! [ -f src/show_disabled_postprocess ] ; then
+	clang -o src/show_disabled_postprocess src/show_disabled_postprocess.c
+fi
+
+grep "^[	 ]*int[	 ]*.*(void)" $FILENAME | grep -n "^[	 ]\+int[	 ]*.*(void)" | ./src/show_disabled_postprocess
