@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/06 19:40:57 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:59:07 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,9 +362,9 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 			}
 			if (cmine != clibc)
 				failed = 1;
-			fclose(fpmine);
-			fclose(fplibc);
 		}
+		fclose(fpmine);
+		fclose(fplibc);
 	}
 
 	if (failed)
