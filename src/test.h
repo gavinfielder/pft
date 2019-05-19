@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/06 19:43:40 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/18 17:49:18 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <time.h>
+#include <float.h>
 
 #include "help.h"
 

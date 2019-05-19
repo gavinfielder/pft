@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 16:54:22 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/18 17:51:52 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -1458,10 +1458,10 @@ static void *a12;
 
 int p_null(void){return test("%p", NULL);}
 
- int	p_ftfc_literal_9w_prec2(void){return test("%9.2p\n", 1234);}
- int	p_ftfc_literal_2w_prec9(void){return test("%2.9p\n", 1234);}
- int	p_ftfc_zero_prec5(void){return test("%.5p", 0);}
- int	p_ftfc_zero_prec0(void){return test("%.0p", 0);}
+int	p_ftfc_literal_9w_prec2(void){return test("%9.2p\n", 1234);}
+int	p_ftfc_literal_2w_prec9(void){return test("%2.9p\n", 1234);}
+int	p_ftfc_zero_prec5(void){return test("%.5p", 0);}
+int	p_ftfc_zero_prec0(void){return test("%.0p", 0);}
 int p_ftfc_5w(void){return test("%5p", 0);}
 
 int p_basic(void){return test("%p%p%p%p%p%p%p%p%p%p%p%p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
@@ -1940,6 +1940,45 @@ int f_asspr_prec0n(void){return test("% +.0f", -7.3);}
 int f_asspr_prec1n(void){return test("% +.1f", -7.3);}
 int f_asspr_prec3n(void){return test("% +.3f", -7.3);}
 int f_asspr_prec6n(void){return test("% +.6f", -7.3);}
+//Floats whose precision exceeds their compiled literal precision
+ int f_overprec_might_be_undef_behav_100(void){return test("%.100f", 0.237);}
+ int f_overprec_might_be_undef_behav_32(void){return test("%.32f", 0.237);}
+ int f_overprec_might_be_undef_behav_4(void){return test("%.4f", 0.237);}
+ int f_overprec_might_be_undef_behav_1000(void){return test("%.4f", -0.106577568068517810765107851705167);}
+ int f_overprec_might_be_undef_behav_10_from_0(void){return test("%.10f", 0.0);}
+ int f_overprec_might_be_undef_behav_2000(void){return test("%.2000f", 623.28376510723481);}
+ int f_overprec_might_be_undef_behav_dblmin(void){return test("%.2000f", DBL_MIN);}
+ int f_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000f", -DBL_MIN);}
+//Floats at double max, double min
+int f_limits_dblmax_prec0(void){return test("%.0f", DBL_MAX);}
+int f_limits_dblmax_prec3(void){return test("%.3f", DBL_MAX);}
+int f_limits_dblmax_precd(void){return test("%f", DBL_MAX);}
+int f_limits_dblmax_prec8(void){return test("%.8f", DBL_MAX);}
+int f_stress_limits_dblmax_prec12(void){return test("%.12f", DBL_MAX);}
+int f_stress_limits_dblmax_prec16(void){return test("%.16f", DBL_MAX);}
+int f_stress_limits_dblmax_prec18(void){return test("%.18f", DBL_MAX);}
+int f_limits_ndblmax_prec0(void){return test("%.0f", -DBL_MAX);}
+int f_limits_ndblmax_prec3(void){return test("%.3f", -DBL_MAX);}
+int f_limits_ndblmax_precd(void){return test("%f", -DBL_MAX);}
+int f_limits_ndblmax_prec8(void){return test("%.8f", -DBL_MAX);}
+int f_stress_limits_ndblmax_prec12(void){return test("%.12f", -DBL_MAX);}
+int f_stress_limits_ndblmax_prec16(void){return test("%.16f", -DBL_MAX);}
+int f_stress_limits_ndblmax_prec18(void){return test("%.18f", -DBL_MAX);}
+int f_limits_dblmin_prec0(void){return test("%.0f", DBL_MIN);}
+int f_limits_dblmin_prec3(void){return test("%.3f", DBL_MIN);}
+int f_limits_dblmin_precd(void){return test("%f", DBL_MIN);}
+int f_limits_dblmin_prec8(void){return test("%.8f", DBL_MIN);}
+int f_stress_limits_dblmin_prec12(void){return test("%.12f", DBL_MIN);}
+int f_stress_limits_dblmin_prec16(void){return test("%.16f", DBL_MIN);}
+int f_stress_limits_dblmin_prec18(void){return test("%.18f", DBL_MIN);}
+int f_limits_ndblmin_prec0(void){return test("%.0f", -DBL_MIN);}
+int f_limits_ndblmin_prec3(void){return test("%.3f", -DBL_MIN);}
+int f_limits_ndblmin_precd(void){return test("%f", -DBL_MIN);}
+int f_limits_ndblmin_prec8(void){return test("%.8f", -DBL_MIN);}
+int f_stress_limits_ndblmin_prec12(void){return test("%.12f", -DBL_MIN);}
+int f_stress_limits_ndblmin_prec16(void){return test("%.16f", -DBL_MIN);}
+int f_stress_limits_ndblmin_prec18(void){return test("%.18f", -DBL_MIN);}
+
 //Floats of special values
  int f_reserved_values_inf(void){double special; *((unsigned long *)(&special)) = DBL_INF;
 	return test("%f", special);}
@@ -2288,7 +2327,44 @@ int f_L_stress_prec20_limits_big(void){return test("%.20f",  0.99999999999999999
 	return test("%06Lf", special);}
  int f_L_reserved_values_nzero_6wzp(void){long double special; *((unsigned long *)(&special)) = 0ull;FTPF_LDBL_BYTE5(special) = 0;
 	return test("%06Lf", special);}
-
+///Long double Floats whose precision exceeds their compiled literal precision
+ int f_L_overprec_might_be_undef_behav_100(void){return test("%.100Lf", 0.237l);}
+ int f_L_overprec_might_be_undef_behav_32(void){return test("%.32Lf", 0.237l);}
+ int f_L_overprec_might_be_undef_behav_4(void){return test("%.4Lf", 0.237l);}
+ int f_L_overprec_might_be_undef_behav_1000(void){return test("%.4Lf", -0.106577568068517810765107851705167l);}
+ int f_L_overprec_might_be_undef_behav_10_from_0(void){return test("%.10Lf", 0.0l);}
+ int f_L_overprec_might_be_undef_behav_2000(void){return test("%.2000Lf", 623.28376510723481l);}
+ int f_L_overprec_might_be_undef_behav_dblmin(void){return test("%.2000Lf", LDBL_MIN);}
+ int f_L_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000Lf", -LDBL_MIN);}
+//Long double floats at double max, double min
+int f_L_limits_dblmax_prec0(void){return test("%.0Lf", LDBL_MAX);}
+int f_L_limits_dblmax_prec3(void){return test("%.3Lf", LDBL_MAX);}
+int f_L_limits_dblmax_precd(void){return test("%Lf", LDBL_MAX);}
+int f_L_limits_dblmax_prec8(void){return test("%.8Lf", LDBL_MAX);}
+int f_L_stress_limits_dblmax_prec12(void){return test("%.12Lf", LDBL_MAX);}
+int f_L_stress_limits_dblmax_prec16(void){return test("%.16Lf", LDBL_MAX);}
+int f_L_stress_limits_dblmax_prec18(void){return test("%.18Lf", LDBL_MAX);}
+int f_L_limits_ndblmax_prec0(void){return test("%.0Lf", -LDBL_MAX);}
+int f_L_limits_ndblmax_prec3(void){return test("%.3Lf", -LDBL_MAX);}
+int f_L_limits_ndblmax_precd(void){return test("%Lf", -LDBL_MAX);}
+int f_L_limits_ndblmax_prec8(void){return test("%.8Lf", -LDBL_MAX);}
+int f_L_stress_limits_ndblmax_prec12(void){return test("%.12Lf", -LDBL_MAX);}
+int f_L_stress_limits_ndblmax_prec16(void){return test("%.16Lf", -LDBL_MAX);}
+int f_L_stress_limits_ndblmax_prec18(void){return test("%.18Lf", -LDBL_MAX);}
+int f_L_limits_dblmin_prec0(void){return test("%.0Lf", LDBL_MIN);}
+int f_L_limits_dblmin_prec3(void){return test("%.3Lf", LDBL_MIN);}
+int f_L_limits_dblmin_precd(void){return test("%Lf", LDBL_MIN);}
+int f_L_limits_dblmin_prec8(void){return test("%.8Lf", LDBL_MIN);}
+int f_L_stress_limits_dblmin_prec12(void){return test("%.12Lf", LDBL_MIN);}
+int f_L_stress_limits_dblmin_prec16(void){return test("%.16Lf", LDBL_MIN);}
+int f_L_stress_limits_dblmin_prec18(void){return test("%.18Lf", LDBL_MIN);}
+int f_L_limits_ndblmin_prec0(void){return test("%.0Lf", -LDBL_MIN);}
+int f_L_limits_ndblmin_prec3(void){return test("%.3Lf", -LDBL_MIN);}
+int f_L_limits_ndblmin_precd(void){return test("%Lf", -LDBL_MIN);}
+int f_L_limits_ndblmin_prec8(void){return test("%.8Lf", -LDBL_MIN);}
+int f_L_stress_limits_ndblmin_prec12(void){return test("%.12Lf", -LDBL_MIN);}
+int f_L_stress_limits_ndblmin_prec16(void){return test("%.16Lf", -LDBL_MIN);}
+int f_L_stress_limits_ndblmin_prec18(void){return test("%.18Lf", -LDBL_MIN);}
 
 //Arbitrary argument numbers
 
