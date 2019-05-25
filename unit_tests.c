@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 17:51:52 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/25 14:42:08 by phtruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -129,7 +129,57 @@ int s_null_string_prec_notrunc(void){return test("%.9s", "NULL");}
 int s_null_string_prec_trunc(void){return test("%.3s", "NULL");}
 int s_null_string_prec_default(void){return test("%.s", "NULL");}
 int s_null_string_prec_zero(void){return test("%.0s", "NULL");}
+// To be review
+static char *s_hidden = "hi low\0don't print me lol\0";
 
+int s_basic_s_hidden(void){return test("%s", s_hidden);}
+int s_width_1_s_hidden(void){return test("%1s", s_hidden);}
+int s_width_2_s_hidden(void){return test("%2s", s_hidden);}
+int s_width_3_s_hidden(void){return test("%3s", s_hidden);}
+int s_width_4_s_hidden(void){return test("%4s", s_hidden);}
+int s_width_5_s_hidden(void){return test("%5s", s_hidden);}
+int s_width_6_s_hidden(void){return test("%6s", s_hidden);}
+int s_width_7_s_hidden(void){return test("%7s", s_hidden);}
+int s_width_8_s_hidden(void){return test("%8s", s_hidden);}
+int s_width_9_s_hidden(void){return test("%9s", s_hidden);}
+int s_prec_no_width_s_hidden_trunc(void){return test("%.s", s_hidden);}
+int s_prec_0_no_width_s_hidden_trunc(void){return test("%.0s", s_hidden);}
+int s_prec_1_no_width_s_hidden_trunc(void){return test("%.1s", s_hidden);}
+int s_prec_2_no_width_s_hidden_trunc(void){return test("%.2s", s_hidden);}
+int s_prec_3_no_width_s_hidden_trunc(void){return test("%.3s", s_hidden);}
+int s_prec_4_no_width_s_hidden_trunc(void){return test("%.4s", s_hidden);}
+int s_prec_5_no_width_s_hidden_trunc(void){return test("%.5s", s_hidden);}
+int s_prec_6_no_width_s_hidden_exact(void){return test("%.6s", s_hidden);}
+int s_prec_7_no_width_s_hidden_notrunc(void){return test("%.7s", s_hidden);}
+int s_prec_8_no_width_s_hidden_notrunc(void){return test("%.8s", s_hidden);}
+int s_prec_9_no_width_s_hidden_notrunc(void){return test("%.9s", s_hidden);}
+int s_prec_00_no_width_s_hidden_trunc(void){return test("%.00s", s_hidden);}
+int s_prec_01_no_width_s_hidden_trunc(void){return test("%.01s", s_hidden);}
+int s_prec_02_no_width_s_hidden_trunc(void){return test("%.02s", s_hidden);}
+int s_prec_03_no_width_s_hidden_trunc(void){return test("%.03s", s_hidden);}
+int s_prec_04_no_width_s_hidden_trunc(void){return test("%.04s", s_hidden);}
+int s_prec_05_no_width_s_hidden_trunc(void){return test("%.05s", s_hidden);}
+int s_prec_06_no_width_s_hidden_exact(void){return test("%.06s", s_hidden);}
+int s_prec_07_no_width_s_hidden_notrunc(void){return test("%.07s", s_hidden);}
+int s_prec_08_no_width_s_hidden_notrunc(void){return test("%.08s", s_hidden);}
+int s_prec_09_no_width_s_hidden_notrunc(void){return test("%.09s", s_hidden);}
+int s_prec_0_width_1_s_hidden(void){return test("%1.s", s_hidden);}
+int s_prec_0_width_2_s_hidden(void){return test("%2.s", s_hidden);}
+int s_prec_0_width_3_s_hidden(void){return test("%3.s", s_hidden);}
+int s_prec_0_width_4_s_hidden(void){return test("%4.s", s_hidden);}
+int s_prec_0_width_5_s_hidden(void){return test("%5.s", s_hidden);}
+int s_prec_0_width_6_s_hidden(void){return test("%6.s", s_hidden);}
+int s_prec_0_width_7_s_hidden(void){return test("%7.s", s_hidden);}
+int s_prec_0_width_8_s_hidden(void){return test("%8.s", s_hidden);}
+int s_prec_0_width_9_s_hidden(void){return test("%9.s", s_hidden);}
+int s_prec_0_width_10_s_hidden(void){return test("%10.s", s_hidden);}
+int s_prec_1_width_1_s_hidden(void){return test("%1.1s", s_hidden);}
+int s_prec_1_width_2_s_hidden(void){return test("%2.1s", s_hidden);}
+int s_prec_1_width_3_s_hidden(void){return test("%3.1s", s_hidden);}
+int s_prec_1_width_4_s_hidden(void){return test("%4.1s", s_hidden);}
+int s_prec_1_width_5_s_hidden(void){return test("%5.1s", s_hidden);}
+int s_prec_1_width_6_s_hidden(void){return test("%6.1s", s_hidden);}
+int s_prec_1_width_7_s_hidden(void){return test("%7.1s", s_hidden);}
 
 //Signed integers - no modifers
 int		i_basic_i_pos(void){return test("this %i number", 17);}
