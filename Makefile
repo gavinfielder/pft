@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/05/06 17:04:33 by gfielder         ###   ########.fr        #
+#    Updated: 2019/05/18 18:53:44 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ TEST_RESULTS=results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
 SRC_TEST=src/main.c src/test.c src/options.c src/utils.c \
-		 src/help.c src/history.c src/vars.c src/print.c src/help_conf.c
+		 src/help.c src/history.c src/print.c src/help_conf.c
 UNIT_TEST_FILE=unit_tests.c
 INDEXED_TESTS=src/unit_tests_indexed.c
 NUMBER_OF_TESTS=$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")
@@ -97,12 +97,14 @@ clean:
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
+	@rm -rf src/show_disabled_postprocess
 	@rm -f src/*.bak
 
 fclean:
 	@make clean
 	@rm -rf $(TEST_ONAME).dSYM
 	@rm -rf $(TEST_ONAME)
+	@rm -rf src/show_disabled_postprocess
 
 re:
 	@if [ $(MAKE_RE_ALSO_REBUILDS_LIBFTPRINTF) -eq 1 ] ; then \

@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 22:52:18 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/18 17:49:18 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <time.h>
+#include <float.h>
 
 #include "help.h"
 
@@ -334,8 +335,8 @@ void					write_ago(time_t prev_time, time_t now, char *buff);
 int						ft_match_helper(const char *s1, char *s2);
 int						ft_match(const char *s1, char *s2);
 void 					convert_nonalphanum_to_wildcard(char *str);
-void					ft_putnbr_fd(int nb, int fd);
+void					my_putnbr_fd(int nb, int fd);
 char					**my_strsplit(char const *s, char c);
-void					ft_destroy_nullterm_ptrarray(void ***arr);
+void					my_destroy_nullterm_ptrarray(void ***arr);
 
 #endif

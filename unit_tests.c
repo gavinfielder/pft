@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/04/25 16:49:49 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/25 14:49:08 by phtruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -45,6 +45,11 @@
 int		nospec_no_specifier_test(void){return test("hello, world!");}
 int		nospec_empty_string(void){return test("");}
 int		nospec_some_escaped_chars(void){return test("\t\n\r\v\f\n");}
+
+//Nospec tests with successive calls
+int		nospec_successive_5_5(void){return ( test("hello") + test("world"));}
+int		nospec_successive_2_9(void){return ( test("he") ^ test(" is alive"));}
+int		nospec_successive_8_3(void){return ( test("is alive") - test(" he"));}
 
 //%% Tests
 int		pct_basic(void){return test("%%");}
@@ -124,7 +129,98 @@ int s_null_string_prec_notrunc(void){return test("%.9s", "NULL");}
 int s_null_string_prec_trunc(void){return test("%.3s", "NULL");}
 int s_null_string_prec_default(void){return test("%.s", "NULL");}
 int s_null_string_prec_zero(void){return test("%.0s", "NULL");}
+// To be review
+static char *s_hidden = "hi low\0don't print me lol\0";
 
+int s_basic_s_hidden(void){return test("%s", s_hidden);}
+int s_width_1_s_hidden(void){return test("%1s", s_hidden);}
+int s_width_2_s_hidden(void){return test("%2s", s_hidden);}
+int s_width_3_s_hidden(void){return test("%3s", s_hidden);}
+int s_width_4_s_hidden(void){return test("%4s", s_hidden);}
+int s_width_5_s_hidden(void){return test("%5s", s_hidden);}
+int s_width_6_s_hidden(void){return test("%6s", s_hidden);}
+int s_width_7_s_hidden(void){return test("%7s", s_hidden);}
+int s_width_8_s_hidden(void){return test("%8s", s_hidden);}
+int s_width_9_s_hidden(void){return test("%9s", s_hidden);}
+int s_prec_no_width_s_hidden_trunc(void){return test("%.s", s_hidden);}
+int s_prec_0_no_width_s_hidden_trunc(void){return test("%.0s", s_hidden);}
+int s_prec_1_no_width_s_hidden_trunc(void){return test("%.1s", s_hidden);}
+int s_prec_2_no_width_s_hidden_trunc(void){return test("%.2s", s_hidden);}
+int s_prec_3_no_width_s_hidden_trunc(void){return test("%.3s", s_hidden);}
+int s_prec_4_no_width_s_hidden_trunc(void){return test("%.4s", s_hidden);}
+int s_prec_5_no_width_s_hidden_trunc(void){return test("%.5s", s_hidden);}
+int s_prec_6_no_width_s_hidden_exact(void){return test("%.6s", s_hidden);}
+int s_prec_7_no_width_s_hidden_notrunc(void){return test("%.7s", s_hidden);}
+int s_prec_8_no_width_s_hidden_notrunc(void){return test("%.8s", s_hidden);}
+int s_prec_9_no_width_s_hidden_notrunc(void){return test("%.9s", s_hidden);}
+int s_prec_00_no_width_s_hidden_trunc(void){return test("%.00s", s_hidden);}
+int s_prec_01_no_width_s_hidden_trunc(void){return test("%.01s", s_hidden);}
+int s_prec_02_no_width_s_hidden_trunc(void){return test("%.02s", s_hidden);}
+int s_prec_03_no_width_s_hidden_trunc(void){return test("%.03s", s_hidden);}
+int s_prec_04_no_width_s_hidden_trunc(void){return test("%.04s", s_hidden);}
+int s_prec_05_no_width_s_hidden_trunc(void){return test("%.05s", s_hidden);}
+int s_prec_06_no_width_s_hidden_exact(void){return test("%.06s", s_hidden);}
+int s_prec_07_no_width_s_hidden_notrunc(void){return test("%.07s", s_hidden);}
+int s_prec_08_no_width_s_hidden_notrunc(void){return test("%.08s", s_hidden);}
+int s_prec_09_no_width_s_hidden_notrunc(void){return test("%.09s", s_hidden);}
+int s_prec_0_width_1_s_hidden(void){return test("%1.s", s_hidden);}
+int s_prec_0_width_2_s_hidden(void){return test("%2.s", s_hidden);}
+int s_prec_0_width_3_s_hidden(void){return test("%3.s", s_hidden);}
+int s_prec_0_width_4_s_hidden(void){return test("%4.s", s_hidden);}
+int s_prec_0_width_5_s_hidden(void){return test("%5.s", s_hidden);}
+int s_prec_0_width_6_s_hidden(void){return test("%6.s", s_hidden);}
+int s_prec_0_width_7_s_hidden(void){return test("%7.s", s_hidden);}
+int s_prec_0_width_8_s_hidden(void){return test("%8.s", s_hidden);}
+int s_prec_0_width_9_s_hidden(void){return test("%9.s", s_hidden);}
+int s_prec_0_width_10_s_hidden(void){return test("%10.s", s_hidden);}
+int s_prec_1_width_1_s_hidden(void){return test("%1.1s", s_hidden);}
+int s_prec_1_width_2_s_hidden(void){return test("%2.1s", s_hidden);}
+int s_prec_1_width_3_s_hidden(void){return test("%3.1s", s_hidden);}
+int s_prec_1_width_4_s_hidden(void){return test("%4.1s", s_hidden);}
+int s_prec_1_width_5_s_hidden(void){return test("%5.1s", s_hidden);}
+int s_prec_1_width_6_s_hidden(void){return test("%6.1s", s_hidden);}
+int s_prec_1_width_7_s_hidden(void){return test("%7.1s", s_hidden);}
+int s_prec_1_width_8_s_hidden(void){return test("%8.1s", s_hidden);}
+int s_prec_1_width_9_s_hidden(void){return test("%9.1s", s_hidden);}
+int s_prec_1_width_10_s_hidden(void){return test("%10.1s", s_hidden);}
+int s_prec_perfect_width_1_s_hidden(void){return test("%1.6s", s_hidden);}
+int s_prec_perfect_width_2_s_hidden(void){return test("%2.6s", s_hidden);}
+int s_prec_perfect_width_3_s_hidden(void){return test("%3.6s", s_hidden);}
+int s_prec_perfect_width_4_s_hidden(void){return test("%4.6s", s_hidden);}
+int s_prec_perfect_width_5_s_hidden(void){return test("%5.6s", s_hidden);}
+int s_prec_perfect_width_6_s_hidden(void){return test("%6.6s", s_hidden);}
+int s_prec_perfect_width_7_s_hidden(void){return test("%7.6s", s_hidden);}
+int s_prec_perfect_width_8_s_hidden(void){return test("%8.6s", s_hidden);}
+int s_prec_perfect_width_9_s_hidden(void){return test("%9.6s", s_hidden);}
+int s_prec_perfect_width_20_s_hidden(void){return test("%20.6s", s_hidden);}
+int s_prec_00_minus_flag_s_hidden_trunc(void){return test("%-.00s", s_hidden);}
+int s_prec_01_minus_flag_s_hidden_trunc(void){return test("%-.01s", s_hidden);}
+int s_prec_02_minus_flag_s_hidden_trunc(void){return test("%-.02s", s_hidden);}
+int s_prec_03_minus_flag_s_hidden_trunc(void){return test("%-.03s", s_hidden);}
+int s_prec_04_minus_flag_s_hidden_trunc(void){return test("%-.04s", s_hidden);}
+int s_prec_05_minus_flag_s_hidden_trunc(void){return test("%-.05s", s_hidden);}
+int s_prec_06_minus_flag_s_hidden_exact(void){return test("%-.06s", s_hidden);}
+int s_prec_07_minus_flag_s_hidden_notrunc(void){return test("%-.07s", s_hidden);}
+int s_prec_08_minus_flag_s_hidden_notrunc(void){return test("%-.08s", s_hidden);}
+int s_prec_09_minus_flag_s_hidden_notrunc(void){return test("%-.09s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_1(void){return test("%+- 06.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_2(void){return test("% 0+-6.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_3(void){return test("%0 +-6.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_4(void){return test("%+-0 6.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_5(void){return test("%-+ 06.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_6(void){return test("% -+06.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_1(void){return test("%+- 07.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_2(void){return test("% 0+-8.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_3(void){return test("%0 +-9.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_4(void){return test("%+-0 10.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_5(void){return test("%-+ 011.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_6(void){return test("% -+012.06s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_1(void){return test("%+- 06.05s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_2(void){return test("% 0+-6.04s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_3(void){return test("%0 +-6.03s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_4(void){return test("%+-0 6.02s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_5(void){return test("%-+ 06.01s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_6(void){return test("% -+06.00s", s_hidden);}
 
 //Signed integers - no modifers
 int		i_basic_i_pos(void){return test("this %i number", 17);}
@@ -1438,20 +1534,26 @@ int o_prec0val0_waflj_impl(void){return test("%#-5.o", 0);}
 
 
 //Pointers - Basic
- extern  char	a01;
- extern unsigned char a02;
- extern short a03;
- extern unsigned short a04;
- extern int a05;
- extern unsigned int a06;
- extern long a07;
- extern unsigned long a08;
- extern long long a09;
- extern unsigned long long a10;
- extern char *a11;
- extern void *a12;
+static char	a01;
+static unsigned char a02;
+static short a03;
+static unsigned short a04;
+static int a05;
+static unsigned int a06;
+static long a07;
+static unsigned long a08;
+static long long a09;
+static unsigned long long a10;
+static char *a11;
+static void *a12;
 
 int p_null(void){return test("%p", NULL);}
+
+int	p_ftfc_literal_9w_prec2(void){return test("%9.2p\n", 1234);}
+int	p_ftfc_literal_2w_prec9(void){return test("%2.9p\n", 1234);}
+int	p_ftfc_zero_prec5(void){return test("%.5p", 0);}
+int	p_ftfc_zero_prec0(void){return test("%.0p", 0);}
+int p_ftfc_5w(void){return test("%5p", 0);}
 
 int p_basic(void){return test("%p%p%p%p%p%p%p%p%p%p%p%p",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);}
 
@@ -1929,6 +2031,45 @@ int f_asspr_prec0n(void){return test("% +.0f", -7.3);}
 int f_asspr_prec1n(void){return test("% +.1f", -7.3);}
 int f_asspr_prec3n(void){return test("% +.3f", -7.3);}
 int f_asspr_prec6n(void){return test("% +.6f", -7.3);}
+//Floats whose precision exceeds their compiled literal precision
+ int f_overprec_might_be_undef_behav_100(void){return test("%.100f", 0.237);}
+ int f_overprec_might_be_undef_behav_32(void){return test("%.32f", 0.237);}
+ int f_overprec_might_be_undef_behav_4(void){return test("%.4f", 0.237);}
+ int f_overprec_might_be_undef_behav_1000(void){return test("%.4f", -0.106577568068517810765107851705167);}
+ int f_overprec_might_be_undef_behav_10_from_0(void){return test("%.10f", 0.0);}
+ int f_overprec_might_be_undef_behav_2000(void){return test("%.2000f", 623.28376510723481);}
+ int f_overprec_might_be_undef_behav_dblmin(void){return test("%.2000f", DBL_MIN);}
+ int f_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000f", -DBL_MIN);}
+//Floats at double max, double min
+int f_limits_dblmax_prec0(void){return test("%.0f", DBL_MAX);}
+int f_limits_dblmax_prec3(void){return test("%.3f", DBL_MAX);}
+int f_limits_dblmax_precd(void){return test("%f", DBL_MAX);}
+int f_limits_dblmax_prec8(void){return test("%.8f", DBL_MAX);}
+int f_stress_limits_dblmax_prec12(void){return test("%.12f", DBL_MAX);}
+int f_stress_limits_dblmax_prec16(void){return test("%.16f", DBL_MAX);}
+int f_stress_limits_dblmax_prec18(void){return test("%.18f", DBL_MAX);}
+int f_limits_ndblmax_prec0(void){return test("%.0f", -DBL_MAX);}
+int f_limits_ndblmax_prec3(void){return test("%.3f", -DBL_MAX);}
+int f_limits_ndblmax_precd(void){return test("%f", -DBL_MAX);}
+int f_limits_ndblmax_prec8(void){return test("%.8f", -DBL_MAX);}
+int f_stress_limits_ndblmax_prec12(void){return test("%.12f", -DBL_MAX);}
+int f_stress_limits_ndblmax_prec16(void){return test("%.16f", -DBL_MAX);}
+int f_stress_limits_ndblmax_prec18(void){return test("%.18f", -DBL_MAX);}
+int f_limits_dblmin_prec0(void){return test("%.0f", DBL_MIN);}
+int f_limits_dblmin_prec3(void){return test("%.3f", DBL_MIN);}
+int f_limits_dblmin_precd(void){return test("%f", DBL_MIN);}
+int f_limits_dblmin_prec8(void){return test("%.8f", DBL_MIN);}
+int f_stress_limits_dblmin_prec12(void){return test("%.12f", DBL_MIN);}
+int f_stress_limits_dblmin_prec16(void){return test("%.16f", DBL_MIN);}
+int f_stress_limits_dblmin_prec18(void){return test("%.18f", DBL_MIN);}
+int f_limits_ndblmin_prec0(void){return test("%.0f", -DBL_MIN);}
+int f_limits_ndblmin_prec3(void){return test("%.3f", -DBL_MIN);}
+int f_limits_ndblmin_precd(void){return test("%f", -DBL_MIN);}
+int f_limits_ndblmin_prec8(void){return test("%.8f", -DBL_MIN);}
+int f_stress_limits_ndblmin_prec12(void){return test("%.12f", -DBL_MIN);}
+int f_stress_limits_ndblmin_prec16(void){return test("%.16f", -DBL_MIN);}
+int f_stress_limits_ndblmin_prec18(void){return test("%.18f", -DBL_MIN);}
+
 //Floats of special values
  int f_reserved_values_inf(void){double special; *((unsigned long *)(&special)) = DBL_INF;
 	return test("%f", special);}
@@ -2277,7 +2418,44 @@ int f_L_stress_prec20_limits_big(void){return test("%.20f",  0.99999999999999999
 	return test("%06Lf", special);}
  int f_L_reserved_values_nzero_6wzp(void){long double special; *((unsigned long *)(&special)) = 0ull;FTPF_LDBL_BYTE5(special) = 0;
 	return test("%06Lf", special);}
-
+///Long double Floats whose precision exceeds their compiled literal precision
+ int f_L_overprec_might_be_undef_behav_100(void){return test("%.100Lf", 0.237l);}
+ int f_L_overprec_might_be_undef_behav_32(void){return test("%.32Lf", 0.237l);}
+ int f_L_overprec_might_be_undef_behav_4(void){return test("%.4Lf", 0.237l);}
+ int f_L_overprec_might_be_undef_behav_1000(void){return test("%.4Lf", -0.106577568068517810765107851705167l);}
+ int f_L_overprec_might_be_undef_behav_10_from_0(void){return test("%.10Lf", 0.0l);}
+ int f_L_overprec_might_be_undef_behav_2000(void){return test("%.2000Lf", 623.28376510723481l);}
+ int f_L_overprec_might_be_undef_behav_dblmin(void){return test("%.2000Lf", LDBL_MIN);}
+ int f_L_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000Lf", -LDBL_MIN);}
+//Long double floats at double max, double min
+int f_L_limits_dblmax_prec0(void){return test("%.0Lf", LDBL_MAX);}
+int f_L_limits_dblmax_prec3(void){return test("%.3Lf", LDBL_MAX);}
+int f_L_limits_dblmax_precd(void){return test("%Lf", LDBL_MAX);}
+int f_L_limits_dblmax_prec8(void){return test("%.8Lf", LDBL_MAX);}
+int f_L_stress_limits_dblmax_prec12(void){return test("%.12Lf", LDBL_MAX);}
+int f_L_stress_limits_dblmax_prec16(void){return test("%.16Lf", LDBL_MAX);}
+int f_L_stress_limits_dblmax_prec18(void){return test("%.18Lf", LDBL_MAX);}
+int f_L_limits_ndblmax_prec0(void){return test("%.0Lf", -LDBL_MAX);}
+int f_L_limits_ndblmax_prec3(void){return test("%.3Lf", -LDBL_MAX);}
+int f_L_limits_ndblmax_precd(void){return test("%Lf", -LDBL_MAX);}
+int f_L_limits_ndblmax_prec8(void){return test("%.8Lf", -LDBL_MAX);}
+int f_L_stress_limits_ndblmax_prec12(void){return test("%.12Lf", -LDBL_MAX);}
+int f_L_stress_limits_ndblmax_prec16(void){return test("%.16Lf", -LDBL_MAX);}
+int f_L_stress_limits_ndblmax_prec18(void){return test("%.18Lf", -LDBL_MAX);}
+int f_L_limits_dblmin_prec0(void){return test("%.0Lf", LDBL_MIN);}
+int f_L_limits_dblmin_prec3(void){return test("%.3Lf", LDBL_MIN);}
+int f_L_limits_dblmin_precd(void){return test("%Lf", LDBL_MIN);}
+int f_L_limits_dblmin_prec8(void){return test("%.8Lf", LDBL_MIN);}
+int f_L_stress_limits_dblmin_prec12(void){return test("%.12Lf", LDBL_MIN);}
+int f_L_stress_limits_dblmin_prec16(void){return test("%.16Lf", LDBL_MIN);}
+int f_L_stress_limits_dblmin_prec18(void){return test("%.18Lf", LDBL_MIN);}
+int f_L_limits_ndblmin_prec0(void){return test("%.0Lf", -LDBL_MIN);}
+int f_L_limits_ndblmin_prec3(void){return test("%.3Lf", -LDBL_MIN);}
+int f_L_limits_ndblmin_precd(void){return test("%Lf", -LDBL_MIN);}
+int f_L_limits_ndblmin_prec8(void){return test("%.8Lf", -LDBL_MIN);}
+int f_L_stress_limits_ndblmin_prec12(void){return test("%.12Lf", -LDBL_MIN);}
+int f_L_stress_limits_ndblmin_prec16(void){return test("%.16Lf", -LDBL_MIN);}
+int f_L_stress_limits_ndblmin_prec18(void){return test("%.18Lf", -LDBL_MIN);}
 
 //Arbitrary argument numbers
 
@@ -2294,617 +2472,617 @@ int f_L_stress_prec20_limits_big(void){return test("%.20f",  0.99999999999999999
 			5.75l, 'c', -17, "Atlanta, GA", 54, 9879879879879ll, "baby shark");}
 
 //Mix tests
- extern unsigned int		mx_u;
- extern long double			mx_Lf;
- extern double				mx_f;
- extern long				mx_li;
- extern long long			mx_lli;
- extern char				mx_c;
- extern short				mx_hi;
- extern char				mx_hhi;
- extern char			   *mx_s;
- extern int					mx_i;
+static unsigned int		mx_u = 235;
+static long double			mx_Lf = 0.375l;
+static double				mx_f = 0.625;
+static long				mx_li =  4223372036854775800;
+static long long			mx_lli = 3223372036654775200;
+static char				mx_c = 'G';
+static short				mx_hi = -3244;
+static char				mx_hhi = 'F';
+static char			   *mx_s = "Hello, World!";
+static int					mx_i = 42;
 
 int		mix_test_0(void){return test(
-			"  %hi    %u    %lli    %f    %li    %X  ",
-			mx_hi, mx_u, mx_lli, mx_f, mx_li, mx_u);}
+			"  %o    %u    %li    %s    %X    %lli  ",
+			mx_u, mx_u, mx_li, mx_s, mx_u, mx_lli);}
 int		mix_test_1(void){return test(
-			"  %hhi    %c    %f    %Lf    %lli    %i  ",
-			mx_c, mx_c, mx_f, mx_Lf, mx_lli, mx_i);}
+			"  %li    %u    %s    %X    %x    %Lf  ",
+			mx_li, mx_u, mx_s, mx_u, mx_u, mx_Lf);}
 int		mix_test_2(void){return test(
-			"  %Lf    %c    %hi    %i    %lli    %x  ",
-			mx_Lf, mx_c, mx_hi, mx_i, mx_lli, mx_u);}
+			"  %Lf    %p    %i    %li    %lli    %s  ",
+			mx_Lf, &mx_i, mx_i, mx_li, mx_lli, mx_s);}
 int		mix_test_3(void){return test(
-			"  %x    %li    %p    %lli    %s    %u  ",
-			mx_u, mx_li, &mx_i, mx_lli, mx_s, mx_u);}
+			"  %x    %s    %i    %p    %X    %Lf  ",
+			mx_u, mx_s, mx_i, &mx_i, mx_u, mx_Lf);}
 int		mix_test_4(void){return test(
-			"  %Lf    %X    %lli    %c    %x    %o  ",
-			mx_Lf, mx_u, mx_lli, mx_c, mx_u, mx_u);}
+			"  %li    %hhi    %p    %o    %%    %Lf  ",
+			mx_li, mx_c, &mx_i, mx_u, mx_Lf);}
 int		mix_test_5(void){return test(
-			"  %o    %i    %s    %hhi    %lli    %p  ",
-			mx_u, mx_i, mx_s, mx_c, mx_lli, &mx_i);}
+			"  %hi    %u    %x    %s    %i    %X  ",
+			mx_hi, mx_u, mx_u, mx_s, mx_i, mx_u);}
 int		mix_test_6(void){return test(
-			"  %i    %f    %p    %o    %s    %Lf  ",
-			mx_i, mx_f, &mx_i, mx_u, mx_s, mx_Lf);}
+			"  %f    %li    %i    %p    %u    %hi  ",
+			mx_f, mx_li, mx_i, &mx_i, mx_u, mx_hi);}
 int		mix_test_7(void){return test(
-			"  %X    %f    %lli    %u    %x    %c  ",
-			mx_u, mx_f, mx_lli, mx_u, mx_u, mx_c);}
+			"  %u    %hhi    %p    %li    %Lf    %X  ",
+			mx_u, mx_c, &mx_i, mx_li, mx_Lf, mx_u);}
 int		mix_test_8(void){return test(
-			"  %s    %p    %x    %hi    %f    %X  ",
-			mx_s, &mx_i, mx_u, mx_hi, mx_f, mx_u);}
+			"  %o    %Lf    %u    %li    %lli    %x  ",
+			mx_u, mx_Lf, mx_u, mx_li, mx_lli, mx_u);}
 int		mix_test_9(void){return test(
-			"  %li    %p    %lli    %f    %X    %i  ",
-			mx_li, &mx_i, mx_lli, mx_f, mx_u, mx_i);}
+			"  %Lf    %li    %s    %p    %x    %o  ",
+			mx_Lf, mx_li, mx_s, &mx_i, mx_u, mx_u);}
 int		mix_test_10(void){return test(
-			"  %i    %p    %Lf    %f    %X    %o  ",
-			mx_i, &mx_i, mx_Lf, mx_f, mx_u, mx_u);}
+			"  %hhi    %x    %s    %u    %i    %li  ",
+			mx_c, mx_u, mx_s, mx_u, mx_i, mx_li);}
 int		mix_test_11(void){return test(
-			"  %o    %p    %s    %hi    %u    %x  ",
-			mx_u, &mx_i, mx_s, mx_hi, mx_u, mx_u);}
+			"  %X    %li    %o    %s    %f    %u  ",
+			mx_u, mx_li, mx_u, mx_s, mx_f, mx_u);}
 int		mix_test_12(void){return test(
-			"  %X    %hi    %f    %x    %s    %o  ",
-			mx_u, mx_hi, mx_f, mx_u, mx_s, mx_u);}
+			"  %o    %x    %i    %c    %hi    %Lf  ",
+			mx_u, mx_u, mx_i, mx_c, mx_hi, mx_Lf);}
 int		mix_test_13(void){return test(
-			"  %hi    %li    %Lf    %s    %i    %x  ",
-			mx_hi, mx_li, mx_Lf, mx_s, mx_i, mx_u);}
+			"  %c    %i    %hi    %o    %x    %u  ",
+			mx_c, mx_i, mx_hi, mx_u, mx_u, mx_u);}
 int		mix_test_14(void){return test(
-			"  %lli    %i    %hi    %Lf    %f    %hhi  ",
-			mx_lli, mx_i, mx_hi, mx_Lf, mx_f, mx_c);}
+			"  %i    %f    %li    %Lf    %X    %hhi  ",
+			mx_i, mx_f, mx_li, mx_Lf, mx_u, mx_c);}
 int		mix_test_15(void){return test(
-			"  %o    %li    %x    %f    %Lf    %hhi  ",
-			mx_u, mx_li, mx_u, mx_f, mx_Lf, mx_c);}
+			"  %s    %u    %lli    %Lf    %f    %o  ",
+			mx_s, mx_u, mx_lli, mx_Lf, mx_f, mx_u);}
 int		mix_test_16(void){return test(
-			"  %X    %Lf    %li    %x    %c    %u  ",
-			mx_u, mx_Lf, mx_li, mx_u, mx_c, mx_u);}
+			"  %hhi    %X    %u    %p    %x    %o  ",
+			mx_c, mx_u, mx_u, &mx_i, mx_u, mx_u);}
 int		mix_test_17(void){return test(
-			"  %u    %c    %f    %i    %Lf    %li  ",
-			mx_u, mx_c, mx_f, mx_i, mx_Lf, mx_li);}
+			"  %X    %i    %c    %lli    %o    %p  ",
+			mx_u, mx_i, mx_c, mx_lli, mx_u, &mx_i);}
 int		mix_test_18(void){return test(
-			"  %p    %f    %hhi    %hi    %s    %lli  ",
-			&mx_i, mx_f, mx_c, mx_hi, mx_s, mx_lli);}
+			"  %X    %c    %x    %i    %hi    %s  ",
+			mx_u, mx_c, mx_u, mx_i, mx_hi, mx_s);}
 int		mix_test_19(void){return test(
-			"  %hi    %lli    %i    %o    %u    %X  ",
-			mx_hi, mx_lli, mx_i, mx_u, mx_u, mx_u);}
+			"  %hhi    %li    %x    %hi    %lli    %s  ",
+			mx_c, mx_li, mx_u, mx_hi, mx_lli, mx_s);}
 int		mix_test_20(void){return test(
-			"  %c    %lli    %i    %hi    %u    %o  ",
-			mx_c, mx_lli, mx_i, mx_hi, mx_u, mx_u);}
+			"  %Lf    %p    %lli    %hhi    %c    %f  ",
+			mx_Lf, &mx_i, mx_lli, mx_c, mx_c, mx_f);}
 int		mix_test_21(void){return test(
-			"  %hhi    %u    %Lf    %o    %s    %X  ",
-			mx_c, mx_u, mx_Lf, mx_u, mx_s, mx_u);}
+			"  %hi    %s    %hhi    %p    %lli    %u  ",
+			mx_hi, mx_s, mx_c, &mx_i, mx_lli, mx_u);}
 int		mix_test_22(void){return test(
-			"  %Lf    %c    %i    %hi    %x    %hhi  ",
-			mx_Lf, mx_c, mx_i, mx_hi, mx_u, mx_c);}
+			"  %p    %lli    %s    %X    %u    %hhi  ",
+			&mx_i, mx_lli, mx_s, mx_u, mx_u, mx_c);}
 int		mix_test_23(void){return test(
-			"  %o    %i    %li    %u    %c    %s  ",
-			mx_u, mx_i, mx_li, mx_u, mx_c, mx_s);}
+			"  %hhi    %f    %x    %o    %i    %X  ",
+			mx_c, mx_f, mx_u, mx_u, mx_i, mx_u);}
 int		mix_test_24(void){return test(
-			"  %s    %c    %u    %lli    %i    %o  ",
-			mx_s, mx_c, mx_u, mx_lli, mx_i, mx_u);}
+			"  %lli    %hhi    %hi    %i    %c    %o  ",
+			mx_lli, mx_c, mx_hi, mx_i, mx_c, mx_u);}
 int		mix_test_25(void){return test(
-			"  %c    %hi    %Lf    %f    %s    %p  ",
-			mx_c, mx_hi, mx_Lf, mx_f, mx_s, &mx_i);}
+			"  %s    %Lf    %p    %c    %X    %x  ",
+			mx_s, mx_Lf, &mx_i, mx_c, mx_u, mx_u);}
 int		mix_test_26(void){return test(
-			"  %x    %X    %lli    %c    %f    %hi  ",
-			mx_u, mx_u, mx_lli, mx_c, mx_f, mx_hi);}
+			"  %lli    %i    %u    %p    %o    %c  ",
+			mx_lli, mx_i, mx_u, &mx_i, mx_u, mx_c);}
 int		mix_test_27(void){return test(
-			"  %li    %o    %hi    %X    %Lf    %hhi  ",
-			mx_li, mx_u, mx_hi, mx_u, mx_Lf, mx_c);}
+			"  %i    %p    %hhi    %X    %Lf    %lli  ",
+			mx_i, &mx_i, mx_c, mx_u, mx_Lf, mx_lli);}
 int		mix_test_28(void){return test(
-			"  %lli    %s    %x    %o    %u    %i  ",
-			mx_lli, mx_s, mx_u, mx_u, mx_u, mx_i);}
+			"  %f    %i    %p    %li    %o    %x  ",
+			mx_f, mx_i, &mx_i, mx_li, mx_u, mx_u);}
 int		mix_test_29(void){return test(
-			"  %i    %c    %o    %X    %u    %Lf  ",
-			mx_i, mx_c, mx_u, mx_u, mx_u, mx_Lf);}
+			"  %li    %lli    %f    %X    %o    %s  ",
+			mx_li, mx_lli, mx_f, mx_u, mx_u, mx_s);}
 int		mix_test_30(void){return test(
-			"  %c    %s    %x    %p    %X    %o  ",
-			mx_c, mx_s, mx_u, &mx_i, mx_u, mx_u);}
+			"  %f    %hi    %p    %hhi    %li    %u  ",
+			mx_f, mx_hi, &mx_i, mx_c, mx_li, mx_u);}
 int		mix_test_31(void){return test(
-			"  %hhi    %Lf    %f    %x    %p    %c  ",
-			mx_c, mx_Lf, mx_f, mx_u, &mx_i, mx_c);}
+			"  %s    %x    %u    %li    %o    %hi  ",
+			mx_s, mx_u, mx_u, mx_li, mx_u, mx_hi);}
 int		mix_test_32(void){return test(
-			"  %i    %hi    %li    %f    %o    %hhi  ",
-			mx_i, mx_hi, mx_li, mx_f, mx_u, mx_c);}
+			"  %u    %lli    %X    %i    %o    %f  ",
+			mx_u, mx_lli, mx_u, mx_i, mx_u, mx_f);}
 int		mix_test_33(void){return test(
-			"  %c    %s    %hi    %lli    %li    %hhi  ",
-			mx_c, mx_s, mx_hi, mx_lli, mx_li, mx_c);}
+			"  %o    %X    %u    %c    %lli    %hi  ",
+			mx_u, mx_u, mx_u, mx_c, mx_lli, mx_hi);}
 int		mix_test_34(void){return test(
-			"  %u    %li    %o    %x    %hhi    %f  ",
-			mx_u, mx_li, mx_u, mx_u, mx_c, mx_f);}
+			"  %hi    %X    %Lf    %s    %o    %x  ",
+			mx_hi, mx_u, mx_Lf, mx_s, mx_u, mx_u);}
 int		mix_test_35(void){return test(
-			"  %s    %li    %o    %x    %X    %p  ",
-			mx_s, mx_li, mx_u, mx_u, mx_u, &mx_i);}
+			"  %X    %p    %o    %hi    %s    %lli  ",
+			mx_u, &mx_i, mx_u, mx_hi, mx_s, mx_lli);}
 int		mix_test_36(void){return test(
-			"  %li    %o    %x    %lli    %i    %X  ",
-			mx_li, mx_u, mx_u, mx_lli, mx_i, mx_u);}
+			"  %li    %p    %f    %Lf    %x    %lli  ",
+			mx_li, &mx_i, mx_f, mx_Lf, mx_u, mx_lli);}
 int		mix_test_37(void){return test(
-			"  %x    %c    %i    %f    %lli    %li  ",
-			mx_u, mx_c, mx_i, mx_f, mx_lli, mx_li);}
+			"  %i    %li    %X    %p    %hi    %o  ",
+			mx_i, mx_li, mx_u, &mx_i, mx_hi, mx_u);}
 int		mix_test_38(void){return test(
-			"  %hi    %c    %x    %X    %i    %li  ",
-			mx_hi, mx_c, mx_u, mx_u, mx_i, mx_li);}
+			"  %f    %u    %p    %hi    %hhi    %s  ",
+			mx_f, mx_u, &mx_i, mx_hi, mx_c, mx_s);}
 int		mix_test_39(void){return test(
-			"  %u    %o    %X    %Lf    %hhi    %i  ",
-			mx_u, mx_u, mx_u, mx_Lf, mx_c, mx_i);}
+			"  %o    %c    %li    %p    %hi    %f  ",
+			mx_u, mx_c, mx_li, &mx_i, mx_hi, mx_f);}
 int		mix_test_40(void){return test(
-			"  %f    %p    %hi    %i    %hhi    %u  ",
-			mx_f, &mx_i, mx_hi, mx_i, mx_c, mx_u);}
+			"  %u    %X    %f    %hhi    %s    %o  ",
+			mx_u, mx_u, mx_f, mx_c, mx_s, mx_u);}
 int		mix_test_41(void){return test(
-			"  %u    %f    %c    %X    %lli    %o  ",
-			mx_u, mx_f, mx_c, mx_u, mx_lli, mx_u);}
+			"  %li    %x    %hhi    %X    %s    %lli  ",
+			mx_li, mx_u, mx_c, mx_u, mx_s, mx_lli);}
 int		mix_test_42(void){return test(
-			"  %hi    %X    %p    %f    %u    %i  ",
-			mx_hi, mx_u, &mx_i, mx_f, mx_u, mx_i);}
+			"  %hi    %x    %i    %c    %hhi    %li  ",
+			mx_hi, mx_u, mx_i, mx_c, mx_c, mx_li);}
 int		mix_test_43(void){return test(
-			"  %lli    %hi    %o    %hhi    %f    %x  ",
-			mx_lli, mx_hi, mx_u, mx_c, mx_f, mx_u);}
+			"  %x    %X    %o    %s    %lli    %hhi  ",
+			mx_u, mx_u, mx_u, mx_s, mx_lli, mx_c);}
 int		mix_test_44(void){return test(
-			"  %hhi    %i    %Lf    %li    %p    %c  ",
-			mx_c, mx_i, mx_Lf, mx_li, &mx_i, mx_c);}
+			"  %f    %x    %o    %hi    %li    %u  ",
+			mx_f, mx_u, mx_u, mx_hi, mx_li, mx_u);}
 int		mix_test_45(void){return test(
-			"  %s    %p    %hi    %i    %hhi    %X  ",
-			mx_s, &mx_i, mx_hi, mx_i, mx_c, mx_u);}
+			"  %f    %hhi    %c    %X    %lli    %s  ",
+			mx_f, mx_c, mx_c, mx_u, mx_lli, mx_s);}
 int		mix_test_46(void){return test(
-			"  %X    %u    %o    %p    %lli    %li  ",
-			mx_u, mx_u, mx_u, &mx_i, mx_lli, mx_li);}
+			"  %lli    %i    %hhi    %hi    %li    %Lf  ",
+			mx_lli, mx_i, mx_c, mx_hi, mx_li, mx_Lf);}
 int		mix_test_47(void){return test(
-			"  %c    %X    %p    %s    %li    %f  ",
-			mx_c, mx_u, &mx_i, mx_s, mx_li, mx_f);}
+			"  %f    %c    %lli    %s    %hhi    %p  ",
+			mx_f, mx_c, mx_lli, mx_s, mx_c, &mx_i);}
 int		mix_test_48(void){return test(
-			"  %x    %Lf    %hhi    %li    %lli    %X  ",
-			mx_u, mx_Lf, mx_c, mx_li, mx_lli, mx_u);}
+			"  %f    %hhi    %li    %lli    %x    %p  ",
+			mx_f, mx_c, mx_li, mx_lli, mx_u, &mx_i);}
 int		mix_test_49(void){return test(
-			"  %i    %lli    %u    %Lf    %li    %hi  ",
-			mx_i, mx_lli, mx_u, mx_Lf, mx_li, mx_hi);}
+			"  %o    %lli    %hi    %f    %X    %hhi  ",
+			mx_u, mx_lli, mx_hi, mx_f, mx_u, mx_c);}
 int		mix_test_50(void){return test(
-			"  %lli    %li    %f    %X    %p    %hi  ",
-			mx_lli, mx_li, mx_f, mx_u, &mx_i, mx_hi);}
+			"  %o    %u    %f    %i    %x    %hhi  ",
+			mx_u, mx_u, mx_f, mx_i, mx_u, mx_c);}
 int		mix_test_51(void){return test(
-			"  %o    %p    %i    %x    %f    %li  ",
-			mx_u, &mx_i, mx_i, mx_u, mx_f, mx_li);}
+			"  %x    %u    %Lf    %hi    %o    %X  ",
+			mx_u, mx_u, mx_Lf, mx_hi, mx_u, mx_u);}
 int		mix_test_52(void){return test(
-			"  %X    %Lf    %p    %f    %i    %o  ",
-			mx_u, mx_Lf, &mx_i, mx_f, mx_i, mx_u);}
+			"  %u    %Lf    %hi    %li    %X    %hhi  ",
+			mx_u, mx_Lf, mx_hi, mx_li, mx_u, mx_c);}
 int		mix_test_53(void){return test(
-			"  %X    %u    %o    %hi    %p    %f  ",
-			mx_u, mx_u, mx_u, mx_hi, &mx_i, mx_f);}
+			"  %o    %c    %Lf    %hi    %s    %p  ",
+			mx_u, mx_c, mx_Lf, mx_hi, mx_s, &mx_i);}
 int		mix_test_54(void){return test(
-			"  %li    %X    %lli    %i    %c    %s  ",
-			mx_li, mx_u, mx_lli, mx_i, mx_c, mx_s);}
+			"  %s    %hhi    %X    %lli    %x    %u  ",
+			mx_s, mx_c, mx_u, mx_lli, mx_u, mx_u);}
 int		mix_test_55(void){return test(
-			"  %o    %u    %p    %hi    %c    %f  ",
-			mx_u, mx_u, &mx_i, mx_hi, mx_c, mx_f);}
+			"  %x    %X    %o    %lli    %c    %u  ",
+			mx_u, mx_u, mx_u, mx_lli, mx_c, mx_u);}
 int		mix_test_56(void){return test(
-			"  %o    %u    %c    %p    %li    %hhi  ",
-			mx_u, mx_u, mx_c, &mx_i, mx_li, mx_c);}
+			"  %hi    %u    %i    %x    %c    %s  ",
+			mx_hi, mx_u, mx_i, mx_u, mx_c, mx_s);}
 int		mix_test_57(void){return test(
-			"  %i    %X    %p    %c    %Lf    %x  ",
-			mx_i, mx_u, &mx_i, mx_c, mx_Lf, mx_u);}
+			"  %hi    %s    %i    %X    %u    %li  ",
+			mx_hi, mx_s, mx_i, mx_u, mx_u, mx_li);}
 int		mix_test_58(void){return test(
-			"  %u    %p    %X    %lli    %f    %Lf  ",
-			mx_u, &mx_i, mx_u, mx_lli, mx_f, mx_Lf);}
+			"  %c    %X    %li    %hi    %Lf    %p  ",
+			mx_c, mx_u, mx_li, mx_hi, mx_Lf, &mx_i);}
 int		mix_test_59(void){return test(
-			"  %c    %Lf    %lli    %f    %hi    %i  ",
-			mx_c, mx_Lf, mx_lli, mx_f, mx_hi, mx_i);}
+			"  %Lf    %hi    %c    %u    %hhi    %li  ",
+			mx_Lf, mx_hi, mx_c, mx_u, mx_c, mx_li);}
 int		mix_test_60(void){return test(
-			"  %f    %hhi    %x    %li    %hi    %Lf  ",
-			mx_f, mx_c, mx_u, mx_li, mx_hi, mx_Lf);}
+			"  %li    %p    %s    %hi    %u    %lli  ",
+			mx_li, &mx_i, mx_s, mx_hi, mx_u, mx_lli);}
 int		mix_test_61(void){return test(
-			"  %s    %u    %o    %X    %li    %Lf  ",
-			mx_s, mx_u, mx_u, mx_u, mx_li, mx_Lf);}
+			"  %li    %X    %Lf    %s    %c    %lli  ",
+			mx_li, mx_u, mx_Lf, mx_s, mx_c, mx_lli);}
 int		mix_test_62(void){return test(
-			"  %f    %Lf    %c    %hhi    %i    %li  ",
-			mx_f, mx_Lf, mx_c, mx_c, mx_i, mx_li);}
+			"  %lli    %hhi    %f    %o    %s    %X  ",
+			mx_lli, mx_c, mx_f, mx_u, mx_s, mx_u);}
 int		mix_test_63(void){return test(
-			"  %x    %s    %Lf    %hi    %li    %p  ",
-			mx_u, mx_s, mx_Lf, mx_hi, mx_li, &mx_i);}
+			"  %x    %X    %u    %s    %li    %f  ",
+			mx_u, mx_u, mx_u, mx_s, mx_li, mx_f);}
 int		mix_test_64(void){return test(
-			"  %u    %hi    %p    %s    %hhi    %Lf  ",
-			mx_u, mx_hi, &mx_i, mx_s, mx_c, mx_Lf);}
+			"  %hhi    %X    %u    %o    %Lf    %s  ",
+			mx_c, mx_u, mx_u, mx_u, mx_Lf, mx_s);}
 int		mix_test_65(void){return test(
-			"  %hi    %Lf    %c    %x    %li    %p  ",
-			mx_hi, mx_Lf, mx_c, mx_u, mx_li, &mx_i);}
+			"  %li    %u    %x    %o    %lli    %s  ",
+			mx_li, mx_u, mx_u, mx_u, mx_lli, mx_s);}
 int		mix_test_66(void){return test(
-			"  %hi    %s    %o    %p    %lli    %X  ",
-			mx_hi, mx_s, mx_u, &mx_i, mx_lli, mx_u);}
+			"  %hi    %f    %hhi    %u    %i    %p  ",
+			mx_hi, mx_f, mx_c, mx_u, mx_i, &mx_i);}
 int		mix_test_67(void){return test(
-			"  %s    %lli    %li    %f    %Lf    %c  ",
-			mx_s, mx_lli, mx_li, mx_f, mx_Lf, mx_c);}
+			"  %i    %c    %f    %hi    %s    %o  ",
+			mx_i, mx_c, mx_f, mx_hi, mx_s, mx_u);}
 int		mix_test_68(void){return test(
-			"  %i    %c    %f    %hhi    %X    %lli  ",
-			mx_i, mx_c, mx_f, mx_c, mx_u, mx_lli);}
+			"  %li    %s    %p    %f    %Lf    %X  ",
+			mx_li, mx_s, &mx_i, mx_f, mx_Lf, mx_u);}
 int		mix_test_69(void){return test(
-			"  %i    %li    %x    %f    %hi    %Lf  ",
-			mx_i, mx_li, mx_u, mx_f, mx_hi, mx_Lf);}
+			"  %s    %p    %Lf    %lli    %x    %o  ",
+			mx_s, &mx_i, mx_Lf, mx_lli, mx_u, mx_u);}
 int		mix_test_70(void){return test(
-			"  %lli    %o    %x    %c    %hhi    %i  ",
-			mx_lli, mx_u, mx_u, mx_c, mx_c, mx_i);}
+			"  %hhi    %hi    %Lf    %c    %x    %lli  ",
+			mx_c, mx_hi, mx_Lf, mx_c, mx_u, mx_lli);}
 int		mix_test_71(void){return test(
-			"  %o    %li    %hhi    %lli    %s    %c  ",
-			mx_u, mx_li, mx_c, mx_lli, mx_s, mx_c);}
+			"  %p    %u    %lli    %c    %Lf    %X  ",
+			&mx_i, mx_u, mx_lli, mx_c, mx_Lf, mx_u);}
 int		mix_test_72(void){return test(
-			"  %Lf    %hhi    %c    %s    %i    %x  ",
-			mx_Lf, mx_c, mx_c, mx_s, mx_i, mx_u);}
+			"  %X    %p    %f    %c    %o    %li  ",
+			mx_u, &mx_i, mx_f, mx_c, mx_u, mx_li);}
 int		mix_test_73(void){return test(
-			"  %o    %Lf    %li    %i    %x    %hi  ",
-			mx_u, mx_Lf, mx_li, mx_i, mx_u, mx_hi);}
+			"  %p    %c    %li    %lli    %x    %f  ",
+			&mx_i, mx_c, mx_li, mx_lli, mx_u, mx_f);}
 int		mix_test_74(void){return test(
-			"  %li    %X    %o    %i    %Lf    %lli  ",
-			mx_li, mx_u, mx_u, mx_i, mx_Lf, mx_lli);}
+			"  %u    %c    %li    %p    %o    %s  ",
+			mx_u, mx_c, mx_li, &mx_i, mx_u, mx_s);}
 int		mix_test_75(void){return test(
-			"  %hi    %p    %X    %li    %hhi    %lli  ",
-			mx_hi, &mx_i, mx_u, mx_li, mx_c, mx_lli);}
+			"  %hhi    %lli    %s    %li    %hi    %c  ",
+			mx_c, mx_lli, mx_s, mx_li, mx_hi, mx_c);}
 int		mix_test_76(void){return test(
-			"  %i    %s    %p    %X    %c    %lli  ",
-			mx_i, mx_s, &mx_i, mx_u, mx_c, mx_lli);}
+			"  %u    %x    %lli    %hi    %i    %hhi  ",
+			mx_u, mx_u, mx_lli, mx_hi, mx_i, mx_c);}
 int		mix_test_77(void){return test(
-			"  %i    %o    %hhi    %c    %li    %Lf  ",
-			mx_i, mx_u, mx_c, mx_c, mx_li, mx_Lf);}
+			"  %li    %hi    %Lf    %c    %o    %lli  ",
+			mx_li, mx_hi, mx_Lf, mx_c, mx_u, mx_lli);}
 int		mix_test_78(void){return test(
-			"  %hhi    %hi    %li    %lli    %Lf    %p  ",
-			mx_c, mx_hi, mx_li, mx_lli, mx_Lf, &mx_i);}
+			"  %u    %i    %c    %p    %o    %f  ",
+			mx_u, mx_i, mx_c, &mx_i, mx_u, mx_f);}
 int		mix_test_79(void){return test(
-			"  %X    %o    %f    %li    %hi    %i  ",
-			mx_u, mx_u, mx_f, mx_li, mx_hi, mx_i);}
+			"  %Lf    %X    %p    %hhi    %c    %s  ",
+			mx_Lf, mx_u, &mx_i, mx_c, mx_c, mx_s);}
 int		mix_test_80(void){return test(
-			"  %c    %f    %o    %x    %Lf    %lli  ",
-			mx_c, mx_f, mx_u, mx_u, mx_Lf, mx_lli);}
+			"  %c    %hi    %u    %i    %f    %X  ",
+			mx_c, mx_hi, mx_u, mx_i, mx_f, mx_u);}
 int		mix_test_81(void){return test(
-			"  %li    %o    %hi    %p    %u    %Lf  ",
-			mx_li, mx_u, mx_hi, &mx_i, mx_u, mx_Lf);}
+			"  %s    %p    %u    %Lf    %hhi    %li  ",
+			mx_s, &mx_i, mx_u, mx_Lf, mx_c, mx_li);}
 int		mix_test_82(void){return test(
-			"  %p    %hhi    %hi    %u    %x    %f  ",
-			&mx_i, mx_c, mx_hi, mx_u, mx_u, mx_f);}
+			"  %X    %x    %i    %c    %Lf    %li  ",
+			mx_u, mx_u, mx_i, mx_c, mx_Lf, mx_li);}
 int		mix_test_83(void){return test(
-			"  %hhi    %li    %Lf    %c    %u    %i  ",
-			mx_c, mx_li, mx_Lf, mx_c, mx_u, mx_i);}
+			"  %X    %hi    %x    %u    %c    %o  ",
+			mx_u, mx_hi, mx_u, mx_u, mx_c, mx_u);}
 int		mix_test_84(void){return test(
-			"  %X    %hhi    %i    %c    %Lf    %p  ",
-			mx_u, mx_c, mx_i, mx_c, mx_Lf, &mx_i);}
+			"  %hi    %Lf    %hhi    %li    %s    %lli  ",
+			mx_hi, mx_Lf, mx_c, mx_li, mx_s, mx_lli);}
 int		mix_test_85(void){return test(
-			"  %hi    %p    %i    %c    %f    %o  ",
-			mx_hi, &mx_i, mx_i, mx_c, mx_f, mx_u);}
+			"  %Lf    %o    %f    %u    %X    %li  ",
+			mx_Lf, mx_u, mx_f, mx_u, mx_u, mx_li);}
 int		mix_test_86(void){return test(
-			"  %u    %f    %hi    %o    %i    %lli  ",
-			mx_u, mx_f, mx_hi, mx_u, mx_i, mx_lli);}
+			"  %f    %i    %lli    %hi    %u    %o  ",
+			mx_f, mx_i, mx_lli, mx_hi, mx_u, mx_u);}
 int		mix_test_87(void){return test(
-			"  %li    %f    %hhi    %u    %x    %p  ",
-			mx_li, mx_f, mx_c, mx_u, mx_u, &mx_i);}
+			"  %i    %x    %lli    %c    %hi    %f  ",
+			mx_i, mx_u, mx_lli, mx_c, mx_hi, mx_f);}
 int		mix_test_88(void){return test(
-			"  %Lf    %u    %hi    %p    %hhi    %s  ",
-			mx_Lf, mx_u, mx_hi, &mx_i, mx_c, mx_s);}
+			"  %u    %c    %x    %f    %p    %X  ",
+			mx_u, mx_c, mx_u, mx_f, &mx_i, mx_u);}
 int		mix_test_89(void){return test(
-			"  %X    %i    %s    %p    %f    %Lf  ",
-			mx_u, mx_i, mx_s, &mx_i, mx_f, mx_Lf);}
+			"  %li    %c    %o    %f    %u    %lli  ",
+			mx_li, mx_c, mx_u, mx_f, mx_u, mx_lli);}
 int		mix_test_90(void){return test(
-			"  %hhi    %c    %s    %X    %x    %p  ",
-			mx_c, mx_c, mx_s, mx_u, mx_u, &mx_i);}
+			"  %Lf    %o    %f    %li    %p    %s  ",
+			mx_Lf, mx_u, mx_f, mx_li, &mx_i, mx_s);}
 int		mix_test_91(void){return test(
-			"  %o    %hi    %p    %c    %i    %u  ",
-			mx_u, mx_hi, &mx_i, mx_c, mx_i, mx_u);}
+			"  %X    %c    %p    %s    %i    %f  ",
+			mx_u, mx_c, &mx_i, mx_s, mx_i, mx_f);}
 int		mix_test_92(void){return test(
-			"  %s    %lli    %p    %hi    %X    %hhi  ",
-			mx_s, mx_lli, &mx_i, mx_hi, mx_u, mx_c);}
+			"  %c    %hhi    %o    %X    %s    %lli  ",
+			mx_c, mx_c, mx_u, mx_u, mx_s, mx_lli);}
 int		mix_test_93(void){return test(
-			"  %lli    %Lf    %x    %i    %c    %u  ",
-			mx_lli, mx_Lf, mx_u, mx_i, mx_c, mx_u);}
+			"  %Lf    %hi    %c    %hhi    %s    %f  ",
+			mx_Lf, mx_hi, mx_c, mx_c, mx_s, mx_f);}
 int		mix_test_94(void){return test(
-			"  %X    %c    %i    %x    %o    %li  ",
-			mx_u, mx_c, mx_i, mx_u, mx_u, mx_li);}
+			"  %c    %u    %x    %lli    %hi    %s  ",
+			mx_c, mx_u, mx_u, mx_lli, mx_hi, mx_s);}
 int		mix_test_95(void){return test(
-			"  %hhi    %p    %x    %f    %i    %c  ",
-			mx_c, &mx_i, mx_u, mx_f, mx_i, mx_c);}
+			"  %f    %u    %c    %x    %lli    %li  ",
+			mx_f, mx_u, mx_c, mx_u, mx_lli, mx_li);}
 int		mix_test_96(void){return test(
-			"  %x    %hi    %s    %u    %li    %o  ",
-			mx_u, mx_hi, mx_s, mx_u, mx_li, mx_u);}
+			"  %f    %hi    %li    %c    %x    %X  ",
+			mx_f, mx_hi, mx_li, mx_c, mx_u, mx_u);}
 int		mix_test_97(void){return test(
-			"  %o    %u    %s    %lli    %Lf    %hi  ",
-			mx_u, mx_u, mx_s, mx_lli, mx_Lf, mx_hi);}
+			"  %u    %Lf    %i    %f    %hhi    %hi  ",
+			mx_u, mx_Lf, mx_i, mx_f, mx_c, mx_hi);}
 int		mix_test_98(void){return test(
-			"  %x    %hi    %f    %li    %u    %lli  ",
-			mx_u, mx_hi, mx_f, mx_li, mx_u, mx_lli);}
+			"  %Lf    %s    %hi    %i    %f    %x  ",
+			mx_Lf, mx_s, mx_hi, mx_i, mx_f, mx_u);}
 int		mix_test_99(void){return test(
-			"  %lli    %f    %c    %hi    %li    %p  ",
-			mx_lli, mx_f, mx_c, mx_hi, mx_li, &mx_i);}
+			"  %u    %f    %X    %c    %lli    %p  ",
+			mx_u, mx_f, mx_u, mx_c, mx_lli, &mx_i);}
 int		mix_test_100(void){return test(
-			"  %x    %c    %lli    %hi    %p    %i  ",
-			mx_u, mx_c, mx_lli, mx_hi, &mx_i, mx_i);}
+			"  %X    %li    %f    %s    %hhi    %x  ",
+			mx_u, mx_li, mx_f, mx_s, mx_c, mx_u);}
 int		mix_test_101(void){return test(
-			"  %p    %hhi    %s    %lli    %i    %li  ",
-			&mx_i, mx_c, mx_s, mx_lli, mx_i, mx_li);}
+			"  %o    %p    %s    %f    %X    %x  ",
+			mx_u, &mx_i, mx_s, mx_f, mx_u, mx_u);}
 int		mix_test_102(void){return test(
-			"  %hhi    %i    %f    %o    %Lf    %s  ",
-			mx_c, mx_i, mx_f, mx_u, mx_Lf, mx_s);}
+			"  %hhi    %c    %f    %x    %hi    %li  ",
+			mx_c, mx_c, mx_f, mx_u, mx_hi, mx_li);}
 int		mix_test_103(void){return test(
-			"  %Lf    %c    %hhi    %hi    %i    %lli  ",
-			mx_Lf, mx_c, mx_c, mx_hi, mx_i, mx_lli);}
+			"  %p    %Lf    %x    %X    %f    %s  ",
+			&mx_i, mx_Lf, mx_u, mx_u, mx_f, mx_s);}
 int		mix_test_104(void){return test(
-			"  %li    %hi    %c    %f    %u    %o  ",
-			mx_li, mx_hi, mx_c, mx_f, mx_u, mx_u);}
+			"  %s    %x    %lli    %i    %o    %p  ",
+			mx_s, mx_u, mx_lli, mx_i, mx_u, &mx_i);}
 int		mix_test_105(void){return test(
-			"  %Lf    %i    %p    %x    %lli    %o  ",
-			mx_Lf, mx_i, &mx_i, mx_u, mx_lli, mx_u);}
+			"  %X    %s    %Lf    %p    %lli    %x  ",
+			mx_u, mx_s, mx_Lf, &mx_i, mx_lli, mx_u);}
 int		mix_test_106(void){return test(
-			"  %lli    %x    %hhi    %i    %Lf    %X  ",
-			mx_lli, mx_u, mx_c, mx_i, mx_Lf, mx_u);}
+			"  %c    %hhi    %hi    %x    %u    %li  ",
+			mx_c, mx_c, mx_hi, mx_u, mx_u, mx_li);}
 int		mix_test_107(void){return test(
-			"  %hi    %p    %li    %hhi    %c    %x  ",
-			mx_hi, &mx_i, mx_li, mx_c, mx_c, mx_u);}
+			"  %li    %X    %s    %Lf    %f    %hhi  ",
+			mx_li, mx_u, mx_s, mx_Lf, mx_f, mx_c);}
 int		mix_test_108(void){return test(
-			"  %hhi    %x    %u    %li    %o    %hi  ",
-			mx_c, mx_u, mx_u, mx_li, mx_u, mx_hi);}
+			"  %u    %hhi    %s    %c    %p    %f  ",
+			mx_u, mx_c, mx_s, mx_c, &mx_i, mx_f);}
 int		mix_test_109(void){return test(
-			"  %o    %li    %p    %u    %lli    %Lf  ",
-			mx_u, mx_li, &mx_i, mx_u, mx_lli, mx_Lf);}
+			"  %Lf    %s    %u    %f    %i    %X  ",
+			mx_Lf, mx_s, mx_u, mx_f, mx_i, mx_u);}
 int		mix_test_110(void){return test(
-			"  %X    %Lf    %hhi    %lli    %c    %p  ",
-			mx_u, mx_Lf, mx_c, mx_lli, mx_c, &mx_i);}
+			"  %i    %p    %hi    %c    %f    %s  ",
+			mx_i, &mx_i, mx_hi, mx_c, mx_f, mx_s);}
 int		mix_test_111(void){return test(
-			"  %lli    %c    %o    %f    %i    %x  ",
-			mx_lli, mx_c, mx_u, mx_f, mx_i, mx_u);}
+			"  %p    %X    %lli    %hi    %Lf    %f  ",
+			&mx_i, mx_u, mx_lli, mx_hi, mx_Lf, mx_f);}
 int		mix_test_112(void){return test(
-			"  %s    %p    %u    %f    %X    %Lf  ",
-			mx_s, &mx_i, mx_u, mx_f, mx_u, mx_Lf);}
+			"  %u    %c    %Lf    %lli    %o    %hhi  ",
+			mx_u, mx_c, mx_Lf, mx_lli, mx_u, mx_c);}
 int		mix_test_113(void){return test(
-			"  %lli    %hhi    %hi    %u    %li    %s  ",
-			mx_lli, mx_c, mx_hi, mx_u, mx_li, mx_s);}
+			"  %X    %i    %x    %c    %p    %s  ",
+			mx_u, mx_i, mx_u, mx_c, &mx_i, mx_s);}
 int		mix_test_114(void){return test(
-			"  %hhi    %Lf    %o    %i    %X    %f  ",
-			mx_c, mx_Lf, mx_u, mx_i, mx_u, mx_f);}
+			"  %x    %p    %f    %u    %hi    %o  ",
+			mx_u, &mx_i, mx_f, mx_u, mx_hi, mx_u);}
 int		mix_test_115(void){return test(
-			"  %hhi    %c    %f    %u    %x    %p  ",
-			mx_c, mx_c, mx_f, mx_u, mx_u, &mx_i);}
+			"  %X    %hhi    %lli    %p    %li    %hi  ",
+			mx_u, mx_c, mx_lli, &mx_i, mx_li, mx_hi);}
 int		mix_test_116(void){return test(
-			"  %i    %hi    %hhi    %s    %X    %f  ",
-			mx_i, mx_hi, mx_c, mx_s, mx_u, mx_f);}
+			"  %lli    %c    %li    %o    %Lf    %x  ",
+			mx_lli, mx_c, mx_li, mx_u, mx_Lf, mx_u);}
 int		mix_test_117(void){return test(
-			"  %u    %hi    %X    %x    %o    %i  ",
-			mx_u, mx_hi, mx_u, mx_u, mx_u, mx_i);}
+			"  %lli    %s    %i    %Lf    %hhi    %x  ",
+			mx_lli, mx_s, mx_i, mx_Lf, mx_c, mx_u);}
 int		mix_test_118(void){return test(
-			"  %lli    %o    %i    %x    %hhi    %Lf  ",
-			mx_lli, mx_u, mx_i, mx_u, mx_c, mx_Lf);}
+			"  %o    %f    %Lf    %x    %p    %hhi  ",
+			mx_u, mx_f, mx_Lf, mx_u, &mx_i, mx_c);}
 int		mix_test_119(void){return test(
-			"  %p    %i    %c    %x    %hhi    %f  ",
-			&mx_i, mx_i, mx_c, mx_u, mx_c, mx_f);}
+			"  %hhi    %p    %i    %hi    %o    %c  ",
+			mx_c, &mx_i, mx_i, mx_hi, mx_u, mx_c);}
 int		mix_test_120(void){return test(
-			"  %p    %s    %hi    %f    %c    %i  ",
-			&mx_i, mx_s, mx_hi, mx_f, mx_c, mx_i);}
+			"  %X    %lli    %o    %li    %x    %p  ",
+			mx_u, mx_lli, mx_u, mx_li, mx_u, &mx_i);}
 int		mix_test_121(void){return test(
-			"  %c    %li    %i    %hi    %p    %X  ",
-			mx_c, mx_li, mx_i, mx_hi, &mx_i, mx_u);}
+			"  %X    %s    %hi    %li    %c    %x  ",
+			mx_u, mx_s, mx_hi, mx_li, mx_c, mx_u);}
 int		mix_test_122(void){return test(
-			"  %lli    %X    %li    %x    %p    %f  ",
-			mx_lli, mx_u, mx_li, mx_u, &mx_i, mx_f);}
+			"  %lli    %s    %f    %i    %Lf    %u  ",
+			mx_lli, mx_s, mx_f, mx_i, mx_Lf, mx_u);}
 int		mix_test_123(void){return test(
-			"  %hhi    %f    %u    %hi    %i    %o  ",
-			mx_c, mx_f, mx_u, mx_hi, mx_i, mx_u);}
+			"  %f    %lli    %x    %Lf    %o    %p  ",
+			mx_f, mx_lli, mx_u, mx_Lf, mx_u, &mx_i);}
 int		mix_test_124(void){return test(
-			"  %p    %s    %li    %Lf    %u    %i  ",
-			&mx_i, mx_s, mx_li, mx_Lf, mx_u, mx_i);}
+			"  %hhi    %u    %lli    %x    %hi    %Lf  ",
+			mx_c, mx_u, mx_lli, mx_u, mx_hi, mx_Lf);}
 int		mix_test_125(void){return test(
-			"  %li    %hhi    %x    %s    %u    %p  ",
-			mx_li, mx_c, mx_u, mx_s, mx_u, &mx_i);}
+			"  %c    %x    %hhi    %i    %Lf    %p  ",
+			mx_c, mx_u, mx_c, mx_i, mx_Lf, &mx_i);}
 int		mix_test_126(void){return test(
-			"  %hi    %u    %X    %i    %o    %hhi  ",
-			mx_hi, mx_u, mx_u, mx_i, mx_u, mx_c);}
+			"  %c    %Lf    %X    %x    %u    %i  ",
+			mx_c, mx_Lf, mx_u, mx_u, mx_u, mx_i);}
 int		mix_test_127(void){return test(
-			"  %x    %f    %o    %i    %hhi    %c  ",
-			mx_u, mx_f, mx_u, mx_i, mx_c, mx_c);}
+			"  %i    %p    %f    %o    %li    %Lf  ",
+			mx_i, &mx_i, mx_f, mx_u, mx_li, mx_Lf);}
 int		mix_test_128(void){return test(
-			"  %u    %lli    %Lf    %li    %c    %p  ",
-			mx_u, mx_lli, mx_Lf, mx_li, mx_c, &mx_i);}
+			"  %hi    %o    %i    %Lf    %lli    %p  ",
+			mx_hi, mx_u, mx_i, mx_Lf, mx_lli, &mx_i);}
 int		mix_test_129(void){return test(
-			"  %f    %s    %hhi    %li    %p    %lli  ",
-			mx_f, mx_s, mx_c, mx_li, &mx_i, mx_lli);}
+			"  %u    %c    %s    %lli    %X    %x  ",
+			mx_u, mx_c, mx_s, mx_lli, mx_u, mx_u);}
 int		mix_test_130(void){return test(
-			"  %x    %o    %hhi    %p    %i    %hi  ",
-			mx_u, mx_u, mx_c, &mx_i, mx_i, mx_hi);}
+			"  %li    %f    %p    %hhi    %i    %u  ",
+			mx_li, mx_f, &mx_i, mx_c, mx_i, mx_u);}
 int		mix_test_131(void){return test(
-			"  %f    %li    %lli    %o    %hi    %u  ",
-			mx_f, mx_li, mx_lli, mx_u, mx_hi, mx_u);}
+			"  %u    %c    %p    %o    %hhi    %f  ",
+			mx_u, mx_c, &mx_i, mx_u, mx_c, mx_f);}
 int		mix_test_132(void){return test(
-			"  %i    %hi    %c    %hhi    %x    %f  ",
-			mx_i, mx_hi, mx_c, mx_c, mx_u, mx_f);}
+			"  %u    %Lf    %lli    %i    %f    %hi  ",
+			mx_u, mx_Lf, mx_lli, mx_i, mx_f, mx_hi);}
 int		mix_test_133(void){return test(
-			"  %f    %lli    %li    %o    %p    %u  ",
-			mx_f, mx_lli, mx_li, mx_u, &mx_i, mx_u);}
+			"  %x    %s    %i    %hhi    %Lf    %li  ",
+			mx_u, mx_s, mx_i, mx_c, mx_Lf, mx_li);}
 int		mix_test_134(void){return test(
-			"  %f    %i    %li    %s    %p    %c  ",
-			mx_f, mx_i, mx_li, mx_s, &mx_i, mx_c);}
+			"  %f    %p    %o    %hi    %x    %li  ",
+			mx_f, &mx_i, mx_u, mx_hi, mx_u, mx_li);}
 int		mix_test_135(void){return test(
-			"  %lli    %c    %Lf    %p    %li    %u  ",
-			mx_lli, mx_c, mx_Lf, &mx_i, mx_li, mx_u);}
+			"  %p    %X    %s    %li    %u    %c  ",
+			&mx_i, mx_u, mx_s, mx_li, mx_u, mx_c);}
 int		mix_test_136(void){return test(
-			"  %s    %lli    %hi    %u    %li    %i  ",
-			mx_s, mx_lli, mx_hi, mx_u, mx_li, mx_i);}
+			"  %hhi    %o    %X    %p    %s    %li  ",
+			mx_c, mx_u, mx_u, &mx_i, mx_s, mx_li);}
 int		mix_test_137(void){return test(
-			"  %f    %s    %lli    %u    %hhi    %x  ",
-			mx_f, mx_s, mx_lli, mx_u, mx_c, mx_u);}
+			"  %p    %hhi    %i    %x    %X    %f  ",
+			&mx_i, mx_c, mx_i, mx_u, mx_u, mx_f);}
 int		mix_test_138(void){return test(
-			"  %li    %s    %Lf    %hi    %o    %x  ",
-			mx_li, mx_s, mx_Lf, mx_hi, mx_u, mx_u);}
+			"  %s    %li    %i    %x    %p    %o  ",
+			mx_s, mx_li, mx_i, mx_u, &mx_i, mx_u);}
 int		mix_test_139(void){return test(
-			"  %li    %hi    %f    %hhi    %p    %X  ",
-			mx_li, mx_hi, mx_f, mx_c, &mx_i, mx_u);}
+			"  %i    %X    %lli    %u    %s    %hhi  ",
+			mx_i, mx_u, mx_lli, mx_u, mx_s, mx_c);}
 int		mix_test_140(void){return test(
-			"  %o    %c    %x    %u    %hhi    %i  ",
-			mx_u, mx_c, mx_u, mx_u, mx_c, mx_i);}
+			"  %p    %c    %x    %hi    %lli    %u  ",
+			&mx_i, mx_c, mx_u, mx_hi, mx_lli, mx_u);}
 int		mix_test_141(void){return test(
-			"  %hhi    %u    %x    %li    %f    %p  ",
-			mx_c, mx_u, mx_u, mx_li, mx_f, &mx_i);}
+			"  %lli    %li    %x    %Lf    %s    %u  ",
+			mx_lli, mx_li, mx_u, mx_Lf, mx_s, mx_u);}
 int		mix_test_142(void){return test(
-			"  %f    %X    %p    %x    %s    %li  ",
-			mx_f, mx_u, &mx_i, mx_u, mx_s, mx_li);}
+			"  %hhi    %o    %hi    %c    %s    %li  ",
+			mx_c, mx_u, mx_hi, mx_c, mx_s, mx_li);}
 int		mix_test_143(void){return test(
-			"  %i    %Lf    %s    %lli    %hhi    %li  ",
-			mx_i, mx_Lf, mx_s, mx_lli, mx_c, mx_li);}
+			"  %p    %hhi    %lli    %s    %c    %u  ",
+			&mx_i, mx_c, mx_lli, mx_s, mx_c, mx_u);}
 int		mix_test_144(void){return test(
-			"  %x    %X    %lli    %c    %o    %hi  ",
-			mx_u, mx_u, mx_lli, mx_c, mx_u, mx_hi);}
+			"  %x    %p    %i    %Lf    %u    %s  ",
+			mx_u, &mx_i, mx_i, mx_Lf, mx_u, mx_s);}
 int		mix_test_145(void){return test(
-			"  %Lf    %li    %i    %o    %c    %p  ",
-			mx_Lf, mx_li, mx_i, mx_u, mx_c, &mx_i);}
+			"  %li    %hhi    %u    %i    %X    %o  ",
+			mx_li, mx_c, mx_u, mx_i, mx_u, mx_u);}
 int		mix_test_146(void){return test(
-			"  %p    %X    %o    %hhi    %c    %hi  ",
-			&mx_i, mx_u, mx_u, mx_c, mx_c, mx_hi);}
+			"  %u    %c    %p    %hhi    %X    %f  ",
+			mx_u, mx_c, &mx_i, mx_c, mx_u, mx_f);}
 int		mix_test_147(void){return test(
-			"  %lli    %f    %o    %u    %p    %X  ",
-			mx_lli, mx_f, mx_u, mx_u, &mx_i, mx_u);}
+			"  %hhi    %li    %p    %s    %Lf    %o  ",
+			mx_c, mx_li, &mx_i, mx_s, mx_Lf, mx_u);}
 int		mix_test_148(void){return test(
-			"  %p    %u    %x    %o    %i    %f  ",
-			&mx_i, mx_u, mx_u, mx_u, mx_i, mx_f);}
+			"  %lli    %s    %X    %i    %hi    %c  ",
+			mx_lli, mx_s, mx_u, mx_i, mx_hi, mx_c);}
 int		mix_test_149(void){return test(
-			"  %o    %u    %hhi    %c    %p    %li  ",
-			mx_u, mx_u, mx_c, mx_c, &mx_i, mx_li);}
+			"  %c    %p    %li    %X    %s    %lli  ",
+			mx_c, &mx_i, mx_li, mx_u, mx_s, mx_lli);}
 int		mix_test_150(void){return test(
-			"  %x    %p    %hhi    %hi    %s    %Lf  ",
-			mx_u, &mx_i, mx_c, mx_hi, mx_s, mx_Lf);}
+			"  %X    %lli    %c    %i    %f    %u  ",
+			mx_u, mx_lli, mx_c, mx_i, mx_f, mx_u);}
 int		mix_test_151(void){return test(
-			"  %hi    %s    %o    %x    %i    %lli  ",
-			mx_hi, mx_s, mx_u, mx_u, mx_i, mx_lli);}
+			"  %Lf    %c    %hhi    %u    %hi    %x  ",
+			mx_Lf, mx_c, mx_c, mx_u, mx_hi, mx_u);}
 int		mix_test_152(void){return test(
-			"  %c    %X    %i    %u    %Lf    %o  ",
-			mx_c, mx_u, mx_i, mx_u, mx_Lf, mx_u);}
+			"  %li    %hi    %o    %s    %lli    %hhi  ",
+			mx_li, mx_hi, mx_u, mx_s, mx_lli, mx_c);}
 int		mix_test_153(void){return test(
-			"  %c    %hhi    %i    %u    %hi    %x  ",
-			mx_c, mx_c, mx_i, mx_u, mx_hi, mx_u);}
+			"  %Lf    %li    %hhi    %s    %p    %c  ",
+			mx_Lf, mx_li, mx_c, mx_s, &mx_i, mx_c);}
 int		mix_test_154(void){return test(
-			"  %o    %Lf    %li    %f    %i    %X  ",
-			mx_u, mx_Lf, mx_li, mx_f, mx_i, mx_u);}
+			"  %p    %X    %o    %u    %lli    %li  ",
+			&mx_i, mx_u, mx_u, mx_u, mx_lli, mx_li);}
 int		mix_test_155(void){return test(
-			"  %hhi    %X    %o    %s    %p    %hi  ",
-			mx_c, mx_u, mx_u, mx_s, &mx_i, mx_hi);}
+			"  %li    %X    %u    %i    %f    %hi  ",
+			mx_li, mx_u, mx_u, mx_i, mx_f, mx_hi);}
 int		mix_test_156(void){return test(
-			"  %s    %x    %f    %Lf    %hi    %X  ",
-			mx_s, mx_u, mx_f, mx_Lf, mx_hi, mx_u);}
+			"  %Lf    %i    %X    %c    %hhi    %f  ",
+			mx_Lf, mx_i, mx_u, mx_c, mx_c, mx_f);}
 int		mix_test_157(void){return test(
-			"  %X    %hhi    %hi    %c    %i    %o  ",
-			mx_u, mx_c, mx_hi, mx_c, mx_i, mx_u);}
+			"  %p    %i    %Lf    %c    %li    %X  ",
+			&mx_i, mx_i, mx_Lf, mx_c, mx_li, mx_u);}
 int		mix_test_158(void){return test(
-			"  %hi    %hhi    %li    %o    %i    %p  ",
-			mx_hi, mx_c, mx_li, mx_u, mx_i, &mx_i);}
+			"  %i    %p    %c    %f    %x    %li  ",
+			mx_i, &mx_i, mx_c, mx_f, mx_u, mx_li);}
 int		mix_test_159(void){return test(
-			"  %c    %u    %p    %i    %f    %s  ",
-			mx_c, mx_u, &mx_i, mx_i, mx_f, mx_s);}
+			"  %li    %X    %f    %o    %s    %Lf  ",
+			mx_li, mx_u, mx_f, mx_u, mx_s, mx_Lf);}
 int		mix_test_160(void){return test(
-			"  %i    %s    %c    %o    %lli    %Lf  ",
-			mx_i, mx_s, mx_c, mx_u, mx_lli, mx_Lf);}
+			"  %li    %hi    %hhi    %lli    %Lf    %p  ",
+			mx_li, mx_hi, mx_c, mx_lli, mx_Lf, &mx_i);}
 int		mix_test_161(void){return test(
-			"  %i    %o    %x    %hi    %c    %f  ",
-			mx_i, mx_u, mx_u, mx_hi, mx_c, mx_f);}
+			"  %Lf    %hhi    %li    %c    %X    %hi  ",
+			mx_Lf, mx_c, mx_li, mx_c, mx_u, mx_hi);}
 int		mix_test_162(void){return test(
-			"  %p    %i    %Lf    %X    %f    %c  ",
-			&mx_i, mx_i, mx_Lf, mx_u, mx_f, mx_c);}
+			"  %lli    %c    %o    %li    %u    %i  ",
+			mx_lli, mx_c, mx_u, mx_li, mx_u, mx_i);}
 int		mix_test_163(void){return test(
-			"  %li    %o    %s    %f    %hi    %X  ",
-			mx_li, mx_u, mx_s, mx_f, mx_hi, mx_u);}
+			"  %Lf    %li    %i    %lli    %hi    %c  ",
+			mx_Lf, mx_li, mx_i, mx_lli, mx_hi, mx_c);}
 int		mix_test_164(void){return test(
-			"  %Lf    %o    %hhi    %i    %X    %c  ",
-			mx_Lf, mx_u, mx_c, mx_i, mx_u, mx_c);}
+			"  %p    %lli    %hi    %x    %li    %Lf  ",
+			&mx_i, mx_lli, mx_hi, mx_u, mx_li, mx_Lf);}
 int		mix_test_165(void){return test(
-			"  %hhi    %f    %i    %o    %hi    %lli  ",
-			mx_c, mx_f, mx_i, mx_u, mx_hi, mx_lli);}
+			"  %u    %hhi    %p    %lli    %hi    %x  ",
+			mx_u, mx_c, &mx_i, mx_lli, mx_hi, mx_u);}
 int		mix_test_166(void){return test(
-			"  %X    %c    %i    %lli    %hhi    %hi  ",
-			mx_u, mx_c, mx_i, mx_lli, mx_c, mx_hi);}
+			"  %p    %hhi    %s    %li    %Lf    %hi  ",
+			&mx_i, mx_c, mx_s, mx_li, mx_Lf, mx_hi);}
 int		mix_test_167(void){return test(
-			"  %p    %x    %f    %X    %o    %c  ",
-			&mx_i, mx_u, mx_f, mx_u, mx_u, mx_c);}
+			"  %s    %lli    %p    %i    %u    %hhi  ",
+			mx_s, mx_lli, &mx_i, mx_i, mx_u, mx_c);}
 int		mix_test_168(void){return test(
-			"  %x    %o    %hhi    %i    %f    %c  ",
-			mx_u, mx_u, mx_c, mx_i, mx_f, mx_c);}
+			"  %p    %o    %Lf    %X    %c    %u  ",
+			&mx_i, mx_u, mx_Lf, mx_u, mx_c, mx_u);}
 int		mix_test_169(void){return test(
-			"  %o    %u    %i    %c    %hhi    %lli  ",
-			mx_u, mx_u, mx_i, mx_c, mx_c, mx_lli);}
+			"  %p    %i    %X    %lli    %c    %hhi  ",
+			&mx_i, mx_i, mx_u, mx_lli, mx_c, mx_c);}
 int		mix_test_170(void){return test(
-			"  %s    %li    %f    %X    %o    %c  ",
-			mx_s, mx_li, mx_f, mx_u, mx_u, mx_c);}
+			"  %i    %lli    %p    %o    %X    %f  ",
+			mx_i, mx_lli, &mx_i, mx_u, mx_u, mx_f);}
 int		mix_test_171(void){return test(
-			"  %li    %Lf    %u    %i    %f    %s  ",
-			mx_li, mx_Lf, mx_u, mx_i, mx_f, mx_s);}
+			"  %f    %p    %c    %hi    %li    %i  ",
+			mx_f, &mx_i, mx_c, mx_hi, mx_li, mx_i);}
 int		mix_test_172(void){return test(
-			"  %c    %X    %o    %i    %li    %u  ",
-			mx_c, mx_u, mx_u, mx_i, mx_li, mx_u);}
+			"  %lli    %o    %i    %hhi    %c    %X  ",
+			mx_lli, mx_u, mx_i, mx_c, mx_c, mx_u);}
 int		mix_test_173(void){return test(
-			"  %x    %s    %i    %hhi    %o    %Lf  ",
-			mx_u, mx_s, mx_i, mx_c, mx_u, mx_Lf);}
+			"  %p    %hi    %lli    %X    %x    %o  ",
+			&mx_i, mx_hi, mx_lli, mx_u, mx_u, mx_u);}
 int		mix_test_174(void){return test(
-			"  %f    %hi    %p    %lli    %o    %u  ",
-			mx_f, mx_hi, &mx_i, mx_lli, mx_u, mx_u);}
+			"  %hhi    %X    %u    %p    %x    %lli  ",
+			mx_c, mx_u, mx_u, &mx_i, mx_u, mx_lli);}
 int		mix_test_175(void){return test(
-			"  %i    %s    %x    %Lf    %c    %u  ",
-			mx_i, mx_s, mx_u, mx_Lf, mx_c, mx_u);}
+			"  %s    %Lf    %f    %hhi    %x    %o  ",
+			mx_s, mx_Lf, mx_f, mx_c, mx_u, mx_u);}
 int		mix_test_176(void){return test(
-			"  %p    %u    %o    %hhi    %li    %X  ",
-			&mx_i, mx_u, mx_u, mx_c, mx_li, mx_u);}
+			"  %X    %f    %x    %o    %hi    %u  ",
+			mx_u, mx_f, mx_u, mx_u, mx_hi, mx_u);}
 int		mix_test_177(void){return test(
-			"  %li    %hhi    %hi    %x    %c    %Lf  ",
-			mx_li, mx_c, mx_hi, mx_u, mx_c, mx_Lf);}
+			"  %u    %hhi    %p    %o    %X    %x  ",
+			mx_u, mx_c, &mx_i, mx_u, mx_u, mx_u);}
 int		mix_test_178(void){return test(
-			"  %hi    %o    %X    %i    %c    %Lf  ",
-			mx_hi, mx_u, mx_u, mx_i, mx_c, mx_Lf);}
+			"  %f    %i    %lli    %o    %X    %c  ",
+			mx_f, mx_i, mx_lli, mx_u, mx_u, mx_c);}
 int		mix_test_179(void){return test(
-			"  %x    %c    %s    %p    %hhi    %i  ",
-			mx_u, mx_c, mx_s, &mx_i, mx_c, mx_i);}
+			"  %lli    %o    %li    %X    %p    %c  ",
+			mx_lli, mx_u, mx_li, mx_u, &mx_i, mx_c);}
 int		mix_test_180(void){return test(
-			"  %i    %u    %li    %X    %s    %hi  ",
-			mx_i, mx_u, mx_li, mx_u, mx_s, mx_hi);}
+			"  %hi    %x    %i    %o    %c    %hhi  ",
+			mx_hi, mx_u, mx_i, mx_u, mx_c, mx_c);}
 int		mix_test_181(void){return test(
-			"  %hi    %s    %li    %c    %u    %hhi  ",
-			mx_hi, mx_s, mx_li, mx_c, mx_u, mx_c);}
+			"  %hi    %X    %hhi    %s    %lli    %c  ",
+			mx_hi, mx_u, mx_c, mx_s, mx_lli, mx_c);}
 int		mix_test_182(void){return test(
-			"  %li    %c    %p    %hhi    %s    %Lf  ",
-			mx_li, mx_c, &mx_i, mx_c, mx_s, mx_Lf);}
+			"  %hhi    %c    %f    %Lf    %li    %i  ",
+			mx_c, mx_c, mx_f, mx_Lf, mx_li, mx_i);}
 int		mix_test_183(void){return test(
-			"  %X    %s    %lli    %hi    %c    %p  ",
-			mx_u, mx_s, mx_lli, mx_hi, mx_c, &mx_i);}
+			"  %lli    %x    %hi    %c    %hhi    %i  ",
+			mx_lli, mx_u, mx_hi, mx_c, mx_c, mx_i);}
 int		mix_test_184(void){return test(
-			"  %c    %hhi    %p    %x    %hi    %i  ",
-			mx_c, mx_c, &mx_i, mx_u, mx_hi, mx_i);}
+			"  %s    %X    %f    %x    %hi    %i  ",
+			mx_s, mx_u, mx_f, mx_u, mx_hi, mx_i);}
 int		mix_test_185(void){return test(
-			"  %c    %u    %hhi    %li    %hi    %x  ",
-			mx_c, mx_u, mx_c, mx_li, mx_hi, mx_u);}
+			"  %li    %hhi    %f    %Lf    %c    %o  ",
+			mx_li, mx_c, mx_f, mx_Lf, mx_c, mx_u);}
 int		mix_test_186(void){return test(
-			"  %p    %i    %s    %o    %x    %c  ",
-			&mx_i, mx_i, mx_s, mx_u, mx_u, mx_c);}
+			"  %Lf    %i    %li    %u    %X    %hhi  ",
+			mx_Lf, mx_i, mx_li, mx_u, mx_u, mx_c);}
 int		mix_test_187(void){return test(
-			"  %X    %hi    %o    %i    %c    %li  ",
-			mx_u, mx_hi, mx_u, mx_i, mx_c, mx_li);}
+			"  %hi    %Lf    %f    %o    %s    %hhi  ",
+			mx_hi, mx_Lf, mx_f, mx_u, mx_s, mx_c);}
 int		mix_test_188(void){return test(
-			"  %X    %u    %o    %hhi    %x    %li  ",
-			mx_u, mx_u, mx_u, mx_c, mx_u, mx_li);}
+			"  %u    %x    %hi    %Lf    %lli    %X  ",
+			mx_u, mx_u, mx_hi, mx_Lf, mx_lli, mx_u);}
 int		mix_test_189(void){return test(
-			"  %X    %i    %hi    %hhi    %lli    %c  ",
-			mx_u, mx_i, mx_hi, mx_c, mx_lli, mx_c);}
+			"  %o    %u    %X    %s    %i    %hi  ",
+			mx_u, mx_u, mx_u, mx_s, mx_i, mx_hi);}
 int		mix_test_190(void){return test(
-			"  %li    %u    %X    %lli    %x    %p  ",
-			mx_li, mx_u, mx_u, mx_lli, mx_u, &mx_i);}
+			"  %X    %s    %hhi    %u    %o    %lli  ",
+			mx_u, mx_s, mx_c, mx_u, mx_u, mx_lli);}
 int		mix_test_191(void){return test(
-			"  %hi    %Lf    %o    %hhi    %p    %X  ",
-			mx_hi, mx_Lf, mx_u, mx_c, &mx_i, mx_u);}
+			"  %c    %f    %x    %lli    %u    %o  ",
+			mx_c, mx_f, mx_u, mx_lli, mx_u, mx_u);}
 int		mix_test_192(void){return test(
-			"  %Lf    %f    %i    %lli    %p    %li  ",
-			mx_Lf, mx_f, mx_i, mx_lli, &mx_i, mx_li);}
+			"  %f    %u    %li    %x    %c    %hhi  ",
+			mx_f, mx_u, mx_li, mx_u, mx_c, mx_c);}
 int		mix_test_193(void){return test(
-			"  %li    %Lf    %f    %i    %lli    %c  ",
-			mx_li, mx_Lf, mx_f, mx_i, mx_lli, mx_c);}
+			"  %o    %i    %hi    %x    %hhi    %li  ",
+			mx_u, mx_i, mx_hi, mx_u, mx_c, mx_li);}
 int		mix_test_194(void){return test(
-			"  %li    %i    %f    %lli    %hi    %o  ",
-			mx_li, mx_i, mx_f, mx_lli, mx_hi, mx_u);}
+			"  %Lf    %s    %i    %c    %X    %li  ",
+			mx_Lf, mx_s, mx_i, mx_c, mx_u, mx_li);}
 int		mix_test_195(void){return test(
-			"  %hi    %li    %x    %X    %o    %u  ",
-			mx_hi, mx_li, mx_u, mx_u, mx_u, mx_u);}
+			"  %li    %s    %X    %o    %lli    %f  ",
+			mx_li, mx_s, mx_u, mx_u, mx_lli, mx_f);}
 int		mix_test_196(void){return test(
-			"  %i    %u    %x    %f    %li    %hi  ",
-			mx_i, mx_u, mx_u, mx_f, mx_li, mx_hi);}
+			"  %c    %o    %f    %Lf    %lli    %X  ",
+			mx_c, mx_u, mx_f, mx_Lf, mx_lli, mx_u);}
 int		mix_test_197(void){return test(
-			"  %f    %u    %Lf    %o    %lli    %p  ",
-			mx_f, mx_u, mx_Lf, mx_u, mx_lli, &mx_i);}
+			"  %hi    %o    %i    %Lf    %li    %x  ",
+			mx_hi, mx_u, mx_i, mx_Lf, mx_li, mx_u);}
 int		mix_test_198(void){return test(
-			"  %Lf    %x    %X    %hhi    %i    %f  ",
-			mx_Lf, mx_u, mx_u, mx_c, mx_i, mx_f);}
+			"  %p    %i    %x    %Lf    %u    %o  ",
+			&mx_i, mx_i, mx_u, mx_Lf, mx_u, mx_u);}
 int		mix_test_199(void){return test(
-			"  %o    %f    %i    %x    %hhi    %Lf  ",
-			mx_u, mx_f, mx_i, mx_u, mx_c, mx_Lf);}
+			"  %f    %Lf    %c    %hi    %hhi    %li  ",
+			mx_f, mx_Lf, mx_c, mx_hi, mx_c, mx_li);}
 
 
 int		mix_test_extra_1(void){return test(
@@ -2938,16 +3116,77 @@ int		mix_test_extra_10(void){return test(
 			"  %c    %%    %hhi    %p    %hi    %x  ",
 			mx_c, mx_hhi, &mx_c, mx_hi, mx_u);}
 
-
-
-
-
-
-
-
-
-
-
+int		mix_successive_0(void){return ( test("%c", mx_c) + test("%u", mx_u));}
+int		mix_successive_1(void){return ( test("%o", mx_u) + test("%%"));}
+int		mix_successive_2(void){return ( test("%s", mx_s) + test("%Lf", mx_Lf));}
+int		mix_successive_3(void){return ( test("%Lf", mx_Lf) + test("%hhi", mx_c));}
+int		mix_successive_4(void){return ( test("%x", mx_u) + test("%i", mx_i));}
+int		mix_successive_5(void){return ( test("%x", mx_u) + test("%o", mx_u));}
+int		mix_successive_6(void){return ( test("%s", mx_s) + test("%c", mx_c));}
+int		mix_successive_7(void){return ( test("%p", &mx_i) + test("%hi", mx_hi));}
+int		mix_successive_8(void){return ( test("%f", mx_f) + test("%p", &mx_i));}
+int		mix_successive_9(void){return ( test("%hi", mx_hi) + test("%u", mx_u));}
+int		mix_successive_10(void){return ( test("%u", mx_u) + test("%s", mx_s));}
+int		mix_successive_11(void){return ( test("%Lf", mx_Lf) + test("%p", &mx_i));}
+int		mix_successive_12(void){return ( test("%f", mx_f) + test("%hhi", mx_c));}
+int		mix_successive_13(void){return ( test("%X", mx_u) + test("%hhi", mx_c));}
+int		mix_successive_14(void){return ( test("%X", mx_u) + test("%f", mx_f));}
+int		mix_successive_15(void){return ( test("%hhi", mx_c) + test("%X", mx_u));}
+int		mix_successive_16(void){return ( test("%s", mx_s) + test("%x", mx_u));}
+int		mix_successive_17(void){return ( test("%lli", mx_lli) + test("%i", mx_i));}
+int		mix_successive_18(void){return ( test("%s", mx_s) + test("%o", mx_u));}
+int		mix_successive_19(void){return ( test("%hhi", mx_c) + test("%X", mx_u));}
+int		mix_successive_20(void){return ( test("%p", &mx_i) + test("%s", mx_s));}
+int		mix_successive_21(void){return ( test("%X", mx_u) + test("%x", mx_u));}
+int		mix_successive_22(void){return ( test("%p", &mx_i) + test("%lli", mx_lli));}
+int		mix_successive_23(void){return ( test("%s", mx_s) + test("%f", mx_f));}
+int		mix_successive_24(void){return ( test("%c", mx_c) + test("%hhi", mx_c));}
+int		mix_successive_25(void){return ( test("%x", mx_u) + test("%f", mx_f));}
+int		mix_successive_26(void){return ( test("%s", mx_s) + test("%li", mx_li));}
+int		mix_successive_27(void){return ( test("%f", mx_f) + test("%Lf", mx_Lf));}
+int		mix_successive_28(void){return ( test("%i", mx_i) + test("%u", mx_u));}
+int		mix_successive_29(void){return ( test("%o", mx_u) + test("%li", mx_li));}
+int		mix_successive_30(void){return ( test("%s", mx_s) + test("%u", mx_u));}
+int		mix_successive_31(void){return ( test("%X", mx_u) + test("%c", mx_c));}
+int		mix_successive_32(void){return ( test("%x", mx_u) + test("%u", mx_u));}
+int		mix_successive_33(void){return ( test("%Lf", mx_Lf) + test("%s", mx_s));}
+int		mix_successive_34(void){return ( test("%hhi", mx_c) + test("%u", mx_u));}
+int		mix_successive_35(void){return ( test("%p", &mx_i) + test("%f", mx_f));}
+int		mix_successive_36(void){return ( test("%li", mx_li) + test("%o", mx_u));}
+int		mix_successive_37(void){return ( test("%s", mx_s) + test("%li", mx_li));}
+int		mix_successive_38(void){return ( test("%o", mx_u) + test("%lli", mx_lli));}
+int		mix_successive_39(void){return ( test("%i", mx_i) + test("%c", mx_c));}
+int		mix_successive_40(void){return ( test("%c", mx_c) + test("%x", mx_u));}
+int		mix_successive_41(void){return ( test("%hhi", mx_c) + test("%x", mx_u));}
+int		mix_successive_42(void){return ( test("%x", mx_u) + test("%s", mx_s));}
+int		mix_successive_43(void){return ( test("%u", mx_u) + test("%x", mx_u));}
+int		mix_successive_44(void){return ( test("%i", mx_i) + test("%f", mx_f));}
+int		mix_successive_45(void){return ( test("%s", mx_s) + test("%c", mx_c));}
+int		mix_successive_46(void){return ( test("%i", mx_i) + test("%s", mx_s));}
+int		mix_successive_47(void){return ( test("%u", mx_u) + test("%hhi", mx_c));}
+int		mix_successive_48(void){return ( test("%hi", mx_hi) + test("%o", mx_u));}
+int		mix_successive_49(void){return ( test("%i", mx_i) + test("%hi", mx_hi));}
+int		mix_successive_50(void){return ( test("%o", mx_u) + test("%Lf", mx_Lf));}
+int		mix_successive_51(void){return ( test("%li", mx_li) + test("%hhi", mx_c));}
+int		mix_successive_52(void){return ( test("%hi", mx_hi) + test("%hhi", mx_c));}
+int		mix_successive_53(void){return ( test("%Lf", mx_Lf) + test("%x", mx_u));}
+int		mix_successive_54(void){return ( test("%c", mx_c) + test("%hi", mx_hi));}
+int		mix_successive_55(void){return ( test("%hi", mx_hi) + test("%s", mx_s));}
+int		mix_successive_56(void){return ( test("%i", mx_i) + test("%lli", mx_lli));}
+int		mix_successive_57(void){return ( test("%c", mx_c) + test("%Lf", mx_Lf));}
+int		mix_successive_58(void){return ( test("%f", mx_f) + test("%x", mx_u));}
+int		mix_successive_59(void){return ( test("%s", mx_s) + test("%li", mx_li));}
+int		mix_successive_60(void){return ( test("%hhi", mx_c) + test("%s", mx_s));}
+int		mix_successive_61(void){return ( test("%p", &mx_i) + test("%c", mx_c));}
+int		mix_successive_62(void){return ( test("%lli", mx_lli) + test("%u", mx_u));}
+int		mix_successive_63(void){return ( test("%x", mx_u) + test("%o", mx_u));}
+int		mix_successive_64(void){return ( test("%s", mx_s) + test("%c", mx_c));}
+int		mix_successive_65(void){return ( test("%i", mx_i) + test("%lli", mx_lli));}
+int		mix_successive_66(void){return ( test("%li", mx_li) + test("%Lf", mx_Lf));}
+int		mix_successive_67(void){return ( test("%hi", mx_hi) + test("%x", mx_u));}
+int		mix_successive_68(void){return ( test("%i", mx_i) + test("%hi", mx_hi));}
+int		mix_successive_69(void){return ( test("%Lf", mx_Lf) + test("%li", mx_li));}
+int		mix_successive_70(void){return ( test("%o", mx_u) + test("%li", mx_li));}
 
 
 

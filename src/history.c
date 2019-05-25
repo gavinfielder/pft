@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 06:47:42 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 20:25:18 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/06 19:40:46 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		load_history(void)
 		test_history[test_number].timestamp = 
 			(test_last_passed >= test_last_failed ?
 				test_last_passed : test_last_failed);
-		ft_destroy_nullterm_ptrarray((void ***)(&split));
+		my_destroy_nullterm_ptrarray((void ***)(&split));
 	}
 	if (line)
 		free(line);
@@ -200,7 +200,7 @@ void		write_log(void)
 			write_head_to_log(fp_out, test_last_passed, test_last_failed);
 		else
 			fprintf(fp_out, "%s", line);
-		ft_destroy_nullterm_ptrarray((void ***)(&split));
+		my_destroy_nullterm_ptrarray((void ***)(&split));
 	}
 	while (head)
 		write_head_to_log(fp_out, 0, 0);

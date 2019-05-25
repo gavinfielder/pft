@@ -92,12 +92,17 @@ The full documentation is available in the [Wiki](https://github.com/gavinfielde
  - Options and Configuration
    - [Run Options](https://github.com/gavinfielder/pft/wiki/Run-Options)
    - [Configuration Options](https://github.com/gavinfielder/pft/wiki/Configuration-Options)
+   - [Configuration Guide](https://github.com/gavinfielder/pft/wiki/Configuration-Guide)
  - Additional Features
    - [Debugger Compatibility Mode](https://github.com/gavinfielder/pft/wiki/Debugger-Compatibility-Mode)
    - [Test History Logging](https://github.com/gavinfielder/pft/wiki/Test-History-Logging)
    - [Leaks Test (BETA)](https://github.com/gavinfielder/pft/wiki/Leaks-Test-(BETA))
  - [Troubleshooting](https://github.com/gavinfielder/pft/wiki/Troubleshooting)
  - [Contributing to this repo (and possible future features)](https://github.com/gavinfielder/pft/wiki/Contributing-(and-possible-future-features))
+ 
+## Todo List for the Unit Test Library
+I occasionally get suggestions for the unit test library. I keep this list to keep track of what I want to do the next time I modify unit\_tests.c  
+[Todo List for the Unit Test Library](https://github.com/gavinfielder/pft/issues/2)
 
 # Credits
 
