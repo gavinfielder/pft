@@ -118,14 +118,10 @@ I occasionally get suggestions for the unit test library. I keep this list to ke
 
 # Credits
 
-The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
+The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. The vast majority of tests were written by me; some tests were contributed by Eric (phtruong) and Aymen (akharrou).
 
 Also thanks to:
 - [rwright](https://github.com/wright08)
-- phtruong
 - [osfally](https://github.com/shaparder)
 - [dfonarev](https://github.com/ruv1nce)  
 for various suggestions and feature motivations.
-
-
-
