@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/25 14:42:08 by phtruong         ###   ########.fr       */
+/*   Updated: 2019/05/25 14:49:08 by phtruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -180,6 +180,47 @@ int s_prec_1_width_4_s_hidden(void){return test("%4.1s", s_hidden);}
 int s_prec_1_width_5_s_hidden(void){return test("%5.1s", s_hidden);}
 int s_prec_1_width_6_s_hidden(void){return test("%6.1s", s_hidden);}
 int s_prec_1_width_7_s_hidden(void){return test("%7.1s", s_hidden);}
+int s_prec_1_width_8_s_hidden(void){return test("%8.1s", s_hidden);}
+int s_prec_1_width_9_s_hidden(void){return test("%9.1s", s_hidden);}
+int s_prec_1_width_10_s_hidden(void){return test("%10.1s", s_hidden);}
+int s_prec_perfect_width_1_s_hidden(void){return test("%1.6s", s_hidden);}
+int s_prec_perfect_width_2_s_hidden(void){return test("%2.6s", s_hidden);}
+int s_prec_perfect_width_3_s_hidden(void){return test("%3.6s", s_hidden);}
+int s_prec_perfect_width_4_s_hidden(void){return test("%4.6s", s_hidden);}
+int s_prec_perfect_width_5_s_hidden(void){return test("%5.6s", s_hidden);}
+int s_prec_perfect_width_6_s_hidden(void){return test("%6.6s", s_hidden);}
+int s_prec_perfect_width_7_s_hidden(void){return test("%7.6s", s_hidden);}
+int s_prec_perfect_width_8_s_hidden(void){return test("%8.6s", s_hidden);}
+int s_prec_perfect_width_9_s_hidden(void){return test("%9.6s", s_hidden);}
+int s_prec_perfect_width_20_s_hidden(void){return test("%20.6s", s_hidden);}
+int s_prec_00_minus_flag_s_hidden_trunc(void){return test("%-.00s", s_hidden);}
+int s_prec_01_minus_flag_s_hidden_trunc(void){return test("%-.01s", s_hidden);}
+int s_prec_02_minus_flag_s_hidden_trunc(void){return test("%-.02s", s_hidden);}
+int s_prec_03_minus_flag_s_hidden_trunc(void){return test("%-.03s", s_hidden);}
+int s_prec_04_minus_flag_s_hidden_trunc(void){return test("%-.04s", s_hidden);}
+int s_prec_05_minus_flag_s_hidden_trunc(void){return test("%-.05s", s_hidden);}
+int s_prec_06_minus_flag_s_hidden_exact(void){return test("%-.06s", s_hidden);}
+int s_prec_07_minus_flag_s_hidden_notrunc(void){return test("%-.07s", s_hidden);}
+int s_prec_08_minus_flag_s_hidden_notrunc(void){return test("%-.08s", s_hidden);}
+int s_prec_09_minus_flag_s_hidden_notrunc(void){return test("%-.09s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_1(void){return test("%+- 06.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_2(void){return test("% 0+-6.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_3(void){return test("%0 +-6.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_4(void){return test("%+-0 6.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_5(void){return test("%-+ 06.06s", s_hidden);}
+int	s_undefbehav_4_flags_diff_order_6(void){return test("% -+06.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_1(void){return test("%+- 07.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_2(void){return test("% 0+-8.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_3(void){return test("%0 +-9.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_4(void){return test("%+-0 10.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_5(void){return test("%-+ 011.06s", s_hidden);}
+int	s_undefbehav_4_flags_space_padded_diff_order_6(void){return test("% -+012.06s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_1(void){return test("%+- 06.05s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_2(void){return test("% 0+-6.04s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_3(void){return test("%0 +-6.03s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_4(void){return test("%+-0 6.02s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_5(void){return test("%-+ 06.01s", s_hidden);}
+int	s_undefbehav_4_flags_trunc_diff_order_6(void){return test("% -+06.00s", s_hidden);}
 
 //Signed integers - no modifers
 int		i_basic_i_pos(void){return test("this %i number", 17);}
