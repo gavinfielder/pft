@@ -78,6 +78,17 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
 
+# What's NOT Covered
+Feel free to contribute tests for these bonuses:
+
+ - Size modifiers `t`, `z`, `j`, and `q`.
+ - `%n`
+ - `'` (thousands separator flag)
+### What's not covered very well
+ - `*` (4 tests)
+ - `$` (9 tests for argument selection only)
+ - `%g`, `%e`, `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
+
 # Other Documentation
 
 The full documentation is available in the [Wiki](https://github.com/gavinfielder/pft/wiki). Here are some quick links:
@@ -86,6 +97,7 @@ The full documentation is available in the [Wiki](https://github.com/gavinfielde
  - [Usage](https://github.com/gavinfielder/pft/wiki/Usage)
    - [Wildcard Search](https://github.com/gavinfielder/pft/wiki/Wildcard-Search)
    - [Test Naming Conventions](https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions)
+ - [What's Not Covered](https://github.com/gavinfielder/pft/wiki/What's-Not-Covered)
  - Workflow with PFT
    - [Enabling and Disabling Tests](https://github.com/gavinfielder/pft/wiki/Enabling-and-Disabling-Tests)
    - [Adding Tests](https://github.com/gavinfielder/pft/wiki/Adding-Tests)
