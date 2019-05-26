@@ -2246,14 +2246,14 @@ int f_asspr_prec1n(void){return test("% +.1f", -7.3);}
 int f_asspr_prec3n(void){return test("% +.3f", -7.3);}
 int f_asspr_prec6n(void){return test("% +.6f", -7.3);}
 //Floats whose precision exceeds their compiled literal precision
- int f_overprec_might_be_undef_behav_100(void){return test("%.100f", 0.237);}
- int f_overprec_might_be_undef_behav_32(void){return test("%.32f", 0.237);}
- int f_overprec_might_be_undef_behav_4(void){return test("%.4f", 0.237);}
- int f_overprec_might_be_undef_behav_1000(void){return test("%.4f", -0.106577568068517810765107851705167);}
- int f_overprec_might_be_undef_behav_10_from_0(void){return test("%.10f", 0.0);}
- int f_overprec_might_be_undef_behav_2000(void){return test("%.2000f", 623.28376510723481);}
- int f_overprec_might_be_undef_behav_dblmin(void){return test("%.2000f", DBL_MIN);}
- int f_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000f", -DBL_MIN);}
+int f_overprec_might_be_undef_behav_100(void){return test("%.100f", 0.237);}
+int f_overprec_might_be_undef_behav_32(void){return test("%.32f", 0.237);}
+int f_overprec_might_be_undef_behav_4(void){return test("%.4f", 0.237);}
+int f_overprec_might_be_undef_behav_1000(void){return test("%.4f", -0.106577568068517810765107851705167);}
+int f_overprec_might_be_undef_behav_10_from_0(void){return test("%.10f", 0.0);}
+int f_overprec_might_be_undef_behav_2000(void){return test("%.2000f", 623.28376510723481);}
+int f_overprec_might_be_undef_behav_dblmin(void){return test("%.2000f", DBL_MIN);}
+int f_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000f", -DBL_MIN);}
 //Floats at double max, double min
 int f_limits_dblmax_prec0(void){return test("%.0f", DBL_MAX);}
 int f_limits_dblmax_prec3(void){return test("%.3f", DBL_MAX);}
@@ -2633,14 +2633,14 @@ int f_L_stress_prec20_limits_big(void){return test("%.20f",  0.99999999999999999
  int f_L_reserved_values_nzero_6wzp(void){long double special; *((unsigned long *)(&special)) = 0ull;FTPF_LDBL_BYTE5(special) = 0;
 	return test("%06Lf", special);}
 ///Long double Floats whose precision exceeds their compiled literal precision
- int f_L_overprec_might_be_undef_behav_100(void){return test("%.100Lf", 0.237l);}
- int f_L_overprec_might_be_undef_behav_32(void){return test("%.32Lf", 0.237l);}
- int f_L_overprec_might_be_undef_behav_4(void){return test("%.4Lf", 0.237l);}
- int f_L_overprec_might_be_undef_behav_1000(void){return test("%.4Lf", -0.106577568068517810765107851705167l);}
- int f_L_overprec_might_be_undef_behav_10_from_0(void){return test("%.10Lf", 0.0l);}
- int f_L_overprec_might_be_undef_behav_2000(void){return test("%.2000Lf", 623.28376510723481l);}
- int f_L_overprec_might_be_undef_behav_dblmin(void){return test("%.2000Lf", LDBL_MIN);}
- int f_L_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000Lf", -LDBL_MIN);}
+int f_L_overprec_might_be_undef_behav_100(void){return test("%.100Lf", 0.237l);}
+int f_L_overprec_might_be_undef_behav_32(void){return test("%.32Lf", 0.237l);}
+int f_L_overprec_might_be_undef_behav_4(void){return test("%.4Lf", 0.237l);}
+int f_L_overprec_might_be_undef_behav_1000(void){return test("%.4Lf", -0.106577568068517810765107851705167l);}
+int f_L_overprec_might_be_undef_behav_10_from_0(void){return test("%.10Lf", 0.0l);}
+int f_L_overprec_might_be_undef_behav_2000(void){return test("%.2000Lf", 623.28376510723481l);}
+int f_L_overprec_might_be_undef_behav_dblmin(void){return test("%.2000Lf", LDBL_MIN);}
+int f_L_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000Lf", -LDBL_MIN);}
 //Long double floats at double max, double min
 int f_L_limits_dblmax_prec0(void){return test("%.0Lf", LDBL_MAX);}
 int f_L_limits_dblmax_prec3(void){return test("%.3Lf", LDBL_MAX);}
