@@ -110,7 +110,7 @@ The test method itself was adapted from outdated moulinette test files a buddy g
 
 Also thanks to:
 - [rwright](https://github.com/wright08)
-- phtruong
+- [phtruong](https://github.com/nkone)
 - [osfally](https://github.com/shaparder)
 - [dfonarev](https://github.com/ruv1nce)  
 for various suggestions and feature motivations.
