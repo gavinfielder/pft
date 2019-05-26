@@ -78,6 +78,17 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
 
+# What's NOT Covered
+Feel free to contribute tests for these bonuses:
+
+ - Size modifiers `t`, `z`, `j`, and `q`.
+ - `%n`
+ - `'` (thousands separator flag)
+### What's not covered very well
+ - `*` (4 tests)
+ - `$` (9 tests for argument selection only)
+ - `%g`, `%e`, `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
+
 # Other Documentation
 
 The full documentation is available in the [Wiki](https://github.com/gavinfielder/pft/wiki). Here are some quick links:
@@ -86,6 +97,7 @@ The full documentation is available in the [Wiki](https://github.com/gavinfielde
  - [Usage](https://github.com/gavinfielder/pft/wiki/Usage)
    - [Wildcard Search](https://github.com/gavinfielder/pft/wiki/Wildcard-Search)
    - [Test Naming Conventions](https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions)
+ - [What's Not Covered](https://github.com/gavinfielder/pft/wiki/What's-Not-Covered)
  - Workflow with PFT
    - [Enabling and Disabling Tests](https://github.com/gavinfielder/pft/wiki/Enabling-and-Disabling-Tests)
    - [Adding Tests](https://github.com/gavinfielder/pft/wiki/Adding-Tests)
@@ -106,16 +118,14 @@ I occasionally get suggestions for the unit test library. I keep this list to ke
 
 # Usage Statistics
 
-By default, PFT sends a SHA-1 hash of your username and whether you're on the Fremont or Paris campus on every `make`. You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statitics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers.
+By default, PFT sends a SHA-1 hash of your username and whether you're on the Fremont or Paris campus on every `make`. You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statitics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers. You can view all the collected data [HERE](https://docs.google.com/spreadsheets/d/1_UxSfIVYFPQqCotnaEFNApwXchNvWLqANEum1tSvHPM/edit?usp=sharing).
 
 # Credits
 
-The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker, and all other tests (so far) were written by me.
+The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. The vast majority of tests were written by me; some tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), and [robbie](https://github.com/rpeepz).
 
 Also thanks to:
 - [rwright](https://github.com/wright08)
-- phtruong
 - [osfally](https://github.com/shaparder)
 - [dfonarev](https://github.com/ruv1nce)  
 for various suggestions and feature motivations.
-
