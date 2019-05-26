@@ -116,6 +116,10 @@ The full documentation is available in the [Wiki](https://github.com/gavinfielde
 I occasionally get suggestions for the unit test library. I keep this list to keep track of what I want to do the next time I modify unit\_tests.c  
 [Todo List for the Unit Test Library](https://github.com/gavinfielder/pft/issues/2)
 
+# Usage Statistics
+
+By default, PFT sends a SHA-1 hash of your username and whether you're on the Fremont or Paris campus on every `make`. You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statitics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers.
+
 # Credits
 
 The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. The vast majority of tests were written by me; some tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), and [robbie](https://github.com/rpeepz).
