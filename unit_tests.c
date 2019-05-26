@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/25 15:49:44 by phtruong         ###   ########.fr       */
+/*   Updated: 2019/05/25 20:25:47 by phtruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -130,9 +130,11 @@ int s_null_string_prec_trunc(void){return test("%.3s", "NULL");}
 int s_null_string_prec_default(void){return test("%.s", "NULL");}
 int s_null_string_prec_zero(void){return test("%.0s", "NULL");}
 // To be review
+
 static char *s_hidden = "hi low\0don't print me lol\0";
 
 int s_basic_s_hidden(void){return test("%s", s_hidden);}
+// width pad
 int s_width_1_s_hidden(void){return test("%1s", s_hidden);}
 int s_width_2_s_hidden(void){return test("%2s", s_hidden);}
 int s_width_3_s_hidden(void){return test("%3s", s_hidden);}
@@ -142,27 +144,55 @@ int s_width_6_s_hidden(void){return test("%6s", s_hidden);}
 int s_width_7_s_hidden(void){return test("%7s", s_hidden);}
 int s_width_8_s_hidden(void){return test("%8s", s_hidden);}
 int s_width_9_s_hidden(void){return test("%9s", s_hidden);}
-int s_prec_no_width_s_hidden_trunc(void){return test("%.s", s_hidden);}
-int s_prec_0_no_width_s_hidden_trunc(void){return test("%.0s", s_hidden);}
-int s_prec_1_no_width_s_hidden_trunc(void){return test("%.1s", s_hidden);}
-int s_prec_2_no_width_s_hidden_trunc(void){return test("%.2s", s_hidden);}
-int s_prec_3_no_width_s_hidden_trunc(void){return test("%.3s", s_hidden);}
-int s_prec_4_no_width_s_hidden_trunc(void){return test("%.4s", s_hidden);}
-int s_prec_5_no_width_s_hidden_trunc(void){return test("%.5s", s_hidden);}
-int s_prec_6_no_width_s_hidden_exact(void){return test("%.6s", s_hidden);}
-int s_prec_7_no_width_s_hidden_notrunc(void){return test("%.7s", s_hidden);}
-int s_prec_8_no_width_s_hidden_notrunc(void){return test("%.8s", s_hidden);}
-int s_prec_9_no_width_s_hidden_notrunc(void){return test("%.9s", s_hidden);}
-int s_prec_00_no_width_s_hidden_trunc(void){return test("%.00s", s_hidden);}
-int s_prec_01_no_width_s_hidden_trunc(void){return test("%.01s", s_hidden);}
-int s_prec_02_no_width_s_hidden_trunc(void){return test("%.02s", s_hidden);}
-int s_prec_03_no_width_s_hidden_trunc(void){return test("%.03s", s_hidden);}
-int s_prec_04_no_width_s_hidden_trunc(void){return test("%.04s", s_hidden);}
-int s_prec_05_no_width_s_hidden_trunc(void){return test("%.05s", s_hidden);}
-int s_prec_06_no_width_s_hidden_exact(void){return test("%.06s", s_hidden);}
-int s_prec_07_no_width_s_hidden_notrunc(void){return test("%.07s", s_hidden);}
-int s_prec_08_no_width_s_hidden_notrunc(void){return test("%.08s", s_hidden);}
-int s_prec_09_no_width_s_hidden_notrunc(void){return test("%.09s", s_hidden);}
+// precision no width
+int s_prec_no_width_s_hidden(void){return test("%.s", s_hidden);}
+int s_prec_0_no_width_s_hidden(void){return test("%.0s", s_hidden);}
+int s_prec_1_no_width_s_hidden(void){return test("%.1s", s_hidden);}
+int s_prec_2_no_width_s_hidden(void){return test("%.2s", s_hidden);}
+int s_prec_3_no_width_s_hidden(void){return test("%.3s", s_hidden);}
+int s_prec_4_no_width_s_hidden(void){return test("%.4s", s_hidden);}
+int s_prec_5_no_width_s_hidden(void){return test("%.5s", s_hidden);}
+int s_prec_6_no_width_s_hidden(void){return test("%.6s", s_hidden);}
+int s_prec_7_no_width_s_hidden(void){return test("%.7s", s_hidden);}
+int s_prec_8_no_width_s_hidden(void){return test("%.8s", s_hidden);}
+int s_prec_9_no_width_s_hidden(void){return test("%.9s", s_hidden);}
+int s_prec_0_no_width_s_nullchar(void){return test("%.0s", s_hidden);}
+int s_prec_1_no_width_s_nullchar(void){return test("%.1s", s_hidden);}
+int s_prec_2_no_width_s_nullchar(void){return test("%.2s", s_hidden);}
+int s_prec_3_no_width_s_nullchar(void){return test("%.3s", s_hidden);}
+int s_prec_4_no_width_s_nullchar(void){return test("%.4s", s_hidden);}
+// precision with 0 before number
+int s_prec_00_no_width_s_hidden(void){return test("%.00s", s_hidden);}
+int s_prec_01_no_width_s_hidden(void){return test("%.01s", s_hidden);}
+int s_prec_02_no_width_s_hidden(void){return test("%.02s", s_hidden);}
+int s_prec_03_no_width_s_hidden(void){return test("%.03s", s_hidden);}
+int s_prec_04_no_width_s_hidden(void){return test("%.04s", s_hidden);}
+int s_prec_05_no_width_s_hidden(void){return test("%.05s", s_hidden);}
+int s_prec_06_no_width_s_hidden(void){return test("%.06s", s_hidden);}
+int s_prec_07_no_width_s_hidden(void){return test("%.07s", s_hidden);}
+int s_prec_08_no_width_s_hidden(void){return test("%.08s", s_hidden);}
+int s_prec_09_no_width_s_hidden(void){return test("%.09s", s_hidden);}
+int s_prec_00_no_width_s_null(void){return test("%.00s", NULL);}
+int s_prec_01_no_width_s_null(void){return test("%.01s", NULL);}
+int s_prec_02_no_width_s_null(void){return test("%.02s", NULL);}
+int s_prec_03_no_width_s_null(void){return test("%.03s", NULL);}
+int s_prec_04_no_width_s_null(void){return test("%.04s", NULL);}
+int s_prec_05_no_width_s_null(void){return test("%.05s", NULL);}
+int s_prec_06_no_width_s_null(void){return test("%.06s", NULL);}
+int s_prec_07_no_width_s_null(void){return test("%.07s", NULL);}
+int s_prec_08_no_width_s_null(void){return test("%.08s", NULL);}
+int s_prec_09_no_width_s_null(void){return test("%.09s", NULL);}
+int s_prec_00_no_width_s_nullchar(void){return test("%.00s", "\0");}
+int s_prec_01_no_width_s_nullchar(void){return test("%.01s", "\0");}
+int s_prec_02_no_width_s_nullchar(void){return test("%.02s", "\0");}
+int s_prec_03_no_width_s_nullchar(void){return test("%.03s", "\0");}
+int s_prec_04_no_width_s_nullchar(void){return test("%.04s", "\0");}
+int s_prec_05_no_width_s_nullchar(void){return test("%.05s", "\0");}
+int s_prec_06_no_width_s_nullchar(void){return test("%.06s", "\0");}
+int s_prec_07_no_width_s_nullchar(void){return test("%.07s", "\0");}
+int s_prec_08_no_width_s_nullchar(void){return test("%.08s", "\0");}
+int s_prec_09_no_width_s_nullchar(void){return test("%.09s", "\0");}
+// width with no precision
 int s_prec_0_width_1_s_hidden(void){return test("%1.s", s_hidden);}
 int s_prec_0_width_2_s_hidden(void){return test("%2.s", s_hidden);}
 int s_prec_0_width_3_s_hidden(void){return test("%3.s", s_hidden);}
@@ -173,6 +203,46 @@ int s_prec_0_width_7_s_hidden(void){return test("%7.s", s_hidden);}
 int s_prec_0_width_8_s_hidden(void){return test("%8.s", s_hidden);}
 int s_prec_0_width_9_s_hidden(void){return test("%9.s", s_hidden);}
 int s_prec_0_width_10_s_hidden(void){return test("%10.s", s_hidden);}
+int s_prec_0_width_1_s_null(void){return test("%1.s", NULL);}
+int s_prec_0_width_2_s_null(void){return test("%2.s", NULL);}
+int s_prec_0_width_3_s_null(void){return test("%3.s", NULL);}
+int s_prec_0_width_4_s_null(void){return test("%4.s", NULL);}
+int s_prec_0_width_5_s_null(void){return test("%5.s", NULL);}
+int s_prec_0_width_6_s_null(void){return test("%6.s", NULL);}
+int s_prec_0_width_7_s_null(void){return test("%7.s", NULL);}
+int s_prec_0_width_8_s_null(void){return test("%8.s", NULL);}
+int s_prec_0_width_9_s_null(void){return test("%9.s", NULL);}
+int s_prec_0_width_10_s_null(void){return test("%10.s", NULL);}
+int s_prec_0_width_1_s_nullchar(void){return test("%1.s", "\0");}
+int s_prec_0_width_2_s_nullchar(void){return test("%2.s", "\0");}
+int s_prec_0_width_3_s_nullchar(void){return test("%3.s", "\0");}
+int s_prec_0_width_4_s_nullchar(void){return test("%4.s", "\0");}
+int s_prec_0_width_5_s_nullchar(void){return test("%5.s", "\0");}
+int s_prec_0_width_6_s_nullchar(void){return test("%6.s", "\0");}
+// minus flag width with no precision 
+int s_prec_0_minus_flag_width_1_s_hidden(void){return test("%-1.s", s_hidden);}
+int s_prec_0_minus_flag_width_2_s_hidden(void){return test("%-2.s", s_hidden);}
+int s_prec_0_minus_flag_width_3_s_hidden(void){return test("%-3.s", s_hidden);}
+int s_prec_0_minus_flag_width_4_s_hidden(void){return test("%-4.s", s_hidden);}
+int s_prec_0_minus_flag_width_5_s_hidden(void){return test("%-5.s", s_hidden);}
+int s_prec_0_minus_flag_width_6_s_hidden(void){return test("%-6.s", s_hidden);}
+int s_prec_0_minus_flag_width_7_s_hidden(void){return test("%-7.s", s_hidden);}
+int s_prec_0_minus_flag_width_8_s_hidden(void){return test("%-8.s", s_hidden);}
+int s_prec_0_minus_flag_width_1_s_null(void){return test("%-1.s", NULL);}
+int s_prec_0_minus_flag_width_2_s_null(void){return test("%-2.s", NULL);}
+int s_prec_0_minus_flag_width_3_s_null(void){return test("%-3.s", NULL);}
+int s_prec_0_minus_flag_width_4_s_null(void){return test("%-4.s", NULL);}
+int s_prec_0_minus_flag_width_5_s_null(void){return test("%-5.s", NULL);}
+int s_prec_0_minus_flag_width_6_s_null(void){return test("%-6.s", NULL);}
+int s_prec_0_minus_flag_width_7_s_null(void){return test("%-7.s", NULL);}
+int s_prec_0_minus_flag_width_8_s_null(void){return test("%-8.s", NULL);}
+int s_prec_0_minus_flag_width_1_s_nullchar(void){return test("%-1.s", "\0");}
+int s_prec_0_minus_flag_width_2_s_nullchar(void){return test("%-2.s", "\0");}
+int s_prec_0_minus_flag_width_3_s_nullchar(void){return test("%-3.s", "\0");}
+int s_prec_0_minus_flag_width_4_s_nullchar(void){return test("%-4.s", "\0");}
+int s_prec_0_minus_flag_width_5_s_nullchar(void){return test("%-5.s", "\0");}
+int s_prec_0_minus_flag_width_6_s_nullchar(void){return test("%-6.s", "\0");}
+// width with precision 1
 int s_prec_1_width_1_s_hidden(void){return test("%1.1s", s_hidden);}
 int s_prec_1_width_2_s_hidden(void){return test("%2.1s", s_hidden);}
 int s_prec_1_width_3_s_hidden(void){return test("%3.1s", s_hidden);}
@@ -183,6 +253,48 @@ int s_prec_1_width_7_s_hidden(void){return test("%7.1s", s_hidden);}
 int s_prec_1_width_8_s_hidden(void){return test("%8.1s", s_hidden);}
 int s_prec_1_width_9_s_hidden(void){return test("%9.1s", s_hidden);}
 int s_prec_1_width_10_s_hidden(void){return test("%10.1s", s_hidden);}
+int s_prec_1_width_1_s_null(void){return test("%1.1s", NULL);}
+int s_prec_1_width_2_s_null(void){return test("%2.1s", NULL);}
+int s_prec_1_width_3_s_null(void){return test("%3.1s", NULL);}
+int s_prec_1_width_4_s_null(void){return test("%4.1s", NULL);}
+int s_prec_1_width_5_s_null(void){return test("%5.1s", NULL);}
+int s_prec_1_width_6_s_null(void){return test("%6.1s", NULL);}
+int s_prec_1_width_7_s_null(void){return test("%7.1s", NULL);}
+int s_prec_1_width_8_s_null(void){return test("%8.1s", NULL);}
+int s_prec_1_width_9_s_null(void){return test("%9.1s", NULL);}
+int s_prec_1_width_1_s_nullchar(void){return test("%1.1s", "\0");}
+int s_prec_1_width_2_s_nullchar(void){return test("%2.1s", "\0");}
+int s_prec_1_width_3_s_nullchar(void){return test("%3.1s", "\0");}
+int s_prec_1_width_4_s_nullchar(void){return test("%4.1s", "\0");}
+int s_prec_1_width_5_s_nullchar(void){return test("%5.1s", "\0");}
+int s_prec_1_width_6_s_nullchar(void){return test("%6.1s", "\0");}
+// minus flag width with precision 1
+int s_prec_1_minus_flag_width_1_s_hidden(void){return test("%-1.1s", s_hidden);}
+int s_prec_1_minus_flag_width_2_s_hidden(void){return test("%-2.1s", s_hidden);}
+int s_prec_1_minus_flag_width_3_s_hidden(void){return test("%-3.1s", s_hidden);}
+int s_prec_1_minus_flag_width_4_s_hidden(void){return test("%-4.1s", s_hidden);}
+int s_prec_1_minus_flag_width_5_s_hidden(void){return test("%-5.1s", s_hidden);}
+int s_prec_1_minus_flag_width_6_s_hidden(void){return test("%-6.1s", s_hidden);}
+int s_prec_1_minus_flag_width_7_s_hidden(void){return test("%-7.1s", s_hidden);}
+int s_prec_1_minus_flag_width_8_s_hidden(void){return test("%-8.1s", s_hidden);}
+int s_prec_1_minus_flag_width_9_s_hidden(void){return test("%-9.1s", s_hidden);}
+int s_prec_1_minus_flag_width_10_s_hidden(void){return test("%-10.1s", s_hidden);}
+int s_prec_1_minus_flag_width_1_s_null(void){return test("%-1.1s", NULL);}
+int s_prec_1_minus_flag_width_2_s_null(void){return test("%-2.1s", NULL);}
+int s_prec_1_minus_flag_width_3_s_null(void){return test("%-3.1s", NULL);}
+int s_prec_1_minus_flag_width_4_s_null(void){return test("%-4.1s", NULL);}
+int s_prec_1_minus_flag_width_5_s_null(void){return test("%-5.1s", NULL);}
+int s_prec_1_minus_flag_width_6_s_null(void){return test("%-6.1s", NULL);}
+int s_prec_1_minus_flag_width_7_s_null(void){return test("%-7.1s", NULL);}
+int s_prec_1_minus_flag_width_8_s_null(void){return test("%-8.1s", NULL);}
+int s_prec_1_minus_flag_width_9_s_null(void){return test("%-9.1s", NULL);}
+int s_prec_1_minus_flag_width_1_s_nullchar(void){return test("%-1.1s", "\0");}
+int s_prec_1_minus_flag_width_2_s_nullchar(void){return test("%-2.1s", "\0");}
+int s_prec_1_minus_flag_width_3_s_nullchar(void){return test("%-3.1s", "\0");}
+int s_prec_1_minus_flag_width_4_s_nullchar(void){return test("%-4.1s", "\0");}
+int s_prec_1_minus_flag_width_5_s_nullchar(void){return test("%-5.1s", "\0");}
+int s_prec_1_minus_flag_width_6_s_nullchar(void){return test("%-6.1s", "\0");}
+// width with exact precision
 int s_prec_perfect_width_1_s_hidden(void){return test("%1.6s", s_hidden);}
 int s_prec_perfect_width_2_s_hidden(void){return test("%2.6s", s_hidden);}
 int s_prec_perfect_width_3_s_hidden(void){return test("%3.6s", s_hidden);}
@@ -193,6 +305,55 @@ int s_prec_perfect_width_7_s_hidden(void){return test("%7.6s", s_hidden);}
 int s_prec_perfect_width_8_s_hidden(void){return test("%8.6s", s_hidden);}
 int s_prec_perfect_width_9_s_hidden(void){return test("%9.6s", s_hidden);}
 int s_prec_perfect_width_20_s_hidden(void){return test("%20.6s", s_hidden);}
+int s_prec_perfect_width_1_s_null(void){return test("%1.6s", NULL);}
+int s_prec_perfect_width_2_s_null(void){return test("%2.6s", NULL);}
+int s_prec_perfect_width_3_s_null(void){return test("%3.6s", NULL);}
+int s_prec_perfect_width_4_s_null(void){return test("%4.6s", NULL);}
+int s_prec_perfect_width_5_s_null(void){return test("%5.6s", NULL);}
+int s_prec_perfect_width_6_s_null(void){return test("%6.6s", NULL);}
+int s_prec_perfect_width_7_s_null(void){return test("%7.6s", NULL);}
+int s_prec_perfect_width_8_s_null(void){return test("%8.6s", NULL);}
+int s_prec_perfect_width_9_s_null(void){return test("%9.6s", NULL);}
+int s_prec_perfect_width_20_s_null(void){return test("%20.6s", NULL);}
+int s_prec_perfect_width_1_s_nullchar(void){return test("%1.6s", "\0");}
+int s_prec_perfect_width_2_s_nullchar(void){return test("%2.6s", "\0");}
+int s_prec_perfect_width_3_s_nullchar(void){return test("%3.6s", "\0");}
+int s_prec_perfect_width_4_s_nullchar(void){return test("%4.6s", "\0");}
+int s_prec_perfect_width_5_s_nullchar(void){return test("%5.6s", "\0");}
+int s_prec_perfect_width_6_s_nullchar(void){return test("%6.6s", "\0");}
+// minus flag width exact precision
+int s_prec_perfect_minus_flag_width_1_s_hidden(void){return test("%-1.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_2_s_hidden(void){return test("%-2.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_3_s_hidden(void){return test("%-3.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_4_s_hidden(void){return test("%-4.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_5_s_hidden(void){return test("%-5.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_6_s_hidden(void){return test("%-6.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_7_s_hidden(void){return test("%-7.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_8_s_hidden(void){return test("%-8.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_9_s_hidden(void){return test("%-9.6s", s_hidden);}
+int s_prec_perfect_minus_flag_width_20_s_hidden(void){return test("%-20.6s", s_hidden);}
+// minus flag width excess precision
+int s_prec_8_minus_flag_width_1_s_hidden(void){return test("%-1.8s", s_hidden);}
+int s_prec_8_minus_flag_width_2_s_hidden(void){return test("%-2.8s", s_hidden);}
+int s_prec_8_minus_flag_width_3_s_hidden(void){return test("%-3.8s", s_hidden);}
+int s_prec_8_minus_flag_width_4_s_hidden(void){return test("%-4.8s", s_hidden);}
+int s_prec_8_minus_flag_width_5_s_hidden(void){return test("%-5.8s", s_hidden);}
+int s_prec_8_minus_flag_width_6_s_hidden(void){return test("%-6.8s", s_hidden);}
+int s_prec_8_minus_flag_width_7_s_hidden(void){return test("%-7.8s", s_hidden);}
+int s_prec_8_minus_flag_width_8_s_hidden(void){return test("%-8.8s", s_hidden);}
+int s_prec_8_minus_flag_width_9_s_hidden(void){return test("%-9.8s", s_hidden);}
+int s_prec_8_minus_flag_width_10_s_hidden(void){return test("%-10.8s", s_hidden);}
+int s_prec_8_minus_flag_width_1_s_null(void){return test("%-1.8s", NULL);}
+int s_prec_8_minus_flag_width_2_s_null(void){return test("%-2.8s", NULL);}
+int s_prec_8_minus_flag_width_3_s_null(void){return test("%-3.8s", NULL);}
+int s_prec_8_minus_flag_width_4_s_null(void){return test("%-4.8s", NULL);}
+int s_prec_8_minus_flag_width_5_s_null(void){return test("%-5.8s", NULL);}
+int s_prec_8_minus_flag_width_6_s_null(void){return test("%-6.8s", NULL);}
+int s_prec_8_minus_flag_width_7_s_null(void){return test("%-7.8s", NULL);}
+int s_prec_8_minus_flag_width_8_s_null(void){return test("%-8.8s", NULL);}
+int s_prec_8_minus_flag_width_9_s_null(void){return test("%-9.8s", NULL);}
+int s_prec_8_minus_flag_width_10_s_null(void){return test("%-10.8s", NULL);}
+// decoy minus flag
 int s_prec_00_minus_flag_s_hidden_trunc(void){return test("%-.00s", s_hidden);}
 int s_prec_01_minus_flag_s_hidden_trunc(void){return test("%-.01s", s_hidden);}
 int s_prec_02_minus_flag_s_hidden_trunc(void){return test("%-.02s", s_hidden);}
@@ -203,31 +364,77 @@ int s_prec_06_minus_flag_s_hidden_exact(void){return test("%-.06s", s_hidden);}
 int s_prec_07_minus_flag_s_hidden_notrunc(void){return test("%-.07s", s_hidden);}
 int s_prec_08_minus_flag_s_hidden_notrunc(void){return test("%-.08s", s_hidden);}
 int s_prec_09_minus_flag_s_hidden_notrunc(void){return test("%-.09s", s_hidden);}
+// multiple flags diff order same width and precision
  int	s_undefbehav_4_flags_diff_order_1(void){return test("%+- 06.06s", s_hidden);}
  int	s_undefbehav_4_flags_diff_order_2(void){return test("% 0+-6.06s", s_hidden);}
  int	s_undefbehav_4_flags_diff_order_3(void){return test("%0 +-6.06s", s_hidden);}
  int	s_undefbehav_4_flags_diff_order_4(void){return test("%+-0 6.06s", s_hidden);}
  int	s_undefbehav_4_flags_diff_order_5(void){return test("%-+ 06.06s", s_hidden);}
  int	s_undefbehav_4_flags_diff_order_6(void){return test("% -+06.06s", s_hidden);}
+// multiple flags diff order width > precision
  int	s_undefbehav_4_flags_space_padded_diff_order_1(void){return test("%+- 07.06s", s_hidden);}
  int	s_undefbehav_4_flags_space_padded_diff_order_2(void){return test("% 0+-8.06s", s_hidden);}
  int	s_undefbehav_4_flags_space_padded_diff_order_3(void){return test("%0 +-9.06s", s_hidden);}
  int	s_undefbehav_4_flags_space_padded_diff_order_4(void){return test("%+-0 10.06s", s_hidden);}
  int	s_undefbehav_4_flags_space_padded_diff_order_5(void){return test("%-+ 011.06s", s_hidden);}
  int	s_undefbehav_4_flags_space_padded_diff_order_6(void){return test("% -+012.06s", s_hidden);}
+// multiple flags diff order width > precision, truncated string
  int	s_undefbehav_4_flags_plus_minus_space_zero_trunc(void){return test("%+- 06.04s", s_hidden);}
  int	s_undefbehav_4_flags_space_zero_plus_minus_trunc(void){return test("% 0+-6.04s", s_hidden);}
  int	s_undefbehav_4_flags_zero_space_plus_minus_trunc(void){return test("%0 +-6.04s", s_hidden);}
  int	s_undefbehav_4_flags_plus_minus_zero_space_trunc(void){return test("%+-0 6.04s", s_hidden);}
  int	s_undefbehav_4_flags_minus_plus_space_zero_trunc(void){return test("%-+ 06.04s", s_hidden);}
  int	s_undefbehav_4_flags_space_zero_minus_plus_trunc(void){return test("% 0-+6.04s", s_hidden);}
+// multiple flags diff order width < precision, excess precision
+ int	s_undefbehav_4_flags_plus_minus_space_zero_with_pads(void){return test("%+- 06.09s", s_hidden);}
+ int	s_undefbehav_4_flags_space_zero_plus_minus_with_pads(void){return test("% 0+-6.09s", s_hidden);}
+ int	s_undefbehav_4_flags_zero_space_plus_minus_with_pads(void){return test("%0 +-6.09s", s_hidden);}
+ int	s_undefbehav_4_flags_plus_minus_zero_space_with_pads(void){return test("%+-0 6.09s", s_hidden);}
+ int	s_undefbehav_4_flags_minus_plus_space_zero_with_pads(void){return test("%-+ 06.09s", s_hidden);}
+ int	s_undefbehav_4_flags_space_zero_minus_plus_with_pads(void){return test("% 0-+6.09s", s_hidden);}
+// multi zeros
  int	s_undefbehav_0_flag_2zero(void){return test("%00s", s_hidden);}
  int	s_undefbehav_0_flag_3zero(void){return test("%000s", s_hidden);}
  int	s_undefbehav_0_flag_4zero(void){return test("%0000s", s_hidden);}
  int	s_undefbehav_0_flag_minus_2zero(void){return test("%-00s", s_hidden);}
  int	s_undefbehav_0_flag_zero_minus_zero(void){return test("%0-0s", s_hidden);}
  int	s_undefbehav_0_flag_2zero_minus(void){return test("%00-s", s_hidden);}
- int	s_undefbehav_0_flag_minus_zero(void){return test("%-0s", s_hidden);}
+// zero and width
+ int	s_undefbehav_0_flag_width_1(void){return test("%01s", s_hidden);}
+ int	s_undefbehav_0_flag_width_2(void){return test("%02s", s_hidden);}
+ int	s_undefbehav_0_flag_width_3(void){return test("%03s", s_hidden);}
+ int	s_undefbehav_0_flag_width_4(void){return test("%04s", s_hidden);}
+ int	s_undefbehav_0_flag_width_5(void){return test("%05s", s_hidden);}
+ int	s_undefbehav_0_flag_width_6(void){return test("%06s", s_hidden);}
+ int	s_undefbehav_0_flag_width_7(void){return test("%07s", s_hidden);}
+ int	s_undefbehav_0_flag_width_8(void){return test("%08s", s_hidden);}
+ int	s_undefbehav_0_flag_width_9(void){return test("%09s", s_hidden);}
+// plus and zero flags with width
+ int	s_undefbehav_plus_0_flag_width_1(void){return test("%+01s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_2(void){return test("%+02s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_3(void){return test("%+03s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_4(void){return test("%+04s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_5(void){return test("%+05s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_6(void){return test("%+06s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_7(void){return test("%+07s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_8(void){return test("%+08s", s_hidden);}
+ int	s_undefbehav_plus_0_flag_width_9(void){return test("%+09s", s_hidden);}
+// flag cancelling
+ int	s_undefbehav_minus_0_flag_width_1(void){return test("%-01s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_2(void){return test("%-02s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_3(void){return test("%-03s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_4(void){return test("%-04s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_5(void){return test("%-05s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_6(void){return test("%-06s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_7(void){return test("%-07s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_8(void){return test("%-08s", s_hidden);}
+ int	s_undefbehav_minus_0_flag_width_9(void){return test("%-09s", s_hidden);}
+ int	s_undefbehav_plus_sp_flag_width_1(void){return test("%+ 1s", s_hidden);}
+ int	s_undefbehav_plus_sp_flag_width_2(void){return test("%+ 2s", s_hidden);}
+ int	s_undefbehav_plus_sp_flag_width_3(void){return test("%+ 3s", s_hidden);}
+ int	s_undefbehav_plus_sp_flag_width_4(void){return test("%+ 4s", s_hidden);}
+ int	s_undefbehav_plus_sp_flag_width_5(void){return test("%+ 5s", s_hidden);}
+ int	s_undefbehav_plus_sp_flag_width_6(void){return test("%+ 6s", s_hidden);}
 
 //Signed integers - no modifers
 int		i_basic_i_pos(void){return test("this %i number", 17);}
@@ -2039,14 +2246,14 @@ int f_asspr_prec1n(void){return test("% +.1f", -7.3);}
 int f_asspr_prec3n(void){return test("% +.3f", -7.3);}
 int f_asspr_prec6n(void){return test("% +.6f", -7.3);}
 //Floats whose precision exceeds their compiled literal precision
- int f_overprec_might_be_undef_behav_100(void){return test("%.100f", 0.237);}
- int f_overprec_might_be_undef_behav_32(void){return test("%.32f", 0.237);}
- int f_overprec_might_be_undef_behav_4(void){return test("%.4f", 0.237);}
- int f_overprec_might_be_undef_behav_1000(void){return test("%.4f", -0.106577568068517810765107851705167);}
- int f_overprec_might_be_undef_behav_10_from_0(void){return test("%.10f", 0.0);}
- int f_overprec_might_be_undef_behav_2000(void){return test("%.2000f", 623.28376510723481);}
- int f_overprec_might_be_undef_behav_dblmin(void){return test("%.2000f", DBL_MIN);}
- int f_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000f", -DBL_MIN);}
+int f_overprec_might_be_undef_behav_100(void){return test("%.100f", 0.237);}
+int f_overprec_might_be_undef_behav_32(void){return test("%.32f", 0.237);}
+int f_overprec_might_be_undef_behav_4(void){return test("%.4f", 0.237);}
+int f_overprec_might_be_undef_behav_1000(void){return test("%.4f", -0.106577568068517810765107851705167);}
+int f_overprec_might_be_undef_behav_10_from_0(void){return test("%.10f", 0.0);}
+int f_overprec_might_be_undef_behav_2000(void){return test("%.2000f", 623.28376510723481);}
+int f_overprec_might_be_undef_behav_dblmin(void){return test("%.2000f", DBL_MIN);}
+int f_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000f", -DBL_MIN);}
 //Floats at double max, double min
 int f_limits_dblmax_prec0(void){return test("%.0f", DBL_MAX);}
 int f_limits_dblmax_prec3(void){return test("%.3f", DBL_MAX);}
@@ -2426,14 +2633,14 @@ int f_L_stress_prec20_limits_big(void){return test("%.20f",  0.99999999999999999
  int f_L_reserved_values_nzero_6wzp(void){long double special; *((unsigned long *)(&special)) = 0ull;FTPF_LDBL_BYTE5(special) = 0;
 	return test("%06Lf", special);}
 ///Long double Floats whose precision exceeds their compiled literal precision
- int f_L_overprec_might_be_undef_behav_100(void){return test("%.100Lf", 0.237l);}
- int f_L_overprec_might_be_undef_behav_32(void){return test("%.32Lf", 0.237l);}
- int f_L_overprec_might_be_undef_behav_4(void){return test("%.4Lf", 0.237l);}
- int f_L_overprec_might_be_undef_behav_1000(void){return test("%.4Lf", -0.106577568068517810765107851705167l);}
- int f_L_overprec_might_be_undef_behav_10_from_0(void){return test("%.10Lf", 0.0l);}
- int f_L_overprec_might_be_undef_behav_2000(void){return test("%.2000Lf", 623.28376510723481l);}
- int f_L_overprec_might_be_undef_behav_dblmin(void){return test("%.2000Lf", LDBL_MIN);}
- int f_L_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000Lf", -LDBL_MIN);}
+int f_L_overprec_might_be_undef_behav_100(void){return test("%.100Lf", 0.237l);}
+int f_L_overprec_might_be_undef_behav_32(void){return test("%.32Lf", 0.237l);}
+int f_L_overprec_might_be_undef_behav_4(void){return test("%.4Lf", 0.237l);}
+int f_L_overprec_might_be_undef_behav_1000(void){return test("%.4Lf", -0.106577568068517810765107851705167l);}
+int f_L_overprec_might_be_undef_behav_10_from_0(void){return test("%.10Lf", 0.0l);}
+int f_L_overprec_might_be_undef_behav_2000(void){return test("%.2000Lf", 623.28376510723481l);}
+int f_L_overprec_might_be_undef_behav_dblmin(void){return test("%.2000Lf", LDBL_MIN);}
+int f_L_overprec_might_be_undef_behav_ndblmin(void){return test("%.2000Lf", -LDBL_MIN);}
 //Long double floats at double max, double min
 int f_L_limits_dblmax_prec0(void){return test("%.0Lf", LDBL_MAX);}
 int f_L_limits_dblmax_prec3(void){return test("%.3Lf", LDBL_MAX);}
