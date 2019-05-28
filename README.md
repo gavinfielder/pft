@@ -118,7 +118,7 @@ I occasionally get suggestions for the unit test library. I keep this list to ke
 
 # Usage Statistics
 
-By default, PFT sends a SHA-1 hash of your username and whether you're on the Fremont or Paris campus on every `make`. You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statitics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers. You can view all the collected data [HERE](https://docs.google.com/spreadsheets/d/1_UxSfIVYFPQqCotnaEFNApwXchNvWLqANEum1tSvHPM/edit?usp=sharing).
+By default, PFT sends a SHA-1 hash of your username and whether you're on the Fremont or Paris campus on every `make`. You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statitics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers. If you're a 42 student and want to know more or see the collected data, feel free to message me on slack.
 
 # Credits
 
