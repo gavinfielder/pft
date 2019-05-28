@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/26 16:08:00 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/05/27 19:43:41 by phtruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #pragma clang diagnostic push
@@ -1172,7 +1172,231 @@ int d_prec0val0_was(void){return test("%+5.0d", 0);}
 int d_prec0val0_was_impl(void){return test("%+5.d", 0);}
 int d_prec0val0_waslj(void){return test("%+-5.0d", 0);}
 int d_prec0val0_waslj_impl(void){return test("%+-5.d", 0);}
+//To be review
+//Basic single flag
+int	d_basic_plus_flag_pos(void){return test("%+d", 0);}
+int	d_basic_plus_flag_neg(void){return test("%+d", -1);}
+int	d_basic_space_flag_pos(void){return test("% d", 0);}
+int	d_basic_space_flag_neg(void){return test("% d", -1);}
+int	d_basic_minus_flag(void){return test("%-d", 0);}
+int	d_basic_zero_flag(void){return test("%0d", 0);}
+//Basic multiple flags
+int d_basic_2plus_flag(void){return test("%++d", 0);}
+int d_basic_3plus_flag(void){return test("%+++d", 0);}
+int d_basic_4plus_flag(void){return test("%++++d", 0);}
+int d_basic_5plus_flag(void){return test("%+++++d", 0);}
+int d_basic_10plus_flag(void){return test("%++++++++++d", 0);}
+int d_basic_2space_flag(void){return test("%  d", 0);}
+int d_basic_3space_flag(void){return test("%   d", 0);}
+int d_basic_4space_flag(void){return test("%    d", 0);}
+int d_basic_5space_flag(void){return test("%     d", 0);}
+int d_basic_10space_flag(void){return test("%          d", 0);}
+int d_basic_2minus_flag(void){return test("%--d", 0);}
+int d_basic_3minus_flag(void){return test("%---d", 0);}
+int d_basic_4minus_flag(void){return test("%----d", 0);}
+int d_basic_5minus_flag(void){return test("%-----d", 0);}
+int d_basic_10minus_flag(void){return test("%----------d", 0);}
+int d_basic_2zero_flag(void){return test("%++d", 0);}
+int d_basic_3zero_flag(void){return test("%+++d", 0);}
+int d_basic_4zero_flag(void){return test("%++++d", 0);}
+int d_basic_5zero_flag(void){return test("%+++++d", 0);}
+int d_basic_10zero_flag(void){return test("%++++++++++d", 0);}
+//plus flag with basic width
+int	d_plus_flag_width_1_pos(void){return test("%+1d", 0);}
+int	d_plus_flag_width_2_pos(void){return test("%+2d", 0);}
+int	d_plus_flag_width_3_pos(void){return test("%+3d", 0);}
+int	d_plus_flag_width_4_pos(void){return test("%+4d", 0);}
+int	d_plus_flag_width_5_pos(void){return test("%+5d", 0);}
+int	d_plus_flag_width_6_pos(void){return test("%+6d", 0);}
+int	d_plus_flag_width_1_neg(void){return test("%+1d", -10);}
+int	d_plus_flag_width_2_neg(void){return test("%+2d", -10);}
+int	d_plus_flag_width_3_neg(void){return test("%+3d", -10);}
+int	d_plus_flag_width_4_neg(void){return test("%+4d", -10);}
+int	d_plus_flag_width_5_neg(void){return test("%+5d", -10);}
+int	d_plus_flag_width_6_neg(void){return test("%+6d", -10);}
+int	d_plus_flag_rand_width_mix_pos_neg(void){return test("%+1d%+29d%+12d%+13d%+2d%+4d%+5d%+6d%+8d%+3d%+2d%+100d%+100d%+64d%+64d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX);}
+ int	d_plus_flag_width_over9k_pos(void){return test("%+10000d", 0);}
+//space flag with basic width
+int	d_space_flag_width_1_pos(void){return test("% 1d", 0);}
+int	d_space_flag_width_2_pos(void){return test("% 2d", 0);}
+int	d_space_flag_width_3_pos(void){return test("% 3d", 0);}
+int	d_space_flag_width_4_pos(void){return test("% 4d", 0);}
+int	d_space_flag_width_5_pos(void){return test("% 5d", 0);}
+int	d_space_flag_width_6_pos(void){return test("% 6d", 0);}
+int	d_space_flag_width_1_neg(void){return test("% 1d", -10);}
+int	d_space_flag_width_2_neg(void){return test("% 2d", -10);}
+int	d_space_flag_width_3_neg(void){return test("% 3d", -10);}
+int	d_space_flag_width_4_neg(void){return test("% 4d", -10);}
+int	d_space_flag_width_5_neg(void){return test("% 5d", -10);}
+int	d_space_flag_width_6_neg(void){return test("% 6d", -10);}
+int	d_space_flag_rand_width_mix_pos_neg(void){return test("% 1d% 29d% 12d% 13d% 2d% 4d% 5d% 6d% 8d% 3d% 2d% 100d% 100d% 64d% 64d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX);}
+ int	d_space_flag_width_over9k_pos(void){return test("% 10000d", 0);}
+//minus flag with basic width
+int	d_minus_flag_width_1_pos(void){return test("%-1d", 0);}
+int	d_minus_flag_width_2_pos(void){return test("%-2d", 0);}
+int	d_minus_flag_width_3_pos(void){return test("%-3d", 0);}
+int	d_minus_flag_width_4_pos(void){return test("%-4d", 0);}
+int	d_minus_flag_width_5_pos(void){return test("%-5d", 0);}
+int	d_minus_flag_width_6_pos(void){return test("%-6d", 0);}
+int	d_minus_flag_width_1_neg(void){return test("%-1d", -10);}
+int	d_minus_flag_width_2_neg(void){return test("%-2d", -10);}
+int	d_minus_flag_width_3_neg(void){return test("%-3d", -10);}
+int	d_minus_flag_width_4_neg(void){return test("%-4d", -10);}
+int	d_minus_flag_width_5_neg(void){return test("%-5d", -10);}
+int	d_minus_flag_width_6_neg(void){return test("%-6d", -10);}
+int	d_minus_flag_rand_width_mix_pos_neg(void){return test("%-1d%-29d%-12d%-13d%-2d%-4d%-5d%-6d%-8d%-3d%-2d%-100d%-100d%-64d%-64d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX);}
+ int	d_minus_flag_width_over9k_pos(void){return test("%-10000d", 0);}
+// zero flag with basic width
+int	d_zero_flag_width_1_pos(void){return test("%01d", 0);}
+int	d_zero_flag_width_2_pos(void){return test("%02d", 0);}
+int	d_zero_flag_width_3_pos(void){return test("%03d", 0);}
+int	d_zero_flag_width_4_pos(void){return test("%04d", 0);}
+int	d_zero_flag_width_5_pos(void){return test("%05d", 0);}
+int	d_zero_flag_width_6_pos(void){return test("%06d", 0);}
+int	d_zero_flag_width_1_neg(void){return test("%01d", -10);}
+int	d_zero_flag_width_2_neg(void){return test("%02d", -10);}
+int	d_zero_flag_width_3_neg(void){return test("%03d", -10);}
+int	d_zero_flag_width_4_neg(void){return test("%04d", -10);}
+int	d_zero_flag_width_5_neg(void){return test("%05d", -10);}
+int	d_zero_flag_width_6_neg(void){return test("%06d", -10);}
+int	d_zero_flag_rand_width_mix_pos_neg(void){return test("%01d%029d%012d%013d%02d%04d%05d%06d%08d%03d%02d%0100d%0100d%064d%064d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX);}
+ int	d_zero_flag_width_over9k_pos(void){return test("%010000d", 0);}
+// plus flag with basic precision
+int	d_plus_flag_prec_1_pos(void){return test("%+.1d", 0);}
+int	d_plus_flag_prec_2_pos(void){return test("%+.2d", 0);}
+int	d_plus_flag_prec_3_pos(void){return test("%+.3d", 0);}
+int	d_plus_flag_prec_4_pos(void){return test("%+.4d", 0);}
+int	d_plus_flag_prec_5_pos(void){return test("%+.5d", 0);}
+int	d_plus_flag_prec_6_pos(void){return test("%+.6d", 0);}
+int	d_plus_flag_prec_1_neg(void){return test("%+.1d", -10);}
+int	d_plus_flag_prec_2_neg(void){return test("%+.2d", -10);}
+int	d_plus_flag_prec_3_neg(void){return test("%+.3d", -10);}
+int	d_plus_flag_prec_4_neg(void){return test("%+.4d", -10);}
+int	d_plus_flag_prec_5_neg(void){return test("%+.5d", -10);}
+int	d_plus_flag_prec_6_neg(void){return test("%+.6d", -10);}
+int	d_plus_flag_rand_prec_mix_pos_neg(void){return test("%+.1d%+.29d%+.12d%+.13d%+.2d%+.4d%+.5d%+.6d%+.8d%+.3d%+.2d%+.100d%+.100d%+.64d%+.64d%+.3d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX,-123);}
+ int	d_plus_flag_prec_over9k_pos(void){return test("%+.10000d", 0);}
+// minus flag with basic precision
+int	d_minus_flag_prec_1_pos(void){return test("%-.1d", 0);}
+int	d_minus_flag_prec_2_pos(void){return test("%-.2d", 0);}
+int	d_minus_flag_prec_3_pos(void){return test("%-.3d", 0);}
+int	d_minus_flag_prec_4_pos(void){return test("%-.4d", 0);}
+int	d_minus_flag_prec_5_pos(void){return test("%-.5d", 0);}
+int	d_minus_flag_prec_6_pos(void){return test("%-.6d", 0);}
+int	d_minus_flag_prec_1_neg(void){return test("%-.1d", -10);}
+int	d_minus_flag_prec_2_neg(void){return test("%-.2d", -10);}
+int	d_minus_flag_prec_3_neg(void){return test("%-.3d", -10);}
+int	d_minus_flag_prec_4_neg(void){return test("%-.4d", -10);}
+int	d_minus_flag_prec_5_neg(void){return test("%-.5d", -10);}
+int	d_minus_flag_prec_6_neg(void){return test("%-.6d", -10);}
+int	d_minus_flag_rand_prec_mix_pos_neg(void){return test("%-.1d%-.29d%-.12d%-.13d%-.2d%-.4d%-.5d%-.6d%-.8d%-.3d%-.2d%-.100d%-.100d%-.64d%-.64d%-.3d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX,-123);}
+ int	d_minus_flag_prec_over9k_pos(void){return test("%-.10000d", 0);}
+// zero flag with basic precision
+int	d_zero_flag_prec_1_pos(void){return test("%0.1d", 0);}
+int	d_zero_flag_prec_2_pos(void){return test("%0.2d", 0);}
+int	d_zero_flag_prec_3_pos(void){return test("%0.3d", 0);}
+int	d_zero_flag_prec_4_pos(void){return test("%0.4d", 0);}
+int	d_zero_flag_prec_5_pos(void){return test("%0.5d", 0);}
+int	d_zero_flag_prec_6_pos(void){return test("%0.6d", 0);}
+int	d_zero_flag_prec_1_neg(void){return test("%0.1d", -10);}
+int	d_zero_flag_prec_2_neg(void){return test("%0.2d", -10);}
+int	d_zero_flag_prec_3_neg(void){return test("%0.3d", -10);}
+int	d_zero_flag_prec_4_neg(void){return test("%0.4d", -10);}
+int	d_zero_flag_prec_5_neg(void){return test("%0.5d", -10);}
+int	d_zero_flag_prec_6_neg(void){return test("%0.6d", -10);}
+int	d_zero_flag_rand_prec_mix_pos_neg(void){return test("%0.1d%0.29d%0.12d%0.13d%0.2d%0.4d%0.5d%0.6d%0.8d%0.3d%0.2d%0.100d%0.100d%0.64d%0.64d%0.3d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX,-123);}
+ int	d_zero_flag_prec_over9k_pos(void){return test("%0.10000d", 0);}
+// space flag with basic precision
+int	d_space_flag_prec_1_pos(void){return test("% .1d", 0);}
+int	d_space_flag_prec_2_pos(void){return test("% .2d", 0);}
+int	d_space_flag_prec_3_pos(void){return test("% .3d", 0);}
+int	d_space_flag_prec_4_pos(void){return test("% .4d", 0);}
+int	d_space_flag_prec_5_pos(void){return test("% .5d", 0);}
+int	d_space_flag_prec_6_pos(void){return test("% .6d", 0);}
+int	d_space_flag_prec_1_neg(void){return test("% .1d", -10);}
+int	d_space_flag_prec_2_neg(void){return test("% .2d", -10);}
+int	d_space_flag_prec_3_neg(void){return test("% .3d", -10);}
+int	d_space_flag_prec_4_neg(void){return test("% .4d", -10);}
+int	d_space_flag_prec_5_neg(void){return test("% .5d", -10);}
+int	d_space_flag_prec_6_neg(void){return test("% .6d", -10);}
+int	d_space_flag_rand_prec_mix_pos_neg(void){return test("% .1d% .29d% .12d% .13d% .2d% .4d% .5d% .6d% .8d% .3d% .2d% .100d% .100d% .64d% .64d% .3d",0,1,-3,-4,INT_MIN,INT_MAX,-100,300, INT8_MAX, INT8_MIN, INT16_MAX, INT16_MIN, UINT64_MAX, UINT32_MAX,-123);}
+ int	d_space_flag_prec_over9k_pos(void){return test("% .10000d", 0);}
+// width vs no precision
+int d_width_1_prec_0_pos(void){return test("%1.d", 0);}
+int d_width_2_prec_0_pos(void){return test("%2.d", 0);}
+int d_width_3_prec_0_pos(void){return test("%3.d", 0);}
+int d_width_4_prec_0_pos(void){return test("%4.d", 0);}
+int d_width_1_prec_0_neg(void){return test("%1.d", -1);}
+int d_width_2_prec_0_neg(void){return test("%2.d", -1);}
+int d_width_3_prec_0_neg(void){return test("%3.d", -1);}
+int d_width_4_prec_0_neg(void){return test("%4.d", -1);}
+int	d_rand_width_prec_0_mix(void){return test("%1.d%2.d%12.d%13.d%7.d%5.d%8.d%9.d%10.d%3.d%15.d,%7.d%1.d%27.d%84.d%20.d%19.d",0,1,2,3,10,123,1234,12345,INT_MAX,INT_MIN,INT8_MAX,INT8_MIN,UINT32_MAX,UINT64_MAX,-1,-10,-123);}
+ int	d_width_over9k_prec_0_pos(void){return test("%10000.d", 0);}
+// width vs precision 1
+int d_width_1_prec_1_pos(void){return test("%1.1d", 0);}
+int d_width_2_prec_1_pos(void){return test("%2.1d", 0);}
+int d_width_3_prec_1_pos(void){return test("%3.1d", 0);}
+int d_width_4_prec_1_pos(void){return test("%4.1d", 0);}
+ int d_width_over9k_prec_1_pos(void){return test("%10000.1d", 0);}
+int d_width_1_prec_1_neg(void){return test("%1.1d", -1);}
+int d_width_2_prec_1_neg(void){return test("%2.1d", -1);}
+int d_width_3_prec_1_neg(void){return test("%3.1d", -1);}
+int d_width_4_prec_1_neg(void){return test("%4.1d", -1);}
+ int d_width_over9k_prec_1_neg(void){return test("%10000.1d", -1);}
+// width < precision
+int d_width_1_prec_2_pos(void){return test("%1.2d", 0);}
+int d_width_2_prec_3_pos(void){return test("%2.3d", 0);}
+int d_width_3_prec_4_pos(void){return test("%3.4d", 0);}
+int d_width_4_prec_5_pos(void){return test("%4.5d", 0);}
+ int d_width_4_prec_over9k_pos(void){return test("%4.10000d", 0);}
+int d_width_1_prec_2_neg(void){return test("%1.2d", -1);}
+int d_width_2_prec_3_neg(void){return test("%2.3d", -1);}
+int d_width_3_prec_4_neg(void){return test("%3.4d", -1);}
+int d_width_4_prec_5_neg(void){return test("%4.5d", -1);}
+ int d_width_4_prec_over9k_neg(void){return test("%4.10000d", -1);}
+// minus flag vs no precision
+int d_minus_flag_width_1_prec_0_pos(void){return test("%-1.d", 0);}
+int d_minus_flag_width_2_prec_0_pos(void){return test("%-2.d", 0);}
+int d_minus_flag_width_3_prec_0_pos(void){return test("%-3.d", 0);}
+int d_minus_flag_width_4_prec_0_pos(void){return test("%-4.d", 0);}
+ int d_minus_flag_width_over9k_prec_0_pos(void){return test("%-10000.d", 0);}
+int d_minus_flag_width_1_prec_0_neg(void){return test("%-1.d", -1);}
+int d_minus_flag_width_2_prec_0_neg(void){return test("%-2.d", -1);}
+int d_minus_flag_width_3_prec_0_neg(void){return test("%-3.d", -1);}
+int d_minus_flag_width_4_prec_0_neg(void){return test("%-4.d", -1);}
+ int d_minus_flag_width_over9k_prec_0_neg(void){return test("%-10000.d", -1);}
+// minus flag vs precision 1
+int d_minus_flag_width_1_prec_1_pos(void){return test("%-1.1d", 0);}
+int d_minus_flag_width_2_prec_1_pos(void){return test("%-2.1d", 0);}
+int d_minus_flag_width_3_prec_1_pos(void){return test("%-3.1d", 0);}
+int d_minus_flag_width_4_prec_1_pos(void){return test("%-4.1d", 0);}
+ int d_minus_flag_width_over9k_prec_1_pos(void){return test("%-10000.1d", 0);}
+int d_minus_flag_width_1_prec_1_neg(void){return test("%-1.1d", -1);}
+int d_minus_flag_width_2_prec_1_neg(void){return test("%-2.1d", -1);}
+int d_minus_flag_width_3_prec_1_neg(void){return test("%-3.1d", -1);}
+int d_minus_flag_width_4_prec_1_neg(void){return test("%-4.1d", -1);}
+ int d_minus_flag_width_over9k_prec_1_neg(void){return test("%-10000.1d", -1);}
+// ultima
+ int d_ultima_0(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);} 
 
+ int d_ultima_pos_1(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);}
+
+
+ int d_ultima_int8_max(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX,INT8_MAX);} 
+
+ int d_ultima_int16_max(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX,INT16_MAX);}
+
+ int d_ultima_int32_max(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX,INT32_MAX);} 
+
+
+ int d_ultima_int64_max(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX,INT64_MAX);}
+
+ int d_ultima_intmax(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX);} 
+
+ int d_ultima_neg_1(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1);}
+
+
+ int d_ultima_int8_min(void){return test("%d%+d%-d% d%0d%++++d%----d%0000d%    d%+  +d% ++ d%0--0d%-00-d%+--+d%0  0d%0+- d%0+ -d%0-+ d%0- +d%0 -+d%0 +-d%+0 -d%+0- d%+-0 d%+- 0d%+ 0-d%+ -0d%-0+ d%-0 +d%-+0 d%-+ 0d%- +0d%- 0+d% 0+-d% 0-+d% +0-d% +-0d% -+0d% -0+d%1d%2d%3d%5d%10d%19d%20d%22d%-1d%-2d%-3d%-5d%-10d%-19d%-20d%-22d%.1d%.2d%.3d%.5d%.10d%.19d%.20d%.22d%1.2d%2.3d%3.4d%5.6d%10.11d%19.20d%20.21d%22.23d%1.d%2.1d%3.2d%5.4d%10.9d%19.18d%20.19d%22.21d%1.1d%2.2d%3.3d%5.5d%10.10d%19.19d%20.20d%22.22d%-1.2d%-2.3d%-3.4d%-5.6d%-10.11d%-19.20d%-20.21d%-22.23d%-1.d%-2.1d%-3.2d%-5.4d%-10.9d%-19.18d%-20.19d%-22.21d%-1.1d%-2.2d%-3.3d%-5.5d%-10.10d%-19.19d%-20.20d%-22.22d%01d%02d%03d%05d%010d%019d%020d%022d%-01d%-20d%-03d%-05d%-010d%-019d%-020d%-022d%01.d%02.1d%03.2d%05.4d%010.9d%019.18d%020.19d%022.21d%-02.1d%-03.2d%-05.4d%-010.9d%-019.18d%-020.19d%-022.21d%01.2d%02.3d%03.4d%05.6d%010.11d%019.20d%020.21d%022.23d%-01.2d%-02.3d%-03.4d%-05.6d%-010.11d%-019.20d%-020.21d%-022.23d%01.1d%02.2d%03.3d%05.5d%010.10d%019.19d%020.20d%022.22d%-01.1d%-02.2d%-03.3d%-05.5d%-010.10d%-019.19d%-020.20d%-022.22d%+.d%+1.d%+2.d%+3.d%+20.d%+.1d%+.2d%+.3d%+.20d%+1.1d%+2.2d%+3.3d%+20.20d%+2.1d%+3.1d%+20.1d%+3.2d%+4.3d%+20.6d%+1.2d%+3.4d%+6.9d%+15.20d%+0.d%+01.d%+02.d%+03.d%+020.d%+0.1d%+0.2d%+0.3d%+0.20d%+01.1d%+02.2d%+03.3d%+020.20d%+02.1d%+03.1d%+020.1d%+03.2d%+04.3d%+020.6d%+01.2d%+03.4d%+06.9d%+015.20d% 0.d% 01.d% 02.d% 03.d% 020.d% 0.1d% 0.2d% 0.3d% 0.20d% 01.1d% 02.2d% 03.3d% 020.20d% 02.1d% 03.1d% 020.1d% 03.2d% 04.3d% 020.6d% 01.2d% 03.4d% 06.9d% 015.20d%+ d% +d%0-d%-0d",INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN,INT8_MIN);}
 
 //Switching between string and signed integers of various sizes
 static char	str_1[] = "hello world", str_2[] = "panda", str_3[] = "this is a longer string";
