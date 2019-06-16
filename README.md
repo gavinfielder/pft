@@ -84,9 +84,9 @@ Feel free to contribute tests for these bonuses:
  - Size modifiers `t`, `z`, `j`, and `q`.
  - `%n`
  - `'` (thousands separator flag)
+ - '$' for precision selecting. Argument number selection is covered under `argnum_`.
 ### What's not covered very well
  - `*` (4 tests)
- - `$` (9 tests for argument selection only)
  - `%g`, `%e`, `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
 
 # Other Documentation
