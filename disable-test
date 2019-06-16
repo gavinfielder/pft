@@ -15,25 +15,32 @@ PFT_ROOT=$(dirname $0)
 MAKEFILE=$PFT_ROOT"/Makefile"
 CONFIG_FILE=$PFT_ROOT"/options-config.ini"
 
-FILENAME=$PFT_ROOT"/"$(grep -e "^UNIT_TEST_FILE" $MAKEFILE | cut -d '=' -f 2 | tr -d " \t")
+FILENAME=$PFT_ROOT"/"$(grep -e "^UNIT_TEST_FILE" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 TEST_HISTORY_FILENAME=$PFT_ROOT"/"$(grep -e "^TEST_LOG" $MAKEFILE | cut -d '=' -f 2 | tr -d " \t")
 TOUCH_TEST_HISTORY=$(grep -e "^ENABLE_DISABLE_TOUCHES_TEST_HISTORY" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 REMAKE=$(grep -e "^ENABLE_DISABLE_REMAKES_PFT" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 
-echo "Disabling tests..."
 
-php $PFT_ROOT"/src/select_router.php" disable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $1 $2 $3 $4 $5
-make -C $PFT_ROOT fclean
+if [ "$1" == "-q" ] ; then
+	ARGS=$2 $3 $4 $5 $6
+	php $PFT_ROOT"/src/select_router.php" disable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $ARGS > /dev/null
+	exit 0;
+else
+	ARGS=$1 $2 $3 $4 $5
+	echo "Disabling tests..."
+	php $PFT_ROOT"/src/select_router.php" disable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $ARGS
 
-echo "Done."
+	make -C $PFT_ROOT fclean
+	echo "Done."
 
-if [[ $TOUCH_TEST_HISTORY -eq 1 ]] && [[ -f "$TEST_HISTORY_FILENAME" ]]
-then
-	touch $TEST_HISTORY_FILENAME
-fi
+	if [[ $TOUCH_TEST_HISTORY -eq 1 ]] && [[ -f "$TEST_HISTORY_FILENAME" ]]
+	then
+		touch $TEST_HISTORY_FILENAME
+	fi
 
-if [[ $REMAKE -eq 1 ]]
-then
-	echo "Remaking PFT..."
-	make -C $PFT_ROOT
+	if [[ $REMAKE -eq 1 ]]
+	then
+		echo "Remaking PFT..."
+		make -C $PFT_ROOT
+	fi
 fi

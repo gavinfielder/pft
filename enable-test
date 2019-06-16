@@ -15,16 +15,26 @@ PFT_ROOT=$(dirname $0)
 MAKEFILE=$PFT_ROOT"/Makefile"
 CONFIG_FILE=$PFT_ROOT"/options-config.ini"
 
-FILENAME=$PFT_ROOT"/"$(grep -e "^UNIT_TEST_FILE" $MAKEFILE | cut -d '=' -f 2 | tr -d " \t")
+FILENAME=$PFT_ROOT"/"$(grep -e "^UNIT_TEST_FILE" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 TEST_HISTORY_FILENAME=$PFT_ROOT"/"$(grep -e "^TEST_LOG" $MAKEFILE | cut -d '=' -f 2 | tr -d " \t")
 TOUCH_TEST_HISTORY=$(grep -e "^ENABLE_DISABLE_TOUCHES_TEST_HISTORY" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 REMAKE=$(grep -e "^ENABLE_DISABLE_REMAKES_PFT" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 
-echo "Enabling tests..."
 
-php $PFT_ROOT"/src/select_router.php" enable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $1 $2 $3 $4 $5
+if [ "$1" == "-q" ] ; then
+	ARGS=$2 $3 $4 $5 $6
+else
+	ARGS=$1 $2 $3 $4 $5
+	echo "Enabling tests..."
+fi
+
+php $PFT_ROOT"/src/select_router.php" enable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $ARGS
+
+if [ "$1" == "-q" ] ; then
+	exit 0;
+fi
+
 make -C $PFT_ROOT fclean
-
 echo "Done."
 
 if [[ $TOUCH_TEST_HISTORY -eq 1 ]] && [[ -f "$TEST_HISTORY_FILENAME" ]]

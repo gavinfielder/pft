@@ -35,6 +35,8 @@ if (strpos($hostname, "42.us.org") > 0)
 	$location = "Fremont";
 else if (strpos($hostname, "42.fr") > 0)
 	$location = "Paris";
+else if (strpos($hostname, ".21-school.ru") > 0)
+	$location = "Moscow";
 else
 	$location = $hostname;
 

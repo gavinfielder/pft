@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:57:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/06 16:53:44 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/16 00:27:58 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,17 +432,20 @@ void		help_naming_conventions(void)
 	help_list_item("-", "%% tests start with `pct_`");
 	help_list_item("-", "hh, h, l, ll tests usually have '`size`' in the name");
 	help_list_item("-", "L (long double) tests start with `f_L_`");
-	help_list_item("-", "# tests usually have '`af`' in the name (or '`altform`')");
+	help_list_item("-", "# tests usually have '`af`' in the name");
 	help_list_item("-", "0 (zero padding) tests usually have '`zp`' in the name");
 	help_list_item("-", "- (left justify) tests usually have '`lj`' in the name");
-	help_list_item("-", "+ tests usually have '`as`' or '`allsign`' in the name");
+	help_list_item("-", "+ tests usually have '`as`' in the name");
 	help_list_item("-", "' ' (space padding) tests usually have '`sp`' in the name");
 	help_list_item("-", "Precision tests usually have '`prec`' in the name");
 	help_list_item("-", "Field width tests usually have '`width`' or just '`w`' in the name");
 	help_list_item("-", "Simple tests usually have '`basic`' in the name");
 	help_list_item("-", "Tests taken from moulinette files start with `moul_`");
 	help_list_item("-", "The `moul_` block has subgroups `moul_d_`, `moul_i_`, `moul_o_`, etc.");
-	help_list_item("-", "Tests adapated from 42FileChecker have '`ftfc`' in the name");
+	help_list_item("-", "Tests adapated from 42FileChecker or moulitest have '`ftfc`' in the name");
+	help_list_item("-", "Tests that throw a '...flag is ignored when...' have `_ignoreflag`");
+	help_list_item("-", "Tests that throw some other warning have `_throwswarning`");
+
 	printf("\n");
 	help_header("Other Specific Test Blocks");
 	help_list_item("-", "`mix_` are tests that combine multiple specifiers at random");
@@ -699,6 +702,8 @@ void		help_libftprintf_dir(void)
 
 void		help_troubleshooting(void)
 {
+	help_header("My test results show the same string and the same return value. Why am I failing this test?");
+	help_paragraph("Some text editors don't show you nonprintable characters. Open results.txt in vim first. If it still shows identical in vim, let me know because it could be a bug.");
 	help_header("Help! Wildcard search isn't working!");
 	help_paragraph("For almost all shell terminals, the `*` needs to be escaped--usually, putting a string in double quotes is sufficient, but some terminals still treat it as a shell `*` even then. You can either escape it manually '`\\*`', or, to make this feature compatible with all shells, I've made any character not valid for a C function name (alphanumeric + underscore) is now considered a wildcard. This means instead of `\\*`, you can also use `@`, or anything else your terminal doesn't recognize as a special character. The same is true for the enable-test and disable-test scripts.");
 	printf("\n");
