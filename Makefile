@@ -6,19 +6,21 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/06/15 16:05:45 by gfielder         ###   ########.fr        #
+#    Updated: 2019/06/17 00:53:30 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------------------------------------------------------
-#      User options are now in the file below!
+#      User options are now in options-config.ini
 # ------------------------------------------------------------------------------
 
+OVERRIDE_EXISTS=$(shell find options-config.ini.override | grep -c ".*")
+
+ifeq ($(OVERRIDE_EXISTS),1)
+include options-config.ini.override
+else
 include options-config.ini
-
-# ------------------------------------------------------------------------------
-#      User options are now in the file above!
-# ------------------------------------------------------------------------------
+endif
 
 CC=clang
 INC=-I src

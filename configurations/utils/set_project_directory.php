@@ -11,7 +11,7 @@ $ft_printf_dir = $argv[1];
 $pft_root = dirname(__FILE__, 3);
 $conf = file_get_contents($pft_root."/options-config.ini");
 $conf = preg_replace('/LIBFTPRINTF_DIR=.*$/m', "LIBFTPRINTF_DIR=".$ft_printf_dir, $conf);
-$fout = fopen($pft_root."/options-config.ini", "w");
+$fout = fopen($pft_root."/options-config.ini.override", "w");
 fwrite($fout, $conf);
 fclose($fout);
 
