@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/06/17 00:53:30 by gfielder         ###   ########.fr        #
+#    Updated: 2019/06/17 18:16:50 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #      User options are now in options-config.ini
 # ------------------------------------------------------------------------------
 
-OVERRIDE_EXISTS=$(shell find options-config.ini.override | grep -c ".*")
+OVERRIDE_EXISTS=$(shell find options-config.ini.override 2>/dev/null | grep -c ".*")
 
 ifeq ($(OVERRIDE_EXISTS),1)
 include options-config.ini.override
