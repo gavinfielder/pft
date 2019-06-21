@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/15 23:53:35 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/18 14:03:45 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ uint16_t		tty_get_window_width(void)
 
 void			init_printing(void)
 {
-	window_width = tty_get_window_width();
+	if (!(get_options().print_responsive))
+		window_width = 80;
+	else
+		window_width = tty_get_window_width();
 	now = time(NULL);
 	if (DEBUG)
 		printf("window width: %hu\n", window_width);
@@ -60,6 +63,8 @@ void			init_printing(void)
 	else
 	{
 		int field_width = window_width - 46;
+		if (field_width > 65)
+			field_width = 65;
 		sprintf(test_start_fmt_dynamic_buffer, "Test %%4i:  %%-%is [",
 				field_width);
 		test_start_fmt_str = test_start_fmt_dynamic_buffer;

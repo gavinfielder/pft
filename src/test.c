@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 18:59:07 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/18 14:36:47 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -593,75 +593,6 @@ int			run_test_fork(int test_number)
 	return (failed);
 }
 
-/*
-void	set_option_fork(void) { options.run_test = run_test_fork; }
-void	set_option_nofork(void) { options.run_test = run_test_nofork; }
-void	set_option_notimeout(void) { options.use_timeout = 0; }
-void	set_option_usetimeout(void) { options.use_timeout = 1; }
-void	set_option_loghistory(void) { options.log_history = 1; }
-void	set_option_nologhistory(void) { options.log_history = 0; }
-void	set_option_filter_failingoff(void) { options.filter_run_failing = 0; }
-void	set_option_filter_failingon(void) { options.filter_run_failing = 1; }
-void	set_option_filter_passingoff(void) { options.filter_run_passing = 0; }
-void	set_option_filter_passingon(void) { options.filter_run_passing = 1; }
-void	set_option_filter_outdatedoff(void) { options.filter_run_outdated = 0; }
-void	set_option_filter_outdatedon(void) { options.filter_run_outdated = 1; }
-void	set_option_filter_nohistoryon(void) { options.filter_run_nohistory = 1; }
-void	set_option_filter_nohistoryoff(void) { options.filter_run_nohistory = 0; }
-void	set_option_rundisabled(void) { options.filter_run_disabled = 1; }
-void	set_option_norundisabled(void) { options.filter_run_disabled = 0; }
-void	set_option_leakstest(void)
-{ options.run_leaks_test = 1; options.run_test = run_test_nofork; options.use_timeout = 0; }
-void	set_option_noleakstest(void) { options.run_leaks_test = 0; }
-void	set_option_handlesignals(void) { options.handle_signals = 1; }
-void	set_option_nohandlesignals(void) { options.handle_signals = 0; }
-void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
-void	set_option_noprintinfo(void) { options.print_info = 0; }
-void	set_option_printinfo(void) { options.print_info = 1; }
-void	set_option_refreshresults(void) { options.refresh_results = 1; }
-void	set_option_norefreshresults(void) { options.refresh_results = 0; }
-
-//Accessors
-int		get_option_loghistory(void) { return options.log_history; }
-int		get_option_writelog(void) { return options.log_write_enabled; }
-int		get_option_printinfo(void) { return options.print_info; }
-
-void	options_check(void)
-{
-	if (options.run_leaks_test && options.run_test == run_test_fork)
-	{
-		dprintf(2, "leaks test (-k) must be run in non-forking mode (-X). Run with -kX.\n");
-		exit(-1);
-	}
-	if (options.use_timeout && options.run_test == run_test_nofork)
-	{
-		dprintf(2, "Notice: timeout (-t) is only available in forking mode (-x).\n");
-		fflush(stdout);
-	}
-
-	if (DEBUG)
-	{
-		printf("Options selected:\n");
-		if (options.run_test == run_test_nofork)
-			printf("   options.run_test = run_test_nofork\n");
-		else if (options.run_test == run_test_fork)
-			printf("   options.run_test = run_test_fork\n");
-		else
-			printf("   options.run_test = %p\n", options.run_test);
-		printf("   options.use_timeout = %i\n", options.use_timeout);
-		printf("   options.log_history = %i\n", options.log_history);
-		printf("   options.filter_run_failing = %i\n", options.filter_run_failing);
-		printf("   options.filter_run_passing = %i\n", options.filter_run_passing);
-		printf("   options.filter_run_outdated = %i\n", options.filter_run_outdated);
-		printf("   options.filter_run_nohistory = %i\n", options.filter_run_nohistory);
-		printf("   options.filter_run_disabled = %i\n", options.filter_run_disabled);
-		printf("   options.run_leaks_test = %i\n", options.run_leaks_test);
-		printf("   options.handle_signals = %i\n", options.handle_signals);
-		printf("\n");
-		fflush(stdout);
-	}
-}*/
-
 /* ----------------------------------------------------------------------------
 ** Returns 1 if options allow test to run, 0 if it is filtered out
 ** --------------------------------------------------------------------------*/
@@ -714,6 +645,15 @@ void	run_init(void)
 }
 
 /* ----------------------------------------------------------------------------
+** Removes temporary files created by a test run
+** --------------------------------------------------------------------------*/
+void	cleanup_temp_files()
+{
+	unlink(OUT_ACTUAL);
+	unlink(OUT_EXPECTED);
+}
+
+/* ----------------------------------------------------------------------------
 ** Runs all the tests that match the search pattern
 ** --------------------------------------------------------------------------*/
 void	run_search_tests(t_unit_tester_args *args)
@@ -757,6 +697,8 @@ void	run_search_tests(t_unit_tester_args *args)
 			LEAKS_TEST_CMD;
 		}
 	}
+	if (get_options().cleanup)
+		cleanup_temp_files();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }
 
@@ -790,5 +732,7 @@ void	run_test_range(t_unit_tester_args *args)
 			LEAKS_TEST_CMD;
 		}
 	}
+	if (get_options().cleanup)
+		cleanup_temp_files();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }

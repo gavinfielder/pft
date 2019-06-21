@@ -11,10 +11,16 @@
 #                                                                              #
 # **************************************************************************** #
 
-FILENAME=unit_tests.c
+PFT_ROOT=$(dirname $0)
+if [ -f "$PFT_ROOT/options-config.override.ini" ] ; then
+	CONFIG_FILE=$PFT_ROOT"/options-config.override.ini"
+else
+	CONFIG_FILE=$PFT_ROOT"/options-config.ini"
+fi
+FILENAME=$PFT_ROOT"/"$(grep -e "^UNIT_TEST_FILE" $CONFIG_FILE | cut -d '=' -f 2 | tr -d " \t")
 
-if ! [ -f src/show_disabled_postprocess ] ; then
-	clang -o src/show_disabled_postprocess src/show_disabled_postprocess.c
+if ! [ -f "$PFT_ROOT/src/show_disabled_postprocess" ] ; then
+	clang -o $PFT_ROOT/src/show_disabled_postprocess $PFT_ROOT/src/show_disabled_postprocess.c
 fi
 
-grep "^[	 ]*int[	 ]*.*(void)" $FILENAME | grep -n "^[	 ]\+int[	 ]*.*(void)" | ./src/show_disabled_postprocess
+grep "^[	 ]*int[	 ]*.*(void)" $FILENAME | grep -n "^[	 ]\+int[	 ]*.*(void)" | $PFT_ROOT/src/show_disabled_postprocess

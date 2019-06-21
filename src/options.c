@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:16:25 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/06 13:58:45 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/18 14:10:36 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 t_pft_options	options = {
 	run_test_fork,
-	1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1
+	1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0
 };
 
 t_pft_options	get_options(void) { return options; }
@@ -51,6 +51,10 @@ void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
 void	set_option_writelog(void) { options.log_write_enabled = 1; }
 void	set_option_noprintinfo(void) { options.print_info = 0; }
 void	set_option_printinfo(void) { options.print_info = 1; }
+void	set_option_printresponsive(void) { options.print_responsive = 1; }
+void	set_option_noprintresponsive(void) { options.print_responsive = 0; }
+void	set_option_cleanup(void) { options.cleanup = 1; }
+void	set_option_nocleanup(void) { options.cleanup = 0; }
 void	set_option_refreshresults(void) { options.refresh_results = 1; }
 void	set_option_norefreshresults(void) { options.refresh_results = 0; }
 
@@ -239,6 +243,18 @@ int		parse_option(char *str)
 			return (1);
 		case 'A':
 			set_option_norundisabled();
+			return (1);
+		case 'c':
+			set_option_printresponsive();
+			return (1);
+		case 'C':
+			set_option_noprintresponsive();
+			return (1);
+		case 'g':
+			set_option_cleanup();
+			return (1);
+		case 'G':
+			set_option_nocleanup();
 			return (1);
 		case 's':
 			set_option_handlesignals();

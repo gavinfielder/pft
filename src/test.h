@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 17:49:18 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/18 14:37:04 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,8 @@ typedef struct			s_pft_options
 	char				log_write_enabled : 1;
 	char				print_info: 1;
 	char				refresh_results: 1;
+	char				print_responsive: 1;
+	char				cleanup: 1;
 }						t_pft_options;
 
 //Entries in the test history

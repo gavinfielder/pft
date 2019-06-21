@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/06/17 18:16:50 by gfielder         ###   ########.fr        #
+#    Updated: 2019/06/21 15:13:00 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,15 @@
 
 OVERRIDE_EXISTS=$(shell find options-config.ini.override 2>/dev/null | grep -c ".*")
 
-ifeq ($(OVERRIDE_EXISTS),1)
-include options-config.ini.override
-else
+ifeq ($(OVERRIDE_EXISTS),0)
 include options-config.ini
+else
+include options-config.ini.override
 endif
 
 CC=clang
 INC=-I src
 TEST_LOG=history.csv
-TEST_RESULTS=results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
 SRC_TEST=src/main.c src/test.c src/options.c src/utils.c \
