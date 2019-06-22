@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/21 16:06:17 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/21 17:34:47 by gfielder         ###   ########.fr       */
 /*   Updated: 2019/05/27 19:43:41 by phtruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -60,11 +60,11 @@ int		pct_5wzp(void){return test("%05%");}
 int		pct_5wljzp(void){return test("%-05%");}
 
 //Null specifier tests
- int		nocrash_nullspec_basic(void){return test("%");}
- int		nocrash_nullspec_5w(void){return test("%5");}
- int		nocrash_nullspec_5wzp(void){return test("%05");}
- int		nocrash_nullspec_5wzplj(void){return test("%-05");}
- int		nocrash_nullspec_5wlj(void){return test("%-5");}
+int		nocrash_nullspec_basic(void){return test("%");}
+int		nocrash_nullspec_5w(void){return test("%5");}
+int		nocrash_nullspec_5wzp(void){return test("%05");}
+int		nocrash_nullspec_5wzplj(void){return test("%-05");}
+int		nocrash_nullspec_5wlj(void){return test("%-5");}
 
 //String specifiers - no modifiers
 int s_basic_string_expansion(void){return test("hello, %s.", "gavin");}
@@ -3216,95 +3216,210 @@ int		mix_successive_70(void){return ( test("%o", mx_u) + test("%li", mx_li));}
 
 
 //No-crash-no-segfault test
- int		nocrash_noarg_1(void){return test("%1$"); }
- int		nocrash_noarg_2(void){return test("%0"); }
- int		nocrash_noarg_3(void){return test("% "); }
- int		nocrash_noarg_4(void){return test("%#"); }
- int		nocrash_noarg_5(void){return test("%-"); }
- int		nocrash_noarg_6(void){return test("%+"); }
- int		nocrash_noarg_9(void){return test("%23"); }
- int		nocrash_noarg_10(void){return test("%."); }
- int		nocrash_noarg_11(void){return test("%hh"); }
- int		nocrash_noarg_12(void){return test("%h"); }
- int		nocrash_noarg_13(void){return test("%ll"); }
- int		nocrash_noarg_14(void){return test("%l"); }
- int		nocrash_noarg_15(void){return test("%L"); }
- int		nocrash_noarg_16(void){return test("%p"); }
- int		nocrash_noarg_17(void){return test("%d"); }
- int		nocrash_noarg_19(void){return test("%u"); }
- int		nocrash_noarg_20(void){return test("%x"); }
- int		nocrash_noarg_21(void){return test("%X"); }
- int		nocrash_noarg_22(void){return test("%f"); }
- int		nocrash_noarg_24(void){return test("%c"); }
- int		nocrash_noarg_25(void){return test("%o"); }
+ int		nocrash_noarg_1_notmandatory(void){return test("%1$"); }
+ int		nocrash_noarg_2_notmandatory(void){return test("%0"); }
+ int		nocrash_noarg_3_notmandatory(void){return test("% "); }
+ int		nocrash_noarg_4_notmandatory(void){return test("%#"); }
+ int		nocrash_noarg_5_notmandatory(void){return test("%-"); }
+ int		nocrash_noarg_6_notmandatory(void){return test("%+"); }
+ int		nocrash_noarg_9_notmandatory(void){return test("%23"); }
+ int		nocrash_noarg_10_notmandatory(void){return test("%."); }
+ int		nocrash_noarg_11_notmandatory(void){return test("%hh"); }
+ int		nocrash_noarg_12_notmandatory(void){return test("%h"); }
+ int		nocrash_noarg_13_notmandatory(void){return test("%ll"); }
+ int		nocrash_noarg_14_notmandatory(void){return test("%l"); }
+ int		nocrash_noarg_15_notmandatory(void){return test("%L"); }
+ int		nocrash_noarg_16_notmandatory(void){return test("%p"); }
+ int		nocrash_noarg_17_notmandatory(void){return test("%d"); }
+ int		nocrash_noarg_19_notmandatory(void){return test("%u"); }
+ int		nocrash_noarg_20_notmandatory(void){return test("%x"); }
+ int		nocrash_noarg_21_notmandatory(void){return test("%X"); }
+ int		nocrash_noarg_22_notmandatory(void){return test("%f"); }
+ int		nocrash_noarg_24_notmandatory(void){return test("%c"); }
+ int		nocrash_noarg_25_notmandatory(void){return test("%o"); }
 
- int		nocrash_nullarg_1(void){return test("%1$s", NULL); }
- int		nocrash_nullarg_2(void){return test("%0s", NULL); }
- int		nocrash_nullarg_3(void){return test("% s", NULL); }
- int		nocrash_nullarg_4(void){return test("%#s", NULL); }
- int		nocrash_nullarg_5(void){return test("%-s", NULL); }
- int		nocrash_nullarg_6(void){return test("%+s", NULL); }
- int		nocrash_nullarg_9(void){return test("%23s", NULL); }
- int		nocrash_nullarg_10(void){return test("%.s", NULL); }
- int		nocrash_nullarg_11(void){return test("%hhs", NULL); }
- int		nocrash_nullarg_12(void){return test("%hs", NULL); }
- int		nocrash_nullarg_13(void){return test("%lls", NULL); }
- int		nocrash_nullarg_14(void){return test("%ls", NULL); }
- int		nocrash_nullarg_15(void){return test("%Ls", NULL); }
- int		nocrash_nullarg_16(void){return test("%p", NULL); }
- int		nocrash_nullarg_17(void){return test("%d", NULL); }
- int		nocrash_nullarg_18(void){return test("%b", NULL); }
- int		nocrash_nullarg_19(void){return test("%u", NULL); }
- int		nocrash_nullarg_20(void){return test("%x", NULL); }
- int		nocrash_nullarg_21(void){return test("%X", NULL); }
- int		nocrash_nullarg_22(void){return test("%f", NULL); }
- int		nocrash_nullarg_23(void){return test("%s", NULL); }
- int		nocrash_nullarg_24(void){return test("%c", NULL); }
- int		nocrash_nullarg_25(void){return test("%o", NULL); }
+int		nocrash_nullarg_1(void){return test("%1$s", NULL); }
+int		nocrash_nullarg_2(void){return test("%0s", NULL); }
+int		nocrash_nullarg_3(void){return test("% s", NULL); }
+int		nocrash_nullarg_4(void){return test("%#s", NULL); }
+int		nocrash_nullarg_5(void){return test("%-s", NULL); }
+int		nocrash_nullarg_6(void){return test("%+s", NULL); }
+int		nocrash_nullarg_9(void){return test("%23s", NULL); }
+int		nocrash_nullarg_10(void){return test("%.s", NULL); }
+int		nocrash_nullarg_11(void){return test("%hhs", NULL); }
+int		nocrash_nullarg_12(void){return test("%hs", NULL); }
+int		nocrash_nullarg_13(void){return test("%lls", NULL); }
+int		nocrash_nullarg_14(void){return test("%ls", NULL); }
+int		nocrash_nullarg_15(void){return test("%Ls", NULL); }
+int		nocrash_nullarg_16(void){return test("%p", NULL); }
+int		nocrash_nullarg_17(void){return test("%d", NULL); }
+int		nocrash_nullarg_18(void){return test("%b", NULL); }
+int		nocrash_nullarg_19(void){return test("%u", NULL); }
+int		nocrash_nullarg_20(void){return test("%x", NULL); }
+int		nocrash_nullarg_21(void){return test("%X", NULL); }
+int		nocrash_nullarg_22(void){return test("%f", NULL); }
+int		nocrash_nullarg_23(void){return test("%s", NULL); }
+int		nocrash_nullarg_24(void){return test("%c", NULL); }
+int		nocrash_nullarg_25(void){return test("%o", NULL); }
 
 //Tests that were deleted because turning off -Wformat=0 gives a warning about undefined behavior
- int nocrash_str_zero_padded_field_width_lj(void){return test("%-021s", "abc");}
- int nocrash_str_zero_padded_over_field_width_lj(void){return test("%-05s", "goes over");}
- int nocrash_str_two_strings_zrjtrunc_and_ljtrunc(void){return test("%04.3s%-7.4s", "hello", "world");}
- int nocrash_str_null_zero_padded_field_width(void){return test("%021s", NULL);}
- int nocrash_str_null_zero_padded_over_field_width(void){return test("%02s", NULL);}
- int nocrash_str_null_zero_padded_field_width_lj(void){return test("%-021s", NULL);}
- int nocrash_str_null_zero_padded_over_field_width_lj(void){return test("%-03s", NULL);}
- int nocrash_uint_as_pos(void){return test("%+u", 5);}
- int nocrash_uint_as_zero(void){return test("%+u", 5);}
- int nocrash_uint_uintmax_as(void){return test("%+u", 4294967295);}
- int nocrash_uint_width_as_pos(void){return test("%+5u", 35);}
- int nocrash_uint_width_as_zero(void){return test("%+7u", 0);}
- int nocrash_uint_width_uintmax_as(void){return test("%+24u", 4294967295);}
- int nocrash_uint_prec_as_pos(void){return test("%+.7u", 234);}
- int nocrash_uint_prec_as_pos_nofit(void){return test("%+.3u", 3723);}
- int nocrash_uint_zp_as_fits(void){return test("%+05u", 432);}
- int nocrash_uint_zp_as_zero(void){return test("%+04u", 0);}
- int nocrash_uint_prec_width_fit_fit_pos_as(void){return test("%+8.5u", 34);}
- int nocrash_uint_prec_width_fit_fit_zero_as(void){return test("%+8.5u", 0);}
- int nocrash_uint_prec_width_nofit_fit_pos_as(void){return test("%+8.3u", 8375);}
- int nocrash_uint_prec_width_fit_nofit_pos_as(void){return test("%+3.7u", 3267);}
- int nocrash_uint_prec_width_nofit_nofit_pos_as(void){return test("%+3.3u", 6983);}
- int nocrash_uint_prec_width_fit_fit_pos_lj_as(void){return test("%+-8.5u", 34);}
- int nocrash_uint_prec_width_fit_fit_zero_lj_as(void){return test("%+-8.5u", 0);}
- int nocrash_uint_prec_width_nofit_fit_pos_lj_as(void){return test("%+-8.3u", 8375);}
- int nocrash_uint_prec_width_fit_nofit_pos_lj_as(void){return test("%+-3.7u", 3267);}
- int nocrash_uint_prec_width_nofit_nofit_pos_lj_as(void){return test("%+-3.3u", 6983);}
- int nocrash_uint_prec_width_ff_pos_as_zp(void){return test("%0+8.5u", 34);}
- int nocrash_uint_prec_width_ff_zero_as_zp(void){return test("%0+8.5u", 0);}
- int nocrash_uint_prec_width_nf_pos_as_zp(void){return test("%0+8.3u", 8375);}
- int nocrash_uint_prec_width_fn_pos_as_zp(void){return test("%0+3.7u", 3267);}
- int nocrash_uint_prec_width_nn_pos_as_zp(void){return test("%0+3.3u", 6983);}
- int nocrash_uint_prec_width_ff_pos_lj_as_zp(void){return test("%0+-8.5u", 34);}
- int nocrash_uint_prec_width_ff_zero_lj_as_zp(void){return test("%0+-8.5u", 0);}
- int nocrash_uint_prec_width_nf_pos_lj_as_zp(void){return test("%0+-8.3u", 8375);}
- int nocrash_uint_prec_width_fn_pos_lj_as_zp(void){return test("%0+-3.7u", 3267);}
- int nocrash_uint_prec_width_nn_pos_lj_as_zp(void){return test("%0+-3.3u", 6983);}
- int nocrash_char_nullterm_5wzp(void){return test("%05c", '\0');}
- int nocrash_char_nullterm_5wljzp(void){return test("%-05c", '\0');}
- int		nocrash_uint_size_l_pos_big_as(void){return test("%+lu", 22337203685477);}
+ int nocrash_mandatory_wformat_undefbehav_01(void){return test("%-021s", "abc");}
+ int nocrash_mandatory_wformat_undefbehav_02(void){return test("%-05s", "goes over");}
+ int nocrash_mandatory_wformat_undefbehav_03(void){return test("%04.3s%-7.4s", "hello", "world");}
+ int nocrash_mandatory_wformat_undefbehav_04(void){return test("%021s", NULL);}
+ int nocrash_mandatory_wformat_undefbehav_05(void){return test("%02s", NULL);}
+ int nocrash_mandatory_wformat_undefbehav_06(void){return test("%-021s", NULL);}
+ int nocrash_mandatory_wformat_undefbehav_07(void){return test("%-03s", NULL);}
+ int nocrash_mandatory_wformat_undefbehav_08(void){return test("%+u", 5);}
+ int nocrash_mandatory_wformat_undefbehav_09(void){return test("%+u", 5);}
+ int nocrash_mandatory_wformat_undefbehav_10(void){return test("%+u", 4294967295);}
+ int nocrash_mandatory_wformat_undefbehav_11(void){return test("%+5u", 35);}
+ int nocrash_mandatory_wformat_undefbehav_12(void){return test("%+7u", 0);}
+ int nocrash_mandatory_wformat_undefbehav_13(void){return test("%+24u", 4294967295);}
+ int nocrash_mandatory_wformat_undefbehav_14(void){return test("%+.7u", 234);}
+ int nocrash_mandatory_wformat_undefbehav_15(void){return test("%+.3u", 3723);}
+ int nocrash_mandatory_wformat_undefbehav_16(void){return test("%+05u", 432);}
+ int nocrash_mandatory_wformat_undefbehav_17(void){return test("%+04u", 0);}
+ int nocrash_mandatory_wformat_undefbehav_18(void){return test("%+8.5u", 34);}
+ int nocrash_mandatory_wformat_undefbehav_19(void){return test("%+8.5u", 0);}
+ int nocrash_mandatory_wformat_undefbehav_20(void){return test("%+8.3u", 8375);}
+ int nocrash_mandatory_wformat_undefbehav_21(void){return test("%+3.7u", 3267);}
+ int nocrash_mandatory_wformat_undefbehav_22(void){return test("%+3.3u", 6983);}
+ int nocrash_mandatory_wformat_undefbehav_23(void){return test("%+-8.5u", 34);}
+ int nocrash_mandatory_wformat_undefbehav_24(void){return test("%+-8.5u", 0);}
+ int nocrash_mandatory_wformat_undefbehav_25(void){return test("%+-8.3u", 8375);}
+ int nocrash_mandatory_wformat_undefbehav_26(void){return test("%+-3.7u", 3267);}
+ int nocrash_mandatory_wformat_undefbehav_27(void){return test("%+-3.3u", 6983);}
+ int nocrash_mandatory_wformat_undefbehav_28(void){return test("%0+8.5u", 34);}
+ int nocrash_mandatory_wformat_undefbehav_29(void){return test("%0+8.5u", 0);}
+ int nocrash_mandatory_wformat_undefbehav_30(void){return test("%0+8.3u", 8375);}
+ int nocrash_mandatory_wformat_undefbehav_31(void){return test("%0+3.7u", 3267);}
+ int nocrash_mandatory_wformat_undefbehav_32(void){return test("%0+3.3u", 6983);}
+ int nocrash_mandatory_wformat_undefbehav_33(void){return test("%0+-8.5u", 34);}
+ int nocrash_mandatory_wformat_undefbehav_34(void){return test("%0+-8.5u", 0);}
+ int nocrash_mandatory_wformat_undefbehav_35(void){return test("%0+-8.3u", 8375);}
+ int nocrash_mandatory_wformat_undefbehav_36(void){return test("%0+-3.7u", 3267);}
+ int nocrash_mandatory_wformat_undefbehav_37(void){return test("%0+-3.3u", 6983);}
+ int nocrash_mandatory_wformat_undefbehav_38(void){return test("%05c", '\0');}
+ int nocrash_mandatory_wformat_undefbehav_39(void){return test("%-05c", '\0');}
+ int nocrash_mandatory_wformat_undefbehav_40(void){return test("%+lu", 22337203685477);}
 
+//nocrash tests adapted from tests contributed by phtruong
+int nocrash_mandatory_dupflag_d_asas(void){return test("%++d", 42);}
+int nocrash_mandatory_dupflag_d_spsp(void){return test("%  d", 42);}
+int nocrash_mandatory_dupflag_d_spassp(void){return test("% + d", 42);}
+int nocrash_mandatory_dupflag_d_ljljw(void){return test("%--5d", 42);}
+int nocrash_mandatory_dupflag_d_ljasljw(void){return test("%-+-5d", 42);}
+int nocrash_mandatory_dupflag_x_afaf(void){return test("%##x", 42);}
+int nocrash_mandatory_dupflag_x_afasasafljw(void){return test("%#++#-5x", 42);}
 
+//nocrash tests that came about as part of the minimal specification
+int nocrash_mandatory_c_prec_1(void){return test("%.4c", 'a');}
+int nocrash_mandatory_c_prec_2(void){return test("%.c", 'a');}
+int nocrash_mandatory_c_af(void){return test("%#c", 'a');}
+int nocrash_mandatory_c_zp_1(void){return test("%05c", 'a');}
+int nocrash_mandatory_c_zp_2(void){return test("%0c", 'a');}
+int nocrash_mandatory_c_as_1(void){return test("%+c", 'a');}
+int nocrash_mandatory_c_as_2(void){return test("%+c", -42);}
+int nocrash_mandatory_c_sp_1(void){return test("% c", 'a');}
+int nocrash_mandatory_c_sp_2(void){return test("% c", -42);}
+int nocrash_mandatory_c_size_hh(void){return test("%hhc", 'a');}
+int nocrash_mandatory_c_size_h(void){return test("%hc", 'a');}
+int nocrash_mandatory_c_size_l(void){return test("%lc", L'a');}
+int nocrash_mandatory_c_size_ll(void){return test("%llc", L'a');}
+int nocrash_mandatory_c_size_L(void){return test("%Lc", L'a');}
+int nocrash_mandatory_c_lj_nowidth(void){return test("%-c", 'a');}
+
+int nocrash_mandatory_s_af(void){return test("%#s", "hello");}
+int nocrash_mandatory_s_zp_1(void){return test("%05s", "hello");}
+int nocrash_mandatory_s_zp_2(void){return test("%0s", "hello");}
+int nocrash_mandatory_s_as_1(void){return test("%+s", "hello");}
+int nocrash_mandatory_s_sp_1(void){return test("% s", "hello");}
+int nocrash_mandatory_s_size_hh(void){return test("%hhs", "hello");}
+int nocrash_mandatory_s_size_h(void){return test("%hs", "hello");}
+int nocrash_mandatory_s_size_l(void){return test("%ls", L"hello");}
+int nocrash_mandatory_s_size_ll(void){return test("%lls", L"hello");}
+int nocrash_mandatory_s_size_L(void){return test("%Ls", L"hello");}
+int nocrash_mandatory_s_lj_nowidth(void){return test("%-s", "hello");}
+
+static int ncm_p = 5;
+int nocrash_mandatory_p_prec_1(void){return test("%.4p", &ncm_p);}
+int nocrash_mandatory_p_prec_2(void){return test("%.p", &ncm_p);}
+int nocrash_mandatory_p_af(void){return test("%#p", &ncm_p);}
+int nocrash_mandatory_p_zp_1(void){return test("%05p", &ncm_p);}
+int nocrash_mandatory_p_zp_2(void){return test("%0p", &ncm_p);}
+int nocrash_mandatory_p_as_1(void){return test("%+p", &ncm_p);}
+int nocrash_mandatory_p_as_2(void){return test("%+p", &ncm_p);}
+int nocrash_mandatory_p_sp_1(void){return test("% p", &ncm_p);}
+int nocrash_mandatory_p_sp_2(void){return test("% p", &ncm_p);}
+int nocrash_mandatory_p_size_hh(void){return test("%hhp", &ncm_p);}
+int nocrash_mandatory_p_size_h(void){return test("%hp", &ncm_p);}
+int nocrash_mandatory_p_size_l(void){return test("%lp", &ncm_p);}
+int nocrash_mandatory_p_size_ll(void){return test("%llp", &ncm_p);}
+int nocrash_mandatory_p_size_L(void){return test("%Lp", &ncm_p);}
+int nocrash_mandatory_p_lj_nowidth(void){return test("%-p", &ncm_p);}
+
+int nocrash_mandatory_d_size_L(void){return test("%Ld", 42);}
+int nocrash_mandatory_d_af(void){return test("%#d", 42);}
+int nocrash_mandatory_d_size_hhh(void){return test("%hhhd", 42);}
+int nocrash_mandatory_d_size_hhhh(void){return test("%hhhhd", 42);}
+int nocrash_mandatory_d_size_hhl(void){return test("%hhld", 42);}
+int nocrash_mandatory_d_size_hhll(void){return test("%hhlld", 42);}
+int nocrash_mandatory_d_size_llh(void){return test("%llhd", 42);}
+int nocrash_mandatory_d_size_lll(void){return test("%llld", 42);}
+int nocrash_mandatory_i_size_L(void){return test("%Li", 42);}
+int nocrash_mandatory_i_af(void){return test("%#i", 42);}
+int nocrash_mandatory_i_size_hhh(void){return test("%hhhi", 42);}
+int nocrash_mandatory_i_lj_nowidth(void){return test("%-i", 42);}
+
+int nocrash_mandatory_o_as(void){return test("%+o", 42);}
+int nocrash_mandatory_o_sp(void){return test("% o", 42);}
+int nocrash_mandatory_o_size_L(void){return test("%Lo", 42);}
+int nocrash_mandatory_o_size_hhh(void){return test("%hhho", 42);}
+int nocrash_mandatory_o_size_hhhh(void){return test("%hhhho", 42);}
+int nocrash_mandatory_o_size_hhl(void){return test("%hhlo", 42);}
+int nocrash_mandatory_o_size_hhll(void){return test("%hhllo", 42);}
+int nocrash_mandatory_o_size_llh(void){return test("%llho", 42);}
+int nocrash_mandatory_o_size_lll(void){return test("%lllo", 42);}
+int nocrash_mandatory_o_lj_nowidth(void){return test("%-o", 42);}
+
+int nocrash_mandatory_u_size_L(void){return test("%Lu", 42);}
+int nocrash_mandatory_u_af(void){return test("%#u", 42);}
+int nocrash_mandatory_u_as(void){return test("%+u", 42);}
+int nocrash_mandatory_u_sp(void){return test("% u", 42);}
+int nocrash_mandatory_u_size_hhh(void){return test("%hhhu", 42);}
+int nocrash_mandatory_u_size_hhhh(void){return test("%hhhhu", 42);}
+int nocrash_mandatory_u_size_hhl(void){return test("%hhlu", 42);}
+int nocrash_mandatory_u_size_hhll(void){return test("%hhllu", 42);}
+int nocrash_mandatory_u_size_llh(void){return test("%llhu", 42);}
+int nocrash_mandatory_u_size_lll(void){return test("%lllu", 42);}
+int nocrash_mandatory_u_lj_nowidth(void){return test("%-u", 42);}
+
+int nocrash_mandatory_x_size_L(void){return test("%Lx", 42);}
+int nocrash_mandatory_x_as(void){return test("%+x", 42);}
+int nocrash_mandatory_x_sp(void){return test("% x", 42);}
+int nocrash_mandatory_x_size_hhh(void){return test("%hhhx", 42);}
+int nocrash_mandatory_x_size_hhhh(void){return test("%hhhhx", 42);}
+int nocrash_mandatory_x_size_hhl(void){return test("%hhlx", 42);}
+int nocrash_mandatory_x_size_hhll(void){return test("%hhllx", 42);}
+int nocrash_mandatory_x_size_llh(void){return test("%llhx", 42);}
+int nocrash_mandatory_x_size_lll(void){return test("%lllx", 42);}
+int nocrash_mandatory_X_size_L(void){return test("%LX", 42);}
+int nocrash_mandatory_X_as(void){return test("%+X", 42);}
+int nocrash_mandatory_X_sp(void){return test("% X", 42);}
+int nocrash_mandatory_X_size_hhh(void){return test("%hhhX", 42);}
+int nocrash_mandatory_X_size_llh(void){return test("%llhX", 42);}
+int nocrash_mandatory_x_lj_nowidth(void){return test("%-x", 42);}
+
+int nocrash_mandatory_f_size_hh(void){return test("%hhf", 42.5);}
+int nocrash_mandatory_f_size_h(void){return test("%hf", 42.5);}
+int nocrash_mandatory_f_size_ll(void){return test("%llf", 42.5);}
+int nocrash_mandatory_f_size_lll(void){return test("%lllf", 42.5);}
+int nocrash_mandatory_f_size_llll(void){return test("%llllf", 42.5);}
+int nocrash_mandatory_f_size_LL(void){return test("%LLf", 42.5);}
+int nocrash_mandatory_f_size_Ll(void){return test("%Llf", 42.5);}
+int nocrash_mandatory_f_size_lL(void){return test("%lLf", 42.5);}
+int nocrash_mandatory_f_lj_nowidth(void){return test("%-f", 42.5);}
 
 
 
