@@ -3,7 +3,7 @@
 
 # PFT
 
-This is a unit test library and configurable tester for ft\_printf.  
+This is a unit test library and configurable tester for the 42 project ft\_printf.  
 
 By default, it can check if your *completed* printf is pretty good or not pretty good.   
 
