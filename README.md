@@ -122,7 +122,8 @@ By default, PFT collects some usage statistics on every `make`. The full list of
  - A SHA-1 hash of your `whoami` username.
  - Whether you're on the Fremont, Paris, or Moscow campus, or your `hostname` if none of those.
  - Whether it is a first install or a re-make.
- - The name of your configuration (`CONFIG_NAME` in options-config.ini)
+ - The name of your configuration (`CONFIG_NAME` in options-config.ini)  
+
 You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statistics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers. If you're a 42 student and want to know more or see the collected data, feel free to message me on slack.
 
 # Credits
