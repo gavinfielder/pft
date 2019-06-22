@@ -6,9 +6,6 @@
  * If the campus is not Fremont or Paris, your hostname is sent instead.
  * The google forms request also logs the timestamp. You can disable this by
  * setting SEND_USAGE_STATISTICS=0 in options-config.ini
- *
- * All collected data can be viewed here:
- * https://docs.google.com/spreadsheets/d/1_UxSfIVYFPQqCotnaEFNApwXchNvWLqANEum1tSvHPM/edit?usp=sharing
  */
 
 define("PFT_ROOT", dirname(__FILE__, 2));
