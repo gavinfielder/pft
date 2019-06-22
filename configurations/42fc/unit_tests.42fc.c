@@ -3263,46 +3263,46 @@ int		nocrash_nullarg_24(void){return test("%c", NULL); }
 int		nocrash_nullarg_25(void){return test("%o", NULL); }
 
 //Tests that were deleted because turning off -Wformat=0 gives a warning about undefined behavior
- int nocrash_mandatory_wformat_undefbehav_01(void){return test("%-021s", "abc");}
- int nocrash_mandatory_wformat_undefbehav_02(void){return test("%-05s", "goes over");}
- int nocrash_mandatory_wformat_undefbehav_03(void){return test("%04.3s%-7.4s", "hello", "world");}
- int nocrash_mandatory_wformat_undefbehav_04(void){return test("%021s", NULL);}
- int nocrash_mandatory_wformat_undefbehav_05(void){return test("%02s", NULL);}
- int nocrash_mandatory_wformat_undefbehav_06(void){return test("%-021s", NULL);}
- int nocrash_mandatory_wformat_undefbehav_07(void){return test("%-03s", NULL);}
- int nocrash_mandatory_wformat_undefbehav_08(void){return test("%+u", 5);}
- int nocrash_mandatory_wformat_undefbehav_09(void){return test("%+u", 5);}
- int nocrash_mandatory_wformat_undefbehav_10(void){return test("%+u", 4294967295);}
- int nocrash_mandatory_wformat_undefbehav_11(void){return test("%+5u", 35);}
- int nocrash_mandatory_wformat_undefbehav_12(void){return test("%+7u", 0);}
- int nocrash_mandatory_wformat_undefbehav_13(void){return test("%+24u", 4294967295);}
- int nocrash_mandatory_wformat_undefbehav_14(void){return test("%+.7u", 234);}
- int nocrash_mandatory_wformat_undefbehav_15(void){return test("%+.3u", 3723);}
- int nocrash_mandatory_wformat_undefbehav_16(void){return test("%+05u", 432);}
- int nocrash_mandatory_wformat_undefbehav_17(void){return test("%+04u", 0);}
- int nocrash_mandatory_wformat_undefbehav_18(void){return test("%+8.5u", 34);}
- int nocrash_mandatory_wformat_undefbehav_19(void){return test("%+8.5u", 0);}
- int nocrash_mandatory_wformat_undefbehav_20(void){return test("%+8.3u", 8375);}
- int nocrash_mandatory_wformat_undefbehav_21(void){return test("%+3.7u", 3267);}
- int nocrash_mandatory_wformat_undefbehav_22(void){return test("%+3.3u", 6983);}
- int nocrash_mandatory_wformat_undefbehav_23(void){return test("%+-8.5u", 34);}
- int nocrash_mandatory_wformat_undefbehav_24(void){return test("%+-8.5u", 0);}
- int nocrash_mandatory_wformat_undefbehav_25(void){return test("%+-8.3u", 8375);}
- int nocrash_mandatory_wformat_undefbehav_26(void){return test("%+-3.7u", 3267);}
- int nocrash_mandatory_wformat_undefbehav_27(void){return test("%+-3.3u", 6983);}
- int nocrash_mandatory_wformat_undefbehav_28(void){return test("%0+8.5u", 34);}
- int nocrash_mandatory_wformat_undefbehav_29(void){return test("%0+8.5u", 0);}
- int nocrash_mandatory_wformat_undefbehav_30(void){return test("%0+8.3u", 8375);}
- int nocrash_mandatory_wformat_undefbehav_31(void){return test("%0+3.7u", 3267);}
- int nocrash_mandatory_wformat_undefbehav_32(void){return test("%0+3.3u", 6983);}
- int nocrash_mandatory_wformat_undefbehav_33(void){return test("%0+-8.5u", 34);}
- int nocrash_mandatory_wformat_undefbehav_34(void){return test("%0+-8.5u", 0);}
- int nocrash_mandatory_wformat_undefbehav_35(void){return test("%0+-8.3u", 8375);}
- int nocrash_mandatory_wformat_undefbehav_36(void){return test("%0+-3.7u", 3267);}
- int nocrash_mandatory_wformat_undefbehav_37(void){return test("%0+-3.3u", 6983);}
- int nocrash_mandatory_wformat_undefbehav_38(void){return test("%05c", '\0');}
- int nocrash_mandatory_wformat_undefbehav_39(void){return test("%-05c", '\0');}
- int nocrash_mandatory_wformat_undefbehav_40(void){return test("%+lu", 22337203685477);}
+int nocrash_mandatory_wformat_undefbehav_01(void){return test("%-021s", "abc");}
+int nocrash_mandatory_wformat_undefbehav_02(void){return test("%-05s", "goes over");}
+int nocrash_mandatory_wformat_undefbehav_03(void){return test("%04.3s%-7.4s", "hello", "world");}
+int nocrash_mandatory_wformat_undefbehav_04(void){return test("%021s", NULL);}
+int nocrash_mandatory_wformat_undefbehav_05(void){return test("%02s", NULL);}
+int nocrash_mandatory_wformat_undefbehav_06(void){return test("%-021s", NULL);}
+int nocrash_mandatory_wformat_undefbehav_07(void){return test("%-03s", NULL);}
+int nocrash_mandatory_wformat_undefbehav_08(void){return test("%+u", 5);}
+int nocrash_mandatory_wformat_undefbehav_09(void){return test("%+u", 5);}
+int nocrash_mandatory_wformat_undefbehav_10(void){return test("%+u", 4294967295);}
+int nocrash_mandatory_wformat_undefbehav_11(void){return test("%+5u", 35);}
+int nocrash_mandatory_wformat_undefbehav_12(void){return test("%+7u", 0);}
+int nocrash_mandatory_wformat_undefbehav_13(void){return test("%+24u", 4294967295);}
+int nocrash_mandatory_wformat_undefbehav_14(void){return test("%+.7u", 234);}
+int nocrash_mandatory_wformat_undefbehav_15(void){return test("%+.3u", 3723);}
+int nocrash_mandatory_wformat_undefbehav_16(void){return test("%+05u", 432);}
+int nocrash_mandatory_wformat_undefbehav_17(void){return test("%+04u", 0);}
+int nocrash_mandatory_wformat_undefbehav_18(void){return test("%+8.5u", 34);}
+int nocrash_mandatory_wformat_undefbehav_19(void){return test("%+8.5u", 0);}
+int nocrash_mandatory_wformat_undefbehav_20(void){return test("%+8.3u", 8375);}
+int nocrash_mandatory_wformat_undefbehav_21(void){return test("%+3.7u", 3267);}
+int nocrash_mandatory_wformat_undefbehav_22(void){return test("%+3.3u", 6983);}
+int nocrash_mandatory_wformat_undefbehav_23(void){return test("%+-8.5u", 34);}
+int nocrash_mandatory_wformat_undefbehav_24(void){return test("%+-8.5u", 0);}
+int nocrash_mandatory_wformat_undefbehav_25(void){return test("%+-8.3u", 8375);}
+int nocrash_mandatory_wformat_undefbehav_26(void){return test("%+-3.7u", 3267);}
+int nocrash_mandatory_wformat_undefbehav_27(void){return test("%+-3.3u", 6983);}
+int nocrash_mandatory_wformat_undefbehav_28(void){return test("%0+8.5u", 34);}
+int nocrash_mandatory_wformat_undefbehav_29(void){return test("%0+8.5u", 0);}
+int nocrash_mandatory_wformat_undefbehav_30(void){return test("%0+8.3u", 8375);}
+int nocrash_mandatory_wformat_undefbehav_31(void){return test("%0+3.7u", 3267);}
+int nocrash_mandatory_wformat_undefbehav_32(void){return test("%0+3.3u", 6983);}
+int nocrash_mandatory_wformat_undefbehav_33(void){return test("%0+-8.5u", 34);}
+int nocrash_mandatory_wformat_undefbehav_34(void){return test("%0+-8.5u", 0);}
+int nocrash_mandatory_wformat_undefbehav_35(void){return test("%0+-8.3u", 8375);}
+int nocrash_mandatory_wformat_undefbehav_36(void){return test("%0+-3.7u", 3267);}
+int nocrash_mandatory_wformat_undefbehav_37(void){return test("%0+-3.3u", 6983);}
+int nocrash_mandatory_wformat_undefbehav_38(void){return test("%05c", '\0');}
+int nocrash_mandatory_wformat_undefbehav_39(void){return test("%-05c", '\0');}
+int nocrash_mandatory_wformat_undefbehav_40(void){return test("%+lu", 22337203685477);}
 
 //nocrash tests adapted from tests contributed by phtruong
 int nocrash_mandatory_dupflag_d_asas(void){return test("%++d", 42);}

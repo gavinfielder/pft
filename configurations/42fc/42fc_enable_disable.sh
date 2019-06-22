@@ -8,6 +8,7 @@ $PFT_ROOT/disable-test -q "*notmandatory"
 $PFT_ROOT/disable-test -q "argnum"
 $PFT_ROOT/disable-test -q "f_*reserved_values" 
 $PFT_ROOT/disable-test -q "*undefbehav" 
+$PFT_ROOT/enable-test -q "*_mandatory_*undefbehav"
 $PFT_ROOT/disable-test -q "*dblmax" 
 
 # 'NOT TESTED' under the minimal specification

@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/21 19:57:47 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/21 21:07:04 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,31 @@ static int			signaled = 0;
 ** --------------------------------------------------------------------------*/
 static int	output_to_file(char *filename, t_unit_test f)
 {
-	fpos_t		pos;
+	fpos_t		pos_stdout;
+	fpos_t		pos_stderr;
 	int			fd = dup(fileno(stdout));
+	int			fd_err = dup(fileno(stderr));
 	int			ret;
 
 	//Set up redirection of stdout
-	fgetpos(stdout, &pos);
+	fgetpos(stdout, &pos_stdout);
+	fgetpos(stderr, &pos_stderr);
 	freopen(filename, "w+", stdout);
+	freopen("/dev/null", "w+", stderr);
 	//Call the test function
 	ret = f();
 	chmod(filename, 0644);
 	//Clean up
 	fflush(stdout);
+	fflush(stderr);
 	dup2(fd, fileno(stdout));
+	dup2(fd_err, fileno(stderr));
 	close(fd);
+	close(fd_err);
 	clearerr(stdout);
-	fsetpos(stdout, &pos);
+	clearerr(stderr);
+	fsetpos(stdout, &pos_stdout);
+	fsetpos(stderr, &pos_stderr);
 	return (ret);
 }
 
