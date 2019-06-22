@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/18 14:36:47 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/21 17:30:54 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ void	log_failed_test(int test_number, int expected, int actual,
 	buff[MAX_FILE_COPY_SIZE] = '\0';
 	int bytes;
 
+	int				nocrash = 0;
+	nocrash = (strncmp(g_unit_tests[test_number].name, "nocrash_", 8) == 0);
+
 	//Open files
 	int finmine = open(OUT_ACTUAL, O_RDONLY);
 	int finlibc = open(OUT_EXPECTED, O_RDONLY);
@@ -114,9 +117,14 @@ void	log_failed_test(int test_number, int expected, int actual,
 	//Write to test results file
 	snprintf(buff, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_tests[test_number].name);
 	write(fout, buff, strlen(buff));
-	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s", g_unit_tests[test_number].first_line);
+	if (nocrash)
+	{
+		snprintf(buff, MAX_FILE_COPY_SIZE,
+			"    (nocrash test: automatically passes provided no unexpected failure)\n");
+		write(fout, buff, strlen(buff));
+	}
+	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s\n", g_unit_tests[test_number].first_line);
 	write(fout, buff, strlen(buff));
-	write(fout, "\n", 1);
 	if (timed_out)
 		write(fout, "    Timed out\n", 14);
 	else if (!signal_terminated)
@@ -325,12 +333,12 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 			failed = 1;
 		else
 			failed = 1;
+		if (timeout)
+			failed = 1;
 		run_comparison = 0;
 	}
 	else if (timeout)
-	{
 		failed = 1;
-	}
 	else if (retvals.stat_loc != 0)
 	{
 		if ((WIFEXITED(retvals.stat_loc))
@@ -396,11 +404,11 @@ static void		*timeout_thread(void *args_void)
 	//usleep fails if a signal was caught
 	if (usleep((unsigned int)(((float)TIMEOUT_SECONDS) * (1000000.0f))) < 0)
 		pthread_exit(NULL);
+	timeout = 1;
 	if (args->pid > 0) //calling thread requested a process killed on timeout
 		kill(args->pid, SIGKILL);
 	if (args->signal) //calling thread requested a signal be sent to it
 		pthread_kill(args->mainthread, args->signal);
-	timeout = 1;
 	return (NULL);
 }
 
