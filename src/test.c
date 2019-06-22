@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/21 17:30:54 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/21 19:57:47 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,11 @@ static int	output_to_file(char *filename, t_unit_test f)
 void	log_failed_test(int test_number, int expected, int actual,
 			const char *signal_terminated, int timed_out)
 {
-	char	buff[MAX_FILE_COPY_SIZE + 1];
-	buff[MAX_FILE_COPY_SIZE] = '\0';
-	int bytes;
+	char	buff1[MAX_FILE_COPY_SIZE + 1];
+	char	buff2[MAX_FILE_COPY_SIZE + 1];
+	buff1[MAX_FILE_COPY_SIZE] = '\0';
+	buff2[MAX_FILE_COPY_SIZE] = '\0';
+	int bytes, buff1_len, buff2_len;
 
 	int				nocrash = 0;
 	nocrash = (strncmp(g_unit_tests[test_number].name, "nocrash_", 8) == 0);
@@ -115,42 +117,61 @@ void	log_failed_test(int test_number, int expected, int actual,
 	}
 
 	//Write to test results file
-	snprintf(buff, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_tests[test_number].name);
-	write(fout, buff, strlen(buff));
+	snprintf(buff1, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_tests[test_number].name);
+	write(fout, buff1, strlen(buff1));
 	if (nocrash)
 	{
-		snprintf(buff, MAX_FILE_COPY_SIZE,
+		snprintf(buff1, MAX_FILE_COPY_SIZE,
 			"    (nocrash test: automatically passes provided no unexpected failure)\n");
-		write(fout, buff, strlen(buff));
+		write(fout, buff1, strlen(buff1));
 	}
-	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s\n", g_unit_tests[test_number].first_line);
-	write(fout, buff, strlen(buff));
+	snprintf(buff1, MAX_FILE_COPY_SIZE, "    First line of code: %s\n", g_unit_tests[test_number].first_line);
+	write(fout, buff1, strlen(buff1));
 	if (timed_out)
 		write(fout, "    Timed out\n", 14);
 	else if (!signal_terminated)
 	{
-		snprintf(buff, MAX_FILE_COPY_SIZE, "    Returned expected %i, actual %i", expected, actual);
-		write(fout, buff, strlen(buff));
+		buff1_len = -1;
+		buff2_len = -1;
+		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected return value : %i\n      your return value     : %i", expected, actual);
+		write(fout, buff1, strlen(buff1));
 		write(fout, "\n", 1);
-		snprintf(buff, MAX_FILE_COPY_SIZE, "      expected : \"");
-		write(fout, buff, strlen(buff));
+		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected output : \"");
+		write(fout, buff1, strlen(buff1));
 		if (finlibc > 0)
 		{
-			bytes = read(finlibc, buff, MAX_FILE_COPY_SIZE);
-			if (bytes > 0) write(fout, buff, bytes);
+			bytes = read(finlibc, buff1, MAX_FILE_COPY_SIZE);
+			if (bytes > 0)
+				write(fout, buff1, bytes);
+			buff1_len = bytes;
 		}
 		else
 			write(fout, "(output doesn't exist or an error occurred)", 43);
-		snprintf(buff, MAX_FILE_COPY_SIZE, "\"\n      actual   : \"");
-		write(fout, buff, strlen(buff));
+		snprintf(buff2, MAX_FILE_COPY_SIZE, "\"\n      your output     : \"");
+		write(fout, buff2, strlen(buff2));
 		if (finmine > 0)
 		{
-			bytes = read(finmine, buff, MAX_FILE_COPY_SIZE);
-			if (bytes > 0) write(fout, buff, bytes);
+			bytes = read(finmine, buff2, MAX_FILE_COPY_SIZE);
+			if (bytes > 0)
+				write(fout, buff2, bytes);
+			buff2_len = bytes;
 		}
 		else
 			write(fout, "(output doesn't exist or an error occurred)", 43);
 		write(fout, "\"\n", 2);
+		//Print nonprintable hex output
+		if (buff1_len >= 0)
+		{
+			write(fout, "      expected (nonprintable as hex) : \"", 40);
+			my_putnchar_np_hex_fd(fout, buff1, buff1_len);
+			write(fout, "\"\n", 2);
+		}
+		if (buff2_len >= 0)
+		{
+			write(fout, "      actual   (nonprintable as hex) : \"", 40);
+			my_putnchar_np_hex_fd(fout, buff2, buff2_len);
+			write(fout, "\"\n", 2);
+		}
 	}
 	else
 	{

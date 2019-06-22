@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 20:09:10 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/04 20:18:12 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/21 19:41:39 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,4 +337,31 @@ char		**my_strsplit_grouping(char const *s, char c, char *groupers)
 char		**my_strsplit(char const *s, char c)
 {
 	return (my_strsplit_grouping(s, c, ""));
+}
+
+void				my_printhexbyte_fd(int fd, const void *loc)
+{
+	const char base[] = "0123456789abcdef";
+	if (*((unsigned char *)loc) < 16)
+		write(fd, "0", 1);
+	else
+		write(fd, base + (*((unsigned char *)loc) / 16), 1);
+	write(fd, base + (*((unsigned char *)loc) % 16), 1);
+}
+
+void	my_putnchar_np_hex_fd(int fd, const char *str, int n)
+{
+	int i;
+
+	i = -1;
+	while (++i < n)
+	{
+		if (str[i] >= 32 && str[i] <= 126)
+			my_putchar_fd(str[i], fd);
+		else
+		{
+			write(fd, "\\x", 2);
+			my_printhexbyte_fd(fd, str + i);
+		}
+	}
 }

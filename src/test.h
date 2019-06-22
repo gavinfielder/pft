@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/18 14:37:04 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/21 19:37:33 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,5 +340,6 @@ void 					convert_nonalphanum_to_wildcard(char *str);
 void					my_putnbr_fd(int nb, int fd);
 char					**my_strsplit(char const *s, char c);
 void					my_destroy_nullterm_ptrarray(void ***arr);
+void					my_putnchar_np_hex_fd(int fd, const char *str, int n);
 
 #endif
