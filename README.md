@@ -74,6 +74,10 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 `lldb ./test 42`   
 
+# TEMPORARY NOTICE
+
+Fork mode is not properly reporting expected return value ([issue #11](https://github.com/gavinfielder/pft/issues/11)). The tests results are still accurate in fork mode, but the return values for some tests are not the actual value returned. I don't currently have time to figure out why, so the default behavior is now non-fork mode, which works perfectly fine. The only thing to be aware of, for most users, is that this disables the timeout functionality, so if your code infinitely loops, your code will hang. I'll re-enable fork mode as the default behavior as soon as I have time to investigate and fix this. 
+
 # How it works, in Brief
 
 The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
