@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/21 21:07:04 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/07/08 23:08:32 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static int	output_to_file(char *filename, t_unit_test f)
 void	log_failed_test(int test_number, int expected, int actual,
 			const char *signal_terminated, int timed_out)
 {
+	char	issue_11_warning[] = "      WARNING: The return values reported here may be bugged on some systems.\n               See https://github.com/gavinfielder/pft/issues/11\n               Run in non-fork mode (-X) to ensure accurate return value\n               reporting, or run test_pipes.sh to see if your system has this\n               bug. This bug does not affect the pass/fail result of a test,\n               nor the function output--only the reported return value.\n";
 	char	buff1[MAX_FILE_COPY_SIZE + 1];
 	char	buff2[MAX_FILE_COPY_SIZE + 1];
 	buff1[MAX_FILE_COPY_SIZE] = '\0';
@@ -140,6 +141,9 @@ void	log_failed_test(int test_number, int expected, int actual,
 		write(fout, "    Timed out\n", 14);
 	else if (!signal_terminated)
 	{
+		if (options.run_test == run_test_fork) {
+			write(fout, issue_11_warning, strlen(issue_11_warning));
+		}
 		buff1_len = -1;
 		buff2_len = -1;
 		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected return value : %i\n      your return value     : %i", expected, actual);
@@ -405,7 +409,7 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 		fclose(fplibc);
 	}
 
-	if (failed)
+	if (failed || FORCE_TEST_LOG)
 	{
 		log_failed_test(test_number, retvals.ret_val_libc,
 				retvals.ret_val_mine,

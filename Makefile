@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/06/21 15:13:00 by gfielder         ###   ########.fr        #
+#    Updated: 2019/07/08 22:40:24 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D TEST_LOG="\"$(TEST_LOG)\"" \
 			 -D NUMBER_OF_TESTS=$(NUMBER_OF_TESTS) \
 			 -D TEST_OUTDATED_TIME=$(TEST_OUTDATED_TIME) \
-			 -D LEAKS_TEST_CMD="$(LEAKS_TEST_CMD)"
+			 -D LEAKS_TEST_CMD="$(LEAKS_TEST_CMD)" \
+			 -D FORCE_TEST_LOG=$(FORCE_TEST_LOG)
 ifeq ($(USE_SEPARATE_LIBFT),1)
 LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else
