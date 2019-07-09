@@ -74,11 +74,9 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 `lldb ./test 42`   
 
-# TEMPORARY NOTICE
+# Known Issues
 
-Fork mode (`-x`) is not properly reporting expected return value in results.txt ([issue #11](https://github.com/gavinfielder/pft/issues/11)). The tests results are still accurate in fork mode, but the expected (and actual) return values in results.txt for some tests are not the actual values returned. I don't currently have time to figure out why, so the default behavior is now non-fork mode, which works perfectly fine.  
-
-The only thing to be aware of, for most users, is that this disables the timeout functionality, so if your code infinitely loops, PFT will hang. I'll re-enable fork mode as the default behavior as soon as I have time to investigate and fix this. 
+Fork mode (`-x`) is currently not properly reporting expected return value in results.txt for many tests ([issue #11](https://github.com/gavinfielder/pft/issues/11)). This bug does not affect the pass/fail result of a test. Running in non-fork mode (`-X`) will show the correct return values.
 
 # How it works, in Brief
 
