@@ -128,7 +128,7 @@ void	log_failed_test(int test_number, int expected, int actual,
 	}
 
 	//Print issue 11 warning
-	if (options.run_test == run_test_fork && issue_11_warning_printed == 0) {
+	if (!IGNORE_RETURN_VALUE && options.run_test == run_test_fork && issue_11_warning_printed == 0) {
 		write(fout, issue_11_warning, strlen(issue_11_warning));
 		issue_11_warning_printed = 1;
 	}
@@ -151,9 +151,11 @@ void	log_failed_test(int test_number, int expected, int actual,
 	{
 		buff1_len = -1;
 		buff2_len = -1;
-		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected return value : %i\n      your return value     : %i", expected, actual);
-		write(fout, buff1, strlen(buff1));
-		write(fout, "\n", 1);
+        if (!IGNORE_RETURN_VALUE) {
+    		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected return value : %i\n      your return value     : %i", expected, actual);
+		    write(fout, buff1, strlen(buff1));
+	    	write(fout, "\n", 1);
+        }
 		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected output : \"");
 		write(fout, buff1, strlen(buff1));
 		if (finlibc > 0)
