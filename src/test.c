@@ -103,7 +103,7 @@ static int	output_to_file(char *filename, t_unit_test f)
 void	log_failed_test(int test_number, int expected, int actual,
 			const char *signal_terminated, int timed_out)
 {
-	char	issue_11_warning[] = "WARNING: The return values reported here may be bugged on some systems.\n          See https://github.com/gavinfielder/pft/issues/11\n          Run in non-fork mode (-X) to ensure accurate return value\n          reporting, or run test_pipes.sh to see if your system has this\n          bug. This bug does not affect the pass/fail result of a test,\n          nor the function output--only the reported return value.\n\n\n";
+	char	issue_11_warning[] = "WARNING: The return values reported here may be bugged on some systems.\n          See https://github.com/gavinfielder/pft/issues/11\n          Run in non-fork mode (-X) to ensure accurate return value\n          reporting, set IGNORE_RETURN_VALUE=1 in options-config.ini,\n          or run test_pipes.sh to see if your system has this bug.\n          This bug does not affect the pass/fail result of a test, nor\n          the function output--only the reported return value.\n\n\n";
 	static int issue_11_warning_printed = 0;
 	char	buff1[MAX_FILE_COPY_SIZE + 1];
 	char	buff2[MAX_FILE_COPY_SIZE + 1];
