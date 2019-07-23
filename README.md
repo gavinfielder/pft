@@ -3,7 +3,7 @@
 
 # PFT
 
-This is a unit test library and configurable tester for ft\_printf.  
+This is a unit test library and configurable tester for the 42 project ft\_printf.  
 
 By default, it can check if your *completed* printf is pretty good or not pretty good.   
 
@@ -21,6 +21,7 @@ Other than this, it should be completely general to all ft\_printf projects.
 
 ### System Requirements (for computers outside the lab)
 Requires PHP. All 42 lab computers should have PHP installed.
+Other requirements may be necessary--open an issue if you find one.
 
 # Installation
 
@@ -74,6 +75,10 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 `lldb ./test 42`   
 
+# Known Issues
+
+Fork mode (`-x`) is currently not properly reporting expected return value in results.txt for many tests ([issue #11](https://github.com/gavinfielder/pft/issues/11)). This bug does not affect the pass/fail result of a test. Running in non-fork mode (`-X`) will show the correct return values.
+
 # How it works, in Brief
 
 The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
@@ -118,7 +123,13 @@ I occasionally get suggestions for the unit test library. I keep this list to ke
 
 # Usage Statistics
 
-By default, PFT sends a SHA-1 hash of your username and whether you're on the Fremont or Paris campus on every `make`. You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statitics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers. If you're a 42 student and want to know more or see the collected data, feel free to message me on slack.
+By default, PFT collects some usage statistics on every `make`. The full list of data collected is:
+ - A SHA-1 hash of your `whoami` username.
+ - Whether you're on the Fremont, Paris, or Moscow campus, or your `hostname` if none of those.
+ - Whether it is a first install or a re-make.
+ - The name of your configuration (`CONFIG_NAME` in options-config.ini)  
+
+You can disable this behavior in options-config.ini, and/or see exactly what the script does in src/usage\_statistics.php. My reason in doing this is to have real usage data to show recruiters and hiring managers. If you're a 42 student and want to know more or see the collected data, feel free to message me on slack.
 
 # Credits
 

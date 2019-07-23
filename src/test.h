@@ -6,18 +6,20 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 19:10:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 17:49:18 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/21 19:37:33 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_H
 # define TEST_H
+# define _GNU_SOURCE
 
 /* ----------------------------------------------------------------------------
 ** Secondary includes
 ** --------------------------------------------------------------------------*/
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -33,7 +35,7 @@
 #include <sys/wait.h>
 #include <time.h>
 #include <float.h>
-
+#include <termios.h>
 #include "help.h"
 
 /* ----------------------------------------------------------------------------
@@ -223,6 +225,8 @@ typedef struct			s_pft_options
 	char				log_write_enabled : 1;
 	char				print_info: 1;
 	char				refresh_results: 1;
+	char				print_responsive: 1;
+	char				cleanup: 1;
 }						t_pft_options;
 
 //Entries in the test history
@@ -338,5 +342,6 @@ void 					convert_nonalphanum_to_wildcard(char *str);
 void					my_putnbr_fd(int nb, int fd);
 char					**my_strsplit(char const *s, char c);
 void					my_destroy_nullterm_ptrarray(void ***arr);
+void					my_putnchar_np_hex_fd(int fd, const char *str, int n);
 
 #endif

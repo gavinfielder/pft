@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:02:15 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/06 16:54:35 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/18 14:14:04 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,18 @@ int		help_conf_parse_option(char *str)
 			return (1);
 		case 'A':
 			help_list_item("A", "ignore disabled tests");
+			return (1);
+		case 'c':
+			help_list_item("c", "Print responsive to window width");
+			return (1);
+		case 'C':
+			help_list_item("C", "print standardized output");
+			return (1);
+		case 'g':
+			help_list_item("g", "Remove temporary files after run");
+			return (1);
+		case 'G':
+			help_list_item("G", "Leave temporary files after run");
 			return (1);
 		case 's':
 			help_list_item("s", "signal handling enabled");

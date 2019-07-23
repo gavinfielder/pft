@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/06/17 00:53:30 by gfielder         ###   ########.fr        #
+#    Updated: 2019/07/08 22:40:24 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,17 @@
 #      User options are now in options-config.ini
 # ------------------------------------------------------------------------------
 
-OVERRIDE_EXISTS=$(shell find options-config.ini.override | grep -c ".*")
+OVERRIDE_EXISTS=$(shell find options-config.ini.override 2>/dev/null | grep -c ".*")
 
-ifeq ($(OVERRIDE_EXISTS),1)
-include options-config.ini.override
-else
+ifeq ($(OVERRIDE_EXISTS),0)
 include options-config.ini
+else
+include options-config.ini.override
 endif
 
 CC=clang
 INC=-I src
 TEST_LOG=history.csv
-TEST_RESULTS=results.txt
 TEST_OUT_ACTUAL=test.mine
 TEST_OUT_EXPECTED=test.libc
 SRC_TEST=src/main.c src/test.c src/options.c src/utils.c \
@@ -44,11 +43,15 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D TEST_LOG="\"$(TEST_LOG)\"" \
 			 -D NUMBER_OF_TESTS=$(NUMBER_OF_TESTS) \
 			 -D TEST_OUTDATED_TIME=$(TEST_OUTDATED_TIME) \
-			 -D LEAKS_TEST_CMD="$(LEAKS_TEST_CMD)"
+			 -D LEAKS_TEST_CMD="$(LEAKS_TEST_CMD)" \
+			 -D FORCE_TEST_LOG=$(FORCE_TEST_LOG)
 ifeq ($(USE_SEPARATE_LIBFT),1)
 LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else
 LIB=
+endif
+ifeq ($(INCLUDE_LIBPTHREAD),1)
+LIB +=	-lpthread
 endif
 
 TEST_HISTORY_MOD_TIME:=$(shell stat -r $(TEST_LOG) 2> /dev/null | awk '{ print $$9 }' 2> /dev/null)
@@ -57,13 +60,16 @@ ifndef TEST_HISTORY_MOD_TIME
 TEST_HISTORY_MOD_TIME:=0
 endif
 
+# testing:
+	# @echo "$(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME)"
+
 all: $(TEST_ONAME)
 
 $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_index check_history_remove
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
-	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS)
+	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB)  $(SRC_TEST) $(INDEXED_TESTS) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME)
 	@./src/usage_statistics.php &>/dev/null &
 	@echo "\x1B[32m=============================================================\x1B[0m"
 	@echo "\x1B[32m  printftester2000 (aka PFT)\x1B[0m - \x1B[2mmade by gfielder@42.us.org\x1B[0m"
@@ -83,9 +89,11 @@ test_index: $(UNIT_TEST_FILE)
 .INTERMEDIATE: check_history_remove
 check_history_remove:
 	@if [ $(REMOVE_HISTORY_WHEN_TESTS_NEW) -eq 1 ] ; then \
-		if [ $(UNIT_TESTS_MOD_TIME) -gt $(TEST_HISTORY_MOD_TIME) ] ; then \
-			rm -rf $(TEST_LOG) ; \
-		fi \
+        if ! [ -z "$(UNIT_TESTS_MOD_TIME)" ] ; then \
+    		if [ $(UNIT_TESTS_MOD_TIME) -gt $(TEST_HISTORY_MOD_TIME) ] ; then \
+    			rm -rf $(TEST_LOG) ; \
+    		fi \
+        fi \
 	fi
 
 $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME):

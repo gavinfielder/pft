@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:53:02 by gfielder          #+#    #+#             */
-/*   Updated: 2019/05/18 18:59:07 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/07/09 00:00:07 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,31 @@ static int			signaled = 0;
 ** --------------------------------------------------------------------------*/
 static int	output_to_file(char *filename, t_unit_test f)
 {
-	fpos_t		pos;
+	fpos_t		pos_stdout;
+	fpos_t		pos_stderr;
 	int			fd = dup(fileno(stdout));
+	int			fd_err = dup(fileno(stderr));
 	int			ret;
 
 	//Set up redirection of stdout
-	fgetpos(stdout, &pos);
+	fgetpos(stdout, &pos_stdout);
+	fgetpos(stderr, &pos_stderr);
 	freopen(filename, "w+", stdout);
+	freopen("/dev/null", "w+", stderr);
 	//Call the test function
 	ret = f();
 	chmod(filename, 0644);
 	//Clean up
 	fflush(stdout);
+	fflush(stderr);
 	dup2(fd, fileno(stdout));
+	dup2(fd_err, fileno(stderr));
 	close(fd);
+	close(fd_err);
 	clearerr(stdout);
-	fsetpos(stdout, &pos);
+	clearerr(stderr);
+	fsetpos(stdout, &pos_stdout);
+	fsetpos(stderr, &pos_stderr);
 	return (ret);
 }
 
@@ -94,9 +103,16 @@ static int	output_to_file(char *filename, t_unit_test f)
 void	log_failed_test(int test_number, int expected, int actual,
 			const char *signal_terminated, int timed_out)
 {
-	char	buff[MAX_FILE_COPY_SIZE + 1];
-	buff[MAX_FILE_COPY_SIZE] = '\0';
-	int bytes;
+	char	issue_11_warning[] = "WARNING: The return values reported here may be bugged on some systems.\n          See https://github.com/gavinfielder/pft/issues/11\n          Run in non-fork mode (-X) to ensure accurate return value\n          reporting, set IGNORE_RETURN_VALUE=1 in options-config.ini,\n          or run test_pipes.sh to see if your system has this bug.\n          This bug does not affect the pass/fail result of a test, nor\n          the function output--only the reported return value.\n\n\n";
+	static int issue_11_warning_printed = 0;
+	char	buff1[MAX_FILE_COPY_SIZE + 1];
+	char	buff2[MAX_FILE_COPY_SIZE + 1];
+	buff1[MAX_FILE_COPY_SIZE] = '\0';
+	buff2[MAX_FILE_COPY_SIZE] = '\0';
+	int bytes, buff1_len, buff2_len;
+
+	int				nocrash = 0;
+	nocrash = (strncmp(g_unit_tests[test_number].name, "nocrash_", 8) == 0);
 
 	//Open files
 	int finmine = open(OUT_ACTUAL, O_RDONLY);
@@ -111,38 +127,71 @@ void	log_failed_test(int test_number, int expected, int actual,
 		return ;
 	}
 
+	//Print issue 11 warning
+	if (!IGNORE_RETURN_VALUE && options.run_test == run_test_fork && issue_11_warning_printed == 0) {
+		write(fout, issue_11_warning, strlen(issue_11_warning));
+		issue_11_warning_printed = 1;
+	}
+
 	//Write to test results file
-	snprintf(buff, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_tests[test_number].name);
-	write(fout, buff, strlen(buff));
-	snprintf(buff, MAX_FILE_COPY_SIZE, "    First line of code: %s", g_unit_tests[test_number].first_line);
-	write(fout, buff, strlen(buff));
-	write(fout, "\n", 1);
+
+	snprintf(buff1, MAX_FILE_COPY_SIZE, "Test %3i (%s) : FAILED.\n", test_number, g_unit_tests[test_number].name);
+	write(fout, buff1, strlen(buff1));
+	if (nocrash)
+	{
+		snprintf(buff1, MAX_FILE_COPY_SIZE,
+			"    (nocrash test: automatically passes provided no unexpected failure)\n");
+		write(fout, buff1, strlen(buff1));
+	}
+	snprintf(buff1, MAX_FILE_COPY_SIZE, "    First line of code: %s\n", g_unit_tests[test_number].first_line);
+	write(fout, buff1, strlen(buff1));
 	if (timed_out)
 		write(fout, "    Timed out\n", 14);
 	else if (!signal_terminated)
 	{
-		snprintf(buff, MAX_FILE_COPY_SIZE, "    Returned expected %i, actual %i", expected, actual);
-		write(fout, buff, strlen(buff));
-		write(fout, "\n", 1);
-		snprintf(buff, MAX_FILE_COPY_SIZE, "      expected : \"");
-		write(fout, buff, strlen(buff));
+		buff1_len = -1;
+		buff2_len = -1;
+        if (!IGNORE_RETURN_VALUE) {
+    		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected return value : %i\n      your return value     : %i", expected, actual);
+		    write(fout, buff1, strlen(buff1));
+	    	write(fout, "\n", 1);
+        }
+		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected output : \"");
+		write(fout, buff1, strlen(buff1));
 		if (finlibc > 0)
 		{
-			bytes = read(finlibc, buff, MAX_FILE_COPY_SIZE);
-			if (bytes > 0) write(fout, buff, bytes);
+			bytes = read(finlibc, buff1, MAX_FILE_COPY_SIZE);
+			if (bytes > 0)
+				write(fout, buff1, bytes);
+			buff1_len = bytes;
 		}
 		else
 			write(fout, "(output doesn't exist or an error occurred)", 43);
-		snprintf(buff, MAX_FILE_COPY_SIZE, "\"\n      actual   : \"");
-		write(fout, buff, strlen(buff));
+		snprintf(buff2, MAX_FILE_COPY_SIZE, "\"\n      your output     : \"");
+		write(fout, buff2, strlen(buff2));
 		if (finmine > 0)
 		{
-			bytes = read(finmine, buff, MAX_FILE_COPY_SIZE);
-			if (bytes > 0) write(fout, buff, bytes);
+			bytes = read(finmine, buff2, MAX_FILE_COPY_SIZE);
+			if (bytes > 0)
+				write(fout, buff2, bytes);
+			buff2_len = bytes;
 		}
 		else
 			write(fout, "(output doesn't exist or an error occurred)", 43);
 		write(fout, "\"\n", 2);
+		//Print nonprintable hex output
+		if (buff1_len >= 0)
+		{
+			write(fout, "      expected (nonprintable as hex) : \"", 40);
+			my_putnchar_np_hex_fd(fout, buff1, buff1_len);
+			write(fout, "\"\n", 2);
+		}
+		if (buff2_len >= 0)
+		{
+			write(fout, "      actual   (nonprintable as hex) : \"", 40);
+			my_putnchar_np_hex_fd(fout, buff2, buff2_len);
+			write(fout, "\"\n", 2);
+		}
 	}
 	else
 	{
@@ -325,12 +374,12 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 			failed = 1;
 		else
 			failed = 1;
+		if (timeout)
+			failed = 1;
 		run_comparison = 0;
 	}
 	else if (timeout)
-	{
 		failed = 1;
-	}
 	else if (retvals.stat_loc != 0)
 	{
 		if ((WIFEXITED(retvals.stat_loc))
@@ -367,7 +416,7 @@ static int	evaluate_test_results(t_retvals retvals, int test_number)
 		fclose(fplibc);
 	}
 
-	if (failed)
+	if (failed || FORCE_TEST_LOG)
 	{
 		log_failed_test(test_number, retvals.ret_val_libc,
 				retvals.ret_val_mine,
@@ -396,11 +445,11 @@ static void		*timeout_thread(void *args_void)
 	//usleep fails if a signal was caught
 	if (usleep((unsigned int)(((float)TIMEOUT_SECONDS) * (1000000.0f))) < 0)
 		pthread_exit(NULL);
+	timeout = 1;
 	if (args->pid > 0) //calling thread requested a process killed on timeout
 		kill(args->pid, SIGKILL);
 	if (args->signal) //calling thread requested a signal be sent to it
 		pthread_kill(args->mainthread, args->signal);
-	timeout = 1;
 	return (NULL);
 }
 
@@ -466,7 +515,7 @@ static void		*read_retvals_pipe(void *args_void)
 	siginterrupt(SIGUSR2, 1);
 
 	bzero(&(args->retvals), sizeof(t_retvals));
-	
+
 	while (read(args->fd, &c, 1) > 0)
 	{
 		init_mine = 1;
@@ -484,6 +533,7 @@ static void		*read_retvals_pipe(void *args_void)
 		args->retvals.ret_val_mine = -5;
 	signal(SIGUSR2, catch_timeout_signal);
 	siginterrupt(SIGUSR2, 1);
+
 	while (read(args->fd, &c, 1) > 0)
 	{
 		init_libc = 1;
@@ -593,75 +643,6 @@ int			run_test_fork(int test_number)
 	return (failed);
 }
 
-/*
-void	set_option_fork(void) { options.run_test = run_test_fork; }
-void	set_option_nofork(void) { options.run_test = run_test_nofork; }
-void	set_option_notimeout(void) { options.use_timeout = 0; }
-void	set_option_usetimeout(void) { options.use_timeout = 1; }
-void	set_option_loghistory(void) { options.log_history = 1; }
-void	set_option_nologhistory(void) { options.log_history = 0; }
-void	set_option_filter_failingoff(void) { options.filter_run_failing = 0; }
-void	set_option_filter_failingon(void) { options.filter_run_failing = 1; }
-void	set_option_filter_passingoff(void) { options.filter_run_passing = 0; }
-void	set_option_filter_passingon(void) { options.filter_run_passing = 1; }
-void	set_option_filter_outdatedoff(void) { options.filter_run_outdated = 0; }
-void	set_option_filter_outdatedon(void) { options.filter_run_outdated = 1; }
-void	set_option_filter_nohistoryon(void) { options.filter_run_nohistory = 1; }
-void	set_option_filter_nohistoryoff(void) { options.filter_run_nohistory = 0; }
-void	set_option_rundisabled(void) { options.filter_run_disabled = 1; }
-void	set_option_norundisabled(void) { options.filter_run_disabled = 0; }
-void	set_option_leakstest(void)
-{ options.run_leaks_test = 1; options.run_test = run_test_nofork; options.use_timeout = 0; }
-void	set_option_noleakstest(void) { options.run_leaks_test = 0; }
-void	set_option_handlesignals(void) { options.handle_signals = 1; }
-void	set_option_nohandlesignals(void) { options.handle_signals = 0; }
-void	set_option_nowritelog(void) { options.log_write_enabled = 0; }
-void	set_option_noprintinfo(void) { options.print_info = 0; }
-void	set_option_printinfo(void) { options.print_info = 1; }
-void	set_option_refreshresults(void) { options.refresh_results = 1; }
-void	set_option_norefreshresults(void) { options.refresh_results = 0; }
-
-//Accessors
-int		get_option_loghistory(void) { return options.log_history; }
-int		get_option_writelog(void) { return options.log_write_enabled; }
-int		get_option_printinfo(void) { return options.print_info; }
-
-void	options_check(void)
-{
-	if (options.run_leaks_test && options.run_test == run_test_fork)
-	{
-		dprintf(2, "leaks test (-k) must be run in non-forking mode (-X). Run with -kX.\n");
-		exit(-1);
-	}
-	if (options.use_timeout && options.run_test == run_test_nofork)
-	{
-		dprintf(2, "Notice: timeout (-t) is only available in forking mode (-x).\n");
-		fflush(stdout);
-	}
-
-	if (DEBUG)
-	{
-		printf("Options selected:\n");
-		if (options.run_test == run_test_nofork)
-			printf("   options.run_test = run_test_nofork\n");
-		else if (options.run_test == run_test_fork)
-			printf("   options.run_test = run_test_fork\n");
-		else
-			printf("   options.run_test = %p\n", options.run_test);
-		printf("   options.use_timeout = %i\n", options.use_timeout);
-		printf("   options.log_history = %i\n", options.log_history);
-		printf("   options.filter_run_failing = %i\n", options.filter_run_failing);
-		printf("   options.filter_run_passing = %i\n", options.filter_run_passing);
-		printf("   options.filter_run_outdated = %i\n", options.filter_run_outdated);
-		printf("   options.filter_run_nohistory = %i\n", options.filter_run_nohistory);
-		printf("   options.filter_run_disabled = %i\n", options.filter_run_disabled);
-		printf("   options.run_leaks_test = %i\n", options.run_leaks_test);
-		printf("   options.handle_signals = %i\n", options.handle_signals);
-		printf("\n");
-		fflush(stdout);
-	}
-}*/
-
 /* ----------------------------------------------------------------------------
 ** Returns 1 if options allow test to run, 0 if it is filtered out
 ** --------------------------------------------------------------------------*/
@@ -714,6 +695,15 @@ void	run_init(void)
 }
 
 /* ----------------------------------------------------------------------------
+** Removes temporary files created by a test run
+** --------------------------------------------------------------------------*/
+void	cleanup_temp_files()
+{
+	unlink(OUT_ACTUAL);
+	unlink(OUT_EXPECTED);
+}
+
+/* ----------------------------------------------------------------------------
 ** Runs all the tests that match the search pattern
 ** --------------------------------------------------------------------------*/
 void	run_search_tests(t_unit_tester_args *args)
@@ -757,6 +747,8 @@ void	run_search_tests(t_unit_tester_args *args)
 			LEAKS_TEST_CMD;
 		}
 	}
+	if (get_options().cleanup)
+		cleanup_temp_files();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }
 
@@ -790,5 +782,7 @@ void	run_test_range(t_unit_tester_args *args)
 			LEAKS_TEST_CMD;
 		}
 	}
+	if (get_options().cleanup)
+		cleanup_temp_files();
 	exit(0); //needed in non-fork mode in case a test segfaulted
 }

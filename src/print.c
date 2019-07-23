@@ -6,10 +6,11 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:08:06 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/15 23:53:35 by gfielder         ###   ########.fr       */
+/*   Updated: 2019/06/18 14:03:45 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _GNU_SOURCE
 #include <time.h>
 #include <stdint.h>
 #include <sys/ioctl.h>
@@ -32,15 +33,26 @@ static char test_start_fmt_dynamic_buffer[100];
 
 uint16_t		tty_get_window_width(void)
 {
+#ifdef TIOCGWINSZ
+    struct winsize ws;
+    if (ioctl(1, TIOCGWINSZ, &ws) == 0)
+    {
+        return (ws.ws_col);
+    }
+    return (0);
+#else
 	struct ttysize	ws;
-
 	ioctl(0, TIOCGWINSZ, &ws);
 	return (ws.ts_cols);
+#endif
 }
 
 void			init_printing(void)
 {
-	window_width = tty_get_window_width();
+	if (!(get_options().print_responsive))
+		window_width = 80;
+	else
+		window_width = tty_get_window_width();
 	now = time(NULL);
 	if (DEBUG)
 		printf("window width: %hu\n", window_width);
@@ -60,6 +72,8 @@ void			init_printing(void)
 	else
 	{
 		int field_width = window_width - 46;
+		if (field_width > 65)
+			field_width = 65;
 		sprintf(test_start_fmt_dynamic_buffer, "Test %%4i:  %%-%is [",
 				field_width);
 		test_start_fmt_str = test_start_fmt_dynamic_buffer;
