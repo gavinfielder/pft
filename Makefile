@@ -46,9 +46,12 @@ TEST_DEFINES=-D OUT_ACTUAL="\"$(TEST_OUT_ACTUAL)\"" \
 			 -D LEAKS_TEST_CMD="$(LEAKS_TEST_CMD)" \
 			 -D FORCE_TEST_LOG=$(FORCE_TEST_LOG)
 ifeq ($(USE_SEPARATE_LIBFT),1)
-LIB=-lpthread $(LIBFT_DIR_PATH)/$(LIBFT_NAME)
+LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else
-LIB=-lpthread
+LIB=
+endif
+ifeq ($(INCLUDE_LIBPTHREAD),1)
+LIB +=	-lpthread
 endif
 
 TEST_HISTORY_MOD_TIME:=$(shell stat -r $(TEST_LOG) 2> /dev/null | awk '{ print $$9 }' 2> /dev/null)
