@@ -21,6 +21,7 @@ Other than this, it should be completely general to all ft\_printf projects.
 
 ### System Requirements (for computers outside the lab)
 Requires PHP. All 42 lab computers should have PHP installed.
+Other requirements may be necessary--open an issue if you find one.
 
 # Installation
 
