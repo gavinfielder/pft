@@ -20,7 +20,7 @@ You have to have a Makefile in your project directory that will compile libftpri
 Other than this, it should be completely general to all ft\_printf projects.  
 
 ### System Requirements (for computers outside the lab)
-Requires PHP. All 42 lab computers should have PHP installed.  
+Requires PHP. All 42 lab computers should have PHP installed. See also [Compatibility with Other Systems](https://github.com/gavinfielder/pft/wiki/Compatibility-with-Other-Systems).
 
 Other requirements may be necessary--open an issue if you find one.
 
