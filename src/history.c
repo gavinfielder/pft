@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _GNU_SOURCE
 #include <time.h>
 #include <string.h>
 #include "test.h"

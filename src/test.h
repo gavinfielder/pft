@@ -12,12 +12,14 @@
 
 #ifndef TEST_H
 # define TEST_H
+# define _GNU_SOURCE
 
 /* ----------------------------------------------------------------------------
 ** Secondary includes
 ** --------------------------------------------------------------------------*/
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -33,7 +35,7 @@
 #include <sys/wait.h>
 #include <time.h>
 #include <float.h>
-
+#include <termios.h>
 #include "help.h"
 
 /* ----------------------------------------------------------------------------
