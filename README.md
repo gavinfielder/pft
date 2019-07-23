@@ -20,7 +20,8 @@ You have to have a Makefile in your project directory that will compile libftpri
 Other than this, it should be completely general to all ft\_printf projects.  
 
 ### System Requirements (for computers outside the lab)
-Requires PHP. All 42 lab computers should have PHP installed.
+Requires PHP. All 42 lab computers should have PHP installed.  
+
 Other requirements may be necessary--open an issue if you find one.
 
 # Installation
@@ -77,11 +78,11 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 # Known Issues
 
-Fork mode (`-x`) is currently not properly reporting expected return value in results.txt for many tests ([issue #11](https://github.com/gavinfielder/pft/issues/11)). This bug does not affect the pass/fail result of a test. Running in non-fork mode (`-X`) will show the correct return values.
+Fork mode (`-x`) used in conjunction with `IGNORE_RETURN_VALUE=0` is currently not properly reporting expected return value in results.txt for many tests ([issue #11](https://github.com/gavinfielder/pft/issues/11)). This bug does not affect the pass/fail result of a test. Running in non-fork mode (`-X`) will show the correct return values. The default configuration has been set to `IGNORE_RETURN_VALUE=1`. If this issue might affect you, a warning will be printed in results.txt.
 
 # How it works, in Brief
 
-The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it then compares their return value. If the return value is identical, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.
+The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.  
 
 # What's NOT Covered
 Feel free to contribute tests for these bonuses:
