@@ -116,6 +116,7 @@ The full documentation is available in the [Wiki](https://github.com/gavinfielde
    - [Test History Logging](https://github.com/gavinfielder/pft/wiki/Test-History-Logging)
    - [Leaks Test (BETA)](https://github.com/gavinfielder/pft/wiki/Leaks-Test-(BETA))
  - [Troubleshooting](https://github.com/gavinfielder/pft/wiki/Troubleshooting)
+ - [Compatibility With Other Systems](https://github.com/gavinfielder/pft/wiki/Compatibility-with-Other-Systems)
  - [Contributing to this repo (and possible future features)](https://github.com/gavinfielder/pft/wiki/Contributing-(and-possible-future-features))
  
 ## Todo List for the Unit Test Library
