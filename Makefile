@@ -50,6 +50,9 @@ LIB=$(LIBFT_DIR_PATH)/$(LIBFT_NAME)
 else
 LIB=
 endif
+ifeq ($(INCLUDE_LIBPTHREAD),1)
+LIB +=	-lpthread
+endif
 
 TEST_HISTORY_MOD_TIME:=$(shell stat -r $(TEST_LOG) 2> /dev/null | awk '{ print $$9 }' 2> /dev/null)
 UNIT_TESTS_MOD_TIME:=$(shell stat -r $(UNIT_TEST_FILE) 2> /dev/null | awk '{ print $$9 }' 2> /dev/null)
@@ -57,13 +60,16 @@ ifndef TEST_HISTORY_MOD_TIME
 TEST_HISTORY_MOD_TIME:=0
 endif
 
+# testing:
+	# @echo "$(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME)"
+
 all: $(TEST_ONAME)
 
 $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_index check_history_remove
 	@rm -f $(TEST_OUT_ACTUAL)
 	@rm -f $(TEST_OUT_EXPECTED)
 	@rm -f $(TEST_RESULTS)
-	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(SRC_TEST) $(INDEXED_TESTS)
+	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB)  $(SRC_TEST) $(INDEXED_TESTS) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME)
 	@./src/usage_statistics.php &>/dev/null &
 	@echo "\x1B[32m=============================================================\x1B[0m"
 	@echo "\x1B[32m  printftester2000 (aka PFT)\x1B[0m - \x1B[2mmade by gfielder@42.us.org\x1B[0m"
@@ -83,9 +89,11 @@ test_index: $(UNIT_TEST_FILE)
 .INTERMEDIATE: check_history_remove
 check_history_remove:
 	@if [ $(REMOVE_HISTORY_WHEN_TESTS_NEW) -eq 1 ] ; then \
-		if [ $(UNIT_TESTS_MOD_TIME) -gt $(TEST_HISTORY_MOD_TIME) ] ; then \
-			rm -rf $(TEST_LOG) ; \
-		fi \
+        if ! [ -z "$(UNIT_TESTS_MOD_TIME)" ] ; then \
+    		if [ $(UNIT_TESTS_MOD_TIME) -gt $(TEST_HISTORY_MOD_TIME) ] ; then \
+    			rm -rf $(TEST_LOG) ; \
+    		fi \
+        fi \
 	fi
 
 $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME):

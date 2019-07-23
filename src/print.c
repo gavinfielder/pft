@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _GNU_SOURCE
 #include <time.h>
 #include <stdint.h>
 #include <sys/ioctl.h>
@@ -32,10 +33,18 @@ static char test_start_fmt_dynamic_buffer[100];
 
 uint16_t		tty_get_window_width(void)
 {
+#ifdef TIOCGWINSZ
+    struct winsize ws;
+    if (ioctl(1, TIOCGWINSZ, &ws) == 0)
+    {
+        return (ws.ws_col);
+    }
+    return (0);
+#else
 	struct ttysize	ws;
-
 	ioctl(0, TIOCGWINSZ, &ws);
 	return (ws.ts_cols);
+#endif
 }
 
 void			init_printing(void)

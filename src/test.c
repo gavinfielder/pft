@@ -103,7 +103,7 @@ static int	output_to_file(char *filename, t_unit_test f)
 void	log_failed_test(int test_number, int expected, int actual,
 			const char *signal_terminated, int timed_out)
 {
-	char	issue_11_warning[] = "WARNING: The return values reported here may be bugged on some systems.\n          See https://github.com/gavinfielder/pft/issues/11\n          Run in non-fork mode (-X) to ensure accurate return value\n          reporting, or run test_pipes.sh to see if your system has this\n          bug. This bug does not affect the pass/fail result of a test,\n          nor the function output--only the reported return value.\n\n\n";
+	char	issue_11_warning[] = "WARNING: The return values reported here may be bugged on some systems.\n          See https://github.com/gavinfielder/pft/issues/11\n          Run in non-fork mode (-X) to ensure accurate return value\n          reporting, set IGNORE_RETURN_VALUE=1 in options-config.ini,\n          or run test_pipes.sh to see if your system has this bug.\n          This bug does not affect the pass/fail result of a test, nor\n          the function output--only the reported return value.\n\n\n";
 	static int issue_11_warning_printed = 0;
 	char	buff1[MAX_FILE_COPY_SIZE + 1];
 	char	buff2[MAX_FILE_COPY_SIZE + 1];
@@ -128,7 +128,7 @@ void	log_failed_test(int test_number, int expected, int actual,
 	}
 
 	//Print issue 11 warning
-	if (options.run_test == run_test_fork && issue_11_warning_printed == 0) {
+	if (!IGNORE_RETURN_VALUE && options.run_test == run_test_fork && issue_11_warning_printed == 0) {
 		write(fout, issue_11_warning, strlen(issue_11_warning));
 		issue_11_warning_printed = 1;
 	}
@@ -151,9 +151,11 @@ void	log_failed_test(int test_number, int expected, int actual,
 	{
 		buff1_len = -1;
 		buff2_len = -1;
-		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected return value : %i\n      your return value     : %i", expected, actual);
-		write(fout, buff1, strlen(buff1));
-		write(fout, "\n", 1);
+        if (!IGNORE_RETURN_VALUE) {
+    		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected return value : %i\n      your return value     : %i", expected, actual);
+		    write(fout, buff1, strlen(buff1));
+	    	write(fout, "\n", 1);
+        }
 		snprintf(buff1, MAX_FILE_COPY_SIZE, "      expected output : \"");
 		write(fout, buff1, strlen(buff1));
 		if (finlibc > 0)
