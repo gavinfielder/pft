@@ -62,7 +62,7 @@ static void		unit_testing(t_clopt clargs)
 						set_option_notimeout();
 						set_option_nofork();
 						set_option_nohandlesignals();
-						if (ft_issel(&clargs, 'f'))
+						if (ft_issel(&clargs, 'x'))
 							set_option_fork();
 						if (ft_issel(&clargs, 't'))
 							set_option_usetimeout();
