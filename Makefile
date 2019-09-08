@@ -6,7 +6,7 @@
 #    By: gfielder <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:19:45 by gfielder          #+#    #+#              #
-#    Updated: 2019/07/08 22:40:24 by gfielder         ###   ########.fr        #
+#    Updated: 2019/09/07 17:27:35 by gfielder         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,8 @@ LIB=
 endif
 ifeq ($(INCLUDE_LIBPTHREAD),1)
 LIB +=	-lpthread
+else ifeq ($(shell uname),Linux)
+LIB +=	-lpthread
 endif
 
 TEST_HISTORY_MOD_TIME:=$(shell stat -r $(TEST_LOG) 2> /dev/null | awk '{ print $$9 }' 2> /dev/null)
@@ -61,7 +63,7 @@ TEST_HISTORY_MOD_TIME:=0
 endif
 
 # testing:
-	# @echo "$(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME)"
+	# @printf "$(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME)\n"
 
 all: $(TEST_ONAME)
 
@@ -71,13 +73,13 @@ $(TEST_ONAME): $(SRC_TEST) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME) $(LIB) test_in
 	@rm -f $(TEST_RESULTS)
 	@$(CC) $(CFLAGS) $(INC) $(TEST_DEFINES) -o $(TEST_ONAME) $(LIB)  $(SRC_TEST) $(INDEXED_TESTS) $(LIBFTPRINTF_DIR)/$(LIBFTPRINTF_NAME)
 	@./src/usage_statistics.php &>/dev/null &
-	@echo "\x1B[32m=============================================================\x1B[0m"
-	@echo "\x1B[32m  printftester2000 (aka PFT)\x1B[0m - \x1B[2mmade by gfielder@42.us.org\x1B[0m"
-	@echo "\x1B[32m=============================================================\x1B[0m"
-	@echo "  \x1B[1;36m$(shell cat $(UNIT_TEST_FILE) | grep -c "^int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") \x1B[0mout of \x1B[1;33m$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")\x1B[0m tests are enabled.\x1B[0;0;0m"
-	@echo "  \x1B[4mDirections\x1B[0m:"
-	@echo "    \x1B[36m./test [query]\x1B[0m          to run tests"
-	@echo "    \x1B[36m./test help\x1B[0m             to see examples and other help"
+	@printf "\x1B[32m=============================================================\x1B[0m\n"
+	@printf "\x1B[32m  printftester2000 (aka PFT)\x1B[0m - \x1B[2mmade by gfielder@42.us.org\x1B[0m\n"
+	@printf "\x1B[32m=============================================================\x1B[0m\n"
+	@printf "  \x1B[1;36m$(shell cat $(UNIT_TEST_FILE) | grep -c "^int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t") \x1B[0mout of \x1B[1;33m$(shell cat $(UNIT_TEST_FILE) | grep -c "^\s*int\s*[a-zA-Z0-9_]*(void)" | tr -d " \n\t")\x1B[0m tests are enabled.\x1B[0;0;0m\n"
+	@printf "  \x1B[4mDirections\x1B[0m:\n"
+	@printf "    \x1B[36m./test [query]\x1B[0m          to run tests\n"
+	@printf "    \x1B[36m./test help\x1B[0m             to see examples and other help\n"
 
 
 $(INDEXED_TESTS): test_index
