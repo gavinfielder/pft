@@ -1,4 +1,4 @@
-***Updated for new curriculum***
+***Updated for new curriculum*** - Please let me know if there are any issues or bugs with the new release.
 <img align="right"  src="https://i.imgur.com/tpVSrBr.png" width="45%" />  
 
 # PFT
