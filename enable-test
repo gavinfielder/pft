@@ -27,7 +27,7 @@ if [ "$1" == "-q" ] ; then
 	exit 0;
 else
 	ARGS=$1 $2 $3 $4 $5
-	echo "Disabling tests..."
+	echo "Enabling tests..."
 	php $PFT_ROOT"/src/select_router.php" enable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $ARGS
 
 	make -C $PFT_ROOT fclean
