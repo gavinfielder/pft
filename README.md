@@ -1,4 +1,4 @@
-
+***Updated for new curriculum***
 <img align="right"  src="https://i.imgur.com/tpVSrBr.png" width="45%" />  
 
 # PFT
@@ -76,6 +76,8 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 # Known Issues
 
+The 2020 update added `*` tests to the required features. Tests were added from https://github.com/cclaude42/PFT_2019, but these tests don't include enough combinations with other flags--looking for current 42 students to add such tests.  
+  
 Fork mode (`-x`) used in conjunction with `IGNORE_RETURN_VALUE=0` is currently not properly reporting expected return value in results.txt for many tests ([issue #11](https://github.com/gavinfielder/pft/issues/11)). This bug does not affect the pass/fail result of a test. Running in non-fork mode (`-X`) will show the correct return values. The default configuration has been set to `IGNORE_RETURN_VALUE=1`. If this issue might affect you, a warning will be printed in results.txt.
 
 # How it works, in Brief
@@ -83,14 +85,14 @@ Fork mode (`-x`) used in conjunction with `IGNORE_RETURN_VALUE=0` is currently n
 The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.  
 
 # What's NOT Covered
-Feel free to contribute tests for these bonuses:
+Feel free to contribute tests for these:
 
  - Size modifiers `t`, `z`, `j`, and `q`.
  - `%n`
  - `'` (thousands separator flag)
  - `$` for dynamic precision. (`$` for argument selection is covered under `argnum_`)
 ### What's not covered very well
- - `*` (4 tests)
+ - `*` (There are some tests, but not many combinations with other flags)
  - `%g`, `%e`, `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
 
 # Other Documentation
@@ -133,7 +135,8 @@ You can disable this behavior in options-config.ini, and/or see exactly what the
 
 # Credits
 
-The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. The vast majority of tests were written by me; some tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), and [robbie](https://github.com/rpeepz).
+The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. The vast majority of tests were written by me; some tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), and [robbie](https://github.com/rpeepz). Big thanks to [cclaude](https://github.com/cclaude42) for doing the first update for the new curriculum.
+
 
 Also thanks to:
 - [rwright](https://github.com/wright08)

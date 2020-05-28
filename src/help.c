@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:57:57 by gfielder          #+#    #+#             */
-/*   Updated: 2019/06/16 00:27:58 by gfielder         ###   ########.fr       */
+/*   Updated: 2020/05/28 06:00:33 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -445,6 +445,8 @@ void		help_naming_conventions(void)
 	help_list_item("-", "Tests adapated from 42FileChecker or moulitest have '`ftfc`' in the name");
 	help_list_item("-", "Tests that throw a '...flag is ignored when...' have `_ignoreflag`");
 	help_list_item("-", "Tests that throw some other warning have `_throwswarning`");
+	help_list_item("-", "* tests have `argnum` or `star` in the name.");
+
 
 	printf("\n");
 	help_header("Other Specific Test Blocks");
