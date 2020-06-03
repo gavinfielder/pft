@@ -31,7 +31,10 @@ git clone https://github.com/gavinfielder/pft.git pft && echo "pft/" >> .gitigno
 ```
 For most users, that is all that is required.  
 
-**If you are running on Linux**, you need to change `INCLUDE_LIBPTHREAD=0` in `options-config.ini` to `INCLUDE_LIBPTHREAD=1`. This could apply to other systems--if you get a make error with undefined refrences to `pthread_` functions, make this change and it will work.
+### If you are running on Linux
+Change `INCLUDE_LIBPTHREAD=0` in `options-config.ini` to `INCLUDE_LIBPTHREAD=1`.  
+
+This could apply to other systems--if you get a make error with undefined refrences to `pthread_` functions, make this change and it will work.
 
 ### If your libft.a is separate from libftprintf.a   
 If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in options-config.ini, and make sure the path is correct. See options-config.ini, and it should be self-explanatory.  
