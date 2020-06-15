@@ -6,7 +6,7 @@
 /*   By: gfielder <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 16:57:57 by gfielder          #+#    #+#             */
-/*   Updated: 2020/05/28 06:00:33 by gfielder         ###   ########.fr       */
+/*   Updated: 2020/06/15 16:49:15 by gfielder         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -427,40 +427,41 @@ void		help_wildcard_search(void)
 void		help_naming_conventions(void)
 {
 	help_header("Test Naming Conventions");
-	help_list_item("-", "d, i, o, u, x, X, c, s, p, f tests start with `d_`, `i_`, `o_`, etc.");
-	help_list_item("-", "Tests of strings with no specifiers start with `nospec_`");
-	help_list_item("-", "%% tests start with `pct_`");
-	help_list_item("-", "hh, h, l, ll tests usually have '`size`' in the name");
-	help_list_item("-", "L (long double) tests start with `f_L_`");
-	help_list_item("-", "# tests usually have '`af`' in the name");
-	help_list_item("-", "0 (zero padding) tests usually have '`zp`' in the name");
-	help_list_item("-", "- (left justify) tests usually have '`lj`' in the name");
-	help_list_item("-", "+ tests usually have '`as`' in the name");
-	help_list_item("-", "' ' (space padding) tests usually have '`sp`' in the name");
-	help_list_item("-", "Precision tests usually have '`prec`' in the name");
-	help_list_item("-", "Field width tests usually have '`width`' or just '`w`' in the name");
-	help_list_item("-", "Simple tests usually have '`basic`' in the name");
-	help_list_item("-", "Tests taken from moulinette files start with `moul_`");
-	help_list_item("-", "The `moul_` block has subgroups `moul_d_`, `moul_i_`, `moul_o_`, etc.");
-	help_list_item("-", "Tests adapated from 42FileChecker or moulitest have '`ftfc`' in the name");
-	help_list_item("-", "Tests that throw a '...flag is ignored when...' have `_ignoreflag`");
-	help_list_item("-", "Tests that throw some other warning have `_throwswarning`");
-	help_list_item("-", "* tests have `star` in the name.");
+    help_paragraph("This help section is out of date. `Please see https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions` for the latest information.");
+	//help_list_item("-", "d, i, o, u, x, X, c, s, p, f tests start with `d_`, `i_`, `o_`, etc.");
+	//help_list_item("-", "Tests of strings with no specifiers start with `nospec_`");
+	//help_list_item("-", "%% tests start with `pct_`");
+	//help_list_item("-", "hh, h, l, ll tests usually have '`size`' in the name");
+	//help_list_item("-", "L (long double) tests start with `f_L_`");
+	//help_list_item("-", "# tests usually have '`af`' in the name");
+	//help_list_item("-", "0 (zero padding) tests usually have '`zp`' in the name");
+	//help_list_item("-", "- (left justify) tests usually have '`lj`' in the name");
+	//help_list_item("-", "+ tests usually have '`as`' in the name");
+	//help_list_item("-", "' ' (space padding) tests usually have '`sp`' in the name");
+	//help_list_item("-", "Precision tests usually have '`prec`' in the name");
+	//help_list_item("-", "Field width tests usually have '`width`' or just '`w`' in the name");
+	//help_list_item("-", "Simple tests usually have '`basic`' in the name");
+	//help_list_item("-", "Tests taken from moulinette files start with `moul_`");
+	//help_list_item("-", "The `moul_` block has subgroups `moul_d_`, `moul_i_`, `moul_o_`, etc.");
+	//help_list_item("-", "Tests adapated from 42FileChecker or moulitest have '`ftfc`' in the name");
+	//help_list_item("-", "Tests that throw a '...flag is ignored when...' have `_ignoreflag`");
+	//help_list_item("-", "Tests that throw some other warning have `_throwswarning`");
+	//help_list_item("-", "* tests have `star` in the name.");
 
 
-	printf("\n");
-	help_header("Other Specific Test Blocks");
-	help_list_item("-", "`mix_` are tests that combine multiple specifiers at random");
-	help_list_item("-", "`f_stress_` and `f_L_stress_` are float stress tests. Don't worry if you don't pass some of these.");
-	help_list_item("-", "`f_reserved_values_` and `f_L_reserved_values_` are tests of special floating-point values (inf, -inf, NaN, negative zero). As of the time of writing this, they are not mandatory. They are disabled by default.");
-	help_list_item("-", "`nocrash_` is a specially-handled prefix. `nocrash_` tests will pass as long as ft_printf doesn't crash while executing them. They are disabled by default");
-	help_list_item("-", "`argnum_` are tests for the arbitrary argument selector '$'. They are disabled by default");
-	help_list_item("-", "`moul_notmandatory_` are moulinette tests that used to be mandatory but are now bonuses. They are disabled by default.");
-	help_list_item("-", "`moul_D` and `moul_F` are also tests that used to be mandatory but are now bonuses. They are disabled by default.");
-	printf("\n");
-	help_header("See Also");
-	help_example("./test help enabling-tests", 0);
-	help_example("./test help disabling-tests", 0);
+	//printf("\n");
+	//help_header("Other Specific Test Blocks");
+	//help_list_item("-", "`mix_` are tests that combine multiple specifiers at random");
+	//help_list_item("-", "`f_stress_` and `f_L_stress_` are float stress tests. Don't worry if you don't pass some of these.");
+	//help_list_item("-", "`f_reserved_values_` and `f_L_reserved_values_` are tests of special floating-point values (inf, -inf, NaN, negative zero). As of the time of writing this, they are not mandatory. They are disabled by default.");
+	//help_list_item("-", "`nocrash_` is a specially-handled prefix. `nocrash_` tests will pass as long as ft_printf doesn't crash while executing them. They are disabled by default");
+	//help_list_item("-", "`argnum_` are tests for the arbitrary argument selector '$'. They are disabled by default");
+	//help_list_item("-", "`moul_notmandatory_` are moulinette tests that used to be mandatory but are now bonuses. They are disabled by default.");
+	//help_list_item("-", "`moul_D` and `moul_F` are also tests that used to be mandatory but are now bonuses. They are disabled by default.");
+	//printf("\n");
+	//help_header("See Also");
+	//help_example("./test help enabling-tests", 0);
+	//help_example("./test help disabling-tests", 0);
 }
 
 void		help_debug(void)
