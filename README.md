@@ -96,7 +96,7 @@ There are many tests not covered by the above examples.
 
 # Known Issues
 
-The 2020 update recently made `%n` mandatory, but PFT does not yet have functionality that enables testing it. You would be a rockstar if you added such functionality. 
+The 2020 update recently made `%n` an attainable bonus, but PFT does not yet have functionality that enables testing it. You would be a rockstar if you added such functionality. 
 
 The 2020 update added `*` tests to the required features. Tests were added from https://github.com/cclaude42/PFT\_2019, but these tests don't include enough combinations with other flags--looking for current 42 students to add such tests.  
   
