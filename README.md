@@ -82,7 +82,7 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but si
  - `./enable-test bonus_af` will enable tests for `#` (`af` is short for alternate form)  
  - `./enable-test bonus_sp` will enable tests for ` ` (`sp` is short for space padding)  
  - `./enable-test bonus_as` will enable tests for `+` (`as` is short for always sign)  
- - `./enable-test nocrash` will enable tests that test your `ft_printf`'s ability to handle bad input (will pass as long as it doesn't crash)  
+ - `./enable-test nocrash` will enable tests that test your `ft_printf`'s ability to handle bad input (will pass as long as it doesn't crash) While they are disabled by default and may be irrelevant to moulinette, I suggest that handling bad input is in fact a mandatory requirement of the subject which evaluators may opt to grade you on, so I personally recommend that everyone enable these.  
 
 There are many tests not covered by the above examples.  
 
