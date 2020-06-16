@@ -26,6 +26,14 @@ if [ "$1" == "-q" ] ; then
 	php $PFT_ROOT"/src/select_router.php" enable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $ARGS > /dev/null
 	exit 0;
 else
+	if [ "$#" == "0" ] ; then
+		echo "WARNING: You are about to enable ALL tests in the test library. This not only includes bonuses, but also tests for functionality that is not mentioned in the subject. You probably don't want to do this. This script accepts queries on test name or numeric range to enable specific test blocks--all queries that are accepted by the ./test executable are accepted by this script as well. To see a list of tests that this action would enable, try first running ./show-disabled-tests"
+		echo ""
+		read -p "Are you sure you wish to proceed with enabling ALL tests? y/n " CONFIRM
+		if ! [ "$CONFIRM" == "y" ] || [ "$CONFIRM" == "Y" ] ; then
+			exit 0;
+		fi
+	fi
 	ARGS=$1 $2 $3 $4 $5
 	echo "Enabling tests..."
 	php $PFT_ROOT"/src/select_router.php" enable $FILENAME $TEST_HISTORY_FILENAME $CONFIG_FILE $ARGS

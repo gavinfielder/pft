@@ -1,13 +1,10 @@
-***Updated for new curriculum*** - Please let me know if there are any issues or bugs with the new release.
 <img align="right"  src="https://i.imgur.com/tpVSrBr.png" width="45%" />  
 
 # PFT
 
 This is a unit test library and configurable tester for the 42 project ft\_printf.  
 
-By default, it can check if your *completed* printf is pretty good or not pretty good.   
-
-It's **more** useful as a production tool while you're developing ft\_prinf, because it lets you enable and disable entire blocks of tests at once, search and run tests by name, category, and previous run history, and in general perform quick regression testing. It's quick and easy to add your own tests, which I recommend on principle. It's built to be flexible and highly configurable, so you can use it how you wish.   
+It is designed to be a regression testing utility--that is, it is meant to be used while you are developing. It lets you select specific tests and test groups to run, enable and disable entire blocks of tests at once, or even select tests based on and previous run/pass/fail history. It's quick and easy to add your own tests, which I must recommend for the principle of it--but its original name (printftester2000) reflected that there are over 2000 tests available already. Regardless, it's built to be flexible and highly configurable, so you can use it how you wish.   
 
 <p align="center">
   <img src="https://i.imgur.com/oFAc9EQ.png" width="60%" />
@@ -31,24 +28,27 @@ git clone https://github.com/gavinfielder/pft.git pft && echo "pft/" >> .gitigno
 ```
 For most users, that is all that is required.  
 
-### If you are running on Linux
-Change `INCLUDE_LIBPTHREAD=0` in `options-config.ini` to `INCLUDE_LIBPTHREAD=1`.  
-
-This could apply to other systems--if you get a make error with undefined refrences to `pthread_` functions, make this change and it will work.
-
 ### If your libft.a is separate from libftprintf.a   
 If you include all required .o files (including your libft) in libftprintf.a, this is not necessary. If you do NOT, and require your libft separate, you must set `USE_SEPARATE_LIBFT=1` in options-config.ini, and make sure the path is correct. See options-config.ini, and it should be self-explanatory.  
 
 For non-standard installation options, see [Installation](https://github.com/gavinfielder/pft/wiki/Installation).
 
+### If you are running on Linux
+Change `INCLUDE_LIBPTHREAD=0` in `options-config.ini` to `INCLUDE_LIBPTHREAD=1`.  
+
+This could apply to other systems--if you get a make error with undefined refrences to `pthread_` functions, make this change and it will work.
+
 # Usage
- - `./test s` runs all the tests that start with a string, in this case 's'. As you might guess, the `%s` tests start with 's'. Tests for the other specifiers (`%d`, `%f`, etc.) can be selected the same way.
- - `./test 42` runs test #42
+
+Every test has a name and a number. You select tests or groups of tests to run based on either a name search or a number range. Name searches will look for tests that start with the given string. Groups of tests are organized with their names so that they can be selected easily in this way.  
+
+ - `./test s` runs all the tests that start with 's'. As you might guess, the `%s` tests start with 's'. Tests for the other specifiers (`%d`, `%p`, etc.) can be selected the same way.
+ - `./test 42` runs test #42 only
  - `./test 42 84` runs all the enabled tests from #42 to #84
  - `./test` runs all the enabled tests
  - `./test help` shows examples and other help information.
 
-You can also run specific types of tests by using [Wildcard Search](https://github.com/gavinfielder/pft/wiki/Wildcard-Search). See also [Test Naming Conventions](https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions).
+You can also run specific types of tests by using [Wildcard Search](https://github.com/gavinfielder/pft/wiki/Wildcard-Search), for example `./test "d*prec"` will run all the `%d` tests that have `prec` in their name, which selects `%d` tests that use precision (`.`). See [Test Naming Conventions](https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions) for a reference on selecting tests in more detail.  
 
 
 <p align="center">
@@ -64,14 +64,29 @@ When you fail a test, the file `results.txt` will show the results of the test i
 
 ## Enabling and Disabling tests
 
-I have provided scripts that make it easy to enable and disable tests. These scripts accept the same queries as the `./test` executable.  
+I have provided scripts that make it easy to enable and disable tests. "Disabled" tests mean they will never run unless you force them to with `-a`. These enable-test and disable-test scripts accept the same queries as the `./test` executable, that is, querying on the name or using a numeric range.  
 
  - `./disable-test s` Disables all tests that start with 's'
  - `./enable-test nocrash` Enables all tests that start with 'nocrash'
  - `./disable-test 42 84` Disables all tests from #42 to #84
  - `./disable-test && ./enable-test s` Disables all tests except tests that start with 's'.
 
-You **can** call `./enable-test` (with no arguments) to enable all tests, but keep in mind that some tests are disabled by default because if you have not implemented certain bonuses, your ft\_printf will segfault.  
+You **can** call `./enable-test` (with no arguments) to enable all tests, but since you are probably not crazy enough to actually implement everything that the test library can possibly test, that is generally a bad idea.  
+
+## Enabling Bonus Tests (and others)
+
+ - `./enable-test bonus` will enable all tests that test bonuses  
+ - `./enable-test bonus && ./disable-test bonus_notrequired` will enable bonus tests, but not tests that are not necessary to pass for moulinette to validate the bonus  
+ - `./enable-test "bonus*_f_"` will enable `%f` tests. (Similarly for `%g` and `%e`)  
+ - `./enable-test bonus_length` will enable tests for `l` `ll` `h` `hh`  
+ - `./enable-test bonus_af` will enable tests for `#` (`af` is short for alternate form)  
+ - `./enable-test bonus_sp` will enable tests for ` ` (`sp` is short for space padding)  
+ - `./enable-test bonus_as` will enable tests for `+` (`as` is short for always sign)  
+ - `./enable-test nocrash` will enable tests that test your `ft_printf`'s ability to handle bad input (will pass as long as it doesn't crash)  
+
+There are many tests not covered by the above examples.  
+
+ - `./show-disabled-tests` will print a list of all tests currently disabled. This may help to know what non-mandatory tests are available, which you can use the enable- and disable-test scripts to select by name or wildcard search as in the above examples. See also [Test Naming Conventions](https://github.com/gavinfielder/pft/wiki/Test-Naming-Conventions).  
 
 ## Using PFT with LLDB or other debuggers
 
@@ -81,13 +96,15 @@ You **can** call `./enable-test` (with no arguments) to enable all tests, but ke
 
 # Known Issues
 
-The 2020 update added `*` tests to the required features. Tests were added from https://github.com/cclaude42/PFT_2019, but these tests don't include enough combinations with other flags--looking for current 42 students to add such tests.  
+The 2020 update added `*` tests to the required features. Tests were added from https://github.com/cclaude42/PFT\_2019, but these tests don't include enough combinations with other flags--looking for current 42 students to add such tests.  
   
 Fork mode (`-x`) used in conjunction with `IGNORE_RETURN_VALUE=0` is currently not properly reporting expected return value in results.txt for many tests ([issue #11](https://github.com/gavinfielder/pft/issues/11)). This bug does not affect the pass/fail result of a test. Running in non-fork mode (`-X`) will show the correct return values. The default configuration has been set to `IGNORE_RETURN_VALUE=1`. If this issue might affect you, a warning will be printed in results.txt.
 
 # How it works, in Brief
 
-The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails.  
+The Makefile creates two versions of each unit test function, one that uses ft\_printf, and one that uses printf. For each test, it redirects stdout to a file, calls the function. Once each version returns, it opens both files and reads each one byte by byte until *both* reach EOF. If any single byte differs, the test fails. If `IGNORE_RETURN_VALUE` is set to `0`, the test will also fail if the return values between printf and ft\_printf differ.  
+
+Tests starting with `nocrash` are handled differently: these tests will pass as long as ft\_printf does not crash while executing them.  
 
 # What's NOT Covered
 Feel free to contribute tests for these:
@@ -98,7 +115,7 @@ Feel free to contribute tests for these:
  - `$` for dynamic precision. (`$` for argument selection is covered under `argnum_`)
 ### What's not covered very well
  - `*` (There are some tests, but not many combinations with other flags)
- - `%g`, `%e`, `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
+ - `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
 
 # Other Documentation
 
@@ -140,7 +157,7 @@ You can disable this behavior in options-config.ini, and/or see exactly what the
 
 # Credits
 
-The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. The vast majority of tests were written by me; some tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), and [robbie](https://github.com/rpeepz). Big thanks to [cclaude](https://github.com/cclaude42) for doing the first update for the new curriculum.
+The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. Many tests were written by me; tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), [robbie](https://github.com/rpeepz). Big thanks to [cclaude](https://github.com/cclaude42) for doing the first update for the new curriculum, and bigger to [appinha](https://github.com/appinha) for reorganizing the test library and adding tests for the new curriculum.  
 
 
 Also thanks to:
