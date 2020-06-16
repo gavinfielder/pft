@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# This script resets the test library to its default state, where mandatory tests are enabled and bonus/not mandatory tests are disabled.
+
+./enable-test -q ;\
+./disable-test -q "bonus" ;\
+./disable-test -q "*notmandatory" ;\
+./disable-test -q "*notinsubject" ;\
+./disable-test -q "*notrequired" ;\
+./disable-test -q "*undefbehav" ;\
+./disable-test -q "nocrash" ;\
+./enable-test -q "nocrash_mandatory" ;\
+./enable-test -q "nocrash*_mandatory_*undefbehav" ;\
+make fclean
