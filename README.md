@@ -98,7 +98,7 @@ There are many tests not covered by the above examples.
 
 # Known Issues
 
-The 2020 update added `*` tests to the required features. Tests were added from https://github.com/cclaude42/PFT\_2019, but these tests don't include enough combinations with other flags--looking for current 42 students to add such tests.  
+The 2020 update added `*` tests to the required features. Tests were added from https://github.com/cclaude42/PFT_2019, but these tests don't include enough combinations with other flags--looking for current 42 students to add such tests.  
   
 Fork mode (`-x`) used in conjunction with `IGNORE_RETURN_VALUE=0` is currently not properly reporting expected return value in results.txt for many tests ([issue #11](https://github.com/gavinfielder/pft/issues/11)). This bug does not affect the pass/fail result of a test. Running in non-fork mode (`-X`) will show the correct return values. The default configuration has been set to `IGNORE_RETURN_VALUE=1`. If this issue might affect you, a warning will be printed in results.txt.
 
