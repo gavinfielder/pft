@@ -73,6 +73,8 @@ I have provided scripts that make it easy to enable and disable tests. "Disabled
 
 You **can** call `./enable-test` (with no arguments) to enable all tests, but since you are probably not crazy enough to actually implement everything that the test library can possibly test, that is generally a bad idea.  
 
+If you want to reset to the default state of enabled tests, `./reset-to-default-enabled-tests`  
+
 ## Enabling Bonus Tests (and others)
 
  - `./enable-test bonus` will enable all tests that test bonuses  
