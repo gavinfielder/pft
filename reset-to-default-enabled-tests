@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This script resets the test library to its default state, where mandatory tests are enabled and bonus/not mandatory tests are disabled.
 
