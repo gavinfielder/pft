@@ -122,7 +122,7 @@ Feel free to contribute tests for these:
  ### What to be AWARE of
  OS implemetation differences
  - For example, NULL output for %p Linux "(nil)" verse MacOS "0x0"
- - If developing on Linux test on MacOS before submission
+ - If developing on Linux test on macOS before submission
 
 # Other Documentation
 
