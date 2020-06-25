@@ -115,12 +115,13 @@ Feel free to contribute tests for these:
  - `%n`
  - `'` (thousands separator flag)
  - `$` for dynamic precision. (`$` for argument selection is covered under `argnum_`)
-# What to be AWARE of OS implemetation differences
- - For example, NULL output for %p Linux "(nil)" verse MacOS "0x0"
- - If developing on Linux test on MacOS before submission
  ### What's not covered very well
  - `*` (There are some tests, but not many combinations with other flags)
  - `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
+
+## What to be AWARE of OS implemetation differences
+ - For example, NULL output for %p Linux "(nil)" verse MacOS "0x0"
+ - If developing on Linux test on MacOS before submission
 
 # Other Documentation
 
