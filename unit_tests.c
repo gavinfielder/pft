@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2020/06/24 23:22:27 by mg               ###   ########.fr       */
+/*   Updated: 2020/06/25 11:47:52 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -5652,7 +5652,7 @@ int bonus_g_rnd_9999_18(void){return test("%.1g", -0.999);}
 int bonus_g_rnd_9999_19(void){return test("%.0g", -0.099);}
 int bonus_g_rnd_9999_20(void){return test("%.1g", -0.099);}
 
- /* -----------------------------------------------------------------------------
+/* -----------------------------------------------------------------------------
 ** 						NEGATIVE PRECISION
 ** ---------------------------------------------------------------------------*/
 // %f negative precision
@@ -5697,4 +5697,24 @@ int p_neg_prec_star_02(void){return test("%.*p", -1, s_hello);}
 int p_neg_prec_star_03(void){return test("%.*p", -3, 0);}
 int p_neg_prec_star_04(void){return test("%.*p", -1, 0);}
 
+
+/* -----------------------------------------------------------------------------
+** 						%n format only test cases
+** ---------------------------------------------------------------------------*/
+// %p negative precision
+int n;
+int bonus_n_format_only(void){return test("pft%ntest", &n); (void)n;} 
+int bonus_n_format_only_sp(void){return test("pft% ntest", &n); (void)n;} 
+int bonus_n_format_only_af(void){return test("pft%#ntest", &n); (void)n;} 
+int bonus_n_format_only_zp(void){return test("pft%0ntest", &n); (void)n;} 
+int bonus_n_format_only_lj(void){return test("pft%-ntest", &n); (void)n;} 
+int bonus_n_format_only_as(void){return test("pft%+ntest", &n); (void)n;} 
+int bonus_n_format_only_w(void){return test("pft%5ntest", &n); (void)n;} 
+int bonus_n_format_only_prec(void){return test("pft%.5ntest", &n); (void)n;} 
+int bonus_n_format_only_w_prec(void){return test("pft%5.5ntest", &n); (void)n;} 
+int bonus_n_format_only_prec_star(void){return test("pft%.*ntest%d", 5, &n, 123); (void)n;}
+int bonus_n_format_only_w_star(void){return test("pft%*.ntest%d", 5, &n, 123); (void)n;}
+int bonus_n_format_only_wprec_star(void){return test("pft%*.*ntest%d", 5, 5, &n, 123); (void)n;}
+
 #pragma clang diagnostic pop
+
