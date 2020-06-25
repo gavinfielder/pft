@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2020/06/25 11:47:52 by mg               ###   ########.fr       */
+/*   Updated: 2020/06/25 13:13:31 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -5717,4 +5717,3 @@ int bonus_n_format_only_w_star(void){return test("pft%*.ntest%d", 5, &n, 123); (
 int bonus_n_format_only_wprec_star(void){return test("pft%*.*ntest%d", 5, 5, &n, 123); (void)n;}
 
 #pragma clang diagnostic pop
-
