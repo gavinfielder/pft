@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unit_tests.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apuchill <apuchill@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2020/06/15 15:18:56 by gfielder         ###   ########.fr       */
+/*   Updated: 2020/06/25 13:13:31 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2150,12 +2150,10 @@ static unsigned long  		ulmax = 9223372036854775807;
  int nocrash_notrequired_bonus_length_f_llll(void){return test("%llllf", 42.5);}
 
 
-
-/* -----------------------------------------------------------------------------
-** 						%n NOTHING PRINTED TESTS (BONUS)
-** ---------------------------------------------------------------------------*/
+/* -----------------------------------------------------------------------------	
+** 						%n NOTHING PRINTED TESTS (BONUS)	
+** ---------------------------------------------------------------------------*/	
 // To do
-
 
 
 /* -----------------------------------------------------------------------------
@@ -5464,5 +5462,258 @@ static char				mx_hhi = 'F';
  int notinsubject_moul_D_11_notmandatory(void){return test("%%D \t == |%D|\n", '\t');}
  int notinsubject_moul_D_12_notmandatory(void){return test("%%D Lydie == |%D|\n", 'L'+'y'+'d'+'i'+'e');}
 
+/* -----------------------------------------------------------------------------
+** 						ROUND HALF TO EVEN
+** ---------------------------------------------------------------------------*/
+// %f round half to even
+ int bonus_f_rnd_half_to_even_01(void){return test("%.0f", -5.5);}
+ int bonus_f_rnd_half_to_even_02(void){return test("%.0f", -4.5);}
+ int bonus_f_rnd_half_to_even_03(void){return test("%.0f", -3.5);}
+ int bonus_f_rnd_half_to_even_04(void){return test("%.0f", -2.5);}
+ int bonus_f_rnd_half_to_even_05(void){return test("%.0f", -1.5);}
+ int bonus_f_rnd_half_to_even_06(void){return test("%.0f", -0.5);}
+ int bonus_f_rnd_half_to_even_07(void){return test("%.0f", 0.5);}
+ int bonus_f_rnd_half_to_even_08(void){return test("%.0f", 1.5);}
+ int bonus_f_rnd_half_to_even_09(void){return test("%.0f", 2.5);}
+ int bonus_f_rnd_half_to_even_10(void){return test("%.0f", 3.5);}
+ int bonus_f_rnd_half_to_even_11(void){return test("%.0f", 4.5);}
+ int bonus_f_rnd_half_to_even_12(void){return test("%.0f", 5.5);}
+ int bonus_f_rnd_half_to_even_13(void){return test("%.3f", -1.2305);}
+ int bonus_f_rnd_half_to_even_14(void){return test("%.3f", -1.2315);}
+ int bonus_f_rnd_half_to_even_15(void){return test("%.3f", -1.2325);}
+ int bonus_f_rnd_half_to_even_16(void){return test("%.3f", -1.2335);}
+ int bonus_f_rnd_half_to_even_17(void){return test("%.3f", -1.2345);}
+ int bonus_f_rnd_half_to_even_18(void){return test("%.3f", -1.2355);}
+ int bonus_f_rnd_half_to_even_19(void){return test("%.3f", -1.2365);}
+ int bonus_f_rnd_half_to_even_20(void){return test("%.3f", -1.2375);}
+ int bonus_f_rnd_half_to_even_21(void){return test("%.3f", -1.2385);}
+ int bonus_f_rnd_half_to_even_22(void){return test("%.3f", -1.2395);}
+ int bonus_f_rnd_half_to_even_24(void){return test("%.3f", 1.2305);}
+ int bonus_f_rnd_half_to_even_25(void){return test("%.3f", 1.2315);}
+ int bonus_f_rnd_half_to_even_26(void){return test("%.3f", 1.2325);}
+ int bonus_f_rnd_half_to_even_27(void){return test("%.3f", 1.2335);}
+ int bonus_f_rnd_half_to_even_28(void){return test("%.3f", 1.2345);}
+ int bonus_f_rnd_half_to_even_29(void){return test("%.3f", 1.2355);}
+ int bonus_f_rnd_half_to_even_30(void){return test("%.3f", 1.2365);}
+ int bonus_f_rnd_half_to_even_31(void){return test("%.3f", 1.2375);}
+ int bonus_f_rnd_half_to_even_32(void){return test("%.3f", 1.2385);}
+ int bonus_f_rnd_half_to_even_33(void){return test("%.3f", 1.2395);}
+// %e round half to even
+ int bonus_e_rnd_half_to_even_01(void){return test("%.0e", -5.5);}
+ int bonus_e_rnd_half_to_even_02(void){return test("%.0e", -4.5);}
+ int bonus_e_rnd_half_to_even_03(void){return test("%.0e", -3.5);}
+ int bonus_e_rnd_half_to_even_04(void){return test("%.0e", -2.5);}
+ int bonus_e_rnd_half_to_even_05(void){return test("%.0e", -1.5);}
+ int bonus_e_rnd_half_to_even_06(void){return test("%.0e", -0.5);}
+ int bonus_e_rnd_half_to_even_07(void){return test("%.0e", 0.5);}
+ int bonus_e_rnd_half_to_even_08(void){return test("%.0e", 1.5);}
+ int bonus_e_rnd_half_to_even_09(void){return test("%.0e", 2.5);}
+ int bonus_e_rnd_half_to_even_10(void){return test("%.0e", 3.5);}
+ int bonus_e_rnd_half_to_even_11(void){return test("%.0e", 4.5);}
+ int bonus_e_rnd_half_to_even_12(void){return test("%.0e", 5.5);}
+ int bonus_e_rnd_half_to_even_13(void){return test("%.3e", -1.2305);}
+ int bonus_e_rnd_half_to_even_14(void){return test("%.3e", -1.2315);}
+ int bonus_e_rnd_half_to_even_15(void){return test("%.3e", -1.2325);}
+ int bonus_e_rnd_half_to_even_16(void){return test("%.3e", -1.2335);}
+ int bonus_e_rnd_half_to_even_17(void){return test("%.3e", -1.2345);}
+ int bonus_e_rnd_half_to_even_18(void){return test("%.3e", -1.2355);}
+ int bonus_e_rnd_half_to_even_19(void){return test("%.3e", -1.2365);}
+ int bonus_e_rnd_half_to_even_20(void){return test("%.3e", -1.2375);}
+ int bonus_e_rnd_half_to_even_21(void){return test("%.3e", -1.2385);}
+ int bonus_e_rnd_half_to_even_22(void){return test("%.3e", -1.2395);}
+ int bonus_e_rnd_half_to_even_24(void){return test("%.3e", 1.2305);}
+ int bonus_e_rnd_half_to_even_25(void){return test("%.3e", 1.2315);}
+ int bonus_e_rnd_half_to_even_26(void){return test("%.3e", 1.2325);}
+ int bonus_e_rnd_half_to_even_27(void){return test("%.3e", 1.2335);}
+ int bonus_e_rnd_half_to_even_28(void){return test("%.3e", 1.2345);}
+ int bonus_e_rnd_half_to_even_29(void){return test("%.3e", 1.2355);}
+ int bonus_e_rnd_half_to_even_30(void){return test("%.3e", 1.2365);}
+ int bonus_e_rnd_half_to_even_31(void){return test("%.3e", 1.2375);}
+ int bonus_e_rnd_half_to_even_32(void){return test("%.3e", 1.2385);}
+ int bonus_e_rnd_half_to_even_33(void){return test("%.3e", 1.2395);}
+// %g round half to even
+ int bonus_g_rnd_half_to_even_01(void){return test("%.0g", -5.5);}
+ int bonus_g_rnd_half_to_even_02(void){return test("%.0g", -4.5);}
+ int bonus_g_rnd_half_to_even_03(void){return test("%.0g", -3.5);}
+ int bonus_g_rnd_half_to_even_04(void){return test("%.0g", -2.5);}
+ int bonus_g_rnd_half_to_even_05(void){return test("%.0g", -1.5);}
+ int bonus_g_rnd_half_to_even_06(void){return test("%.0g", -0.5);}
+ int bonus_g_rnd_half_to_even_07(void){return test("%.0g", 0.5);}
+ int bonus_g_rnd_half_to_even_08(void){return test("%.0g", 1.5);}
+ int bonus_g_rnd_half_to_even_09(void){return test("%.0g", 2.5);}
+ int bonus_g_rnd_half_to_even_10(void){return test("%.0g", 3.5);}
+ int bonus_g_rnd_half_to_even_11(void){return test("%.0g", 4.5);}
+ int bonus_g_rnd_half_to_even_12(void){return test("%.0g", 5.5);}
+ int bonus_g_rnd_half_to_even_13(void){return test("%.3g", -1.2305);}
+ int bonus_g_rnd_half_to_even_14(void){return test("%.3g", -1.2315);}
+ int bonus_g_rnd_half_to_even_15(void){return test("%.3g", -1.2325);}
+ int bonus_g_rnd_half_to_even_16(void){return test("%.3g", -1.2335);}
+ int bonus_g_rnd_half_to_even_17(void){return test("%.3g", -1.2345);}
+ int bonus_g_rnd_half_to_even_18(void){return test("%.3g", -1.2355);}
+ int bonus_g_rnd_half_to_even_19(void){return test("%.3g", -1.2365);}
+ int bonus_g_rnd_half_to_even_20(void){return test("%.3g", -1.2375);}
+ int bonus_g_rnd_half_to_even_21(void){return test("%.3g", -1.2385);}
+ int bonus_g_rnd_half_to_even_22(void){return test("%.3g", -1.2395);}
+ int bonus_g_rnd_half_to_even_24(void){return test("%.3g", 1.2305);}
+ int bonus_g_rnd_half_to_even_25(void){return test("%.3g", 1.2315);}
+ int bonus_g_rnd_half_to_even_26(void){return test("%.3g", 1.2325);}
+ int bonus_g_rnd_half_to_even_27(void){return test("%.3g", 1.2335);}
+ int bonus_g_rnd_half_to_even_28(void){return test("%.3g", 1.2345);}
+ int bonus_g_rnd_half_to_even_29(void){return test("%.3g", 1.2355);}
+ int bonus_g_rnd_half_to_even_30(void){return test("%.3g", 1.2365);}
+ int bonus_g_rnd_half_to_even_31(void){return test("%.3g", 1.2375);}
+ int bonus_g_rnd_half_to_even_32(void){return test("%.3g", 1.2385);}
+ int bonus_g_rnd_half_to_even_33(void){return test("%.3g", 1.2395);}
+ int bonus_g_rnd_half_to_even_34(void){return test("%.4g", -1.2305);}
+ int bonus_g_rnd_half_to_even_35(void){return test("%.4g", -1.2315);}
+ int bonus_g_rnd_half_to_even_36(void){return test("%.4g", -1.2325);}
+ int bonus_g_rnd_half_to_even_37(void){return test("%.4g", -1.2335);}
+ int bonus_g_rnd_half_to_even_38(void){return test("%.4g", -1.2345);}
+ int bonus_g_rnd_half_to_even_39(void){return test("%.4g", -1.2355);}
+ int bonus_g_rnd_half_to_even_40(void){return test("%.4g", -1.2365);}
+ int bonus_g_rnd_half_to_even_41(void){return test("%.4g", -1.2375);}
+ int bonus_g_rnd_half_to_even_42(void){return test("%.4g", -1.2385);}
+ int bonus_g_rnd_half_to_even_43(void){return test("%.4g", -1.2395);}
+ int bonus_g_rnd_half_to_even_44(void){return test("%.4g", 1.2305);}
+ int bonus_g_rnd_half_to_even_45(void){return test("%.4g", 1.2315);}
+ int bonus_g_rnd_half_to_even_46(void){return test("%.4g", 1.2325);}
+ int bonus_g_rnd_half_to_even_47(void){return test("%.4g", 1.2335);}
+ int bonus_g_rnd_half_to_even_48(void){return test("%.4g", 1.2345);}
+ int bonus_g_rnd_half_to_even_49(void){return test("%.4g", 1.2355);}
+ int bonus_g_rnd_half_to_even_50(void){return test("%.4g", 1.2365);}
+ int bonus_g_rnd_half_to_even_51(void){return test("%.4g", 1.2375);}
+ int bonus_g_rnd_half_to_even_52(void){return test("%.4g", 1.2385);}
+ int bonus_g_rnd_half_to_even_53(void){return test("%.4g", 1.2395);}
+
+/* -----------------------------------------------------------------------------
+** 						ROUND 9.999
+** ---------------------------------------------------------------------------*/
+// %f round 9.999
+ int bonus_f_rnd_9999_01(void){return test("%.0f", -9.0);}
+ int bonus_f_rnd_9999_02(void){return test("%.1f", -9.0);}
+ int bonus_f_rnd_9999_03(void){return test("%.0f", -9.9);}
+ int bonus_f_rnd_9999_04(void){return test("%.1f", -9.9);}
+ int bonus_f_rnd_9999_05(void){return test("%.0f", -9.999);}
+ int bonus_f_rnd_9999_06(void){return test("%.1f", -9.999);}
+ int bonus_f_rnd_9999_07(void){return test("%.0f", -0.999);}
+ int bonus_f_rnd_9999_08(void){return test("%.1f", -0.999);}
+ int bonus_f_rnd_9999_09(void){return test("%.0f", -0.099);}
+ int bonus_f_rnd_9999_10(void){return test("%.1f", -0.099);}
+ int bonus_f_rnd_9999_11(void){return test("%.0f", -9.0);}
+ int bonus_f_rnd_9999_12(void){return test("%.1f", -9.0);}
+ int bonus_f_rnd_9999_13(void){return test("%.0f", -9.9);}
+ int bonus_f_rnd_9999_14(void){return test("%.1f", -9.9);}
+ int bonus_f_rnd_9999_15(void){return test("%.0f", -9.999);}
+ int bonus_f_rnd_9999_16(void){return test("%.1f", -9.999);}
+ int bonus_f_rnd_9999_17(void){return test("%.0f", -0.999);}
+ int bonus_f_rnd_9999_18(void){return test("%.1f", -0.999);}
+ int bonus_f_rnd_9999_19(void){return test("%.0f", -0.099);}
+ int bonus_f_rnd_9999_20(void){return test("%.1f", -0.099);}
+// %e round 9.999
+ int bonus_e_rnd_9999_01(void){return test("%.0e", -9.0);}
+ int bonus_e_rnd_9999_02(void){return test("%.1e", -9.0);}
+ int bonus_e_rnd_9999_03(void){return test("%.0e", -9.9);}
+ int bonus_e_rnd_9999_04(void){return test("%.1e", -9.9);}
+ int bonus_e_rnd_9999_05(void){return test("%.0e", -9.999);}
+ int bonus_e_rnd_9999_06(void){return test("%.1e", -9.999);}
+ int bonus_e_rnd_9999_07(void){return test("%.0e", -0.999);}
+ int bonus_e_rnd_9999_08(void){return test("%.1e", -0.999);}
+ int bonus_e_rnd_9999_09(void){return test("%.0e", -0.099);}
+ int bonus_e_rnd_9999_10(void){return test("%.1e", -0.099);}
+ int bonus_e_rnd_9999_11(void){return test("%.0e", -9.0);}
+ int bonus_e_rnd_9999_12(void){return test("%.1e", -9.0);}
+ int bonus_e_rnd_9999_13(void){return test("%.0e", -9.9);}
+ int bonus_e_rnd_9999_14(void){return test("%.1e", -9.9);}
+ int bonus_e_rnd_9999_15(void){return test("%.0e", -9.999);}
+ int bonus_e_rnd_9999_16(void){return test("%.1e", -9.999);}
+ int bonus_e_rnd_9999_17(void){return test("%.0e", -0.999);}
+ int bonus_e_rnd_9999_18(void){return test("%.1e", -0.999);}
+ int bonus_e_rnd_9999_19(void){return test("%.0e", -0.099);}
+ int bonus_e_rnd_9999_20(void){return test("%.1e", -0.099);}
+// %g round 9.999
+ int bonus_g_rnd_9999_01(void){return test("%.0g", -9.0);}
+ int bonus_g_rnd_9999_02(void){return test("%.1g", -9.0);}
+ int bonus_g_rnd_9999_03(void){return test("%.0g", -9.9);}
+ int bonus_g_rnd_9999_04(void){return test("%.1g", -9.9);}
+ int bonus_g_rnd_9999_05(void){return test("%.0g", -9.999);}
+ int bonus_g_rnd_9999_06(void){return test("%.1g", -9.999);}
+ int bonus_g_rnd_9999_07(void){return test("%.0g", -0.999);}
+ int bonus_g_rnd_9999_08(void){return test("%.1g", -0.999);}
+ int bonus_g_rnd_9999_09(void){return test("%.0g", -0.099);}
+ int bonus_g_rnd_9999_10(void){return test("%.1g", -0.099);}
+ int bonus_g_rnd_9999_11(void){return test("%.0g", -9.0);}
+ int bonus_g_rnd_9999_12(void){return test("%.1g", -9.0);}
+ int bonus_g_rnd_9999_13(void){return test("%.0g", -9.9);}
+ int bonus_g_rnd_9999_14(void){return test("%.1g", -9.9);}
+ int bonus_g_rnd_9999_15(void){return test("%.0g", -9.999);}
+ int bonus_g_rnd_9999_16(void){return test("%.1g", -9.999);}
+ int bonus_g_rnd_9999_17(void){return test("%.0g", -0.999);}
+ int bonus_g_rnd_9999_18(void){return test("%.1g", -0.999);}
+ int bonus_g_rnd_9999_19(void){return test("%.0g", -0.099);}
+ int bonus_g_rnd_9999_20(void){return test("%.1g", -0.099);}
+
+/* -----------------------------------------------------------------------------
+** 						NEGATIVE PRECISION
+** ---------------------------------------------------------------------------*/
+// %f negative precision
+ int bonus_f_neg_prec_star_01(void){return test("%.*f", -3, 3.1415926535);}
+ int bonus_f_neg_prec_star_02(void){return test("%.*f", -1, 3.1415926535);}
+ int bonus_f_neg_prec_star_03(void){return test("%.*f", -1, 0.0);}
+// %e negative precision
+ int bonus_e_neg_prec_star_01(void){return test("%.*e", -3, 3.1415926535);}
+ int bonus_e_neg_prec_star_02(void){return test("%.*e", -1, 3.1415926535);}
+ int bonus_e_neg_prec_star_03(void){return test("%.*e", -1, 0.0);}
+// %g negative precision
+ int bonus_g_neg_prec_star_01(void){return test("%.*g", -3, 3.1415926535);}
+ int bonus_g_neg_prec_star_02(void){return test("%.*g", -1, 3.1415926535);}
+ int bonus_g_neg_prec_star_03(void){return test("%.*g", -1, 0.0);}
+// %d negative precision
+int d_neg_prec_star_01(void){return test("%.*d", -3, 12345);}
+int d_neg_prec_star_02(void){return test("%.*d", -1, 12345);}
+int d_neg_prec_star_03(void){return test("%.*d", -1, 0);}
+// %u negative precision
+int u_neg_prec_star_01(void){return test("%.*u", -3, 12345);}
+int u_neg_prec_star_02(void){return test("%.*u", -1, 12345);}
+int u_neg_prec_star_03(void){return test("%.*u", -1, 0);}
+// %o negative precision
+int notintsubject_o_neg_prec_star_01(void){return test("%.*o", -3, 12345);}
+int notintsubject_o_neg_prec_star_02(void){return test("%.*o", -1, 12345);}
+int notintsubject_o_neg_prec_star_03(void){return test("%.*o", -1, 0);}
+// %x negative precision
+int x_neg_prec_star_01(void){return test("%.*x", -3, 12345);}
+int x_neg_prec_star_02(void){return test("%.*x", -1, 12345);}
+int x_neg_prec_star_03(void){return test("%.*x", -1, 0);}
+// %X negative precision
+int X_neg_prec_star_01(void){return test("%.*X", -3, 12345);}
+int X_neg_prec_star_02(void){return test("%.*X", -1, 12345);}
+int X_neg_prec_star_03(void){return test("%.*X", -1, 0);}
+static char *s_hello = "hello world";
+// %s negative precision
+int s_neg_prec_star_01(void){return test("%.*s", -3, 0);}
+int s_neg_prec_star_02(void){return test("%.*s", -1, 0);}
+// %p negative precision
+int p_neg_prec_star_01(void){return test("%.*p", -3, s_hello);}
+int p_neg_prec_star_02(void){return test("%.*p", -1, s_hello);}
+int p_neg_prec_star_03(void){return test("%.*p", -3, 0);}
+int p_neg_prec_star_04(void){return test("%.*p", -1, 0);}
+
+
+/* -----------------------------------------------------------------------------
+** 						%n format only test cases
+** ---------------------------------------------------------------------------*/
+// %p negative precision
+int n;
+ int bonus_n_format_only(void){return test("pft%ntest", &n); (void)n;} 
+ int bonus_n_format_only_sp(void){return test("pft% ntest", &n); (void)n;} 
+ int bonus_n_format_only_af(void){return test("pft%#ntest", &n); (void)n;} 
+ int bonus_n_format_only_zp(void){return test("pft%0ntest", &n); (void)n;} 
+ int bonus_n_format_only_lj(void){return test("pft%-ntest", &n); (void)n;} 
+ int bonus_n_format_only_as(void){return test("pft%+ntest", &n); (void)n;} 
+ int bonus_n_format_only_w(void){return test("pft%5ntest", &n); (void)n;} 
+ int bonus_n_format_only_prec(void){return test("pft%.5ntest", &n); (void)n;} 
+ int bonus_n_format_only_w_prec(void){return test("pft%5.5ntest", &n); (void)n;} 
+ int bonus_n_format_only_prec_star(void){return test("pft%.*ntest%d", 5, &n, 123); (void)n;}
+ int bonus_n_format_only_w_star(void){return test("pft%*.ntest%d", 5, &n, 123); (void)n;}
+ int bonus_n_format_only_wprec_star(void){return test("pft%*.*ntest%d", 5, 5, &n, 123); (void)n;}
 
 #pragma clang diagnostic pop
