@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/03 21:15:57 by gfielder          #+#    #+#             */
-/*   Updated: 2020/06/24 22:19:41 by mg               ###   ########.fr       */
+/*   Updated: 2020/06/24 23:22:27 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -5658,15 +5658,15 @@ int bonus_g_rnd_9999_20(void){return test("%.1g", -0.099);}
 // %f negative precision
 int bonus_f_neg_prec_star_01(void){return test("%.*f", -3, 3.1415926535);}
 int bonus_f_neg_prec_star_02(void){return test("%.*f", -1, 3.1415926535);}
-int bonus_f_neg_prec_star_03(void){return test("%.*f", -1, 0);}
+int bonus_f_neg_prec_star_03(void){return test("%.*f", -1, 0.0);}
 // %e negative precision
 int bonus_e_neg_prec_star_01(void){return test("%.*e", -3, 3.1415926535);}
 int bonus_e_neg_prec_star_02(void){return test("%.*e", -1, 3.1415926535);}
-int bonus_e_neg_prec_star_03(void){return test("%.*e", -1, 0);}
+int bonus_e_neg_prec_star_03(void){return test("%.*e", -1, 0.0);}
 // %g negative precision
 int bonus_g_neg_prec_star_01(void){return test("%.*g", -3, 3.1415926535);}
 int bonus_g_neg_prec_star_02(void){return test("%.*g", -1, 3.1415926535);}
-int bonus_g_neg_prec_star_03(void){return test("%.*g", -1, 0);}
+int bonus_g_neg_prec_star_03(void){return test("%.*g", -1, 0.0);}
 // %d negative precision
 int d_neg_prec_star_01(void){return test("%.*d", -3, 12345);}
 int d_neg_prec_star_02(void){return test("%.*d", -1, 12345);}
@@ -5689,10 +5689,8 @@ int X_neg_prec_star_02(void){return test("%.*X", -1, 12345);}
 int X_neg_prec_star_03(void){return test("%.*X", -1, 0);}
 static char *s_hello = "hello world";
 // %s negative precision
-int s_neg_prec_star_01(void){return test("%.*s", -3, s_hello);}
-int s_neg_prec_star_02(void){return test("%.*s", -1, s_hello);}
-int s_neg_prec_star_03(void){return test("%.*s", -3, 0);}
-int s_neg_prec_star_04(void){return test("%.*s", -1, 0);}
+int s_neg_prec_star_01(void){return test("%.*s", -3, 0);}
+int s_neg_prec_star_02(void){return test("%.*s", -1, 0);}
 // %p negative precision
 int p_neg_prec_star_01(void){return test("%.*p", -3, s_hello);}
 int p_neg_prec_star_02(void){return test("%.*p", -1, s_hello);}
