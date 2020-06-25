@@ -119,7 +119,8 @@ Feel free to contribute tests for these:
  - `*` (There are some tests, but not many combinations with other flags)
  - `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
 
-## What to be AWARE of OS implemetation differences
+ ### What to be AWARE of
+ OS implemetation differences
  - For example, NULL output for %p Linux "(nil)" verse MacOS "0x0"
  - If developing on Linux test on MacOS before submission
 
