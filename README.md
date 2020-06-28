@@ -4,7 +4,7 @@
 
 This is a unit test library and configurable tester for the 42 project ft\_printf.  
 
-It is designed to be a regression testing utility--that is, it is meant to be used while you are developing. It lets you select specific tests and test groups to run, enable and disable entire blocks of tests at once, or even select tests based on and previous run/pass/fail history. It's quick and easy to add your own tests, which I must recommend for the principle of it--but its original name (printftester2000) reflected that there are over 2000 tests available already. Regardless, it's built to be flexible and highly configurable, so you can use it how you wish.   
+It is designed to be a regression testing utility--that is, it is meant to be used while you are developing. It lets you select specific tests and test groups to run, enable and disable entire blocks of tests at once, or even select tests based on previous run/pass/fail history. It's quick and easy to add your own tests, which I must recommend for the principle of it--but its original name (printftester2000) reflected that there are over 2000 tests available already. Regardless, it's built to be flexible and highly configurable, so you can use it how you wish.   
 
 <p align="center">
   <img src="https://i.imgur.com/oFAc9EQ.png" width="60%" />
