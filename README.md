@@ -119,10 +119,10 @@ Feel free to contribute tests for these:
  - `*` (There are some tests, but not many combinations with other flags)
  - `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
 
- ### What to be AWARE of
- OS implemetation differences
- - For example, NULL output for %p Linux "(nil)" versus MacOS "0x0"
- - If developing on Linux test on macOS before submission
+### Note on coverage for OS differences
+ft\_printf is now being developed on other systems due to 42 working remotely as it deals with the Covid-19 pandemic. Moulinette tests your ft\_printf against what its system print\_f does. That makes the project system-dependent and since PFT uses the same testing method as moulinette, it will not be able to tell you if your ft\_printf will fail because you neglected to test on lab computers. One common difference is the printing of null pointers--there can be others.   
+
+You must test on your lab's computers prior to submission.   
 
 # Other Documentation
 
@@ -164,7 +164,7 @@ You can disable this behavior in options-config.ini, and/or see exactly what the
 
 # Credits
 
-The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. Many tests were written by me; tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), [robbie](https://github.com/rpeepz). Big thanks to [cclaude](https://github.com/cclaude42) for doing the first update for the new curriculum, and bigger to [appinha](https://github.com/appinha) for reorganizing the test library and adding tests for the new curriculum.  
+The test method itself was adapted from outdated moulinette test files a buddy gave me, from which the author was ly@42.fr. The vast majority of code was written by me. The tests prefixed moul\_ were adapted from the moulinette test files, the tests with \_ftfc\_ were adapted from 42FileChecker. Many tests were written by me; tests were contributed by [phtruong](https://github.com/nkone), [akharrou](https://github.com/akharrou), [robbie](https://github.com/rpeepz), and [mgiraldo](https://github.com/michaelgiraldo). Big thanks to [cclaude](https://github.com/cclaude42) for doing the first update for the new curriculum, and bigger to [apuchill](https://github.com/appinha) for reorganizing the test library and adding tests for the new curriculum.  
 
 
 Also thanks to:
