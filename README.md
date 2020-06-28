@@ -120,7 +120,9 @@ Feel free to contribute tests for these:
  - `%a` (some tests exist in the `moul` block, but they are not rigorously tested with flag combinations like the other tests)
 
 ### Note on coverage for OS differences
-ft\_printf is now being developed on other systems due to 42 working remotely as it deals with the Covid-19 pandemic. Moulinette tests your ft\_printf against what its system print\_f does. That makes the project system-dependent and since PFT uses the same testing method as moulinette, it will not be able to tell you if your ft\_printf will fail because you neglected to test on lab computers. One common difference is the printing of null pointers--there can be others.   
+There are differences between printf(3) between systems. One common difference is the printing of null pointers--there can be others.   
+
+ft\_printf is now being developed on other systems due to 42 working remotely as it deals with the Covid-19 pandemic. Moulinette tests your ft\_printf against its own system's printf. That makes the project system-dependent and since PFT uses the same testing method as moulinette, it will not be able to tell you if your ft\_printf will fail because you neglected to test on lab computers. 
 
 You must test on your lab's computers prior to submission.   
 
